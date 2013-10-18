@@ -5,7 +5,7 @@ import com.castlebravostudios.rayguns.api.items.ItemAccessory
 import com.castlebravostudios.rayguns.api.items.ItemBattery
 import com.castlebravostudios.rayguns.api.items.ItemBody
 import com.castlebravostudios.rayguns.api.items.ItemChamber
-import com.castlebravostudios.rayguns.api.items.ItemFocus
+import com.castlebravostudios.rayguns.api.items.ItemLens
 import com.castlebravostudios.rayguns.api.items.ItemModule
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.item.Item

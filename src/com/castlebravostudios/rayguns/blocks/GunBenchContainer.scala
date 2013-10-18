@@ -11,7 +11,7 @@ import net.minecraft.inventory.IInventory
 import net.minecraft.item.Item
 import com.castlebravostudios.rayguns.api.items.ItemBody
 import com.castlebravostudios.rayguns.api.items.ItemAccessory
-import com.castlebravostudios.rayguns.api.items.ItemFocus
+import com.castlebravostudios.rayguns.api.items.ItemLens
 import com.castlebravostudios.rayguns.api.items.ItemChamber
 import com.castlebravostudios.rayguns.api.items.ItemBattery
 import com.castlebravostudios.rayguns.items.RayGun
@@ -67,7 +67,7 @@ class GunBenchContainer( inventoryPlayer : InventoryPlayer, entity : GunBenchTil
       else {
         val targetSlot = Item.itemsList(stackInSlot.itemID) match {
           case _: ItemBody => BODY_SLOT
-          case _: ItemFocus => LENS_SLOT
+          case _: ItemLens => LENS_SLOT
           case _: ItemChamber => CHAMBER_SLOT
           case _: ItemBattery => BATTERY_SLOT
           case _: ItemAccessory => ACC_SLOT

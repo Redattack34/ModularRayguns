@@ -8,7 +8,7 @@ import com.castlebravostudios.rayguns.api.ModuleRegistry
 import com.castlebravostudios.rayguns.blocks.GunBenchTileEntity
 import com.castlebravostudios.rayguns.api.items.ItemBody
 import com.castlebravostudios.rayguns.api.items.ItemChamber
-import com.castlebravostudios.rayguns.api.items.ItemFocus
+import com.castlebravostudios.rayguns.api.items.ItemLens
 import com.castlebravostudios.rayguns.api.items.ItemAccessory
 import com.castlebravostudios.rayguns.api.items.ItemBattery
 import com.castlebravostudios.rayguns.items.RayGun
@@ -16,7 +16,7 @@ import com.castlebravostudios.rayguns.items.Items
 import com.castlebravostudios.rayguns.items.BrokenGun
 
 case class GunComponents(body : ItemBody, chamber : ItemChamber, battery : ItemBattery,
-    lens : Option[ItemFocus], acc : Option[ItemAccessory] ) {
+    lens : Option[ItemLens], acc : Option[ItemAccessory] ) {
   def powerMultiplier : Double = body.powerModifier * chamber.powerModifier * battery.powerModifier *
     lens.map(_.powerModifier).getOrElse(1.0) * acc.map(_.powerModifier).getOrElse(1.0)
 }
@@ -42,9 +42,9 @@ object RaygunNbtUtils {
     for { body <- getComponent(item, BODY_STR)(ModuleRegistry.getBody)
           chamber <- getComponent(item, CHAMBER_STR)(getChamber)
           battery <- getComponent(item, BATTERY_STR)(getBattery)
-          focus = getComponent(item, LENS_STR)(getFocus)
+          lens = getComponent(item, LENS_STR)(getLens)
           accessory = getComponent(item, ACC_STR)(getAccessory) }
-      yield GunComponents( body, chamber, battery, focus, accessory )
+      yield GunComponents( body, chamber, battery, lens, accessory )
     }
 
   private def getComponent[T <: ItemModule](item : ItemStack, key: String )(f : String => Option[T]) : Option[T] = {
@@ -108,14 +108,14 @@ object RaygunNbtUtils {
     val body = getComponent(item, BODY_STR)(getBody)
     val chamber = getComponent(item, CHAMBER_STR)(getChamber)
     val battery = getComponent(item, BATTERY_STR)(getBattery)
-    val focus = getComponent(item, LENS_STR)(getFocus)
+    val lens = getComponent(item, LENS_STR)(getLens)
     val accessory = getComponent(item, ACC_STR)(getAccessory)
-    OptionalGunComponents( body, chamber, battery, focus, accessory )
+    OptionalGunComponents( body, chamber, battery, lens, accessory )
   }
 
   case class OptionalGunComponents(
     body : Option[ItemBody], chamber : Option[ItemChamber], battery : Option[ItemBattery],
-    lens : Option[ItemFocus], acc : Option[ItemAccessory] ) {
+    lens : Option[ItemLens], acc : Option[ItemAccessory] ) {
 
     def this( comp : GunComponents ) = this( Some( comp.body ),
         Some( comp.chamber ), Some( comp.battery ), comp.lens, comp.acc );

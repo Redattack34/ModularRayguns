@@ -7,7 +7,7 @@ import net.minecraft.tileentity.TileEntity
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.nbt.NBTTagList
 import com.castlebravostudios.rayguns.api.items.ItemBody
-import com.castlebravostudios.rayguns.api.items.ItemFocus
+import com.castlebravostudios.rayguns.api.items.ItemLens
 import com.castlebravostudios.rayguns.api.items.ItemChamber
 import com.castlebravostudios.rayguns.api.items.ItemBattery
 import com.castlebravostudios.rayguns.api.items.ItemAccessory
@@ -87,7 +87,7 @@ class GunBenchTileEntity extends TileEntity with IInventory {
   def body = getItem(BODY_SLOT).asInstanceOf[ItemBody]
   def chamber = getItem(CHAMBER_SLOT).asInstanceOf[ItemChamber]
   def battery = getItem(BATTERY_SLOT).asInstanceOf[ItemBattery]
-  def lens = Option( getItem(LENS_SLOT).asInstanceOf[ItemFocus] )
+  def lens = Option( getItem(LENS_SLOT).asInstanceOf[ItemLens] )
   def accessory = Option( getItem(ACC_SLOT).asInstanceOf[ItemAccessory] )
 
   private def getItem( slot : Int ) : Item = {
@@ -146,7 +146,7 @@ class GunBenchTileEntity extends TileEntity with IInventory {
     val item = stack.getItem
     slot match {
       case BODY_SLOT => item.isInstanceOf[ItemBody]
-      case LENS_SLOT => item.isInstanceOf[ItemFocus]
+      case LENS_SLOT => item.isInstanceOf[ItemLens]
       case CHAMBER_SLOT => item.isInstanceOf[ItemChamber]
       case BATTERY_SLOT => item.isInstanceOf[ItemBattery]
       case ACC_SLOT => item.isInstanceOf[ItemAccessory]

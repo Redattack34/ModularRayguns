@@ -3,7 +3,7 @@ package com.castlebravostudios.rayguns.api
 import com.castlebravostudios.rayguns.api.items.ItemBody
 import com.castlebravostudios.rayguns.api.items.ItemAccessory
 import com.castlebravostudios.rayguns.api.items.ItemBattery
-import com.castlebravostudios.rayguns.api.items.ItemFocus
+import com.castlebravostudios.rayguns.api.items.ItemLens
 import com.castlebravostudios.rayguns.api.items.ItemChamber
 import com.castlebravostudios.rayguns.utils.GunComponents
 import net.minecraft.world.World
