@@ -1,0 +1,123 @@
+package com.castlebravostudios.rayguns.utils
+
+import net.minecraft.nbt.NBTTagCompound
+import com.castlebravostudios.rayguns.api.items.ItemModule
+import net.minecraft.item.ItemStack
+import com.castlebravostudios.rayguns.api.BeamRegistry
+import com.castlebravostudios.rayguns.api.ModuleRegistry
+import com.castlebravostudios.rayguns.blocks.GunBenchTileEntity
+import com.castlebravostudios.rayguns.api.items.ItemBody
+import com.castlebravostudios.rayguns.api.items.ItemChamber
+import com.castlebravostudios.rayguns.api.items.ItemFocus
+import com.castlebravostudios.rayguns.api.items.ItemAccessory
+import com.castlebravostudios.rayguns.api.items.ItemBattery
+import com.castlebravostudios.rayguns.items.RayGun
+import com.castlebravostudios.rayguns.items.Items
+import com.castlebravostudios.rayguns.items.BrokenGun
+
+case class GunComponents(body : ItemBody, chamber : ItemChamber, battery : ItemBattery,
+    lens : Option[ItemFocus], acc : Option[ItemAccessory] ) {
+  def powerMultiplier : Double = body.powerModifier * chamber.powerModifier * battery.powerModifier *
+    lens.map(_.powerModifier).getOrElse(1.0) * acc.map(_.powerModifier).getOrElse(1.0)
+}
+object RaygunNbtUtils {
+
+  import ModuleRegistry._
+
+  val BODY_STR = "body"
+  val LENS_STR = "lens"
+  val CHAMBER_STR = "chamber"
+  val BATTERY_STR = "battery"
+  val ACC_STR = "accessory"
+
+  val MODULES_TAG = "raygunModules"
+
+  /**
+   * Get the components from a stack that contains a RayGun. Returns Some if
+   * all of the components in the stack are valid components and if the body,
+   * chamber and battery are all set. The returned components may or may not
+   * form a valid gun.
+   */
+  def getComponents( item : ItemStack ) : Option[GunComponents] = {
+    for { body <- getComponent(item, BODY_STR)(ModuleRegistry.getBody)
+          chamber <- getComponent(item, CHAMBER_STR)(getChamber)
+          battery <- getComponent(item, BATTERY_STR)(getBattery)
+          focus = getComponent(item, LENS_STR)(getFocus)
+          accessory = getComponent(item, ACC_STR)(getAccessory) }
+      yield GunComponents( body, chamber, battery, focus, accessory )
+    }
+
+  private def getComponent[T <: ItemModule](item : ItemStack, key: String )(f : String => Option[T]) : Option[T] = {
+    for { name <- getModuleName( item, key )
+          module <- f( name )
+        } yield module
+  }
+
+  private def getModuleName( item : ItemStack, key : String ) : Option[String] =
+    for {
+      moduleTag <- getModuleTag(item)
+      name <- Option(moduleTag.getString( key ) )
+    } yield name
+
+  private def getModuleTag( item : ItemStack ) : Option[NBTTagCompound] = {
+    for {
+      itemTag <- Option( item.getTagCompound() )
+      moduleTag <- Option( itemTag.getCompoundTag( MODULES_TAG ) )
+    } yield moduleTag
+  }
+
+  def buildGun( components : GunComponents ) : Option[ItemStack] =
+    if ( BeamRegistry.isValid(components) ) Some( buildValidGun( components ) ) else None
+
+  private def buildValidGun( components : GunComponents ) : ItemStack = {
+    val stack = new ItemStack( Items[RayGun] )
+    stack.stackSize = 1
+    stack.setTagInfo( MODULES_TAG, buildModuleTag( components ) )
+    stack
+  }
+
+  private def buildModuleTag( components : GunComponents ) : NBTTagCompound =
+    buildModuleTag( new OptionalGunComponents( components ) )
+  private def buildModuleTag( components : OptionalGunComponents ) : NBTTagCompound = {
+    val tag = new NBTTagCompound( MODULES_TAG )
+    components.body.foreach( setTag( tag, BODY_STR )(_) )
+    components.chamber.foreach( setTag( tag, CHAMBER_STR )(_) )
+    components.battery.foreach( setTag( tag, BATTERY_STR )(_) )
+    components.lens.foreach( setTag( tag, LENS_STR )(_) )
+    components.acc.foreach( setTag( tag, ACC_STR )(_) )
+    tag
+  }
+
+  private def setTag( tag : NBTTagCompound, str : String )( item : ItemModule ) : Unit = {
+    tag.setString(str, item.moduleKey)
+  }
+
+  def buildBrokenGun( item : ItemStack ) : ItemStack = {
+    val stack = new ItemStack( Items[BrokenGun] )
+    stack.stackSize = 1
+    stack.setTagInfo( MODULES_TAG, buildModuleTag( getAllValidComponents( item ) ) )
+    stack
+  }
+
+  /**
+   * Get whatever valid components a stack contains. This is used for salvaging
+   * a broken gun and converting a functional gun to a broken one when fired if
+   * it is invalid.
+   */
+  def getAllValidComponents( item : ItemStack ) : OptionalGunComponents = {
+    val body = getComponent(item, BODY_STR)(getBody)
+    val chamber = getComponent(item, CHAMBER_STR)(getChamber)
+    val battery = getComponent(item, BATTERY_STR)(getBattery)
+    val focus = getComponent(item, LENS_STR)(getFocus)
+    val accessory = getComponent(item, ACC_STR)(getAccessory)
+    OptionalGunComponents( body, chamber, battery, focus, accessory )
+  }
+
+  case class OptionalGunComponents(
+    body : Option[ItemBody], chamber : Option[ItemChamber], battery : Option[ItemBattery],
+    lens : Option[ItemFocus], acc : Option[ItemAccessory] ) {
+
+    def this( comp : GunComponents ) = this( Some( comp.body ),
+        Some( comp.chamber ), Some( comp.battery ), comp.lens, comp.acc );
+  }
+}
