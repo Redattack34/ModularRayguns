@@ -16,6 +16,7 @@ object Items {
 
   private var registeredItems = Map[Class[_], Item]()
 
+  def apply[T <: Item]( c : Class[T] ) : Item = registeredItems( c )
   def apply[T <: Item]( implicit mf : Manifest[T] ) : Item = registeredItems( mf.runtimeClass )
 
   def registerItems : Unit = {

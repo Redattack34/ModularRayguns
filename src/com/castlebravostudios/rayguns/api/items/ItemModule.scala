@@ -1,6 +1,7 @@
 package com.castlebravostudios.rayguns.api.items
 
 import net.minecraft.item.Item
+import com.castlebravostudios.rayguns.items.Items
 
 trait ItemModule extends Item {
 
@@ -21,4 +22,5 @@ trait ItemModule extends Item {
    * the power cost to fire the gun.
    */
   def powerModifier : Double
+
 }
