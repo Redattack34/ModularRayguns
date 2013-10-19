@@ -1,17 +1,19 @@
-package com.castlebravostudios.rayguns.blocks
+package com.castlebravostudios.rayguns.blocks.gunbench
+
+import java.util.Random
+
+import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 import net.minecraft.block.BlockContainer
 import net.minecraft.block.material.Material
 import net.minecraft.creativetab.CreativeTabs
-import net.minecraft.world.World
-import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.tileentity.TileEntity
-import com.castlebravostudios.rayguns.mod.ModularRayguns
-import net.minecraft.inventory.IInventory
-import java.util.Random
 import net.minecraft.entity.item.EntityItem
-import net.minecraft.nbt.NBTTagCompound
+import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.inventory.IInventory
 import net.minecraft.item.ItemStack
+import net.minecraft.nbt.NBTTagCompound
+import net.minecraft.tileentity.TileEntity
+import net.minecraft.world.World
 
 class GunBench(id : Int) extends BlockContainer(id, Material.wood) {
   setHardness(2.0F)

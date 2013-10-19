@@ -1,4 +1,4 @@
-package com.castlebravostudios.rayguns.blocks
+package com.castlebravostudios.rayguns.blocks.gunbench
 
 import net.minecraft.inventory.IInventory
 import net.minecraft.item.ItemStack
@@ -11,13 +11,12 @@ import com.castlebravostudios.rayguns.api.items.ItemLens
 import com.castlebravostudios.rayguns.api.items.ItemChamber
 import com.castlebravostudios.rayguns.api.items.ItemBattery
 import com.castlebravostudios.rayguns.api.items.ItemAccessory
-import com.castlebravostudios.rayguns.items.RayGun
-import com.castlebravostudios.rayguns.api.BeamRegistry
-import com.castlebravostudios.rayguns.items.Items
 import net.minecraft.item.Item
-import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
-import com.castlebravostudios.rayguns.utils.GunComponents
 import com.castlebravostudios.rayguns.items.BrokenGun
+import scala.Array.canBuildFrom
+import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
+import com.castlebravostudios.rayguns.items.RayGun
+import com.castlebravostudios.rayguns.utils.GunComponents
 
 class GunBenchTileEntity extends TileEntity with IInventory {
   private val inv : Array[ItemStack] = Array.fill(6)(null)

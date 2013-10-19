@@ -1,13 +1,10 @@
-package com.castlebravostudios.rayguns.blocks
+package com.castlebravostudios.rayguns.blocks.gunbench
 
 import net.minecraft.entity.player.InventoryPlayer
 import net.minecraft.inventory.Container
 import net.minecraft.inventory.Slot
-import cpw.mods.fml.common.network.Player
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
-import net.minecraft.inventory.SlotCrafting
-import net.minecraft.inventory.IInventory
 import net.minecraft.item.Item
 import com.castlebravostudios.rayguns.api.items.ItemBody
 import com.castlebravostudios.rayguns.api.items.ItemAccessory
@@ -15,6 +12,11 @@ import com.castlebravostudios.rayguns.api.items.ItemLens
 import com.castlebravostudios.rayguns.api.items.ItemChamber
 import com.castlebravostudios.rayguns.api.items.ItemBattery
 import com.castlebravostudios.rayguns.items.RayGun
+import GunBenchTileEntity.ACC_SLOT
+import GunBenchTileEntity.BATTERY_SLOT
+import GunBenchTileEntity.BODY_SLOT
+import GunBenchTileEntity.CHAMBER_SLOT
+import GunBenchTileEntity.OUTPUT_SLOT
 import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
 
 class GunBenchContainer( inventoryPlayer : InventoryPlayer, entity : GunBenchTileEntity ) extends Container {

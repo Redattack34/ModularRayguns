@@ -1,4 +1,4 @@
-package com.castlebravostudios.rayguns.blocks
+package com.castlebravostudios.rayguns.blocks.gunbench
 
 import net.minecraft.client.gui.inventory.GuiContainer
 import net.minecraft.client.resources.I18n

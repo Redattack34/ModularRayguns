@@ -1,4 +1,4 @@
-package com.castlebravostudios.rayguns.blocks
+package com.castlebravostudios.rayguns.blocks.gunbench
 
 import cpw.mods.fml.common.network.IGuiHandler
 import net.minecraft.entity.player.EntityPlayer

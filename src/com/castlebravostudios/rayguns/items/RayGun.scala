@@ -14,7 +14,7 @@ import com.castlebravostudios.rayguns.api.ModuleRegistry
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.world.World
-import com.castlebravostudios.rayguns.blocks.GunBenchTileEntity
+import com.castlebravostudios.rayguns.blocks.gunbench.GunBenchTileEntity
 import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
 import net.minecraft.entity.Entity
 import com.castlebravostudios.rayguns.utils.GunComponents
