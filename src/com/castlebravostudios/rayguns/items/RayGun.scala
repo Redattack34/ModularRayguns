@@ -32,16 +32,15 @@ class RayGun(id : Int) extends Item(id) {
     val components = getComponents( item )
     val creator = components.flatMap( BeamRegistry.getFunction )
     creator match {
-      case Some( f ) => { fire(item, components.get, world, player, f); item }
+      case Some( f ) => { fire(item, components.get, world, player, f(world, player)); item }
       case None => buildBrokenGun( item )
     }
   }
 
 
-  private def fire( item : ItemStack, components : GunComponents,
-      world : World, player : EntityPlayer, f : BeamRegistry.BeamCreator ): Unit = {
+  private def fire( item : ItemStack, components : GunComponents, world : World, player : EntityPlayer, entity : Entity ): Unit = {
     if ( components.battery.drainPower( player, item, components ) ){
-      f( world, player )
+      world.spawnEntityInWorld(entity);
     }
   }
 

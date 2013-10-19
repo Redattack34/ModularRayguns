@@ -12,7 +12,7 @@ import net.minecraft.entity.Entity
 
 object BeamRegistry {
 
-  type BeamCreator = (World, EntityPlayer) => Unit
+  type BeamCreator = (World, EntityPlayer) => Entity
 
   private var registrations = Seq[PartialFunction[GunComponents, BeamCreator]]()
 
