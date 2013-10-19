@@ -6,7 +6,7 @@ import net.minecraft.item.ItemBlock
 import com.castlebravostudios.rayguns.blocks.gunbench.GunBenchTileEntity
 import cpw.mods.fml.common.network.NetworkRegistry
 import com.castlebravostudios.rayguns.mod.ModularRayguns
-import com.castlebravostudios.rayguns.blocks.gunbench.GunBenchGuiHandler
+import com.castlebravostudios.rayguns.gui.ModularRaygunsGuiHandler
 
 object Blocks {
 
@@ -14,6 +14,6 @@ object Blocks {
     val gunBench = new GunBench(1337)
     GameRegistry.registerBlock(gunBench, classOf[ItemBlock], "gunBench")
     GameRegistry.registerTileEntity(classOf[GunBenchTileEntity], "gunBenchEntity")
-    NetworkRegistry.instance().registerGuiHandler(ModularRayguns, new GunBenchGuiHandler)
+    NetworkRegistry.instance().registerGuiHandler(ModularRayguns, new ModularRaygunsGuiHandler)
   }
 }

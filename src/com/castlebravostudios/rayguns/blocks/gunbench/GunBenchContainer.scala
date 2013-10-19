@@ -18,8 +18,10 @@ import GunBenchTileEntity.BODY_SLOT
 import GunBenchTileEntity.CHAMBER_SLOT
 import GunBenchTileEntity.OUTPUT_SLOT
 import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
+import com.castlebravostudios.rayguns.blocks.BaseContainer
 
-class GunBenchContainer( inventoryPlayer : InventoryPlayer, entity : GunBenchTileEntity ) extends Container {
+class GunBenchContainer( inventoryPlayer : InventoryPlayer, entity : GunBenchTileEntity )
+  extends BaseContainer( inventoryPlayer, entity ) {
 
   import GunBenchTileEntity._
   import RaygunNbtUtils._
@@ -32,7 +34,7 @@ class GunBenchContainer( inventoryPlayer : InventoryPlayer, entity : GunBenchTil
     }
     override def onPickupFromSlot(player : EntityPlayer, item : ItemStack ) : Unit = {
       super.onPickupFromSlot(player, item)
-      inv.onPickedUpfrom(slot)
+      inv.onPickedUpFrom(slot)
     }
   }
 
@@ -43,59 +45,24 @@ class GunBenchContainer( inventoryPlayer : InventoryPlayer, entity : GunBenchTil
   addSlotToContainer( new GunBenchSlot( entity, ACC_SLOT,      71, 55 ) )
   addSlotToContainer( new GunBenchSlot( entity, OUTPUT_SLOT,  147, 57 ) )
 
-  for { i <- 0 until 3
-        j <- 0 until 9 } {
-    addSlotToContainer(new Slot( inventoryPlayer, j + i * 9 + 9, 8 + j * 18, 84 + i * 18 ) )
-  }
+  addPlayerInventory()
 
-  for ( i <- 0 until 9 ) {
-    addSlotToContainer( new Slot( inventoryPlayer, i, 8 + i * 18, 142 ) )
-  }
+  val lastCustomIndex = OUTPUT_SLOT
 
-  override def canInteractWith( player : EntityPlayer ) = entity.isUseableByPlayer( player )
-
-  override def transferStackInSlot( player : EntityPlayer, slot : Int ) : ItemStack = {
-    val slotObject : Slot = inventorySlots.get( slot ).asInstanceOf[Slot]
-
-    if ( slotObject != null && slotObject.getHasStack ) {
-      val stackInSlot = slotObject.getStack
-      val copyStack = stackInSlot.copy
-
-      if ( slot <= OUTPUT_SLOT || slot > OUTPUT_SLOT + 27 ) {
-        if ( !mergeItemStack( stackInSlot, OUTPUT_SLOT + 1, OUTPUT_SLOT + 27 + 1, true ) ) {
-          return null
-        }
-      }
-      else {
-        val targetSlot = Item.itemsList(stackInSlot.itemID) match {
-          case _: ItemBody => BODY_SLOT
-          case _: ItemLens => LENS_SLOT
-          case _: ItemChamber => CHAMBER_SLOT
-          case _: ItemBattery => BATTERY_SLOT
-          case _: ItemAccessory => ACC_SLOT
-          case _: RayGun => OUTPUT_SLOT
-          case _ => return null
-        }
-
-        if ( entity.isItemValidForSlot(targetSlot, stackInSlot ) ) {
-          if ( !mergeItemStack( stackInSlot, targetSlot, targetSlot + 1, true ) ) {
-            return null;
-          }
-        }
-      }
-
-      if ( stackInSlot.stackSize == 0 ) {
-        slotObject.putStack( null )
-      }
-      else {
-        slotObject.onSlotChanged()
-      }
-
-      if ( stackInSlot.stackSize == copyStack.stackSize ) {
-        return null
-      }
-      slotObject.onPickupFromSlot(player, stackInSlot)
+  protected override def transferStackToCustomSlots( player : EntityPlayer, slot : Int, stackInSlot: ItemStack ) : Boolean = {
+    val targetSlot = Item.itemsList(stackInSlot.itemID) match {
+      case _: ItemBody => BODY_SLOT
+      case _: ItemLens => LENS_SLOT
+      case _: ItemChamber => CHAMBER_SLOT
+      case _: ItemBattery => BATTERY_SLOT
+      case _: ItemAccessory => ACC_SLOT
+      case _: RayGun => OUTPUT_SLOT
+      case _ => return false
     }
-    null
+
+    if ( entity.isItemValidForSlot(targetSlot, stackInSlot ) ) {
+      mergeItemStack( stackInSlot, targetSlot, targetSlot + 1, false );
+    }
+    else false
   }
 }
