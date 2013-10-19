@@ -10,7 +10,7 @@ import net.minecraft.item.Item
 
 class BasicBattery(id : Int) extends DefaultItemBattery( id ) {
 
-  val moduleKey = defaultKey
+  val moduleKey = "BasicBattery"
   val powerModifier = 1.0d;
   setMaxDamage( 10000 )
   register

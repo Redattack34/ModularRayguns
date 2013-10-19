@@ -11,7 +11,7 @@ import com.castlebravostudios.rayguns.items.Items
 
 class UltimateBattery(id : Int) extends DefaultItemBattery( id ) {
 
-  val moduleKey = defaultKey
+  val moduleKey = "UltimateBattery"
   val powerModifier = 1.0d;
   setMaxDamage( 50000 )
   register
