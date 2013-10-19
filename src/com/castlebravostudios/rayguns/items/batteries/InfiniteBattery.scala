@@ -13,7 +13,7 @@ import com.castlebravostudios.rayguns.utils.GunComponents
 
 class InfiniteBattery(id : Int) extends DefaultItemBattery( id ) {
 
-  val moduleKey = defaultKey
+  val moduleKey = "InfiniteBattery"
   val powerModifier = 1.0d;
   setMaxDamage( Integer.MAX_VALUE )
   register

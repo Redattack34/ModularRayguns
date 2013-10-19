@@ -8,7 +8,7 @@ import com.castlebravostudios.rayguns.items.bodies.BasicBody
 
 class BasicChamber(id : Int) extends DefaultItemChamber( id ) {
 
-  val moduleKey = defaultKey
+  val moduleKey = "BasicChamber"
   val powerModifier = 1.0
   register
   setUnlocalizedName("rayguns.BasicChamber")

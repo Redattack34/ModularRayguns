@@ -11,6 +11,5 @@ abstract class DefaultItemModule(id : Int) extends Item(id) with ItemModule {
   setMaxStackSize(1)
   setCreativeTab(CreativeTabs.tabCombat)
 
-  protected def defaultKey = getClass.getSimpleName
   protected def register = ModuleRegistry.registerModule(this)
 }
