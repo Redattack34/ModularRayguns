@@ -6,19 +6,9 @@ import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.nbt.NBTTagList
+import scala.collection._
 
 abstract class BaseInventoryTileEntity extends TileEntity with IInventory {
-
-  protected def inv : Array[ItemStack]
-
-  override def getSizeInventory : Int = inv.length
-  override def getStackInSlot( slot : Int ) : ItemStack = inv(slot)
-  override def setInventorySlotContents( slot : Int, stack : ItemStack ) = {
-    inv(slot) = stack
-    if ( stack != null && stack.stackSize > getInventoryStackLimit() ) {
-      stack.stackSize = getInventoryStackLimit()
-    }
-  }
 
   override def decrStackSize( slot : Int, amt : Int ) : ItemStack = {
     var stack = getStackInSlot(slot)
@@ -62,8 +52,8 @@ abstract class BaseInventoryTileEntity extends TileEntity with IInventory {
     for ( x <- 0 until tagList.tagCount();
           tag = tagList.tagAt(x).asInstanceOf[NBTTagCompound] ) {
       val slot = tag.getByte("Slot")
-      if ( slot >= 0 && slot < inv.length ) {
-        inv(slot) = ItemStack.loadItemStackFromNBT(tag)
+      if ( slot >= 0 && slot < getSizeInventory ) {
+        setInventorySlotContents( slot, ItemStack.loadItemStackFromNBT(tag) )
       }
     }
   }
@@ -72,8 +62,8 @@ abstract class BaseInventoryTileEntity extends TileEntity with IInventory {
     super.writeToNBT(tagCompound)
 
     val itemList = new NBTTagList
-    for { (item, index) <- inv.zipWithIndex
-          if item != null } {
+    for { index <- 0 until getSizeInventory
+          item <- Option(getStackInSlot(index) ) } {
       val tag = new NBTTagCompound
       tag.setByte( "Slot", index.toByte )
       item.writeToNBT(tag)

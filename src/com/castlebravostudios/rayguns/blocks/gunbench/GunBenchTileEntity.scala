@@ -18,12 +18,22 @@ import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
 import com.castlebravostudios.rayguns.items.RayGun
 import com.castlebravostudios.rayguns.utils.GunComponents
 import com.castlebravostudios.rayguns.blocks.BaseInventoryTileEntity
+import scala.collection.mutable.ListBuffer
 
 class GunBenchTileEntity extends BaseInventoryTileEntity {
-  protected[this] val inv : Array[ItemStack] = Array.fill(6)(null)
+  private[this] val inv = Array.fill[ItemStack](6)(null)
 
   import RaygunNbtUtils._
   import GunBenchTileEntity._
+
+  override def getSizeInventory : Int = inv.length
+  override def getStackInSlot( slot : Int ) : ItemStack = inv(slot)
+  override def setInventorySlotContents( slot : Int, stack : ItemStack ) = {
+    inv(slot) = stack
+    if ( stack != null && stack.stackSize > getInventoryStackLimit() ) {
+      stack.stackSize = getInventoryStackLimit()
+    }
+  }
 
   def onSlotChanged( slot : Int ) : Unit = {
       def toStack( item : Item ) = new ItemStack( item, 1 )
