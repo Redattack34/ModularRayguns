@@ -1,23 +1,17 @@
 package com.castlebravostudios.rayguns.blocks
 
-import net.minecraft.block.BlockContainer
-import net.minecraft.block.material.Material
-import net.minecraft.creativetab.CreativeTabs
-import net.minecraft.world.World
-import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.tileentity.TileEntity
-import com.castlebravostudios.rayguns.mod.ModularRayguns
 import net.minecraft.inventory.IInventory
+import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.block.BlockContainer
+import net.minecraft.world.World
 import java.util.Random
+import com.castlebravostudios.rayguns.mod.ModularRayguns
 import net.minecraft.entity.item.EntityItem
+import net.minecraft.block.material.Material
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.item.ItemStack
 
-class GunBench(id : Int) extends BlockContainer(id, Material.wood) {
-  setHardness(2.0F)
-  setResistance(5.0f)
-  setUnlocalizedName("gunBench")
-  setCreativeTab(CreativeTabs.tabBlock)
+abstract class BaseContainerBlock(id : Int) extends BlockContainer(id, Material.wood) {
 
   override def onBlockActivated(world : World, x : Int, y : Int, z : Int, player : EntityPlayer,
     metadata : Int, par7 : Float, par8 : Float, par9 : Float ) : Boolean = {
@@ -27,7 +21,7 @@ class GunBench(id : Int) extends BlockContainer(id, Material.wood) {
       return false;
     }
 
-    player.openGui(ModularRayguns, 0, world, x, y, z)
+    openGui(player, world, x, y, z);
     true
   }
 
@@ -67,5 +61,5 @@ class GunBench(id : Int) extends BlockContainer(id, Material.wood) {
     }
   }
 
-  override def createNewTileEntity( world : World ) : TileEntity = new GunBenchTileEntity()
+  def openGui( player : EntityPlayer, world : World, x : Int, y : Int, z : Int ) : Unit
 }

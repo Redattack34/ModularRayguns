@@ -5,7 +5,7 @@ import com.castlebravostudios.rayguns.api.items.ItemModule
 import net.minecraft.item.ItemStack
 import com.castlebravostudios.rayguns.api.BeamRegistry
 import com.castlebravostudios.rayguns.api.ModuleRegistry
-import com.castlebravostudios.rayguns.blocks.GunBenchTileEntity
+import com.castlebravostudios.rayguns.blocks.gunbench.GunBenchTileEntity
 import com.castlebravostudios.rayguns.api.items.ItemBody
 import com.castlebravostudios.rayguns.api.items.ItemChamber
 import com.castlebravostudios.rayguns.api.items.ItemLens
