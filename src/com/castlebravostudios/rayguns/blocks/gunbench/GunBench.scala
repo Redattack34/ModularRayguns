@@ -18,7 +18,7 @@ import com.castlebravostudios.rayguns.blocks.BaseContainerBlock
 class GunBench(id : Int) extends BaseContainerBlock(id) {
   setHardness(2.0F)
   setResistance(5.0f)
-  setUnlocalizedName("gunBench")
+  setUnlocalizedName("rayguns.gunBench")
   setCreativeTab(CreativeTabs.tabBlock)
 
   def openGui( player : EntityPlayer, world : World, x : Int, y : Int, z : Int ) : Unit =

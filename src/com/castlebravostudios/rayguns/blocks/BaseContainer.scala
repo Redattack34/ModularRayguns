@@ -1,13 +1,23 @@
 package com.castlebravostudios.rayguns.blocks
 
+import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.player.InventoryPlayer
-import com.castlebravostudios.rayguns.blocks.gunbench.GunBenchTileEntity
 import net.minecraft.inventory.Container
 import net.minecraft.inventory.Slot
-import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 
-abstract class BaseContainer( inventoryPlayer : InventoryPlayer, entity : GunBenchTileEntity ) extends Container {
+class GuiBlockSlot( inv: BaseInventoryTileEntity, slot : Int, x : Int, y : Int ) extends Slot( inv, slot, x, y ) {
+  override def isItemValid( stack : ItemStack ) : Boolean = inv.isItemValidForSlot( slot, stack )
+  override def onSlotChanged() = {
+    super.onSlotChanged
+    inv.onSlotChanged( slot )
+  }
+  override def onPickupFromSlot(player : EntityPlayer, item : ItemStack ) : Unit = {
+    super.onPickupFromSlot(player, item)
+    inv.onPickedUpFrom(slot)
+  }
+}
+abstract class BaseContainer( inventoryPlayer : InventoryPlayer, entity : BaseInventoryTileEntity ) extends Container {
 
   def lastCustomIndex : Int
 
