@@ -10,7 +10,7 @@ import net.minecraft.util.ResourceLocation
 class LensGrinderGui( playerInv: InventoryPlayer, tileEntity: LensGrinderTileEntity )
   extends GuiContainer( new LensGrinderContainer( playerInv, tileEntity ) ) {
 
-  private val texture = new ResourceLocation( "textures/gui/container/crafting_table.png" )
+  private val texture = new ResourceLocation( "rayguns", "textures/gui/container/lens_grinder.png" )
 
   //Color is in 8-bit RGB. Hence hex. This is a sort of very dark grey.
   private[this] val color = 0x404040
@@ -26,6 +26,11 @@ class LensGrinderGui( playerInv: InventoryPlayer, tileEntity: LensGrinderTileEnt
     val x = (width - xSize) / 2
     val y = (height - ySize) / 2
     drawTexturedModalRect(x, y, 0, 0, xSize, ySize)
+
+    if ( tileEntity.isGrinding ){
+      val scaled = tileEntity.getTimeRemainingScaled(24)
+      drawTexturedModalRect( x + 89, y + 35, 176, 0, scaled, 16)
+    }
   }
 
 }

@@ -106,6 +106,13 @@ class LensGrinderTileEntity extends BaseInventoryTileEntity {
     }
   }
 
+  def isGrinding = remainingTime > 0
+  def getTimeRemainingScaled( scale : Int ) : Int = {
+    def totalTime : Int = getRecipe().get.ticks
+    val factor = (totalTime - remainingTime).toDouble / totalTime.toDouble
+    (factor * scale).toInt
+  }
+
   override def readFromNBT( tag : NBTTagCompound ) : Unit = {
     super.readFromNBT(tag)
     remainingTime = tag.getShort("RemainingTime")
