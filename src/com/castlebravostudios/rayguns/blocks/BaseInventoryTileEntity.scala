@@ -79,6 +79,7 @@ abstract class BaseInventoryTileEntity extends TileEntity with IInventory {
       item.writeToNBT(tag)
       itemList.appendTag( tag )
     }
+    tagCompound.setTag("Inventory", itemList)
   }
 
   def onSlotChanged( slot : Int ) : Unit
