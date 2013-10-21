@@ -13,7 +13,7 @@ class AdvancedBattery(id : Int) extends DefaultItemBattery( id ) {
 
   val moduleKey = "AdvancedBattery"
   val powerModifier = 1.0d;
-  setMaxDamage( 30000 )
+  setMaxDamage( 3000 )
   register
   setUnlocalizedName("rayguns.AdvancedBattery")
   setTextureName("rayguns:battery_advanced")

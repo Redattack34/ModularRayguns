@@ -12,7 +12,7 @@ class BasicBattery(id : Int) extends DefaultItemBattery( id ) {
 
   val moduleKey = "BasicBattery"
   val powerModifier = 1.0d;
-  setMaxDamage( 10000 )
+  setMaxDamage( 1000 )
   register
   setUnlocalizedName("rayguns.BasicBattery")
   setTextureName("rayguns:battery_basic")

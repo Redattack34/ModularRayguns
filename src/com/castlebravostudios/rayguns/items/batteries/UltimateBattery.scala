@@ -13,7 +13,7 @@ class UltimateBattery(id : Int) extends DefaultItemBattery( id ) {
 
   val moduleKey = "UltimateBattery"
   val powerModifier = 1.0d;
-  setMaxDamage( 50000 )
+  setMaxDamage( 5000 )
   register
   setUnlocalizedName("rayguns.UltimateBattery")
   setTextureName("rayguns:battery_ultimate")

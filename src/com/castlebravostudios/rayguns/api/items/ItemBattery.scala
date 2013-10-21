@@ -25,5 +25,5 @@ trait ItemBattery extends ItemModule {
   }
 }
 object ItemBattery {
-  val powerBase = 100
+  val powerBase = 10
 }
