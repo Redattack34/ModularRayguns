@@ -22,17 +22,17 @@ object Items {
   def registerItems : Unit = {
     registerItem( new RayGun( Config.item( "rayGun" ) ) )
     registerItem( new BrokenGun( Config.item( "brokenGun" ) ) )
-    registerItem( new BasicBody( Config.item( "basicBody" ) ) )
-    registerItem( new BasicChamber( Config.item( "basicChamber" ) ) )
+    registerItem( BasicBody )
+    registerItem( BasicChamber )
 
-    registerItem( new BasicBattery( Config.item( "basicBattery" ) ) )
-    registerItem( new AdvancedBattery( Config.item( "advancedBattery" ) ) )
-    registerItem( new UltimateBattery( Config.item( "ultimateBattery" ) ) )
-    registerItem( new InfiniteBattery( Config.item( "infiniteBattery" ) ) )
+    registerItem( BasicBattery )
+    registerItem( AdvancedBattery )
+    registerItem( UltimateBattery )
+    registerItem( InfiniteBattery )
 
-    registerItem( new PreciseLens( Config.item( "preciseLens" ) ) )
-    registerItem( new WideLens( Config.item( "wideLens" ) ) )
-    registerItem( new BeamLens( Config.item( "beamLens" ) ) )
+    registerItem( PreciseLens )
+    registerItem( WideLens )
+    registerItem( BeamLens )
   }
 
   private def registerItem( item : Item ) : Unit = {

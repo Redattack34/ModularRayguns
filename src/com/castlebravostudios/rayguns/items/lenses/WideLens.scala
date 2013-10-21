@@ -6,8 +6,9 @@ import com.castlebravostudios.rayguns.api.LensGrinderRecipeRegistry
 import net.minecraft.item.ItemStack
 import net.minecraft.block.Block
 import net.minecraft.item.Item
+import com.castlebravostudios.rayguns.mod.Config
 
-class WideLens(id : Int) extends DefaultItemLens(id) {
+object WideLens extends DefaultItemLens( Config.item( "wideLens" ) ) {
 
   val moduleKey = "WideLens"
   val powerModifier = 3.0

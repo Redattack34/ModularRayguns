@@ -7,8 +7,9 @@ import net.minecraft.item.ItemStack
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.Block
 import net.minecraft.item.Item
+import com.castlebravostudios.rayguns.mod.Config
 
-class BasicBattery(id : Int) extends DefaultItemBattery( id ) {
+object BasicBattery extends DefaultItemBattery( Config.item("basicBattery") ) {
 
   val moduleKey = "BasicBattery"
   val powerModifier = 1.0d;

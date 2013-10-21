@@ -8,8 +8,9 @@ import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.Block
 import net.minecraft.item.Item
 import com.castlebravostudios.rayguns.items.Items
+import com.castlebravostudios.rayguns.mod.Config
 
-class AdvancedBattery(id : Int) extends DefaultItemBattery( id ) {
+object AdvancedBattery extends DefaultItemBattery( Config.item( "advancedBattery" ) ) {
 
   val moduleKey = "AdvancedBattery"
   val powerModifier = 1.0d;
@@ -25,5 +26,5 @@ class AdvancedBattery(id : Int) extends DefaultItemBattery( id ) {
       'S' : Character, Block.stone,
       'G' : Character, Item.ingotGold,
       'I' : Character, Item.ingotIron,
-      'B' : Character, Items[BasicBattery] )
+      'B' : Character, BasicBattery )
 }
