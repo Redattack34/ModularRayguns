@@ -10,7 +10,7 @@ import net.minecraft.item.Item
 import com.castlebravostudios.rayguns.items.Items
 import com.castlebravostudios.rayguns.mod.Config
 
-object UltimateBattery extends DefaultItemBattery( Config.item( "ultimateBattery" ) ) {
+object UltimateBattery extends DefaultItemBattery( Config.ultimateBattery ) {
 
   val moduleKey = "UltimateBattery"
   val powerModifier = 1.0d;

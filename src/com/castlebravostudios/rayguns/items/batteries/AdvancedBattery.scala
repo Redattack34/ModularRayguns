@@ -10,7 +10,7 @@ import net.minecraft.item.Item
 import com.castlebravostudios.rayguns.items.Items
 import com.castlebravostudios.rayguns.mod.Config
 
-object AdvancedBattery extends DefaultItemBattery( Config.item( "advancedBattery" ) ) {
+object AdvancedBattery extends DefaultItemBattery( Config.advancedBattery ) {
 
   val moduleKey = "AdvancedBattery"
   val powerModifier = 1.0d;

@@ -8,7 +8,7 @@ import net.minecraft.block.Block
 import net.minecraft.item.Item
 import com.castlebravostudios.rayguns.mod.Config
 
-object WideLens extends DefaultItemLens( Config.item( "wideLens" ) ) {
+object WideLens extends DefaultItemLens( Config.wideLens ) {
 
   val moduleKey = "WideLens"
   val powerModifier = 3.0

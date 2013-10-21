@@ -20,8 +20,8 @@ object Items {
   def apply[T <: Item]( implicit mf : Manifest[T] ) : Item = registeredItems( mf.runtimeClass )
 
   def registerItems : Unit = {
-    registerItem( new RayGun( Config.item( "rayGun" ) ) )
-    registerItem( new BrokenGun( Config.item( "brokenGun" ) ) )
+    registerItem( new RayGun( Config.rayGun ) )
+    registerItem( new BrokenGun( Config.brokenGun ) )
     registerItem( BasicBody )
     registerItem( BasicChamber )
 

@@ -14,11 +14,11 @@ import com.castlebravostudios.rayguns.mod.Config
 object Blocks {
 
   def registerBlocks : Unit = {
-    val gunBench = new GunBench( Config.block("gunBench") )
+    val gunBench = new GunBench( Config.gunBench )
     GameRegistry.registerBlock(gunBench, classOf[ItemBlock], "gunBench")
     GameRegistry.registerTileEntity(classOf[GunBenchTileEntity], "gunBenchEntity")
 
-    val lensGrinder = new LensGrinder( Config.block("lensGrinder") )
+    val lensGrinder = new LensGrinder( Config.lensGrinder )
     GameRegistry.registerBlock(lensGrinder, classOf[ItemBlock], "lensGrinder")
     GameRegistry.registerTileEntity(classOf[LensGrinderTileEntity], "lensGrinderEntity")
 

@@ -8,7 +8,7 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import com.castlebravostudios.rayguns.mod.Config
 
-object PreciseLens extends DefaultItemLens( Config.item( "preciseLens" ) ) {
+object PreciseLens extends DefaultItemLens( Config.preciseLens ) {
 
   val moduleKey = "PreciseLens"
   val powerModifier = 1.5

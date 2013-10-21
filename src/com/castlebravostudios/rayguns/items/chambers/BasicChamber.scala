@@ -9,7 +9,7 @@ import com.castlebravostudios.rayguns.items.lenses.PreciseLens
 import com.castlebravostudios.rayguns.items.lenses.WideLens
 import com.castlebravostudios.rayguns.mod.Config
 
-object BasicChamber extends DefaultItemChamber( Config.item( "basicChamber" ) ) {
+object BasicChamber extends DefaultItemChamber( Config.basicChamber ) {
 
   val moduleKey = "BasicChamber"
   val powerModifier = 1.0

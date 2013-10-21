@@ -12,7 +12,7 @@ import net.minecraft.entity.player.EntityPlayer
 import com.castlebravostudios.rayguns.utils.GunComponents
 import com.castlebravostudios.rayguns.mod.Config
 
-object InfiniteBattery extends DefaultItemBattery( Config.item( "infiniteBattery" ) ) {
+object InfiniteBattery extends DefaultItemBattery( Config.infiniteBattery ) {
 
   val moduleKey = "InfiniteBattery"
   val powerModifier = 1.0d;
