@@ -22,7 +22,8 @@ object ModularRayguns {
   var proxy : CommonProxy = null
 
   @EventHandler
-  def preInit( event : FMLPreInitializationEvent ) : Unit = Unit
+  def preInit( event : FMLPreInitializationEvent ) : Unit =
+    Config.load( event.getSuggestedConfigurationFile() )
 
   @EventHandler
   def postInit( event : FMLPostInitializationEvent ) : Unit = Unit

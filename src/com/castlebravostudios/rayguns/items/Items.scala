@@ -9,8 +9,8 @@ import com.castlebravostudios.rayguns.items.chambers.BasicChamber
 import com.castlebravostudios.rayguns.items.lenses.BeamLens
 import com.castlebravostudios.rayguns.items.lenses.PreciseLens
 import com.castlebravostudios.rayguns.items.lenses.WideLens
-
 import net.minecraft.item.Item
+import com.castlebravostudios.rayguns.mod.Config
 
 object Items {
 
@@ -20,19 +20,19 @@ object Items {
   def apply[T <: Item]( implicit mf : Manifest[T] ) : Item = registeredItems( mf.runtimeClass )
 
   def registerItems : Unit = {
-    registerItem( new RayGun(4999) )
-    registerItem( new BrokenGun(5000) )
-    registerItem( new BasicBody(5001) )
-    registerItem( new BasicChamber(5003) )
+    registerItem( new RayGun( Config.item( "rayGun" ) ) )
+    registerItem( new BrokenGun( Config.item( "brokenGun" ) ) )
+    registerItem( new BasicBody( Config.item( "basicBody" ) ) )
+    registerItem( new BasicChamber( Config.item( "basicChamber" ) ) )
 
-    registerItem( new BasicBattery(5101) )
-    registerItem( new AdvancedBattery(5102) )
-    registerItem( new UltimateBattery(5103) )
-    registerItem( new InfiniteBattery(5104) )
+    registerItem( new BasicBattery( Config.item( "basicBattery" ) ) )
+    registerItem( new AdvancedBattery( Config.item( "advancedBattery" ) ) )
+    registerItem( new UltimateBattery( Config.item( "ultimateBattery" ) ) )
+    registerItem( new InfiniteBattery( Config.item( "infiniteBattery" ) ) )
 
-    registerItem( new PreciseLens( 5201 ) )
-    registerItem( new WideLens( 5202 ) )
-    registerItem( new BeamLens( 5203 ) )
+    registerItem( new PreciseLens( Config.item( "preciseLens" ) ) )
+    registerItem( new WideLens( Config.item( "wideLens" ) ) )
+    registerItem( new BeamLens( Config.item( "beamLens" ) ) )
   }
 
   private def registerItem( item : Item ) : Unit = {

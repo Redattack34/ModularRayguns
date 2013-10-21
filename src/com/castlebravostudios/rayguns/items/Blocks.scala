@@ -9,15 +9,16 @@ import cpw.mods.fml.common.network.NetworkRegistry
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.item.ItemBlock
 import com.castlebravostudios.rayguns.blocks.lensgrinder.LensGrinderTileEntity
+import com.castlebravostudios.rayguns.mod.Config
 
 object Blocks {
 
   def registerBlocks : Unit = {
-    val gunBench = new GunBench(1337)
+    val gunBench = new GunBench( Config.block("gunBench") )
     GameRegistry.registerBlock(gunBench, classOf[ItemBlock], "gunBench")
     GameRegistry.registerTileEntity(classOf[GunBenchTileEntity], "gunBenchEntity")
 
-    val lensGrinder = new LensGrinder(1338)
+    val lensGrinder = new LensGrinder( Config.block("lensGrinder") )
     GameRegistry.registerBlock(lensGrinder, classOf[ItemBlock], "lensGrinder")
     GameRegistry.registerTileEntity(classOf[LensGrinderTileEntity], "lensGrinderEntity")
 
