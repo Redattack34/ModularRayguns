@@ -1,10 +1,11 @@
 package com.castlebravostudios.rayguns.items.lenses
 
-import com.castlebravostudios.rayguns.api.defaults.DefaultItemBody
-import com.castlebravostudios.rayguns.api.defaults.DefaultItemLens
+import com.castlebravostudios.rayguns.api.items.ItemLens
 import com.castlebravostudios.rayguns.mod.Config
 
-object BeamLens extends DefaultItemLens( Config.beamLens ) {
+import net.minecraft.item.Item
+
+object BeamLens extends Item( Config.beamLens ) with ItemLens {
 
   val moduleKey = "BeamLens"
   val powerModifier = 0.2

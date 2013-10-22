@@ -1,16 +1,14 @@
 package com.castlebravostudios.rayguns.items.batteries
 
-import com.castlebravostudios.rayguns.api.defaults.DefaultItemBattery
-import com.castlebravostudios.rayguns.api.ModuleRegistry
-import net.minecraft.src.ModLoader
-import net.minecraft.item.ItemStack
+import com.castlebravostudios.rayguns.api.items.ItemBattery
+import com.castlebravostudios.rayguns.mod.Config
+
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.Block
 import net.minecraft.item.Item
-import com.castlebravostudios.rayguns.items.Items
-import com.castlebravostudios.rayguns.mod.Config
+import net.minecraft.item.ItemStack
 
-object UltimateBattery extends DefaultItemBattery( Config.ultimateBattery ) {
+object UltimateBattery extends Item( Config.ultimateBattery ) with ItemBattery {
 
   val moduleKey = "UltimateBattery"
   val powerModifier = 1.0d;
