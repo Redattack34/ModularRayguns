@@ -24,6 +24,8 @@ class RayGun(id : Int) extends Item(id) {
 
   import RaygunNbtUtils._
 
+  private val cooldownTime = "CooldownTime"
+
   setMaxStackSize(1)
   setCreativeTab(CreativeTabs.tabCombat)
   setUnlocalizedName("rayguns.raygun")
@@ -40,10 +42,27 @@ class RayGun(id : Int) extends Item(id) {
 
   private def fire( item : ItemStack, components : GunComponents,
       world : World, player : EntityPlayer, f : BeamRegistry.BeamCreator ): Unit = {
-    if ( components.battery.drainPower( player, item, components ) ){
-      f( world, player )
+    if ( getCooldownTime(item) == 0 ) {
+      if ( components.battery.drainPower( player, item, components ) ){
+        f( world, player )
+        setCooldownTime( item, getBaseCooldownTime( item ) )
+      }
     }
   }
+
+  override def onUpdate( item: ItemStack, world : World, entity: Entity, par4 : Int, par5 : Boolean) : Unit = {
+    val currentTime = getCooldownTime(item)
+    val newTime = if ( currentTime > 0 ) currentTime - 1 else 0
+    setCooldownTime( item, newTime );
+  }
+
+  private def getBaseCooldownTime( item : ItemStack ) = 10
+
+  private def setCooldownTime( item : ItemStack, ticks : Int ) =
+    item.getTagCompound().setShort( cooldownTime, ticks.shortValue )
+
+  private def getCooldownTime( item : ItemStack ) =
+    item.getTagCompound().getShort( cooldownTime )
 
   override def getMaxDamage( item: ItemStack ) : Int =
     getComponents( item ).map( _.battery.maxCapacity ).getOrElse(Integer.MAX_VALUE)
