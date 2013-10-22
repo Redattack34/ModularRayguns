@@ -1,15 +1,16 @@
 package com.castlebravostudios.rayguns.items.chambers
 
 import com.castlebravostudios.rayguns.api.BeamRegistry
-import com.castlebravostudios.rayguns.api.defaults.DefaultItemChamber
-import com.castlebravostudios.rayguns.items.bodies.BasicBody
-import com.castlebravostudios.rayguns.utils.GunComponents
-import net.minecraft.entity.projectile.EntitySnowball
+import com.castlebravostudios.rayguns.api.items.ItemChamber
 import com.castlebravostudios.rayguns.items.lenses.PreciseLens
 import com.castlebravostudios.rayguns.items.lenses.WideLens
 import com.castlebravostudios.rayguns.mod.Config
+import com.castlebravostudios.rayguns.utils.GunComponents
 
-object BasicChamber extends DefaultItemChamber( Config.basicChamber ) {
+import net.minecraft.entity.projectile.EntitySnowball
+import net.minecraft.item.Item
+
+object BasicChamber extends Item( Config.basicChamber ) with ItemChamber {
 
   val moduleKey = "BasicChamber"
   val powerModifier = 1.0

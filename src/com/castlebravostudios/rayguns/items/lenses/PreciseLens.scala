@@ -1,14 +1,13 @@
 package com.castlebravostudios.rayguns.items.lenses
 
-import com.castlebravostudios.rayguns.api.defaults.DefaultItemBody
-import com.castlebravostudios.rayguns.api.defaults.DefaultItemLens
 import com.castlebravostudios.rayguns.api.LensGrinderRecipeRegistry
 import net.minecraft.block.Block
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import com.castlebravostudios.rayguns.mod.Config
+import com.castlebravostudios.rayguns.api.items.ItemLens
 
-object PreciseLens extends DefaultItemLens( Config.preciseLens ) {
+object PreciseLens extends Item( Config.preciseLens ) with ItemLens {
 
   val moduleKey = "PreciseLens"
   val powerModifier = 1.5

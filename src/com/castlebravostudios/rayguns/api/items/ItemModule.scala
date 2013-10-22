@@ -2,6 +2,8 @@ package com.castlebravostudios.rayguns.api.items
 
 import net.minecraft.item.Item
 import com.castlebravostudios.rayguns.items.Items
+import com.castlebravostudios.rayguns.api.ModuleRegistry
+import net.minecraft.creativetab.CreativeTabs
 
 trait ItemModule extends Item {
 
@@ -23,4 +25,11 @@ trait ItemModule extends Item {
    */
   def powerModifier : Double
 
+  /**
+   * Alias for ModuleRegistry.registerModule(this)
+   */
+  protected def register = ModuleRegistry.registerModule(this)
+
+  setMaxStackSize(1)
+  setCreativeTab(CreativeTabs.tabCombat)
 }
