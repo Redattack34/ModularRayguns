@@ -42,12 +42,12 @@ class RayGun(id : Int) extends Item(id) {
 
   private def fire( item : ItemStack, components : GunComponents,
       world : World, player : EntityPlayer, f : BeamRegistry.BeamCreator ): Unit = {
-    if ( getCooldownTime(item) == 0 ) {
-      if ( components.battery.drainPower( player, item, components ) ){
-        f( world, player )
-        setCooldownTime( item, getBaseCooldownTime( item ) )
-      }
-    }
+    if ( world.isRemote ) return
+    if ( getCooldownTime(item) != 0 ) return
+    if ( !components.battery.drainPower( player, item, components ) ) return
+
+    f( world, player )
+    setCooldownTime( item, getBaseCooldownTime( item ) )
   }
 
   override def onUpdate( item: ItemStack, world : World, entity: Entity, par4 : Int, par5 : Boolean) : Unit = {
