@@ -43,7 +43,7 @@ class GunBenchTileEntity extends BaseInventoryTileEntity {
         components.body.map(toStack).foreach(setSlot(BODY_SLOT))
         components.chamber.map(toStack).foreach(setSlot(CHAMBER_SLOT))
         components.battery.map(toStack).foreach(setSlot(BATTERY_SLOT))
-        copyDamage( inv(OUTPUT_SLOT), inv(BATTERY_SLOT) )
+        copyCharge( inv(OUTPUT_SLOT), inv(BATTERY_SLOT) )
         components.lens.map(toStack).foreach(setSlot(LENS_SLOT))
         components.acc.map(toStack).foreach(setSlot(ACC_SLOT))
       }
@@ -51,16 +51,13 @@ class GunBenchTileEntity extends BaseInventoryTileEntity {
       val components = GunComponents( body, chamber, battery, lens, accessory )
 
       val gunStack = buildGun( components ).orNull
-      copyDamage( inv(BATTERY_SLOT), gunStack )
+      copyCharge( inv(BATTERY_SLOT), gunStack )
       setInventorySlotContents( OUTPUT_SLOT, gunStack )
   }
 
-  private def copyDamage( from : ItemStack, to : ItemStack ) : Unit = {
+  private def copyCharge( from : ItemStack, to : ItemStack ) : Unit = {
     if ( from != null && to != null ) {
-      val damage =
-        if ( from.getItemDamage() >= to.getMaxDamage() ) to.getMaxDamage() - 1
-        else from.getItemDamage()
-      to.setItemDamage( damage )
+      setChargeDepleted( getChargeDepleted( from ), to )
     }
   }
 
@@ -93,7 +90,7 @@ class GunBenchTileEntity extends BaseInventoryTileEntity {
       case CHAMBER_SLOT => item.isInstanceOf[ItemChamber]
       case BATTERY_SLOT => item.isInstanceOf[ItemBattery]
       case ACC_SLOT => item.isInstanceOf[ItemAccessory]
-      case OUTPUT_SLOT => ( item.isInstanceOf[RayGun] || item.isInstanceOf[BrokenGun] ) &&
+      case OUTPUT_SLOT => ( item == RayGun || item.isInstanceOf[BrokenGun] ) &&
                           inv.forall( _ == null )
     }
   }
