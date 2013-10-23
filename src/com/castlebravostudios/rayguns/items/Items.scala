@@ -13,6 +13,7 @@ import net.minecraft.item.Item
 import com.castlebravostudios.rayguns.mod.Config
 import com.castlebravostudios.rayguns.items.accessories.ExtendedBattery
 import com.castlebravostudios.rayguns.items.accessories.RefireCapacitor
+import com.castlebravostudios.rayguns.items.accessories.SolarPanel
 
 object Items {
 
@@ -38,6 +39,7 @@ object Items {
 
     registerItem( ExtendedBattery )
     registerItem( RefireCapacitor )
+    registerItem( SolarPanel )
   }
 
   private def registerItem( item : Item ) : Unit = {

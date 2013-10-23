@@ -22,6 +22,7 @@ object Config {
 
   var extendedBattery : Int = _
   var refireCapacitor : Int = _
+  var solarPanel : Int = _
 
   var gunBench : Int = _
   var lensGrinder : Int = _
@@ -53,6 +54,7 @@ object Config {
 
     extendedBattery = config.getItem( "extendedBattery", 5301 ).getInt()
     refireCapacitor = config.getItem( "refireCapacitor", 5302 ).getInt()
+    solarPanel = config.getItem( "solarPanel", 5303 ).getInt()
   }
 
   private def loadBlockIds( config : Configuration ) : Unit = {

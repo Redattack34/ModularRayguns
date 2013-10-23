@@ -55,15 +55,9 @@ class RayGun(id : Int) extends Item(id) {
     val currentTime = getCooldownTime(item)
     val newTime = if ( currentTime > 0 ) currentTime - 1 else 0
     setCooldownTime( item, newTime );
-  }
 
-  override def setDamage( item : ItemStack, damage : Int ) = {
-    val max = getMaxDamage(item)
-    val actualDamage =
-      if ( damage >= max ) max - 1
-      else damage
-
-    super.setDamage(item, actualDamage)
+    getComponents(item).flatMap( _.acc )
+      .foreach( _.onGunUpdate(world, entity, item ) )
   }
 
   private def getBaseCooldownTime( components : GunComponents ) = components match {
