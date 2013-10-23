@@ -11,6 +11,9 @@ import com.castlebravostudios.rayguns.items.lenses.PreciseLens
 import com.castlebravostudios.rayguns.items.lenses.WideLens
 import net.minecraft.item.Item
 import com.castlebravostudios.rayguns.mod.Config
+import com.castlebravostudios.rayguns.items.accessories.ExtendedBattery
+import com.castlebravostudios.rayguns.items.accessories.RefireCapacitor
+import com.castlebravostudios.rayguns.items.accessories.SolarPanel
 
 object Items {
 
@@ -20,7 +23,7 @@ object Items {
   def apply[T <: Item]( implicit mf : Manifest[T] ) : Item = registeredItems( mf.runtimeClass )
 
   def registerItems : Unit = {
-    registerItem( new RayGun( Config.rayGun ) )
+    registerItem( RayGun )
     registerItem( new BrokenGun( Config.brokenGun ) )
     registerItem( BasicBody )
     registerItem( BasicChamber )
@@ -33,6 +36,10 @@ object Items {
     registerItem( PreciseLens )
     registerItem( WideLens )
     registerItem( BeamLens )
+
+    registerItem( ExtendedBattery )
+    registerItem( RefireCapacitor )
+    registerItem( SolarPanel )
   }
 
   private def registerItem( item : Item ) : Unit = {

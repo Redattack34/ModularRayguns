@@ -19,8 +19,11 @@ import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
 import net.minecraft.entity.Entity
 import com.castlebravostudios.rayguns.utils.GunComponents
 import com.castlebravostudios.rayguns.utils.GunComponents
+import com.castlebravostudios.rayguns.utils.GunComponents
+import com.castlebravostudios.rayguns.items.accessories.RefireCapacitor
+import com.castlebravostudios.rayguns.mod.Config
 
-class RayGun(id : Int) extends Item(id) {
+object RayGun extends Item( Config.rayGun ) {
 
   import RaygunNbtUtils._
 
@@ -39,7 +42,6 @@ class RayGun(id : Int) extends Item(id) {
     }
   }
 
-
   private def fire( item : ItemStack, components : GunComponents,
       world : World, player : EntityPlayer, f : BeamRegistry.BeamCreator ): Unit = {
     if ( world.isRemote ) return
@@ -47,23 +49,32 @@ class RayGun(id : Int) extends Item(id) {
     if ( !components.battery.drainPower( player, item, components ) ) return
 
     f( world, player )
-    setCooldownTime( item, getBaseCooldownTime( item ) )
+    setCooldownTime( item, getBaseCooldownTime( components ) )
   }
 
   override def onUpdate( item: ItemStack, world : World, entity: Entity, par4 : Int, par5 : Boolean) : Unit = {
     val currentTime = getCooldownTime(item)
     val newTime = if ( currentTime > 0 ) currentTime - 1 else 0
     setCooldownTime( item, newTime );
+
+    getComponents(item).flatMap( _.acc )
+      .foreach( _.onGunUpdate(world, entity, item ) )
   }
 
-  private def getBaseCooldownTime( item : ItemStack ) = 10
+  private def getBaseCooldownTime( components : GunComponents ) = components match {
+    case GunComponents(_, _, _, _, Some(RefireCapacitor)) => 5
+    case _ => 10
+  }
 
   private def setCooldownTime( item : ItemStack, ticks : Int ) =
-    item.getTagCompound().setShort( cooldownTime, ticks.shortValue )
+    getTagCompound(item).setShort( cooldownTime, ticks.shortValue )
 
   private def getCooldownTime( item : ItemStack ) =
-    item.getTagCompound().getShort( cooldownTime )
+    getTagCompound(item).getShort( cooldownTime )
 
-  override def getMaxDamage( item: ItemStack ) : Int =
-    getComponents( item ).map( _.battery.maxCapacity ).getOrElse(Integer.MAX_VALUE)
+  override def getDamage( item : ItemStack ) : Int = 1
+  override def getDisplayDamage( item : ItemStack ) : Int = getChargeDepleted(item)
+  override def isDamaged( item : ItemStack ) = getDisplayDamage( item ) > 0
+
+  override def getMaxDamage( item: ItemStack ) : Int = RaygunNbtUtils.getMaxDamage( item )
 }

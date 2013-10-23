@@ -41,7 +41,7 @@ class GunBenchContainer( inventoryPlayer : InventoryPlayer, entity : GunBenchTil
       case _: ItemChamber => CHAMBER_SLOT
       case _: ItemBattery => BATTERY_SLOT
       case _: ItemAccessory => ACC_SLOT
-      case _: RayGun => OUTPUT_SLOT
+      case RayGun => OUTPUT_SLOT
       case _ => return false
     }
 

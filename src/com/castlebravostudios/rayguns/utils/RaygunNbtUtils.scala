@@ -32,6 +32,8 @@ object RaygunNbtUtils {
 
   val MODULES_TAG = "raygunModules"
 
+  val chargeDepleted = "ChargeDepleted"
+
   /**
    * Get the components from a stack that contains a RayGun. Returns Some if
    * all of the components in the stack are valid components and if the body,
@@ -61,8 +63,7 @@ object RaygunNbtUtils {
 
   private def getModuleTag( item : ItemStack ) : Option[NBTTagCompound] = {
     for {
-      itemTag <- Option( item.getTagCompound() )
-      moduleTag <- Option( itemTag.getCompoundTag( MODULES_TAG ) )
+      moduleTag <- Option( getTagCompound(item).getCompoundTag( MODULES_TAG ) )
     } yield moduleTag
   }
 
@@ -70,7 +71,7 @@ object RaygunNbtUtils {
     if ( BeamRegistry.isValid(components) ) Some( buildValidGun( components ) ) else None
 
   private def buildValidGun( components : GunComponents ) : ItemStack = {
-    val stack = new ItemStack( Items[RayGun] )
+    val stack = new ItemStack( RayGun )
     stack.stackSize = 1
     stack.setTagInfo( MODULES_TAG, buildModuleTag( components ) )
     stack
@@ -111,6 +112,40 @@ object RaygunNbtUtils {
     val lens = getComponent(item, LENS_STR)(getLens)
     val accessory = getComponent(item, ACC_STR)(getAccessory)
     OptionalGunComponents( body, chamber, battery, lens, accessory )
+  }
+
+  def addCharge( delta : Int, stack : ItemStack ) : Unit =
+    setChargeDepleted( getChargeDepleted(stack) - delta , stack)
+
+  def setChargeDepleted( charge : Int, stack : ItemStack ) : Unit = {
+    def clamp( min : Int, cur : Int, max : Int ) : Int =
+      if ( cur < min ) min
+      else if ( cur > max ) max
+      else cur
+
+    val actualCharge = clamp( 0, charge, getMaxDamage( stack ) )
+
+    getTagCompound(stack).setInteger( chargeDepleted, actualCharge )
+  }
+
+  def getChargeDepleted( stack : ItemStack ) : Int = {
+    val tag = getTagCompound(stack)
+    if ( tag == null || !tag.hasKey( chargeDepleted ) ) {
+      setChargeDepleted( 0, stack )
+    }
+    tag.getInteger(chargeDepleted)
+  }
+
+  def getMaxDamage( item: ItemStack ) : Int = item.getItem() match {
+    case bat: ItemBattery => bat.maxCapacity
+    case _ => getComponents( item ).map( _.battery.maxCapacity ).getOrElse(Integer.MAX_VALUE)
+  }
+
+  def getTagCompound( item : ItemStack ) : NBTTagCompound = {
+    if ( item.getTagCompound() == null ) {
+      item.setTagCompound( new NBTTagCompound() );
+    }
+    item.getTagCompound()
   }
 
   case class OptionalGunComponents(
