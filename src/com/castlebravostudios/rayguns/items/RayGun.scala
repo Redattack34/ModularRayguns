@@ -19,6 +19,8 @@ import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
 import net.minecraft.entity.Entity
 import com.castlebravostudios.rayguns.utils.GunComponents
 import com.castlebravostudios.rayguns.utils.GunComponents
+import com.castlebravostudios.rayguns.utils.GunComponents
+import com.castlebravostudios.rayguns.items.accessories.RefireCapacitor
 
 class RayGun(id : Int) extends Item(id) {
 
@@ -46,7 +48,7 @@ class RayGun(id : Int) extends Item(id) {
     if ( !components.battery.drainPower( player, item, components ) ) return
 
     f( world, player )
-    setCooldownTime( item, getBaseCooldownTime( item ) )
+    setCooldownTime( item, getBaseCooldownTime( components ) )
   }
 
   override def onUpdate( item: ItemStack, world : World, entity: Entity, par4 : Int, par5 : Boolean) : Unit = {
@@ -64,7 +66,10 @@ class RayGun(id : Int) extends Item(id) {
     super.setDamage(item, actualDamage)
   }
 
-  private def getBaseCooldownTime( item : ItemStack ) = 10
+  private def getBaseCooldownTime( components : GunComponents ) = components match {
+    case GunComponents(_, _, _, _, Some(RefireCapacitor)) => 5
+    case _ => 10
+  }
 
   private def setCooldownTime( item : ItemStack, ticks : Int ) =
     item.getTagCompound().setShort( cooldownTime, ticks.shortValue )

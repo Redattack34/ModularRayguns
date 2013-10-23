@@ -12,6 +12,7 @@ import com.castlebravostudios.rayguns.items.lenses.WideLens
 import net.minecraft.item.Item
 import com.castlebravostudios.rayguns.mod.Config
 import com.castlebravostudios.rayguns.items.accessories.ExtendedBattery
+import com.castlebravostudios.rayguns.items.accessories.RefireCapacitor
 
 object Items {
 
@@ -36,6 +37,7 @@ object Items {
     registerItem( BeamLens )
 
     registerItem( ExtendedBattery )
+    registerItem( RefireCapacitor )
   }
 
   private def registerItem( item : Item ) : Unit = {
