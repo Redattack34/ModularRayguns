@@ -39,7 +39,6 @@ class RayGun(id : Int) extends Item(id) {
     }
   }
 
-
   private def fire( item : ItemStack, components : GunComponents,
       world : World, player : EntityPlayer, f : BeamRegistry.BeamCreator ): Unit = {
     if ( world.isRemote ) return
@@ -54,6 +53,15 @@ class RayGun(id : Int) extends Item(id) {
     val currentTime = getCooldownTime(item)
     val newTime = if ( currentTime > 0 ) currentTime - 1 else 0
     setCooldownTime( item, newTime );
+  }
+
+  override def setDamage( item : ItemStack, damage : Int ) = {
+    val max = getMaxDamage(item)
+    val actualDamage =
+      if ( damage >= max ) max - 1
+      else damage
+
+    super.setDamage(item, actualDamage)
   }
 
   private def getBaseCooldownTime( item : ItemStack ) = 10

@@ -13,11 +13,7 @@ trait ItemBattery extends ItemModule {
   def drainPower( player : EntityPlayer, item : ItemStack, comp : GunComponents ) : Boolean = {
     val powerMult = comp.powerMultiplier
     val powerDrain = powerMult * powerBase
-    if ( item.getItemDamage() + powerDrain == maxCapacity ) {
-      item.damageItem(powerDrain.intValue - 1, player)
-      true
-    }
-    else if ( item.getItemDamage() + powerDrain < maxCapacity ) {
+    if ( item.getItemDamage() + powerDrain <= maxCapacity ) {
       item.damageItem(powerDrain.intValue, player)
       true
     }

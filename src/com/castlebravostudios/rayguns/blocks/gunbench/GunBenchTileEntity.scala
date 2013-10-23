@@ -57,7 +57,10 @@ class GunBenchTileEntity extends BaseInventoryTileEntity {
 
   private def copyDamage( from : ItemStack, to : ItemStack ) : Unit = {
     if ( from != null && to != null ) {
-      to.setItemDamage( from.getItemDamage )
+      val damage =
+        if ( from.getItemDamage() >= to.getMaxDamage() ) to.getMaxDamage() - 1
+        else from.getItemDamage()
+      to.setItemDamage( damage )
     }
   }
 

@@ -20,6 +20,8 @@ object Config {
   var wideLens : Int = _
   var beamLens : Int = _
 
+  var extendedBattery : Int = _
+
   var gunBench : Int = _
   var lensGrinder : Int = _
 
@@ -47,6 +49,8 @@ object Config {
     preciseLens = config.getItem( "preciseLens", 5201 ).getInt()
     wideLens = config.getItem( "wideLens", 5202 ).getInt()
     beamLens = config.getItem( "beamLens", 5203 ).getInt()
+
+    extendedBattery = config.getItem( "extendedBattery", 5301 ).getInt()
   }
 
   private def loadBlockIds( config : Configuration ) : Unit = {
