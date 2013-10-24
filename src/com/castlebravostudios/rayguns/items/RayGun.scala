@@ -22,6 +22,8 @@ import com.castlebravostudios.rayguns.utils.GunComponents
 import com.castlebravostudios.rayguns.utils.GunComponents
 import com.castlebravostudios.rayguns.items.accessories.RefireCapacitor
 import com.castlebravostudios.rayguns.mod.Config
+import net.minecraft.util.Icon
+import com.castlebravostudios.rayguns.items.bodies.MantisBody
 
 object RayGun extends Item( Config.rayGun ) {
 
@@ -77,4 +79,8 @@ object RayGun extends Item( Config.rayGun ) {
   override def isDamaged( item : ItemStack ) = getDisplayDamage( item ) > 0
 
   override def getMaxDamage( item: ItemStack ) : Int = RaygunNbtUtils.getMaxDamage( item )
+
+  override def getIcon( item : ItemStack, pass : Int ) : Icon = {
+    getComponents( item ).map( _.body.getIconFromDamage(0) ).orNull
+  }
 }

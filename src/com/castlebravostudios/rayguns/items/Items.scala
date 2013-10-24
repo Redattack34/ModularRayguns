@@ -1,19 +1,21 @@
 package com.castlebravostudios.rayguns.items
 
+import com.castlebravostudios.rayguns.items.accessories.ExtendedBattery
+import com.castlebravostudios.rayguns.items.accessories.RefireCapacitor
+import com.castlebravostudios.rayguns.items.accessories.SolarPanel
 import com.castlebravostudios.rayguns.items.batteries.AdvancedBattery
 import com.castlebravostudios.rayguns.items.batteries.BasicBattery
 import com.castlebravostudios.rayguns.items.batteries.InfiniteBattery
 import com.castlebravostudios.rayguns.items.batteries.UltimateBattery
-import com.castlebravostudios.rayguns.items.bodies.BasicBody
+import com.castlebravostudios.rayguns.items.bodies.FireflyBody
+import com.castlebravostudios.rayguns.items.bodies.MantisBody
 import com.castlebravostudios.rayguns.items.chambers.BasicChamber
 import com.castlebravostudios.rayguns.items.lenses.BeamLens
 import com.castlebravostudios.rayguns.items.lenses.PreciseLens
 import com.castlebravostudios.rayguns.items.lenses.WideLens
-import net.minecraft.item.Item
 import com.castlebravostudios.rayguns.mod.Config
-import com.castlebravostudios.rayguns.items.accessories.ExtendedBattery
-import com.castlebravostudios.rayguns.items.accessories.RefireCapacitor
-import com.castlebravostudios.rayguns.items.accessories.SolarPanel
+
+import net.minecraft.item.Item
 
 object Items {
 
@@ -25,7 +27,6 @@ object Items {
   def registerItems : Unit = {
     registerItem( RayGun )
     registerItem( new BrokenGun( Config.brokenGun ) )
-    registerItem( BasicBody )
     registerItem( BasicChamber )
 
     registerItem( BasicBattery )
@@ -40,6 +41,9 @@ object Items {
     registerItem( ExtendedBattery )
     registerItem( RefireCapacitor )
     registerItem( SolarPanel )
+
+    registerItem( MantisBody )
+    registerItem( FireflyBody )
   }
 
   private def registerItem( item : Item ) : Unit = {

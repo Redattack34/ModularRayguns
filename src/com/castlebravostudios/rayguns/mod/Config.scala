@@ -8,7 +8,6 @@ object Config {
 
   var rayGun : Int = _
   var brokenGun : Int = _
-  var basicBody : Int = _
   var basicChamber : Int = _
 
   var basicBattery : Int = _
@@ -23,6 +22,9 @@ object Config {
   var extendedBattery : Int = _
   var refireCapacitor : Int = _
   var solarPanel : Int = _
+
+  var mantisBody : Int = _
+  var fireflyBody : Int = _
 
   var gunBench : Int = _
   var lensGrinder : Int = _
@@ -40,7 +42,6 @@ object Config {
   private def loadItemIds( config : Configuration ) : Unit = {
     rayGun = config.getItem( "rayGun", 4999 ).getInt()
     brokenGun = config.getItem( "brokenGun", 5000 ).getInt()
-    basicBody = config.getItem( "basicBody", 5001 ).getInt()
     basicChamber = config.getItem( "basicChamber", 5003 ).getInt()
 
     basicBattery = config.getItem( "basicBattery", 5101 ).getInt()
@@ -55,6 +56,9 @@ object Config {
     extendedBattery = config.getItem( "extendedBattery", 5301 ).getInt()
     refireCapacitor = config.getItem( "refireCapacitor", 5302 ).getInt()
     solarPanel = config.getItem( "solarPanel", 5303 ).getInt()
+
+    mantisBody = config.getItem( "mantisBody", 5401 ).getInt
+    fireflyBody = config.getItem( "fireflyBody", 5402 ).getInt
   }
 
   private def loadBlockIds( config : Configuration ) : Unit = {
