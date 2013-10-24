@@ -80,6 +80,9 @@ object RayGun extends Item( Config.rayGun ) {
 
   override def getMaxDamage( item: ItemStack ) : Int = RaygunNbtUtils.getMaxDamage( item )
 
+  override def requiresMultipleRenderPasses() = true
+  override def getRenderPasses(metadata : Int) = 1
+
   override def getIcon( item : ItemStack, pass : Int ) : Icon = {
     getComponents( item ).map( _.body.getIconFromDamage(0) ).orNull
   }
