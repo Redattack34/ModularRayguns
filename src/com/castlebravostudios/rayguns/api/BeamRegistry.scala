@@ -24,8 +24,7 @@ object BeamRegistry {
     registrations = f +: registrations
 
   def isValid( m : GunComponents ) : Boolean =
-    m.productIterator.forall( _ != null) &&
-    registrations.exists( _.isDefinedAt( m ) )
+    m.isValid && registrations.exists( _.isDefinedAt( m ) )
 
   def getFunction( m : GunComponents ) : Option[BeamCreator] =
     registrations.find( _.isDefinedAt(m) ).map( _.apply(m) )

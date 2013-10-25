@@ -9,13 +9,13 @@ import com.castlebravostudios.rayguns.items.batteries.InfiniteBattery
 import com.castlebravostudios.rayguns.items.batteries.UltimateBattery
 import com.castlebravostudios.rayguns.items.bodies.FireflyBody
 import com.castlebravostudios.rayguns.items.bodies.MantisBody
-import com.castlebravostudios.rayguns.items.chambers.BasicChamber
+import com.castlebravostudios.rayguns.items.emitters.LaserEmitter
 import com.castlebravostudios.rayguns.items.lenses.BeamLens
 import com.castlebravostudios.rayguns.items.lenses.PreciseLens
 import com.castlebravostudios.rayguns.items.lenses.WideLens
 import com.castlebravostudios.rayguns.mod.Config
-
 import net.minecraft.item.Item
+import com.castlebravostudios.rayguns.items.chambers.LaserChamber
 
 object Items {
 
@@ -27,7 +27,6 @@ object Items {
   def registerItems : Unit = {
     registerItem( RayGun )
     registerItem( new BrokenGun( Config.brokenGun ) )
-    registerItem( BasicChamber )
 
     registerItem( BasicBattery )
     registerItem( AdvancedBattery )
@@ -44,6 +43,10 @@ object Items {
 
     registerItem( MantisBody )
     registerItem( FireflyBody )
+
+    registerItem( LaserEmitter )
+
+    registerItem( LaserChamber )
   }
 
   private def registerItem( item : Item ) : Unit = {
