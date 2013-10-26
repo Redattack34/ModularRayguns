@@ -12,6 +12,7 @@ import cpw.mods.fml.common.Mod.Init
 import com.castlebravostudios.rayguns.items.Items
 import com.castlebravostudios.rayguns.items.Blocks
 import cpw.mods.fml.common.Mod.EventHandler
+import com.castlebravostudios.rayguns.entities.Entities
 
 @Mod(modid="ModularRayguns", name="ModularRayguns", version="0.0.0", modLanguage="scala")
 @NetworkMod(clientSideRequired=true, serverSideRequired=true)
@@ -33,5 +34,6 @@ object ModularRayguns {
     proxy.registerRenderers()
     Items.registerItems
     Blocks.registerBlocks
+    Entities.registerEntities
   }
 }

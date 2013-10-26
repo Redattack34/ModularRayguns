@@ -12,6 +12,8 @@ import com.castlebravostudios.rayguns.utils.GunComponents
 import net.minecraft.entity.projectile.EntitySnowball
 import com.castlebravostudios.rayguns.items.lenses.PreciseLens
 import com.castlebravostudios.rayguns.items.lenses.WideLens
+import com.castlebravostudios.rayguns.entities._
+import com.castlebravostudios.rayguns.utils.EntityUtils
 
 object LaserChamber extends Item( Config.chamberLaser ) with ItemChamber {
 
@@ -31,24 +33,13 @@ object LaserChamber extends Item( Config.chamberLaser ) with ItemChamber {
 
   BeamRegistry.register({
     case GunComponents(_, LaserChamber, _, None, _) => { (world, player) =>
-      world.spawnEntityInWorld( new EntitySnowball(world, player) )
+      EntityUtils.spawnNormal( world, new LaserBeamEntity(world), player )
     }
     case GunComponents(_, LaserChamber, _, Some(PreciseLens), _ ) => { (world, player) =>
-      val snowball = new EntitySnowball( world, player )
-      snowball.motionX *= 2
-      snowball.motionY *= 2
-      snowball.motionZ *= 2
-      world.spawnEntityInWorld( snowball )
+      EntityUtils.spawnPrecise( world, new LaserBeamEntity( world ), player )
     }
     case GunComponents(_, LaserChamber, _, Some(WideLens), _ ) => { (world, player) =>
-      for{ x <- -1 to 1
-           y <- -1 to 1
-      } {
-        val snowball = new EntitySnowball( world, player )
-        snowball.motionX *= 1 + (x * 0.5 )
-        snowball.motionY *= 1 + (y * 0.5 )
-        world.spawnEntityInWorld( snowball )
-      }
+      EntityUtils.spawnScatter(world, new LaserBeamEntity(world), player, 9, 5 )
     }
   })
 }
