@@ -25,8 +25,8 @@ class LaserBeamEntity( world : World ) extends EntityThrowable( world ) {
     _shooter
   }
 
-  var pitchOffset = func_70183_g()
-  var velocityMultiplier = func_70182_d()
+  var pitchOffset : Float = func_70183_g()
+  var velocityMultiplier : Float = func_70182_d()
   override def getGravityVelocity = 0.0f
 
   override def onUpdate() : Unit = {
