@@ -37,42 +37,42 @@ class BeamRenderer extends Render {
   def getEntityTexture( e : Entity ) : ResourceLocation =
     new ResourceLocation( "textures/blocks/redstone_block.png" )
 
-  private def drawWest(tes: net.minecraft.client.renderer.Tessellator): Unit = {
+  private def drawWest(tes: Tessellator): Unit = {
     tes.addVertexWithUV(-1.0D, -1.0D, -1.0D, 0, 0);
     tes.addVertexWithUV(-1.0D, -1.0D, 1.0D, 0, 1);
     tes.addVertexWithUV(-1.0D, 1.0D, 1.0D, 1, 1);
     tes.addVertexWithUV(-1.0D, 1.0D, -1.0D, 1, 0);
   }
 
-  private def drawEast(tes: net.minecraft.client.renderer.Tessellator): Unit = {
+  private def drawEast(tes: Tessellator): Unit = {
     tes.addVertexWithUV(1.0D, -1.0D, 1.0D, 1, 0);
     tes.addVertexWithUV(1.0D, -1.0D, -1.0D, 1, 1);
     tes.addVertexWithUV(1.0D, 1.0D, -1.0D, 0, 1);
     tes.addVertexWithUV(1.0D, 1.0D, 1.0D, 0, 0);
   }
 
-  private def drawTop(tes: net.minecraft.client.renderer.Tessellator): Unit = {
+  private def drawTop(tes: Tessellator): Unit = {
     tes.addVertexWithUV(-1.0D, 1.0D, -1.0D, 0, 0);
     tes.addVertexWithUV(-1.0D, 1.0D, 1.0D, 0, 1);
     tes.addVertexWithUV(1.0D, 1.0D, 1.0D, 1, 1);
     tes.addVertexWithUV(1.0D, 1.0D, -1.0D, 1, 0);
   }
 
-  private def drawBottom(tes: net.minecraft.client.renderer.Tessellator): Unit = {
+  private def drawBottom(tes: Tessellator): Unit = {
     tes.addVertexWithUV(-1.0D, -1.0D, 1.0D, 1, 0);
     tes.addVertexWithUV(-1.0D, -1.0D, -1.0D, 1, 1);
     tes.addVertexWithUV(1.0D, -1.0D, -1.0D, 0, 1);
     tes.addVertexWithUV(1.0D, -1.0D, 1.0D, 0, 0);
   }
 
-  private def drawSouth(tes: net.minecraft.client.renderer.Tessellator): Unit = {
+  private def drawSouth(tes: Tessellator): Unit = {
     tes.addVertexWithUV(-1.0D, 1.0D, 1.0D, 0, 1);
     tes.addVertexWithUV(-1.0D, -1.0D, 1.0D, 0, 0);
     tes.addVertexWithUV(1.0D, -1.0D, 1.0D, 1, 0);
     tes.addVertexWithUV(1.0D, 1.0D, 1.0D, 1, 1);
   }
 
-  private def drawNorth(tes: net.minecraft.client.renderer.Tessellator): Unit = {
+  private def drawNorth(tes: Tessellator): Unit = {
     tes.addVertexWithUV(-1.0D, -1.0D, -1.0D, 1, 1);
     tes.addVertexWithUV(-1.0D, 1.0D, -1.0D, 1, 0);
     tes.addVertexWithUV(1.0D, 1.0D, -1.0D, 0, 0);

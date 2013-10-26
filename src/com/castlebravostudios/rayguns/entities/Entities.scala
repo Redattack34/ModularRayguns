@@ -9,7 +9,7 @@ object Entities {
   def registerEntities : Unit = {
     EntityRegistry.registerModEntity(classOf[LaserBeamEntity], "LaserBeam",
         EntityRegistry.findGlobalUniqueEntityId(), ModularRayguns, 40, 1, true)
-    RenderingRegistry.registerEntityRenderingHandler(classOf[LaserBeamEntity], new BeamRenderer)
+    RenderingRegistry.registerEntityRenderingHandler(classOf[BaseBeamEntity], new BeamRenderer)
   }
 
 }
