@@ -84,6 +84,6 @@ object RayGun extends Item( Config.rayGun ) {
   override def getRenderPasses(metadata : Int) = 1
 
   override def getIcon( item : ItemStack, pass : Int ) : Icon = {
-    getComponents( item ).map( _.body.getIconFromDamage(0) ).orNull
+    getComponents( item ).map( _.body.getIconFromDamage(0) ).getOrElse(itemIcon)
   }
 }

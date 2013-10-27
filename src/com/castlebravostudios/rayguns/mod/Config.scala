@@ -29,6 +29,12 @@ object Config {
   var gunBench : Int = _
   var lensGrinder : Int = _
 
+  var emitterLaser : Int = _
+  var emitterHeatRay : Int = _
+
+  var chamberLaser : Int = _
+  var chamberHeatRay : Int = _
+
   def load( file : File ) : Unit = {
     val config = new Configuration( file )
     config.load()
@@ -59,6 +65,12 @@ object Config {
 
     mantisBody = config.getItem( "mantisBody", 5401 ).getInt
     fireflyBody = config.getItem( "fireflyBody", 5402 ).getInt
+
+    emitterLaser = config.getItem( "emitterLaser", 5501 ).getInt
+    emitterHeatRay = config.getItem( "emitterHeatRay", 5502 ).getInt
+
+    chamberLaser = config.getItem( "chamberLaser", 5601 ).getInt
+    chamberHeatRay = config.getItem( "chamberHeatRay", 5602 ).getInt
   }
 
   private def loadBlockIds( config : Configuration ) : Unit = {

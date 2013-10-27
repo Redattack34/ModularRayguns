@@ -28,4 +28,13 @@ object ModuleRegistry {
   def getBattery( key : String ) : Option[ItemBattery] = registeredBatteries.get( key )
   def getLens( key : String ) : Option[ItemLens] = registeredLenses.get( key )
   def getAccessory( key : String ) : Option[ItemAccessory] = registeredAccessories.get( key )
+
+  def isRegistered( module : Any ) : Boolean = module match {
+    case item : ItemBody => registeredBodies.contains(item.moduleKey)
+    case item : ItemChamber => registeredChambers.contains(item.moduleKey)
+    case item : ItemBattery => registeredBatteries.contains(item.moduleKey)
+    case item : ItemLens => registeredLenses.contains(item.moduleKey)
+    case item : ItemAccessory => registeredAccessories.contains(item.moduleKey)
+    case _ => false
+  }
 }
