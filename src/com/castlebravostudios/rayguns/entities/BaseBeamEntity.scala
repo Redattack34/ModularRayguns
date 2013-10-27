@@ -53,10 +53,6 @@ abstract class BaseBeamEntity( world : World ) extends EntityThrowable( world ) 
       case EnumMovingObjectType.TILE => hitBlock( pos.blockX, pos.blockY, pos.blockZ, pos.sideHit )
     }
 
-    for ( _ <- 0 until 4 ) {
-      this.worldObj.spawnParticle("smoke", this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
-    }
-
     setDead()
   }
 

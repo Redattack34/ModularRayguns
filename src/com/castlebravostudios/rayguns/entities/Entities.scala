@@ -4,6 +4,7 @@ import cpw.mods.fml.common.registry.EntityRegistry
 import com.castlebravostudios.rayguns.mod.ModularRayguns
 import cpw.mods.fml.client.registry.RenderingRegistry
 import net.minecraft.entity.Entity
+import com.castlebravostudios.rayguns.entities.HeatRayBeamEntity
 
 object Entities {
 
@@ -12,6 +13,7 @@ object Entities {
   def registerEntities : Unit = {
     registerEntity( classOf[LaserBeamEntity], "LaserBeam", 0 )
     registerEntity( classOf[HeatRayBeamEntity], "HeatRayBeam", 1 )
+    registerEntity( classOf[LifeForceBeamEntity], "LifeForceBeam", 2 )
   }
 
   private def registerEntity[T <: Entity]( cls : Class[T], name : String, id : Int ) : Unit = {
