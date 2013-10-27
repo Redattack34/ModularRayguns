@@ -5,8 +5,10 @@ import net.minecraft.entity.projectile.EntityThrowable
 import net.minecraft.util.MovingObjectPosition
 import net.minecraft.world.World
 import net.minecraft.nbt.NBTTagCompound
+import net.minecraft.util.EnumMovingObjectType
+import net.minecraft.entity.Entity
 
-class BaseBeamEntity( world : World ) extends EntityThrowable( world ) {
+abstract class BaseBeamEntity( world : World ) extends EntityThrowable( world ) {
 
   def colorRed : Float = 1.0f
   def colorBlue : Float = 1.0f
@@ -44,9 +46,22 @@ class BaseBeamEntity( world : World ) extends EntityThrowable( world ) {
 
   override def setSize( width : Float, height : Float ) = super.setSize( width, height )
 
-  override def onImpact( pos : MovingObjectPosition ) : Unit = {
-    BaseBeamEntity.this.setDead()
+  override def onImpact( pos : MovingObjectPosition ) {
+
+    pos.typeOfHit match {
+      case EnumMovingObjectType.ENTITY => hitEntity( pos.entityHit )
+      case EnumMovingObjectType.TILE => hitBlock( pos.blockX, pos.blockY, pos.blockZ, pos.sideHit )
+    }
+
+    for ( _ <- 0 until 4 ) {
+      this.worldObj.spawnParticle("smoke", this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
+    }
+
+    setDead()
   }
+
+  def hitEntity( entity : Entity ) : Unit
+  def hitBlock( hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Unit
 
   override def getThrower : EntityLivingBase = shooter
 
