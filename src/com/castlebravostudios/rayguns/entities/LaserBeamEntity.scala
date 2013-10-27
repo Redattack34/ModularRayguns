@@ -7,6 +7,10 @@ import net.minecraft.util.EntityDamageSource
 
 class LaserBeamEntity( world : World ) extends BaseBeamEntity(world) {
 
+  override def colorRed : Float = 1.0f
+  override def colorBlue : Float = 0.0f
+  override def colorGreen : Float = 0.0f
+
   override def onImpact( pos : MovingObjectPosition ) {
 
     for ( _ <- 0 until 4 ) {

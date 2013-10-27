@@ -11,6 +11,10 @@ import net.minecraft.block.Block
 
 class HeatRayBeamEntity( world : World ) extends BaseBeamEntity(world) {
 
+  override def colorRed : Float = 1.0f
+  override def colorBlue : Float = 0.0f
+  override def colorGreen : Float = 0.5f
+
   def hitEntity( hit : Entity ) : Unit = {
     hit.setFire(20)
     hit.attackEntityFrom(new EntityDamageSource("heatray", shooter), 2)

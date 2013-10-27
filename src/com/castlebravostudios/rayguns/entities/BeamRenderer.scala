@@ -9,6 +9,10 @@ import net.minecraft.client.renderer.Tessellator
 class BeamRenderer extends Render {
 
   def doRender( e : Entity, x : Double, y : Double, z : Double, yaw : Float, partialTickTime : Float) : Unit = {
+    doRender( e.asInstanceOf[BaseBeamEntity], x, y, z, yaw, partialTickTime )
+  }
+
+  private def doRender( e : BaseBeamEntity, x : Double, y : Double, z : Double, yaw : Float, partialTickTime : Float) : Unit = {
     this.bindEntityTexture(e);
     GL11.glPushMatrix();
 
@@ -16,14 +20,14 @@ class BeamRenderer extends Render {
     GL11.glRotatef(yaw, 0.0f, 1.0f, 0.0f)
     GL11.glRotatef(-e.rotationPitch, 1.0f, 0.0f, 0.0f)
     GL11.glScalef(0.025f, 0.025f, 1.0f)
+    GL11.glDisable(GL11.GL_LIGHTING)
 
     val tes = Tessellator.instance
 
-    tes.startDrawingQuads();
-    drawWest(tes)
-    tes.draw();
+    GL11.glColor4f( e.colorRed, e.colorGreen, e.colorBlue, e.colorAlpha )
 
     tes.startDrawingQuads();
+    drawWest(tes)
     drawEast(tes)
     drawTop(tes)
     drawBottom(tes)
@@ -31,11 +35,13 @@ class BeamRenderer extends Render {
     drawNorth(tes)
     tes.draw();
 
+    GL11.glColor4f( 1.0f, 1.0f, 1.0f, 1.0f )
+    GL11.glEnable(GL11.GL_LIGHTING)
     GL11.glPopMatrix()
   }
 
   def getEntityTexture( e : Entity ) : ResourceLocation =
-    new ResourceLocation( "textures/blocks/redstone_block.png" )
+    new ResourceLocation( "rayguns", "textures/blocks/laser_bolt.png" )
 
   private def drawWest(tes: Tessellator): Unit = {
     tes.addVertexWithUV(-1.0D, -1.0D, -1.0D, 0, 0);

@@ -8,6 +8,11 @@ import net.minecraft.nbt.NBTTagCompound
 
 class BaseBeamEntity( world : World ) extends EntityThrowable( world ) {
 
+  def colorRed : Float = 1.0f
+  def colorBlue : Float = 1.0f
+  def colorGreen : Float = 1.0f
+  def colorAlpha : Float = 1.0f
+
   def lifetime = 20
   private var lifeRemaining = lifetime
 
