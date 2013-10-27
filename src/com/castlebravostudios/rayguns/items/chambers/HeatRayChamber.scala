@@ -14,32 +14,34 @@ import net.minecraft.block.Block
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import com.castlebravostudios.rayguns.items.emitters.HeatRayEmitter
+import com.castlebravostudios.rayguns.entities.HeatRayBeamEntity
 
-object LaserChamber extends Item( Config.chamberLaser ) with ItemChamber {
 
-  val moduleKey = "LaserChamber"
-  val powerModifier = 1.0
+object HeatRayChamber extends Item( Config.chamberHeatRay ) with ItemChamber {
+
+  val moduleKey = "HeatRayChamber"
+  val powerModifier = 1.5
   register
-  setUnlocalizedName("rayguns.LaserChamber")
-  setTextureName("rayguns:chamber_laser")
+  setUnlocalizedName("rayguns.HeatRayChamber")
+  setTextureName("rayguns:chamber_heat_ray")
 
   GameRegistry.addRecipe( new ItemStack( this, 1 ),
     "II ",
     "GGE",
     "II",
     'I' : Character, Item.ingotIron,
-    'E' : Character, LaserEmitter,
+    'E' : Character, HeatRayEmitter,
     'G' : Character, Block.glass )
 
   BeamRegistry.register({
-    case GunComponents(_, LaserChamber, _, None, _) => { (world, player) =>
-      EntityUtils.spawnNormal( world, new LaserBeamEntity(world), player )
+    case GunComponents(_, HeatRayChamber, _, None, _) => { (world, player) =>
+      EntityUtils.spawnNormal( world, new HeatRayBeamEntity(world), player )
     }
-    case GunComponents(_, LaserChamber, _, Some(PreciseLens), _ ) => { (world, player) =>
-      EntityUtils.spawnPrecise( world, new LaserBeamEntity( world ), player )
+    case GunComponents(_, HeatRayChamber, _, Some(PreciseLens), _ ) => { (world, player) =>
+      EntityUtils.spawnPrecise( world, new HeatRayBeamEntity( world ), player )
     }
-    case GunComponents(_, LaserChamber, _, Some(WideLens), _ ) => { (world, player) =>
-      EntityUtils.spawnScatter(world, new LaserBeamEntity(world), player, 9, 5 )
+    case GunComponents(_, HeatRayChamber, _, Some(WideLens), _ ) => { (world, player) =>
+      EntityUtils.spawnScatter(world, new HeatRayBeamEntity(world), player, 9, 5 )
     }
   })
 }

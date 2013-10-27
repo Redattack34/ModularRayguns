@@ -16,6 +16,8 @@ import com.castlebravostudios.rayguns.items.lenses.WideLens
 import com.castlebravostudios.rayguns.mod.Config
 import net.minecraft.item.Item
 import com.castlebravostudios.rayguns.items.chambers.LaserChamber
+import com.castlebravostudios.rayguns.items.emitters.HeatRayEmitter
+import com.castlebravostudios.rayguns.items.chambers.HeatRayChamber
 
 object Items {
 
@@ -45,8 +47,10 @@ object Items {
     registerItem( FireflyBody )
 
     registerItem( LaserEmitter )
+    registerItem( HeatRayEmitter )
 
     registerItem( LaserChamber )
+    registerItem( HeatRayChamber )
   }
 
   private def registerItem( item : Item ) : Unit = {
