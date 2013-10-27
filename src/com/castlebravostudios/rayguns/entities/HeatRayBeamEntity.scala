@@ -16,7 +16,7 @@ class HeatRayBeamEntity( world : World ) extends BaseBeamEntity(world) {
   override def colorGreen : Float = 0.5f
 
   def hitEntity( hit : Entity ) : Unit = {
-    hit.setFire(20)
+    hit.setFire(8)
     hit.attackEntityFrom(new EntityDamageSource("heatray", shooter), 2)
   }
 
