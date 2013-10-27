@@ -18,6 +18,8 @@ import net.minecraft.item.Item
 import com.castlebravostudios.rayguns.items.chambers.LaserChamber
 import com.castlebravostudios.rayguns.items.emitters.HeatRayEmitter
 import com.castlebravostudios.rayguns.items.chambers.HeatRayChamber
+import com.castlebravostudios.rayguns.items.emitters.LifeForceEmitter
+import com.castlebravostudios.rayguns.items.chambers.LifeForceChamber
 
 object Items {
 
@@ -48,9 +50,11 @@ object Items {
 
     registerItem( LaserEmitter )
     registerItem( HeatRayEmitter )
+    registerItem( LifeForceEmitter )
 
     registerItem( LaserChamber )
     registerItem( HeatRayChamber )
+    registerItem( LifeForceChamber )
   }
 
   private def registerItem( item : Item ) : Unit = {

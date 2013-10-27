@@ -7,18 +7,18 @@ import com.castlebravostudios.rayguns.mod.Config
 import net.minecraft.block.Block
 import net.minecraft.creativetab.CreativeTabs
 
-object HeatRayEmitter extends Item( Config.emitterHeatRay ) {
+object LifeForceEmitter extends Item( Config.emitterLifeForce ) {
 
   setCreativeTab(CreativeTabs.tabMaterials)
-  setUnlocalizedName("rayguns.HeatRayEmitter")
-  setTextureName("rayguns:emitter_heat_ray")
+  setUnlocalizedName("rayguns.LifeForceEmitter")
+  setTextureName("rayguns:emitter_life_force")
 
   GameRegistry.addRecipe( new ItemStack( this, 1 ),
-    "ICI ",
-    "FDF",
-    "ICI",
+    "IMI ",
+    "TDT",
+    "IMI",
     'I' : Character, Item.ingotIron,
-    'F' : Character, Item.flintAndSteel,
-    'C' : Character, Item.coal,
+    'T' : Character, Item.ghastTear,
+    'M' : Character, Item.speckledMelon,
     'D' : Character, Item.diamond )
 }
