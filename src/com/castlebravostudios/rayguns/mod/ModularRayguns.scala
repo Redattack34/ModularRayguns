@@ -13,6 +13,7 @@ import com.castlebravostudios.rayguns.items.Items
 import com.castlebravostudios.rayguns.items.Blocks
 import cpw.mods.fml.common.Mod.EventHandler
 import com.castlebravostudios.rayguns.entities.Entities
+import com.castlebravostudios.rayguns.blocks.TileEntities
 
 @Mod(modid="ModularRayguns", name="ModularRayguns", version="0.0.0", modLanguage="scala")
 @NetworkMod(clientSideRequired=true, serverSideRequired=true)
@@ -31,9 +32,9 @@ object ModularRayguns {
 
   @EventHandler
   def load( event : FMLInitializationEvent ) : Unit = {
-    proxy.registerRenderers()
     Items.registerItems
     Blocks.registerBlocks
     Entities.registerEntities
+    TileEntities.registerTileEntities
   }
 }
