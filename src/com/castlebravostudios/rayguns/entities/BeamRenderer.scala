@@ -5,6 +5,7 @@ import net.minecraft.util.ResourceLocation
 import net.minecraft.entity.Entity
 import org.lwjgl.opengl.GL11
 import net.minecraft.client.renderer.Tessellator
+import net.minecraft.client.renderer.OpenGlHelper
 
 class BeamRenderer extends Render {
 
@@ -21,6 +22,9 @@ class BeamRenderer extends Render {
     GL11.glRotatef(-e.rotationPitch, 1.0f, 0.0f, 0.0f)
     GL11.glScalef(0.025f, 0.025f, 1.0f)
     GL11.glDisable(GL11.GL_LIGHTING)
+    OpenGlHelper.setActiveTexture(OpenGlHelper.lightmapTexUnit)
+    GL11.glDisable(GL11.GL_TEXTURE_2D)
+    OpenGlHelper.setActiveTexture(OpenGlHelper.defaultTexUnit)
 
     val tes = Tessellator.instance
 
@@ -35,6 +39,9 @@ class BeamRenderer extends Render {
     drawNorth(tes)
     tes.draw();
 
+    OpenGlHelper.setActiveTexture(OpenGlHelper.lightmapTexUnit)
+    GL11.glEnable(GL11.GL_TEXTURE_2D)
+    OpenGlHelper.setActiveTexture(OpenGlHelper.defaultTexUnit)
     GL11.glColor4f( 1.0f, 1.0f, 1.0f, 1.0f )
     GL11.glEnable(GL11.GL_LIGHTING)
     GL11.glPopMatrix()
