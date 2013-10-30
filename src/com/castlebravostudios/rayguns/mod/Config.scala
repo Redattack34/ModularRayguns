@@ -32,10 +32,12 @@ object Config {
   var emitterLaser : Int = _
   var emitterHeatRay : Int = _
   var emitterLifeForce : Int = _
+  var emitterFrostRay : Int = _
 
   var chamberLaser : Int = _
   var chamberHeatRay : Int = _
   var chamberLifeForce : Int = _
+  var chamberFrostRay : Int = _
 
   def load( file : File ) : Unit = {
     val config = new Configuration( file )
@@ -71,10 +73,12 @@ object Config {
     emitterLaser = config.getItem( "emitterLaser", 5501 ).getInt
     emitterHeatRay = config.getItem( "emitterHeatRay", 5502 ).getInt
     emitterLifeForce = config.getItem( "emitterLifeForce", 5503 ).getInt
+    emitterFrostRay = config.getItem( "emitterFrostRay", 5504 ).getInt
 
     chamberLaser = config.getItem( "chamberLaser", 5601 ).getInt
     chamberHeatRay = config.getItem( "chamberHeatRay", 5602 ).getInt
     chamberLifeForce = config.getItem( "chamberLifeForce", 5603 ).getInt
+    chamberFrostRay = config.getItem( "chamberFrostRay", 5604 ).getInt
   }
 
   private def loadBlockIds( config : Configuration ) : Unit = {
