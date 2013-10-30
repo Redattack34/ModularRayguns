@@ -14,11 +14,12 @@ class BeamRenderer extends Render {
   }
 
   private def doRender( e : BaseBeamEntity, x : Double, y : Double, z : Double, yaw : Float, partialTickTime : Float) : Unit = {
+
     this.bindEntityTexture(e);
     GL11.glPushMatrix();
 
     GL11.glTranslated(x, y, z)
-    GL11.glRotatef(yaw, 0.0f, 1.0f, 0.0f)
+    GL11.glRotatef(e.rotationYaw, 0.0f, 1.0f, 0.0f)
     GL11.glRotatef(-e.rotationPitch, 1.0f, 0.0f, 0.0f)
     GL11.glScalef(0.025f, 0.025f, 1.0f)
     GL11.glDisable(GL11.GL_LIGHTING)
@@ -28,7 +29,7 @@ class BeamRenderer extends Render {
 
     val tes = Tessellator.instance
 
-    GL11.glColor4f( e.colorRed, e.colorGreen, e.colorBlue, e.colorAlpha )
+    GL11.glColor4f( e.colorRed, e.colorGreen, e.colorBlue, 1.0f )
 
     tes.startDrawingQuads();
     drawWest(tes)

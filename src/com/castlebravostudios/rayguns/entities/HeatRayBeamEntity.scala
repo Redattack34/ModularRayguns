@@ -21,8 +21,11 @@ class HeatRayBeamEntity( world : World ) extends BaseBeamEntity(world) {
   }
 
   def hitBlock( hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Unit = {
-    val (x, y, z) = adjustCoords( hitX, hitY, hitZ, side )
+    if ( world.getBlockId(hitX, hitY, hitZ) == Block.ice.blockID ) {
+      world.setBlock( hitX, hitY, hitZ, Block.waterStill.blockID )
+    }
 
+    val (x, y, z) = adjustCoords( hitX, hitY, hitZ, side )
     if ( !shooter.isInstanceOf[EntityPlayer] ||
          shooter.asInstanceOf[EntityPlayer].canPlayerEdit(x, y, z, side, null) ) {
       if ( world.isAirBlock(x, y, z) ) {

@@ -9,17 +9,20 @@ import com.castlebravostudios.rayguns.items.batteries.InfiniteBattery
 import com.castlebravostudios.rayguns.items.batteries.UltimateBattery
 import com.castlebravostudios.rayguns.items.bodies.FireflyBody
 import com.castlebravostudios.rayguns.items.bodies.MantisBody
+import com.castlebravostudios.rayguns.items.chambers.FrostRayChamber
+import com.castlebravostudios.rayguns.items.chambers.HeatRayChamber
+import com.castlebravostudios.rayguns.items.chambers.LaserChamber
+import com.castlebravostudios.rayguns.items.chambers.LifeForceChamber
+import com.castlebravostudios.rayguns.items.emitters.FrostRayEmitter
+import com.castlebravostudios.rayguns.items.emitters.HeatRayEmitter
 import com.castlebravostudios.rayguns.items.emitters.LaserEmitter
+import com.castlebravostudios.rayguns.items.emitters.LifeForceEmitter
 import com.castlebravostudios.rayguns.items.lenses.BeamLens
 import com.castlebravostudios.rayguns.items.lenses.PreciseLens
 import com.castlebravostudios.rayguns.items.lenses.WideLens
 import com.castlebravostudios.rayguns.mod.Config
+
 import net.minecraft.item.Item
-import com.castlebravostudios.rayguns.items.chambers.LaserChamber
-import com.castlebravostudios.rayguns.items.emitters.HeatRayEmitter
-import com.castlebravostudios.rayguns.items.chambers.HeatRayChamber
-import com.castlebravostudios.rayguns.items.emitters.LifeForceEmitter
-import com.castlebravostudios.rayguns.items.chambers.LifeForceChamber
 
 object Items {
 
@@ -51,10 +54,12 @@ object Items {
     registerItem( LaserEmitter )
     registerItem( HeatRayEmitter )
     registerItem( LifeForceEmitter )
+    registerItem( FrostRayEmitter )
 
     registerItem( LaserChamber )
     registerItem( HeatRayChamber )
     registerItem( LifeForceChamber )
+    registerItem( FrostRayChamber )
   }
 
   private def registerItem( item : Item ) : Unit = {
