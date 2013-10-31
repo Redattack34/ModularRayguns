@@ -90,7 +90,7 @@ class GunBenchTileEntity extends BaseInventoryTileEntity {
       case CHAMBER_SLOT => item.isInstanceOf[ItemChamber]
       case BATTERY_SLOT => item.isInstanceOf[ItemBattery]
       case ACC_SLOT => item.isInstanceOf[ItemAccessory]
-      case OUTPUT_SLOT => ( item == RayGun || item.isInstanceOf[BrokenGun] ) &&
+      case OUTPUT_SLOT => ( item == RayGun || item == BrokenGun ) &&
                           inv.forall( _ == null )
     }
   }

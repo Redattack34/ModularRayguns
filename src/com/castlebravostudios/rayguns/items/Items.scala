@@ -37,7 +37,7 @@ object Items {
 
   def registerItems : Unit = {
     registerItem( RayGun )
-    registerItem( new BrokenGun( Config.brokenGun ) )
+    registerItem( BrokenGun )
     registerItem( EnergizedDiamond )
     registerItem( GlassGainMedium )
     registerItem( GlowstoneGainMedium )

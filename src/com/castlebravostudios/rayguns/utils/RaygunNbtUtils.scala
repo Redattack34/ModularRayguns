@@ -100,9 +100,10 @@ object RaygunNbtUtils {
   }
 
   def buildBrokenGun( item : ItemStack ) : ItemStack = {
-    val stack = new ItemStack( Items[BrokenGun] )
+    val stack = new ItemStack( BrokenGun )
     stack.stackSize = 1
     stack.setTagInfo( MODULES_TAG, buildModuleTag( getAllValidComponents( item ) ) )
+    setChargeDepleted( getChargeDepleted( item ), stack );
     stack
   }
 
