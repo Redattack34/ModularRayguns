@@ -23,7 +23,7 @@ import com.castlebravostudios.rayguns.items.lenses.WideLens
 import com.castlebravostudios.rayguns.mod.Config
 import net.minecraft.item.Item
 import com.castlebravostudios.rayguns.items.emitters.ShrinkRayEmitter
-import com.castlebravostudios.rayguns.items.emitters.EnergizedDiamond
+import com.castlebravostudios.rayguns.items.misc.EnergizedDiamond
 
 object Items {
 

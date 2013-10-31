@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack
 import com.castlebravostudios.rayguns.mod.Config
 import net.minecraft.block.Block
 import net.minecraft.creativetab.CreativeTabs
+import com.castlebravostudios.rayguns.utils.RecipeRegisterer
 
 object LifeForceEmitter extends Item( Config.emitterLifeForce ) {
 
@@ -13,12 +14,5 @@ object LifeForceEmitter extends Item( Config.emitterLifeForce ) {
   setUnlocalizedName("rayguns.LifeForceEmitter")
   setTextureName("rayguns:emitter_life_force")
 
-  GameRegistry.addRecipe( new ItemStack( this, 1 ),
-    "IMI ",
-    "TDT",
-    "IMI",
-    'I' : Character, Item.ingotIron,
-    'T' : Character, Item.ghastTear,
-    'M' : Character, Item.speckledMelon,
-    'D' : Character, Item.diamond )
+  RecipeRegisterer.registerTier2Emitter(this, Item.speckledMelon, Item.ghastTear)
 }

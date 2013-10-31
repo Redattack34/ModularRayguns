@@ -1,4 +1,4 @@
-package com.castlebravostudios.rayguns.items.emitters
+package com.castlebravostudios.rayguns.items.misc
 
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.item.Item
