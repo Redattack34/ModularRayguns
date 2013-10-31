@@ -4,6 +4,7 @@ import net.minecraft.item.Item
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.item.ItemStack
 import com.castlebravostudios.rayguns.items.misc.EnergizedDiamond
+import net.minecraft.block.Block
 
 object RecipeRegisterer {
 
@@ -39,5 +40,15 @@ object RecipeRegisterer {
       'R' : Character, right,
       'B' : Character, bottom,
       'L' : Character, left )
+  }
+
+  def registerTier1Chamber( chamber : Item, emitter : Item ) : Unit = {
+    GameRegistry.addRecipe( new ItemStack( chamber, 1 ),
+      "III",
+      "GGE",
+      "III",
+      'I' : Character, Item.ingotIron,
+      'G' : Character, Block.glass,
+      'E' : Character, emitter )
   }
 }
