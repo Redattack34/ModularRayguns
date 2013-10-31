@@ -4,7 +4,6 @@ import cpw.mods.fml.common.registry.EntityRegistry
 import com.castlebravostudios.rayguns.mod.ModularRayguns
 import cpw.mods.fml.client.registry.RenderingRegistry
 import net.minecraft.entity.Entity
-import com.castlebravostudios.rayguns.entities.HeatRayBeamEntity
 
 object Entities {
 

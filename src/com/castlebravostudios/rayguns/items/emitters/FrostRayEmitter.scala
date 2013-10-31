@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack
 import com.castlebravostudios.rayguns.mod.Config
 import net.minecraft.block.Block
 import net.minecraft.creativetab.CreativeTabs
+import com.castlebravostudios.rayguns.utils.RecipeRegisterer
 
 object FrostRayEmitter extends Item( Config.emitterFrostRay ) {
 
@@ -13,12 +14,5 @@ object FrostRayEmitter extends Item( Config.emitterFrostRay ) {
   setUnlocalizedName("rayguns.FrostRayEmitter")
   setTextureName("rayguns:emitter_frost_ray")
 
-  GameRegistry.addRecipe( new ItemStack( this, 1 ),
-    "ICI ",
-    "SDS",
-    "ICI",
-    'I' : Character, Item.ingotIron,
-    'F' : Character, Block.snow,
-    'C' : Character, Block.ice,
-    'D' : Character, Item.diamond )
+  RecipeRegisterer.registerTier2Emitter(this, Block.ice, Block.snow)
 }

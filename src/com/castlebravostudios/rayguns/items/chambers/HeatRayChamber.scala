@@ -15,6 +15,7 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import com.castlebravostudios.rayguns.items.emitters.HeatRayEmitter
 import com.castlebravostudios.rayguns.entities.HeatRayBeamEntity
+import com.castlebravostudios.rayguns.utils.RecipeRegisterer
 
 
 object HeatRayChamber extends Item( Config.chamberHeatRay ) with ItemChamber {
@@ -25,13 +26,7 @@ object HeatRayChamber extends Item( Config.chamberHeatRay ) with ItemChamber {
   setUnlocalizedName("rayguns.HeatRayChamber")
   setTextureName("rayguns:chamber_heat_ray")
 
-  GameRegistry.addRecipe( new ItemStack( this, 1 ),
-    "II ",
-    "GGE",
-    "II",
-    'I' : Character, Item.ingotIron,
-    'E' : Character, HeatRayEmitter,
-    'G' : Character, Block.glass )
+  RecipeRegisterer.registerTier1Chamber(this, HeatRayEmitter)
 
   BeamRegistry.register({
     case GunComponents(_, HeatRayChamber, _, None, _) => { (world, player) =>

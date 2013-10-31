@@ -15,6 +15,7 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import com.castlebravostudios.rayguns.items.emitters.FrostRayEmitter
 import com.castlebravostudios.rayguns.entities.FrostRayBeamEntity
+import com.castlebravostudios.rayguns.utils.RecipeRegisterer
 
 
 object FrostRayChamber extends Item( Config.chamberFrostRay ) with ItemChamber {
@@ -25,13 +26,7 @@ object FrostRayChamber extends Item( Config.chamberFrostRay ) with ItemChamber {
   setUnlocalizedName("rayguns.FrostRayChamber")
   setTextureName("rayguns:chamber_frost_ray")
 
-  GameRegistry.addRecipe( new ItemStack( this, 1 ),
-    "II ",
-    "GGE",
-    "II",
-    'I' : Character, Item.ingotIron,
-    'E' : Character, FrostRayEmitter,
-    'G' : Character, Block.glass )
+  RecipeRegisterer.registerTier2Chamber(this, FrostRayEmitter)
 
   BeamRegistry.register({
     case GunComponents(_, FrostRayChamber, _, None, _) => { (world, player) =>

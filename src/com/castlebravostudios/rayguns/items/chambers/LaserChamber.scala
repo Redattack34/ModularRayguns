@@ -14,6 +14,7 @@ import net.minecraft.block.Block
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import com.castlebravostudios.rayguns.items.emitters.HeatRayEmitter
+import com.castlebravostudios.rayguns.utils.RecipeRegisterer
 
 object LaserChamber extends Item( Config.chamberLaser ) with ItemChamber {
 
@@ -23,13 +24,7 @@ object LaserChamber extends Item( Config.chamberLaser ) with ItemChamber {
   setUnlocalizedName("rayguns.LaserChamber")
   setTextureName("rayguns:chamber_laser")
 
-  GameRegistry.addRecipe( new ItemStack( this, 1 ),
-    "II ",
-    "GGE",
-    "II",
-    'I' : Character, Item.ingotIron,
-    'E' : Character, LaserEmitter,
-    'G' : Character, Block.glass )
+  RecipeRegisterer.registerTier1Chamber(this, LaserEmitter)
 
   BeamRegistry.register({
     case GunComponents(_, LaserChamber, _, None, _) => { (world, player) =>
