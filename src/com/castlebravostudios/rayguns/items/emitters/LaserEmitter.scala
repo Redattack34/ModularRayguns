@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack
 import com.castlebravostudios.rayguns.mod.Config
 import net.minecraft.block.Block
 import net.minecraft.creativetab.CreativeTabs
+import com.castlebravostudios.rayguns.utils.RecipeRegisterer
 
 object LaserEmitter extends Item( Config.emitterLaser ) {
 
@@ -13,11 +14,5 @@ object LaserEmitter extends Item( Config.emitterLaser ) {
   setUnlocalizedName("rayguns.LaserEmitter")
   setTextureName("rayguns:emitter_laser")
 
-  GameRegistry.addRecipe( new ItemStack( this, 1 ),
-    "IRI ",
-    "RDR",
-    "IRI",
-    'I' : Character, Item.ingotIron,
-    'R' : Character, Item.redstone,
-    'D' : Character, Item.diamond )
+  RecipeRegisterer.registerTier1Emitter(this, Item.redstone)
 }

@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack
 import com.castlebravostudios.rayguns.mod.Config
 import net.minecraft.block.Block
 import net.minecraft.creativetab.CreativeTabs
+import com.castlebravostudios.rayguns.utils.RecipeRegisterer
 
 object ShrinkRayEmitter extends Item( Config.emitterShrinkRay ) {
 
@@ -13,11 +14,5 @@ object ShrinkRayEmitter extends Item( Config.emitterShrinkRay ) {
   setUnlocalizedName("rayguns.ShrinkRayEmitter")
   setTextureName("rayguns:emitter_shrink_ray")
 
-  GameRegistry.addRecipe( new ItemStack( this, 1 ),
-    "IPI ",
-    "PDP",
-    "IPI",
-    'I' : Character, Item.ingotIron,
-    'P' : Character, Block.pistonBase,
-    'D' : Character, Item.diamond )
+  RecipeRegisterer.registerTier1Emitter(this, Block.pistonBase)
 }

@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack
 import com.castlebravostudios.rayguns.mod.Config
 import net.minecraft.block.Block
 import net.minecraft.creativetab.CreativeTabs
+import com.castlebravostudios.rayguns.utils.RecipeRegisterer
 
 object HeatRayEmitter extends Item( Config.emitterHeatRay ) {
 
@@ -13,12 +14,5 @@ object HeatRayEmitter extends Item( Config.emitterHeatRay ) {
   setUnlocalizedName("rayguns.HeatRayEmitter")
   setTextureName("rayguns:emitter_heat_ray")
 
-  GameRegistry.addRecipe( new ItemStack( this, 1 ),
-    "ICI ",
-    "FDF",
-    "ICI",
-    'I' : Character, Item.ingotIron,
-    'F' : Character, Item.flintAndSteel,
-    'C' : Character, Item.coal,
-    'D' : Character, Item.diamond )
+  RecipeRegisterer.registerTier1Emitter(this, Item.coal, Item.flintAndSteel)
 }
