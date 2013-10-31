@@ -29,6 +29,7 @@ object Config {
   var gunBench : Int = _
   var lensGrinder : Int = _
 
+  var emitterShrinkRay : Int = _
   var emitterLaser : Int = _
   var emitterHeatRay : Int = _
   var emitterLifeForce : Int = _
@@ -72,6 +73,7 @@ object Config {
     mantisBody = config.getItem( "mantisBody", 5401 ).getInt
     fireflyBody = config.getItem( "fireflyBody", 5402 ).getInt
 
+    emitterShrinkRay = config.getItem( "emitterShrinkRay", 5500 ).getInt
     emitterLaser = config.getItem( "emitterLaser", 5501 ).getInt
     emitterHeatRay = config.getItem( "emitterHeatRay", 5502 ).getInt
     emitterLifeForce = config.getItem( "emitterLifeForce", 5503 ).getInt

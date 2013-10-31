@@ -21,8 +21,8 @@ import com.castlebravostudios.rayguns.items.lenses.BeamLens
 import com.castlebravostudios.rayguns.items.lenses.PreciseLens
 import com.castlebravostudios.rayguns.items.lenses.WideLens
 import com.castlebravostudios.rayguns.mod.Config
-
 import net.minecraft.item.Item
+import com.castlebravostudios.rayguns.items.emitters.ShrinkRayEmitter
 
 object Items {
 
@@ -51,6 +51,7 @@ object Items {
     registerItem( MantisBody )
     registerItem( FireflyBody )
 
+    registerItem( ShrinkRayEmitter )
     registerItem( LaserEmitter )
     registerItem( HeatRayEmitter )
     registerItem( LifeForceEmitter )
