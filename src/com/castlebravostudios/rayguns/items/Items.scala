@@ -23,6 +23,7 @@ import com.castlebravostudios.rayguns.items.lenses.WideLens
 import com.castlebravostudios.rayguns.mod.Config
 import net.minecraft.item.Item
 import com.castlebravostudios.rayguns.items.emitters.ShrinkRayEmitter
+import com.castlebravostudios.rayguns.items.emitters.EnergizedDiamond
 
 object Items {
 
@@ -34,6 +35,7 @@ object Items {
   def registerItems : Unit = {
     registerItem( RayGun )
     registerItem( new BrokenGun( Config.brokenGun ) )
+    registerItem( EnergizedDiamond )
 
     registerItem( BasicBattery )
     registerItem( AdvancedBattery )

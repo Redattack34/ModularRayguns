@@ -8,7 +8,7 @@ object Config {
 
   var rayGun : Int = _
   var brokenGun : Int = _
-  var basicChamber : Int = _
+  var energizedDiamond : Int = _
 
   var basicBattery : Int = _
   var advancedBattery : Int = _
@@ -55,7 +55,7 @@ object Config {
   private def loadItemIds( config : Configuration ) : Unit = {
     rayGun = config.getItem( "rayGun", 4999 ).getInt()
     brokenGun = config.getItem( "brokenGun", 5000 ).getInt()
-    basicChamber = config.getItem( "basicChamber", 5003 ).getInt()
+    energizedDiamond = config.getItem( "energizedDiamond", 5001 ).getInt()
 
     basicBattery = config.getItem( "basicBattery", 5101 ).getInt()
     advancedBattery = config.getItem( "advancedBattery", 5102 ).getInt()
