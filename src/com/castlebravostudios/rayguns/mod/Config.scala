@@ -9,6 +9,7 @@ object Config {
   var rayGun : Int = _
   var brokenGun : Int = _
   var energizedDiamond : Int = _
+  var glassGainMedium : Int = _
 
   var basicBattery : Int = _
   var advancedBattery : Int = _
@@ -56,6 +57,7 @@ object Config {
     rayGun = config.getItem( "rayGun", 4999 ).getInt()
     brokenGun = config.getItem( "brokenGun", 5000 ).getInt()
     energizedDiamond = config.getItem( "energizedDiamond", 5001 ).getInt()
+    glassGainMedium = config.getItem( "glassGainMedium", 5002 ).getInt()
 
     basicBattery = config.getItem( "basicBattery", 5101 ).getInt()
     advancedBattery = config.getItem( "advancedBattery", 5102 ).getInt()

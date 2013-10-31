@@ -24,6 +24,7 @@ import com.castlebravostudios.rayguns.mod.Config
 import net.minecraft.item.Item
 import com.castlebravostudios.rayguns.items.emitters.ShrinkRayEmitter
 import com.castlebravostudios.rayguns.items.misc.EnergizedDiamond
+import com.castlebravostudios.rayguns.items.misc.GlassGainMedium
 
 object Items {
 
@@ -36,6 +37,7 @@ object Items {
     registerItem( RayGun )
     registerItem( new BrokenGun( Config.brokenGun ) )
     registerItem( EnergizedDiamond )
+    registerItem( GlassGainMedium )
 
     registerItem( BasicBattery )
     registerItem( AdvancedBattery )

@@ -5,6 +5,7 @@ import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.item.ItemStack
 import com.castlebravostudios.rayguns.items.misc.EnergizedDiamond
 import net.minecraft.block.Block
+import com.castlebravostudios.rayguns.items.misc.GlassGainMedium
 
 object RecipeRegisterer {
 
@@ -48,7 +49,7 @@ object RecipeRegisterer {
       "GGE",
       "III",
       'I' : Character, Item.ingotIron,
-      'G' : Character, Block.glass,
+      'G' : Character, GlassGainMedium,
       'E' : Character, emitter )
   }
 
