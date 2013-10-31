@@ -17,14 +17,16 @@ import com.castlebravostudios.rayguns.items.emitters.FrostRayEmitter
 import com.castlebravostudios.rayguns.items.emitters.HeatRayEmitter
 import com.castlebravostudios.rayguns.items.emitters.LaserEmitter
 import com.castlebravostudios.rayguns.items.emitters.LifeForceEmitter
+import com.castlebravostudios.rayguns.items.emitters.ShrinkRayEmitter
 import com.castlebravostudios.rayguns.items.lenses.BeamLens
 import com.castlebravostudios.rayguns.items.lenses.PreciseLens
 import com.castlebravostudios.rayguns.items.lenses.WideLens
-import com.castlebravostudios.rayguns.mod.Config
-import net.minecraft.item.Item
-import com.castlebravostudios.rayguns.items.emitters.ShrinkRayEmitter
 import com.castlebravostudios.rayguns.items.misc.EnergizedDiamond
 import com.castlebravostudios.rayguns.items.misc.GlassGainMedium
+import com.castlebravostudios.rayguns.items.misc.GlowstoneGainMedium
+import com.castlebravostudios.rayguns.mod.Config
+
+import net.minecraft.item.Item
 
 object Items {
 
@@ -38,6 +40,7 @@ object Items {
     registerItem( new BrokenGun( Config.brokenGun ) )
     registerItem( EnergizedDiamond )
     registerItem( GlassGainMedium )
+    registerItem( GlowstoneGainMedium )
 
     registerItem( BasicBattery )
     registerItem( AdvancedBattery )

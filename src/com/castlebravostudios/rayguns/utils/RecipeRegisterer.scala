@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack
 import com.castlebravostudios.rayguns.items.misc.EnergizedDiamond
 import net.minecraft.block.Block
 import com.castlebravostudios.rayguns.items.misc.GlassGainMedium
+import com.castlebravostudios.rayguns.items.misc.GlowstoneGainMedium
 
 object RecipeRegisterer {
 
@@ -59,7 +60,7 @@ object RecipeRegisterer {
       "LLE",
       "GGG",
       'G' : Character, Item.ingotGold,
-      'L' : Character, Block.glowStone,
+      'L' : Character, GlowstoneGainMedium,
       'E' : Character, emitter )
   }
 }
