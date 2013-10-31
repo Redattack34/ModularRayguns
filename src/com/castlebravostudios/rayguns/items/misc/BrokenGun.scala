@@ -1,11 +1,11 @@
-package com.castlebravostudios.rayguns.items
+package com.castlebravostudios.rayguns.items.misc
 
 import net.minecraft.item.Item
 import net.minecraft.creativetab.CreativeTabs
 import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
 import net.minecraft.item.ItemStack
-import net.minecraft.util.Icon
 import com.castlebravostudios.rayguns.mod.Config
+import com.castlebravostudios.rayguns.utils.RaygunNbtUtils.getChargeDepleted
 
 object BrokenGun extends Item( Config.brokenGun ) {
 

@@ -11,9 +11,8 @@ import com.castlebravostudios.rayguns.api.items.ItemChamber
 import com.castlebravostudios.rayguns.api.items.ItemLens
 import com.castlebravostudios.rayguns.api.items.ItemAccessory
 import com.castlebravostudios.rayguns.api.items.ItemBattery
-import com.castlebravostudios.rayguns.items.RayGun
-import com.castlebravostudios.rayguns.items.Items
-import com.castlebravostudios.rayguns.items.BrokenGun
+import com.castlebravostudios.rayguns.items.misc.RayGun
+import com.castlebravostudios.rayguns.items.misc.BrokenGun
 
 case class GunComponents(body : ItemBody, chamber : ItemChamber, battery : ItemBattery,
     lens : Option[ItemLens], acc : Option[ItemAccessory] ) {

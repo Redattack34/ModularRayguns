@@ -21,10 +21,9 @@ import com.castlebravostudios.rayguns.items.emitters.ShrinkRayEmitter
 import com.castlebravostudios.rayguns.items.lenses.BeamLens
 import com.castlebravostudios.rayguns.items.lenses.PreciseLens
 import com.castlebravostudios.rayguns.items.lenses.WideLens
-import com.castlebravostudios.rayguns.items.misc.EnergizedDiamond
+import com.castlebravostudios.rayguns.items.misc._
 import com.castlebravostudios.rayguns.items.misc.GlassGainMedium
 import com.castlebravostudios.rayguns.items.misc.GlowstoneGainMedium
-import com.castlebravostudios.rayguns.mod.Config
 
 import net.minecraft.item.Item
 

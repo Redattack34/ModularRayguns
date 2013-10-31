@@ -7,7 +7,8 @@ import com.castlebravostudios.rayguns.api.items.ItemChamber
 import com.castlebravostudios.rayguns.api.items.ItemLens
 import com.castlebravostudios.rayguns.blocks.BaseContainer
 import com.castlebravostudios.rayguns.blocks.GuiBlockSlot
-import com.castlebravostudios.rayguns.items.RayGun
+import com.castlebravostudios.rayguns.items.misc.RayGun
+
 import GunBenchTileEntity.ACC_SLOT
 import GunBenchTileEntity.BATTERY_SLOT
 import GunBenchTileEntity.BODY_SLOT
@@ -18,7 +19,6 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.player.InventoryPlayer
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
-import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
 
 class GunBenchContainer( inventoryPlayer : InventoryPlayer, entity : GunBenchTileEntity )
   extends BaseContainer( inventoryPlayer, entity ) {

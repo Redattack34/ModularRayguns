@@ -1,29 +1,20 @@
-package com.castlebravostudios.rayguns.items
+package com.castlebravostudios.rayguns.items.misc
 
 import com.castlebravostudios.rayguns.api.BeamRegistry
-import com.castlebravostudios.rayguns.api.items.ItemAccessory
-import com.castlebravostudios.rayguns.api.items.ItemBattery
-import com.castlebravostudios.rayguns.api.items.ItemBody
-import com.castlebravostudios.rayguns.api.items.ItemChamber
-import com.castlebravostudios.rayguns.api.items.ItemLens
-import com.castlebravostudios.rayguns.api.items.ItemModule
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
-import com.castlebravostudios.rayguns.api.ModuleRegistry
-import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.world.World
-import com.castlebravostudios.rayguns.blocks.gunbench.GunBenchTileEntity
 import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
 import net.minecraft.entity.Entity
-import com.castlebravostudios.rayguns.utils.GunComponents
-import com.castlebravostudios.rayguns.utils.GunComponents
-import com.castlebravostudios.rayguns.utils.GunComponents
 import com.castlebravostudios.rayguns.items.accessories.RefireCapacitor
 import com.castlebravostudios.rayguns.mod.Config
 import net.minecraft.util.Icon
-import com.castlebravostudios.rayguns.items.bodies.MantisBody
+import com.castlebravostudios.rayguns.utils.RaygunNbtUtils.buildBrokenGun
+import com.castlebravostudios.rayguns.utils.RaygunNbtUtils.getChargeDepleted
+import com.castlebravostudios.rayguns.utils.RaygunNbtUtils.getTagCompound
+import com.castlebravostudios.rayguns.utils.GunComponents
 
 object RayGun extends Item( Config.rayGun ) {
 

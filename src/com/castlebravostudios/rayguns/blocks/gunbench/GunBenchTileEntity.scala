@@ -12,13 +12,12 @@ import com.castlebravostudios.rayguns.api.items.ItemChamber
 import com.castlebravostudios.rayguns.api.items.ItemBattery
 import com.castlebravostudios.rayguns.api.items.ItemAccessory
 import net.minecraft.item.Item
-import com.castlebravostudios.rayguns.items.BrokenGun
+import com.castlebravostudios.rayguns.items.misc.BrokenGun
 import scala.Array.canBuildFrom
 import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
-import com.castlebravostudios.rayguns.items.RayGun
-import com.castlebravostudios.rayguns.utils.GunComponents
+import com.castlebravostudios.rayguns.items.misc.RayGun
 import com.castlebravostudios.rayguns.blocks.BaseInventoryTileEntity
-import scala.collection.mutable.ListBuffer
+import com.castlebravostudios.rayguns.utils.GunComponents
 
 class GunBenchTileEntity extends BaseInventoryTileEntity {
   private[this] val inv = Array.fill[ItemStack](6)(null)
