@@ -46,7 +46,9 @@ object Config {
     loadItemIds( config )
     loadBlockIds( config )
 
-    config.save()
+    if ( config.hasChanged() ) {
+      config.save()
+    }
   }
 
   private def loadItemIds( config : Configuration ) : Unit = {
