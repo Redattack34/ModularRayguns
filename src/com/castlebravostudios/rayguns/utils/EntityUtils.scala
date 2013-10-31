@@ -6,6 +6,7 @@ import net.minecraft.entity.Entity
 import com.castlebravostudios.rayguns.entities.BaseBeamEntity
 import net.minecraft.util.MathHelper
 import java.util.Random
+import net.minecraft.entity.player.EntityPlayer
 
 object EntityUtils {
 
@@ -13,13 +14,13 @@ object EntityUtils {
 
   def spawnNormal( world : World, beam : BaseBeamEntity, shooter : EntityLivingBase ) : Unit = {
     initBeam(beam, shooter)
-    setMotion(beam, beam.rotationYaw, beam.rotationPitch)
+    setMotion(beam, beam.rotationYaw, getBasePitch(shooter, beam))
     world.spawnEntityInWorld(beam)
   }
 
   def spawnPrecise( world : World, beam : BaseBeamEntity, shooter : EntityLivingBase ) : Unit = {
     initBeam(beam, shooter)
-    setMotion(beam, beam.rotationYaw, beam.rotationPitch, velocityMultiplier = 2.0f)
+    setMotion(beam, beam.rotationYaw, getBasePitch(shooter, beam), velocityMultiplier = 2.0f)
     world.spawnEntityInWorld(beam)
   }
 
@@ -29,7 +30,7 @@ object EntityUtils {
       initBeam( shot, shooter )
       val scatterYaw : Float = (getClampedGaussian * scatterFactor)
       val scatterPitch : Float = (getClampedGaussian * scatterFactor).floatValue
-      setMotion( shot, shot.rotationYaw + scatterYaw, shot.rotationPitch + scatterPitch )
+      setMotion( shot, shot.rotationYaw + scatterYaw, getBasePitch(shooter, shot) + scatterPitch )
       world.spawnEntityInWorld( shot )
     }
   }
@@ -79,4 +80,13 @@ object EntityUtils {
     beam.motionY = (-MathHelper.sin(toRadians(pitch + beam.pitchOffset)) * baseVelocity).doubleValue;
     beam.setThrowableHeading(beam.motionX, beam.motionY, beam.motionZ, beam.velocityMultiplier * velocityMultiplier, 1.0F);
   }
+
+  private def getBasePitch(shooter : EntityLivingBase, beam: BaseBeamEntity): Float =
+    if ( shooter.isSneaking() && !isCreativeFlying( shooter ) ) 0.0f
+    else beam.rotationPitch
+
+  private def isCreativeFlying( shooter : EntityLivingBase ) = shooter match {
+      case p : EntityPlayer => p.capabilities.isFlying
+      case _ => false
+    }
 }
