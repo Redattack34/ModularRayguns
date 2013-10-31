@@ -29,11 +29,6 @@ import net.minecraft.item.Item
 
 object Items {
 
-  private var registeredItems = Map[Class[_], Item]()
-
-  def apply[T <: Item]( c : Class[T] ) : Item = registeredItems( c )
-  def apply[T <: Item]( implicit mf : Manifest[T] ) : Item = registeredItems( mf.runtimeClass )
-
   def registerItems : Unit = {
     registerItem( RayGun )
     registerItem( BrokenGun )
@@ -69,7 +64,12 @@ object Items {
     registerItem( FrostRayChamber )
   }
 
+  /**
+   * Since items are Objects, and therefore instantiated when first loaded,
+   * I don't actually have to register them anywhere. This merely forces the
+   * VM to load (and thus register for me) the Objects.
+   */
   private def registerItem( item : Item ) : Unit = {
-    registeredItems += ( item.getClass() -> item )
+    item.hashCode()
   }
 }
