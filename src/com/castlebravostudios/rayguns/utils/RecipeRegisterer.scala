@@ -51,4 +51,14 @@ object RecipeRegisterer {
       'G' : Character, Block.glass,
       'E' : Character, emitter )
   }
+
+  def registerTier2Chamber( chamber : Item, emitter : Item ) : Unit = {
+    GameRegistry.addRecipe( new ItemStack( chamber, 1 ),
+      "GGG",
+      "LLE",
+      "GGG",
+      'G' : Character, Item.ingotGold,
+      'L' : Character, Block.glowStone,
+      'E' : Character, emitter )
+  }
 }

@@ -9,11 +9,11 @@ import com.castlebravostudios.rayguns.items.lenses.WideLens
 import com.castlebravostudios.rayguns.mod.Config
 import com.castlebravostudios.rayguns.utils.EntityUtils
 import com.castlebravostudios.rayguns.utils.GunComponents
-
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.Block
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
+import com.castlebravostudios.rayguns.utils.RecipeRegisterer
 
 
 object LifeForceChamber extends Item( Config.chamberLifeForce ) with ItemChamber {
@@ -24,13 +24,7 @@ object LifeForceChamber extends Item( Config.chamberLifeForce ) with ItemChamber
   setUnlocalizedName("rayguns.LifeForceChamber")
   setTextureName("rayguns:chamber_life_force")
 
-  GameRegistry.addRecipe( new ItemStack( this, 1 ),
-    "II ",
-    "GGE",
-    "II",
-    'I' : Character, Item.ingotIron,
-    'E' : Character, LifeForceEmitter,
-    'G' : Character, Block.glass )
+  RecipeRegisterer.registerTier2Chamber(this, LifeForceEmitter)
 
   BeamRegistry.register({
     case GunComponents(_, LifeForceChamber, _, None, _) => { (world, player) =>
