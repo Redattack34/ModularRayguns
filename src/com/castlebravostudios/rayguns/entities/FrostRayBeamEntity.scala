@@ -9,6 +9,7 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.block.Block
 import net.minecraft.potion.Potion
 import net.minecraft.entity.EntityLivingBase
+import net.minecraft.block.material.Material
 
 
 class FrostRayBeamEntity( world : World ) extends BaseBeamEntity(world) {
@@ -32,18 +33,19 @@ class FrostRayBeamEntity( world : World ) extends BaseBeamEntity(world) {
   def hitBlock( hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Unit = {
     createParticles()
 
-    val hit = Block.blocksList( world.getBlockId( hitX, hitY, hitZ ) )
+    val material = world.getBlockMaterial(hitX, hitY, hitZ)
+    val metadata = world.getBlockMetadata(hitX, hitY, hitZ)
 
     val block =
-      if ( hit == Block.waterMoving || hit == Block.waterStill ) Block.ice
-      else if ( hit == Block.lavaMoving ) Block.cobblestone
-      else if ( hit == Block.lavaStill ) Block.obsidian
+      if ( material == Material.water ) Block.ice
+      else if ( material == Material.lava && metadata == 0 ) Block.obsidian
+      else if ( material == Material.lava && metadata <= 4 ) Block.cobblestone
       else null
 
     if ( block != null ) {
       world.setBlock(hitX, hitY, hitZ, block.blockID)
     }
-    else if ( hit.blockMaterial.blocksMovement && world.isAirBlock(hitX, hitY+1, hitZ) ) {
+    else if ( material.blocksMovement && world.isAirBlock(hitX, hitY+1, hitZ) && side == 1 ) {
       world.setBlock( hitX, hitY+1, hitZ, Block.snow.blockID )
     }
   }
