@@ -7,13 +7,13 @@ import net.minecraft.entity.Entity
 
 object Entities {
 
-  private val renderer = new BeamRenderer
+  private val renderer = new BoltRenderer
 
   def registerEntities : Unit = {
-    registerEntity( classOf[LaserBeamEntity], "LaserBeam", 0 )
-    registerEntity( classOf[HeatRayBeamEntity], "HeatRayBeam", 1 )
-    registerEntity( classOf[LifeForceBeamEntity], "LifeForceBeam", 2 )
-    registerEntity( classOf[FrostRayBeamEntity], "FrostRayBeam", 3 )
+    registerEntity( classOf[LaserBoltEntity], "LaserBolt", 0 )
+    registerEntity( classOf[HeatRayBoltEntity], "HeatRayBolt", 1 )
+    registerEntity( classOf[LifeForceBoltEntity], "LifeForceBolt", 2 )
+    registerEntity( classOf[FrostRayBoltEntity], "FrostRayBolt", 3 )
   }
 
   private def registerEntity[T <: Entity]( cls : Class[T], name : String, id : Int ) : Unit = {

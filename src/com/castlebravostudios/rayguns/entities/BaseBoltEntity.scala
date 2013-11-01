@@ -17,7 +17,7 @@ import scala.collection.JavaConversions._
  * onUpdate. Not coincedentally, most of this code is really non-idiomatic Scala
  * and should not be taken as an example.
  */
-abstract class BaseBeamEntity( world : World ) extends Entity( world ) with IProjectile {
+abstract class BaseBoltEntity( world : World ) extends Entity( world ) with IProjectile {
 
   def colorRed : Float = 1.0f
   def colorBlue : Float = 1.0f
@@ -35,7 +35,7 @@ abstract class BaseBeamEntity( world : World ) extends Entity( world ) with IPro
   }
   def shooter : EntityLivingBase = {
     if ( _shooter == null && shooterName != null && !shooterName.isEmpty ) {
-      _shooter = BaseBeamEntity.this.worldObj.getPlayerEntityByName(shooterName)
+      _shooter = this.worldObj.getPlayerEntityByName(shooterName)
     }
     _shooter
   }

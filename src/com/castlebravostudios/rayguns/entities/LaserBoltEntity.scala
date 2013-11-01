@@ -6,7 +6,7 @@ import net.minecraft.util.EntityDamageSource
 import net.minecraft.entity.Entity
 
 
-class LaserBeamEntity( world : World ) extends BaseBeamEntity(world) {
+class LaserBoltEntity( world : World ) extends BaseBoltEntity(world) {
 
   override def colorRed : Float = 1.0f
   override def colorBlue : Float = 0.0f

@@ -12,7 +12,7 @@ import net.minecraft.entity.EntityLivingBase
 import net.minecraft.block.material.Material
 
 
-class FrostRayBeamEntity( world : World ) extends BaseBeamEntity(world) {
+class FrostRayBoltEntity( world : World ) extends BaseBoltEntity(world) {
 
   override def colorRed : Float = 0.5f
   override def colorBlue : Float = 1.0f

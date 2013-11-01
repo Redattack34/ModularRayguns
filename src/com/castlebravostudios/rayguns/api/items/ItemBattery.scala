@@ -1,10 +1,10 @@
 package com.castlebravostudios.rayguns.api.items
 
 import com.castlebravostudios.rayguns.utils.GunComponents
-import net.minecraft.item.ItemStack
-import net.minecraft.entity.player.EntityPlayer
-import com.castlebravostudios.rayguns.items.RayGun
 import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
+
+import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.item.ItemStack
 
 trait ItemBattery extends ItemModule {
 
