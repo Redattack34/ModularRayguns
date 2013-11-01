@@ -2,10 +2,10 @@ package com.castlebravostudios.rayguns.items.accessories
 
 import java.util.Random
 
-import scala.collection.mutable.MapBuilder
 import scala.collection.mutable.WeakHashMap
 
 import com.castlebravostudios.rayguns.api.items.ItemAccessory
+import com.castlebravostudios.rayguns.items.emitters.ShrinkRayEmitter
 import com.castlebravostudios.rayguns.mod.Config
 import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
 
@@ -55,7 +55,7 @@ object SolarPanel extends Item( Config.solarPanel ) with ItemAccessory {
     "S  ",
     "GGG",
     "RIR",
-    'S' : Character, Block.stone,
+    'S' : Character, ShrinkRayEmitter,
     'I' : Character, Item.ingotIron,
     'R' : Character, Block.blockRedstone,
     'G' : Character, Block.glass )

@@ -6,6 +6,7 @@ import com.castlebravostudios.rayguns.mod.Config
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.item.ItemStack
 import net.minecraft.block.Block
+import com.castlebravostudios.rayguns.items.emitters.ShrinkRayEmitter
 
 object RefireCapacitor extends Item( Config.refireCapacitor ) with ItemAccessory {
 
@@ -19,7 +20,7 @@ object RefireCapacitor extends Item( Config.refireCapacitor ) with ItemAccessory
     "SI ",
     "IRI",
     "G G",
-    'S' : Character, Block.stone,
+    'S' : Character, ShrinkRayEmitter,
     'I' : Character, Item.ingotIron,
     'R' : Character, Block.blockRedstone,
     'G' : Character, Item.ingotGold )
