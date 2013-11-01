@@ -7,13 +7,13 @@ import org.lwjgl.opengl.GL11
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.client.renderer.OpenGlHelper
 
-class BeamRenderer extends Render {
+class BoltRenderer extends Render {
 
   def doRender( e : Entity, x : Double, y : Double, z : Double, yaw : Float, partialTickTime : Float) : Unit = {
-    doRender( e.asInstanceOf[BaseBeamEntity], x, y, z, yaw, partialTickTime )
+    doRender( e.asInstanceOf[BaseBoltEntity], x, y, z, yaw, partialTickTime )
   }
 
-  private def doRender( e : BaseBeamEntity, x : Double, y : Double, z : Double, yaw : Float, partialTickTime : Float) : Unit = {
+  private def doRender( e : BaseBoltEntity, x : Double, y : Double, z : Double, yaw : Float, partialTickTime : Float) : Unit = {
 
     this.bindEntityTexture(e);
     GL11.glPushMatrix();

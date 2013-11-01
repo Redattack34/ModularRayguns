@@ -10,7 +10,7 @@ import net.minecraft.block.Block
 import net.minecraft.entity.EntityLivingBase
 
 
-class LifeForceBeamEntity( world : World ) extends BaseBeamEntity(world) {
+class LifeForceBoltEntity( world : World ) extends BaseBoltEntity(world) {
 
   override def colorRed : Float = 1.0f
   override def colorBlue : Float = 1.0f

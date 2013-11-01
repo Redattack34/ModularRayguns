@@ -9,7 +9,7 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.block.Block
 
 
-class HeatRayBeamEntity( world : World ) extends BaseBeamEntity(world) {
+class HeatRayBoltEntity( world : World ) extends BaseBoltEntity(world) {
 
   override def colorRed : Float = 1.0f
   override def colorBlue : Float = 0.0f
