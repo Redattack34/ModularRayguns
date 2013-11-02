@@ -36,6 +36,7 @@ object Config {
   var emitterHeatRay : Int = _
   var emitterLifeForce : Int = _
   var emitterFrostRay : Int = _
+  var emitterFortifiedSunlight : Int = _
 
   var chamberLaser : Int = _
   var chamberHeatRay : Int = _
@@ -82,6 +83,7 @@ object Config {
     emitterHeatRay = config.getItem( "emitterHeatRay", 5502 ).getInt
     emitterLifeForce = config.getItem( "emitterLifeForce", 5503 ).getInt
     emitterFrostRay = config.getItem( "emitterFrostRay", 5504 ).getInt
+    emitterFortifiedSunlight = config.getItem( "emitterFortifiedSunlight", 5505 ).getInt
 
     chamberLaser = config.getItem( "chamberLaser", 5601 ).getInt
     chamberHeatRay = config.getItem( "chamberHeatRay", 5602 ).getInt
