@@ -14,6 +14,7 @@ object Entities {
     registerEntity( classOf[HeatRayBoltEntity], "HeatRayBolt", 1 )
     registerEntity( classOf[LifeForceBoltEntity], "LifeForceBolt", 2 )
     registerEntity( classOf[FrostRayBoltEntity], "FrostRayBolt", 3 )
+    registerEntity( classOf[FortifiedSunlightBoltEntity], "FortifiedSunlightBolt", 4 )
   }
 
   private def registerEntity[T <: Entity]( cls : Class[T], name : String, id : Int ) : Unit = {
