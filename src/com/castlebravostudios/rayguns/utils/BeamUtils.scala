@@ -14,6 +14,7 @@ import cpw.mods.fml.client.FMLClientHandler
 object BeamUtils {
 
   def spawnSingleShot( fx : LaserBeam, world : World, player : EntityLivingBase ) : Unit = {
+    if ( !world.isRemote ) return
     fx.shooter = player
     val hit = raytrace( world, player, 20.0d )
     if ( hit != null ) {

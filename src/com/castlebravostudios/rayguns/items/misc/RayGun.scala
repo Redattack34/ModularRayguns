@@ -37,7 +37,6 @@ object RayGun extends Item( Config.rayGun ) {
 
   private def fire( item : ItemStack, components : GunComponents,
       world : World, player : EntityPlayer, f : BeamRegistry.BeamCreator ): Unit = {
-    if ( world.isRemote ) return
     if ( getCooldownTime(item) != 0 ) return
     if ( !components.battery.drainPower( player, item, components ) ) return
 
