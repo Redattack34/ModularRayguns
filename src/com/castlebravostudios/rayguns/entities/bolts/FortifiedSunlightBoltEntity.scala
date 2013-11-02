@@ -9,6 +9,7 @@ import net.minecraft.item.ItemDye
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.entity.player.EntityPlayer
+import com.castlebravostudios.rayguns.entities.bolts.BaseBoltEntity
 
 
 class FortifiedSunlightBoltEntity( world : World ) extends BaseBoltEntity(world) {

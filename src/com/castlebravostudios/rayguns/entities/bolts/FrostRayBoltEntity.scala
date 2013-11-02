@@ -10,6 +10,7 @@ import net.minecraft.block.Block
 import net.minecraft.potion.Potion
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.block.material.Material
+import com.castlebravostudios.rayguns.entities.bolts.BaseBoltEntity
 
 
 class FrostRayBoltEntity( world : World ) extends BaseBoltEntity(world) {

@@ -8,6 +8,7 @@ import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.block.Block
 import net.minecraft.entity.EntityLivingBase
+import com.castlebravostudios.rayguns.entities.bolts.BaseBoltEntity
 
 
 class LifeForceBoltEntity( world : World ) extends BaseBoltEntity(world) {

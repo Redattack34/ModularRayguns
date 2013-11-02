@@ -4,6 +4,7 @@ import net.minecraft.world.World
 import net.minecraft.util.MovingObjectPosition
 import net.minecraft.util.EntityDamageSource
 import net.minecraft.entity.Entity
+import com.castlebravostudios.rayguns.entities.bolts.BaseBoltEntity
 
 
 class LaserBoltEntity( world : World ) extends BaseBoltEntity(world) {

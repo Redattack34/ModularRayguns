@@ -7,6 +7,7 @@ import net.minecraft.util.EnumMovingObjectType
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.block.Block
+import com.castlebravostudios.rayguns.entities.bolts.BaseBoltEntity
 
 
 class HeatRayBoltEntity( world : World ) extends BaseBoltEntity(world) {

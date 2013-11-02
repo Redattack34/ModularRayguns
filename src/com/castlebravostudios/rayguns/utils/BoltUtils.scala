@@ -6,7 +6,7 @@ import net.minecraft.entity.Entity
 import net.minecraft.util.MathHelper
 import java.util.Random
 import net.minecraft.entity.player.EntityPlayer
-import com.castlebravostudios.rayguns.entities.BaseBoltEntity
+import com.castlebravostudios.rayguns.entities.bolts.BaseBoltEntity
 
 object EntityUtils {
 
