@@ -24,9 +24,9 @@ object EntityUtils {
     world.spawnEntityInWorld(bolt)
   }
 
-  def spawnScatter( world : World, bolt : => BaseBoltEntity, shooter : EntityLivingBase, shots : Int, scatterFactor: Float ) : Unit = {
+  def spawnScatter( world : World, shooter : EntityLivingBase, shots : Int, scatterFactor: Float )( bolt : () => BaseBoltEntity ) : Unit = {
     for ( _ <- 0 until shots ) {
-      val shot = bolt
+      val shot = bolt()
       initBolt( shot, shooter )
       val scatterYaw : Float = (getClampedGaussian * scatterFactor)
       val scatterPitch : Float = (getClampedGaussian * scatterFactor).floatValue

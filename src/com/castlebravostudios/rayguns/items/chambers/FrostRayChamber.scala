@@ -32,7 +32,9 @@ object FrostRayChamber extends Item( Config.chamberFrostRay ) with ItemChamber {
       EntityUtils.spawnPrecise( world, new FrostRayBoltEntity( world ), player )
     }
     case GunComponents(_, FrostRayChamber, _, Some(WideLens), _ ) => { (world, player) =>
-      EntityUtils.spawnScatter(world, new FrostRayBoltEntity(world), player, 9, 5 )
+      EntityUtils.spawnScatter(world, player, 9, 5 ){ () =>
+        new FrostRayBoltEntity(world)
+      }
     }
   })
 }

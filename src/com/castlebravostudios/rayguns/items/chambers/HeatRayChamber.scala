@@ -32,7 +32,9 @@ object HeatRayChamber extends Item( Config.chamberHeatRay ) with ItemChamber {
       EntityUtils.spawnPrecise( world, new HeatRayBoltEntity( world ), player )
     }
     case GunComponents(_, HeatRayChamber, _, Some(WideLens), _ ) => { (world, player) =>
-      EntityUtils.spawnScatter(world, new HeatRayBoltEntity(world), player, 9, 5 )
+      EntityUtils.spawnScatter(world, player, 9, 5 ){ () =>
+        new HeatRayBoltEntity(world)
+      }
     }
   })
 }

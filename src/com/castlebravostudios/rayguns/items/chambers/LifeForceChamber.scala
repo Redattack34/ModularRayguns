@@ -32,7 +32,9 @@ object LifeForceChamber extends Item( Config.chamberLifeForce ) with ItemChamber
       EntityUtils.spawnPrecise( world, new LifeForceBoltEntity( world ), player )
     }
     case GunComponents(_, LifeForceChamber, _, Some(WideLens), _ ) => { (world, player) =>
-      EntityUtils.spawnScatter(world, new LifeForceBoltEntity(world), player, 9, 5 )
+      EntityUtils.spawnScatter(world, player, 9, 5 ){ () =>
+        new LifeForceBoltEntity(world)
+      }
     }
   })
 }

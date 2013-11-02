@@ -31,7 +31,9 @@ object LaserChamber extends Item( Config.chamberLaser ) with ItemChamber {
       EntityUtils.spawnPrecise( world, new LaserBoltEntity( world ), player )
     }
     case GunComponents(_, LaserChamber, _, Some(WideLens), _ ) => { (world, player) =>
-      EntityUtils.spawnScatter(world, new LaserBoltEntity(world), player, 9, 5 )
+      EntityUtils.spawnScatter(world, player, 9, 5 ){ () =>
+        new LaserBoltEntity(world)
+      }
     }
   })
 }
