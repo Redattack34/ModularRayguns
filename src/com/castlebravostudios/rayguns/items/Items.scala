@@ -24,8 +24,11 @@ import com.castlebravostudios.rayguns.items.lenses.WideLens
 import com.castlebravostudios.rayguns.items.misc._
 import com.castlebravostudios.rayguns.items.misc.GlassGainMedium
 import com.castlebravostudios.rayguns.items.misc.GlowstoneGainMedium
-
 import net.minecraft.item.Item
+import com.castlebravostudios.rayguns.items.emitters.FortifiedSunlightEmitter
+import com.castlebravostudios.rayguns.items.emitters.LaserEmitter
+import com.castlebravostudios.rayguns.items.chambers.FortifiedSunlightChamber
+import com.castlebravostudios.rayguns.items.chambers.LaserChamber
 
 object Items {
 
@@ -57,11 +60,13 @@ object Items {
     registerItem( HeatRayEmitter )
     registerItem( LifeForceEmitter )
     registerItem( FrostRayEmitter )
+    registerItem( FortifiedSunlightEmitter )
 
     registerItem( LaserChamber )
     registerItem( HeatRayChamber )
     registerItem( LifeForceChamber )
     registerItem( FrostRayChamber )
+    registerItem( FortifiedSunlightChamber )
   }
 
   /**
