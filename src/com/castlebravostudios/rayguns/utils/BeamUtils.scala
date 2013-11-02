@@ -7,14 +7,18 @@ import net.minecraft.util.Vec3
 import net.minecraft.util.{ MovingObjectPosition => TraceHit }
 import net.minecraft.entity.Entity
 import scala.collection.JavaConverters._
+import com.castlebravostudios.rayguns.entities.beams.LaserBeam
+import net.minecraft.src.ModLoader
+import cpw.mods.fml.client.FMLClientHandler
 
 object BeamUtils {
 
-  def spawnSingleShot( fx : EntityFX, world : World, player : EntityLivingBase ) : Unit = {
+  def spawnSingleShot( fx : LaserBeam, world : World, player : EntityLivingBase ) : Unit = {
+    fx.shooter = player
     val hit = raytrace( world, player, 20.0d )
     if ( hit != null ) {
-      println( hit.hitVec )
-      println( hit.typeOfHit )
+      fx.onImpact(hit)
+      FMLClientHandler.instance().getClient().effectRenderer.addEffect(fx)
     }
   }
 
@@ -34,7 +38,7 @@ object BeamUtils {
     val blockDist = block.hitVec.distanceTo(playerPos)
     val entityDist = entity.hitVec.distanceTo(playerPos)
 
-    if ( blockDist > entityDist ) block
+    if ( blockDist < entityDist ) block
     else entity
   }
 
@@ -62,8 +66,8 @@ object BeamUtils {
     val reach = 1.1 * distance
     val box = player.boundingBox.expand(reach, reach, reach)
     world.getEntitiesWithinAABBExcludingEntity(player, box).asScala.map{
-      case e : Entity => e
-      case _ => null : Entity
+      case e : Entity =>  e
+      case _ => ;null : Entity
     }
   }
 
@@ -72,7 +76,11 @@ object BeamUtils {
     val box = entity.boundingBox.expand(border, border, border)
     val intercept = box.calculateIntercept(start, end)
 
-    if ( intercept != null ) new TraceHit( entity )
+    if ( intercept != null ) {
+      val hit = new TraceHit( entity )
+      hit.hitVec = intercept.hitVec
+      hit
+    }
     else null
   }
 
