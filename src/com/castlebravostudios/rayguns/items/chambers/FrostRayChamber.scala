@@ -7,7 +7,7 @@ import com.castlebravostudios.rayguns.items.emitters.FrostRayEmitter
 import com.castlebravostudios.rayguns.items.lenses.PreciseLens
 import com.castlebravostudios.rayguns.items.lenses.WideLens
 import com.castlebravostudios.rayguns.mod.Config
-import com.castlebravostudios.rayguns.utils.EntityUtils
+import com.castlebravostudios.rayguns.utils.BoltUtils
 import com.castlebravostudios.rayguns.utils.GunComponents
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer
 
@@ -26,13 +26,13 @@ object FrostRayChamber extends Item( Config.chamberFrostRay ) with ItemChamber {
 
   BeamRegistry.register({
     case GunComponents(_, FrostRayChamber, _, None, _) => { (world, player) =>
-      EntityUtils.spawnNormal( world, new FrostRayBoltEntity(world), player )
+      BoltUtils.spawnNormal( world, new FrostRayBoltEntity(world), player )
     }
     case GunComponents(_, FrostRayChamber, _, Some(PreciseLens), _ ) => { (world, player) =>
-      EntityUtils.spawnPrecise( world, new FrostRayBoltEntity( world ), player )
+      BoltUtils.spawnPrecise( world, new FrostRayBoltEntity( world ), player )
     }
     case GunComponents(_, FrostRayChamber, _, Some(WideLens), _ ) => { (world, player) =>
-      EntityUtils.spawnScatter(world, player, 9, 5 ){ () =>
+      BoltUtils.spawnScatter(world, player, 9, 5 ){ () =>
         new FrostRayBoltEntity(world)
       }
     }

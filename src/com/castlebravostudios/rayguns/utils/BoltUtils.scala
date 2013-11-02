@@ -8,7 +8,7 @@ import java.util.Random
 import net.minecraft.entity.player.EntityPlayer
 import com.castlebravostudios.rayguns.entities.bolts.BaseBoltEntity
 
-object EntityUtils {
+object BoltUtils {
 
   private final val rand = new Random();
 

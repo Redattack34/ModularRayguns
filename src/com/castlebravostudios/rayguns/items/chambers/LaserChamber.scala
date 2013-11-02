@@ -7,7 +7,7 @@ import com.castlebravostudios.rayguns.items.emitters.LaserEmitter
 import com.castlebravostudios.rayguns.items.lenses.PreciseLens
 import com.castlebravostudios.rayguns.items.lenses.WideLens
 import com.castlebravostudios.rayguns.mod.Config
-import com.castlebravostudios.rayguns.utils.EntityUtils
+import com.castlebravostudios.rayguns.utils.BoltUtils
 import com.castlebravostudios.rayguns.utils.GunComponents
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer
 
@@ -25,13 +25,13 @@ object LaserChamber extends Item( Config.chamberLaser ) with ItemChamber {
 
   BeamRegistry.register({
     case GunComponents(_, LaserChamber, _, None, _) => { (world, player) =>
-      EntityUtils.spawnNormal( world, new LaserBoltEntity(world), player )
+      BoltUtils.spawnNormal( world, new LaserBoltEntity(world), player )
     }
     case GunComponents(_, LaserChamber, _, Some(PreciseLens), _ ) => { (world, player) =>
-      EntityUtils.spawnPrecise( world, new LaserBoltEntity( world ), player )
+      BoltUtils.spawnPrecise( world, new LaserBoltEntity( world ), player )
     }
     case GunComponents(_, LaserChamber, _, Some(WideLens), _ ) => { (world, player) =>
-      EntityUtils.spawnScatter(world, player, 9, 5 ){ () =>
+      BoltUtils.spawnScatter(world, player, 9, 5 ){ () =>
         new LaserBoltEntity(world)
       }
     }
