@@ -32,7 +32,7 @@ object RecipeRegisterer {
   def registerTier2Emitter( emitter : Item, vert : AnyRef, horiz: AnyRef) : Unit =
     registerTier2Emitter( emitter, vert, horiz, vert, horiz )
   def registerTier2Emitter( emitter : Item, top : AnyRef, right : AnyRef, bottom : AnyRef, left : AnyRef ) : Unit = {
-    GameRegistry.addRecipe( new ItemStack( emitter, 2 ),
+    GameRegistry.addRecipe( new ItemStack( emitter, 1 ),
       "ITI",
       "LDR",
       "IBI",
