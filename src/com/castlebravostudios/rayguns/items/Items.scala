@@ -27,6 +27,8 @@ import com.castlebravostudios.rayguns.items.misc.GlowstoneGainMedium
 import net.minecraft.item.Item
 import com.castlebravostudios.rayguns.items.emitters.FortifiedSunlightEmitter
 import com.castlebravostudios.rayguns.items.emitters.LaserEmitter
+import com.castlebravostudios.rayguns.items.chambers.FortifiedSunlightChamber
+import com.castlebravostudios.rayguns.items.chambers.LaserChamber
 
 object Items {
 
@@ -64,6 +66,7 @@ object Items {
     registerItem( HeatRayChamber )
     registerItem( LifeForceChamber )
     registerItem( FrostRayChamber )
+    registerItem( FortifiedSunlightChamber )
   }
 
   /**
