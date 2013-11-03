@@ -9,13 +9,15 @@ import net.minecraft.util.MovingObjectPosition
 import net.minecraft.util.EnumMovingObjectType
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.Vec3
+import com.castlebravostudios.rayguns.utils.Extensions.WorldExtension
+import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData
+import cpw.mods.fml.common.registry.IThrowableEntity
+import com.google.common.io.ByteArrayDataOutput
 
 class LaserBeam(world : World) extends Entity( world ) {
 
-  private var _shooter : EntityLivingBase = _
-  private var shooterName : String = ""
-
   private var timeRemaining = 3
+  var length : Double = 0
 
   ignoreFrustumCheck = true
 
@@ -25,19 +27,20 @@ class LaserBeam(world : World) extends Entity( world ) {
   }
 
 
-  def length_=( length : Double ) : Unit = motionX = length
-  def length : Double = motionX
-
-  def shooter_=( shooter : EntityLivingBase ) : Unit = {
+  private var _shooter : Entity = _
+  private var shooterName : String = ""
+  def shooter_=( shooter : Entity ) : Unit = {
     _shooter = shooter
     shooterName = shooter.getEntityName
   }
-  def shooter : EntityLivingBase = {
+  def shooter : Entity = {
     if ( _shooter == null && shooterName != null && !shooterName.isEmpty ) {
       _shooter = this.worldObj.getPlayerEntityByName(shooterName)
     }
     _shooter
   }
+  def getThrower = shooter
+  def setThrower( e : Entity ) = shooter = e
 
   def onImpact( pos : MovingObjectPosition ) {
     createSmoke( pos.hitVec.xCoord, pos.hitVec.yCoord, pos.hitVec.zCoord )

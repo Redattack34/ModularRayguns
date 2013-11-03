@@ -23,9 +23,14 @@ class FrostRayBoltEntity( world : World ) extends BaseBoltEntity(world) {
     createParticles()
     hit.attackEntityFrom(new EntityDamageSource("frostray", shooter), 2)
 
+    val livingShooter = shooter match{
+      case l : EntityLivingBase => l
+      case _ => null
+    }
+
     hit match {
       case living : EntityLivingBase => {
-        Potion.moveSlowdown.affectEntity(shooter, living, 0, 1.0d)
+        Potion.moveSlowdown.affectEntity(livingShooter, living, 0, 1.0d)
       }
     }
 

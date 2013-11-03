@@ -14,7 +14,6 @@ import net.minecraft.util.MathHelper
 object BeamUtils {
 
   def spawnSingleShot( fx : LaserBeam, world : World, player : EntityLivingBase ) : Unit = {
-    if ( world.isOnServer ) return
     fx.shooter = player
     val start = getPlayerPosition(world, player)
     val hit = raytrace( world, player, 20.0d )
@@ -24,7 +23,9 @@ object BeamUtils {
       fx.length = hit.hitVec.distanceTo(start)
       fx.rotationPitch = player.rotationPitch
       fx.rotationYaw = player.rotationYaw
-      world.spawnEntityInWorld(fx)
+      if ( world.isOnClient ) {
+        world.spawnEntityInWorld(fx)
+      }
     }
   }
 
@@ -101,8 +102,10 @@ object BeamUtils {
     def toRadians(yaw: Float): Float = yaw / 180.0F * Math.PI.floatValue
     val offsetX = (MathHelper.cos(toRadians(player.rotationYaw)) * 0.08F).doubleValue()
     val offsetZ = (MathHelper.sin(toRadians(player.rotationYaw)) * 0.08F).doubleValue()
+
+    val y = if ( world.isOnClient ) player.posY else player.posY + 1.62
     world.getWorldVec3Pool().getVecFromPool(
-        player.posX - offsetX, player.posY + player.getEyeHeight() * -0.2, player.posZ - offsetZ)
+        player.posX - offsetX, y, player.posZ - offsetZ)
   }
 
   private def getPlayerTarget( world : World, player : EntityLivingBase, distance : Double ) : Vec3 = {

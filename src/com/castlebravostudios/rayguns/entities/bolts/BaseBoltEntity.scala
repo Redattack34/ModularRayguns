@@ -9,6 +9,7 @@ import net.minecraft.entity.Entity
 import net.minecraft.entity.IProjectile
 import net.minecraft.util.MathHelper
 import scala.collection.JavaConversions._
+import cpw.mods.fml.common.registry.IThrowableEntity
 
 /**
  * Abstract base class for beam entities. Most of this code is a poor translation
@@ -16,7 +17,7 @@ import scala.collection.JavaConversions._
  * onUpdate. Not coincedentally, most of this code is really non-idiomatic Scala
  * and should not be taken as an example.
  */
-abstract class BaseBoltEntity( world : World ) extends Entity( world ) with IProjectile {
+abstract class BaseBoltEntity( world : World ) extends Entity( world ) with IProjectile with IThrowableEntity {
 
   def colorRed : Float = 1.0f
   def colorBlue : Float = 1.0f
@@ -25,19 +26,22 @@ abstract class BaseBoltEntity( world : World ) extends Entity( world ) with IPro
   def lifetime = 20
   private var timeRemaining = lifetime
 
-  private var _shooter : EntityLivingBase = _
+  private var _shooter : Entity = _
   private var shooterName : String = ""
 
-  def shooter_=( shooter : EntityLivingBase ) : Unit = {
+  def shooter_=( shooter : Entity ) : Unit = {
     _shooter = shooter
     shooterName = shooter.getEntityName
   }
-  def shooter : EntityLivingBase = {
+  def shooter : Entity = {
     if ( _shooter == null && shooterName != null && !shooterName.isEmpty ) {
       _shooter = this.worldObj.getPlayerEntityByName(shooterName)
     }
     _shooter
   }
+
+  def getThrower = shooter
+  def setThrower( e : Entity ) = shooter = e
 
   def pitchOffset : Float = 0.5f
   def velocityMultiplier : Float = 1.5f
