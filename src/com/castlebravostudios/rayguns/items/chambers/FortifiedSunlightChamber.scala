@@ -11,6 +11,9 @@ import com.castlebravostudios.rayguns.utils.GunComponents
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer
 import net.minecraft.item.Item
 import com.castlebravostudios.rayguns.entities.effects.FortifiedSunlightBoltEntity
+import com.castlebravostudios.rayguns.entities.effects.FortifiedSunlightBeamEntity
+import com.castlebravostudios.rayguns.items.lenses.PreciseBeamLens
+import com.castlebravostudios.rayguns.utils.BeamUtils
 
 object FortifiedSunlightChamber extends Item( Config.chamberFortifiedSunlight ) with ItemChamber {
 
@@ -33,6 +36,9 @@ object FortifiedSunlightChamber extends Item( Config.chamberFortifiedSunlight ) 
       BoltUtils.spawnScatter(world, player, 9, 5 ){ () =>
         new FortifiedSunlightBoltEntity(world)
       }
+    }
+    case GunComponents(_, FortifiedSunlightChamber, _, Some(PreciseBeamLens), _ ) => { (world, player) =>
+      BeamUtils.spawnSingleShot( new FortifiedSunlightBeamEntity(world), world, player )
     }
   })
 }

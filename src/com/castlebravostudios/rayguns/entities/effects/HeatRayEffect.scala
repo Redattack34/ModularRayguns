@@ -2,12 +2,12 @@ package com.castlebravostudios.rayguns.entities.effects
 
 import com.castlebravostudios.rayguns.entities.Shootable
 import com.castlebravostudios.rayguns.entities.BaseBoltEntity
-
 import net.minecraft.block.Block
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.EntityDamageSource
 import net.minecraft.world.World
+import com.castlebravostudios.rayguns.entities.BaseBeamEntity
 
 
 trait HeatRayEffect extends BaseEffect {
@@ -49,3 +49,4 @@ trait HeatRayEffect extends BaseEffect {
 }
 
 class HeatRayBoltEntity( world : World ) extends BaseBoltEntity(world) with HeatRayEffect
+class HeatRayBeamEntity( world : World ) extends BaseBeamEntity(world) with HeatRayEffect

@@ -11,6 +11,9 @@ import com.castlebravostudios.rayguns.utils.GunComponents
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer
 import net.minecraft.item.Item
 import com.castlebravostudios.rayguns.entities.effects.LifeForceBoltEntity
+import com.castlebravostudios.rayguns.items.lenses.PreciseBeamLens
+import com.castlebravostudios.rayguns.utils.BeamUtils
+import com.castlebravostudios.rayguns.entities.effects.LifeForceBeamEntity
 
 
 object LifeForceChamber extends Item( Config.chamberLifeForce ) with ItemChamber {
@@ -34,6 +37,9 @@ object LifeForceChamber extends Item( Config.chamberLifeForce ) with ItemChamber
       BoltUtils.spawnScatter(world, player, 9, 5 ){ () =>
         new LifeForceBoltEntity(world)
       }
+    }
+    case GunComponents(_, LifeForceChamber, _, Some(PreciseBeamLens), _ ) => { (world, player) =>
+      BeamUtils.spawnSingleShot( new LifeForceBeamEntity(world), world, player )
     }
   })
 }

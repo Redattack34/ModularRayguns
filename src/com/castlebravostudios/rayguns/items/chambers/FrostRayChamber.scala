@@ -10,8 +10,10 @@ import com.castlebravostudios.rayguns.mod.Config
 import com.castlebravostudios.rayguns.utils.BoltUtils
 import com.castlebravostudios.rayguns.utils.GunComponents
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer
-
 import net.minecraft.item.Item
+import com.castlebravostudios.rayguns.items.lenses.PreciseBeamLens
+import com.castlebravostudios.rayguns.utils.BeamUtils
+import com.castlebravostudios.rayguns.entities.effects.FrostRayBeamEntity
 
 
 object FrostRayChamber extends Item( Config.chamberFrostRay ) with ItemChamber {
@@ -35,6 +37,9 @@ object FrostRayChamber extends Item( Config.chamberFrostRay ) with ItemChamber {
       BoltUtils.spawnScatter(world, player, 9, 5 ){ () =>
         new FrostRayBoltEntity(world)
       }
+    }
+    case GunComponents(_, FrostRayChamber, _, Some(PreciseBeamLens), _ ) => { (world, player) =>
+      BeamUtils.spawnSingleShot( new FrostRayBeamEntity(world), world, player )
     }
   })
 }

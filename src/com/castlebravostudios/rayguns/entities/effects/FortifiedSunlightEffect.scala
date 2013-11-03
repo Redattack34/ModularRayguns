@@ -7,6 +7,7 @@ import net.minecraft.entity.EntityLivingBase
 import net.minecraft.util.EntityDamageSource
 import net.minecraft.world.World
 import java.util.Random
+import com.castlebravostudios.rayguns.entities.BaseBeamEntity
 
 
 trait FortifiedSunlightEffect extends BaseEffect {
@@ -43,3 +44,4 @@ trait FortifiedSunlightEffect extends BaseEffect {
 }
 
 class FortifiedSunlightBoltEntity( world : World ) extends BaseBoltEntity(world) with FortifiedSunlightEffect
+class FortifiedSunlightBeamEntity( world : World ) extends BaseBeamEntity(world) with FortifiedSunlightEffect

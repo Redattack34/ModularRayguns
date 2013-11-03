@@ -2,7 +2,6 @@ package com.castlebravostudios.rayguns.entities.effects
 
 import com.castlebravostudios.rayguns.entities.Shootable
 import com.castlebravostudios.rayguns.entities.BaseBoltEntity
-
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.entity.Entity
@@ -10,6 +9,7 @@ import net.minecraft.entity.EntityLivingBase
 import net.minecraft.potion.Potion
 import net.minecraft.util.EntityDamageSource
 import net.minecraft.world.World
+import com.castlebravostudios.rayguns.entities.BaseBeamEntity
 
 
 trait FrostRayEffect extends BaseEffect {
@@ -63,3 +63,4 @@ trait FrostRayEffect extends BaseEffect {
 }
 
 class FrostRayBoltEntity( world : World ) extends BaseBoltEntity(world) with FrostRayEffect
+class FrostRayBeamEntity( world : World ) extends BaseBeamEntity(world) with FrostRayEffect

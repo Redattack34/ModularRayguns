@@ -11,6 +11,9 @@ import com.castlebravostudios.rayguns.utils.GunComponents
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer
 import net.minecraft.item.Item
 import com.castlebravostudios.rayguns.entities.effects.HeatRayBoltEntity
+import com.castlebravostudios.rayguns.items.lenses.PreciseBeamLens
+import com.castlebravostudios.rayguns.utils.BeamUtils
+import com.castlebravostudios.rayguns.entities.effects.HeatRayBeamEntity
 
 
 object HeatRayChamber extends Item( Config.chamberHeatRay ) with ItemChamber {
@@ -34,6 +37,9 @@ object HeatRayChamber extends Item( Config.chamberHeatRay ) with ItemChamber {
       BoltUtils.spawnScatter(world, player, 9, 5 ){ () =>
         new HeatRayBoltEntity(world)
       }
+    }
+    case GunComponents(_, HeatRayChamber, _, Some(PreciseBeamLens), _ ) => { (world, player) =>
+      BeamUtils.spawnSingleShot( new HeatRayBeamEntity(world), world, player )
     }
   })
 }

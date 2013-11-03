@@ -2,11 +2,11 @@ package com.castlebravostudios.rayguns.entities.effects
 
 import com.castlebravostudios.rayguns.entities.Shootable
 import com.castlebravostudios.rayguns.entities.BaseBoltEntity
-
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.util.EntityDamageSource
 import net.minecraft.world.World
+import com.castlebravostudios.rayguns.entities.BaseBeamEntity
 
 
 trait LifeForceEffect extends BaseEffect {
@@ -39,3 +39,4 @@ trait LifeForceEffect extends BaseEffect {
 }
 
 class LifeForceBoltEntity( world : World ) extends BaseBoltEntity( world ) with LifeForceEffect
+class LifeForceBeamEntity( world : World ) extends BaseBeamEntity( world ) with LifeForceEffect
