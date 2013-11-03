@@ -104,7 +104,7 @@ object BeamUtils {
     val offsetX = (MathHelper.cos(toRadians(player.rotationYaw)) * 0.08F).doubleValue()
     val offsetZ = (MathHelper.sin(toRadians(player.rotationYaw)) * 0.08F).doubleValue()
 
-    val y = if ( world.isOnClient ) player.posY else player.posY + 1.62
+    val y = if ( world.isOnClient ) player.posY - 0.035 else player.posY + 1.62
     world.getWorldVec3Pool().getVecFromPool(
         player.posX - offsetX, y, player.posZ - offsetZ)
   }

@@ -27,13 +27,17 @@ class BeamRenderer extends Render {
     GL11.glScalef(0.025f, 0.025f, 1.0f)
     GL11.glDisable(GL11.GL_LIGHTING)
     GL11.glDisable(GL11.GL_CULL_FACE)
+    GL11.glEnable(GL11.GL_BLEND);
+    GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
+    GL11.glDepthMask(false);
     OpenGlHelper.setActiveTexture(OpenGlHelper.lightmapTexUnit)
     GL11.glDisable(GL11.GL_TEXTURE_2D)
     OpenGlHelper.setActiveTexture(OpenGlHelper.defaultTexUnit)
 
     val tes = Tessellator.instance
 
-    GL11.glColor4f( e.colourRed, e.colourGreen, e.colourBlue, e.colourAlpha )
+    GL11.glColor4f( e.colourRed, e.colourGreen, e.colourBlue,
+      e.colourAlpha * ( e.timeRemaining.toFloat / e.lifetime.toFloat ) )
 
     for ( _ <- 0 until 3 ) {
       tes.startDrawingQuads();
@@ -49,11 +53,13 @@ class BeamRenderer extends Render {
     GL11.glEnable(GL11.GL_TEXTURE_2D)
     OpenGlHelper.setActiveTexture(OpenGlHelper.defaultTexUnit)
     GL11.glColor4f( 1.0f, 1.0f, 1.0f, 1.0f )
+    GL11.glDepthMask(true);
+    GL11.glDisable(GL11.GL_BLEND)
     GL11.glEnable(GL11.GL_CULL_FACE)
     GL11.glEnable(GL11.GL_LIGHTING)
     GL11.glPopMatrix()
   }
 
   def getEntityTexture( e : Entity ) : ResourceLocation =
-    new ResourceLocation( "rayguns", "textures/blocks/laser_bolt.png" )
+    new ResourceLocation( "rayguns", "textures/effects/blank_beam.png" )
 }
