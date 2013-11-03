@@ -14,19 +14,23 @@ import com.castlebravostudios.rayguns.entities.effects.BaseEffect
 
 object BeamUtils {
 
+  val maxBeamLength = 40
+
   def spawnSingleShot( fx : BaseBeamEntity with BaseEffect, world : World, player : EntityLivingBase ) : Unit = {
     fx.shooter = player
     val start = getPlayerPosition(world, player)
-    val hit = raytrace( world, player, 20.0d, fx.collidesWithLiquids )
+    val hit = raytrace( world, player, maxBeamLength, fx.collidesWithLiquids )
     if ( hit != null ) {
       fx.onImpact(hit)
-      fx.setStart( start )
-      fx.length = hit.hitVec.distanceTo(start)
-      fx.rotationPitch = player.rotationPitch
-      fx.rotationYaw = player.rotationYaw
-      if ( world.isOnClient ) {
-        world.spawnEntityInWorld(fx)
-      }
+    }
+    fx.setStart( start )
+
+    val target = if ( hit == null ) getPlayerTarget(world, player, maxBeamLength) else hit.hitVec
+    fx.length = target.distanceTo(start)
+    fx.rotationPitch = player.rotationPitch
+    fx.rotationYaw = player.rotationYaw
+    if ( world.isOnClient ) {
+      world.spawnEntityInWorld(fx)
     }
   }
 
