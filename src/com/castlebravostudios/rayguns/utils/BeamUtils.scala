@@ -1,20 +1,21 @@
 package com.castlebravostudios.rayguns.utils
 
-import net.minecraft.entity.EntityLivingBase
-import net.minecraft.world.World
-import net.minecraft.client.particle.EntityFX
-import net.minecraft.util.Vec3
-import net.minecraft.util.{ MovingObjectPosition => TraceHit }
-import net.minecraft.entity.Entity
-import scala.collection.JavaConverters._
+import scala.collection.JavaConverters.asScalaBufferConverter
+
 import com.castlebravostudios.rayguns.entities.beams.LaserBeam
-import net.minecraft.src.ModLoader
+import com.castlebravostudios.rayguns.utils.Extensions.WorldExtension
+
 import cpw.mods.fml.client.FMLClientHandler
+import net.minecraft.entity.Entity
+import net.minecraft.entity.EntityLivingBase
+import net.minecraft.util.{MovingObjectPosition => TraceHit}
+import net.minecraft.util.Vec3
+import net.minecraft.world.World
 
 object BeamUtils {
 
   def spawnSingleShot( fx : LaserBeam, world : World, player : EntityLivingBase ) : Unit = {
-    if ( !world.isRemote ) return
+    if ( world.isOnServer ) return
     fx.shooter = player
     val hit = raytrace( world, player, 20.0d )
     if ( hit != null ) {
