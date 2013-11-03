@@ -44,6 +44,23 @@ object RecipeRegisterer {
       'L' : Character, left )
   }
 
+  def registerTier3Emitter( emitter : Item, item : AnyRef) : Unit =
+    registerTier3Emitter( emitter, item, item, item, item)
+  def registerTier3Emitter( emitter : Item, vert : AnyRef, horiz: AnyRef) : Unit =
+    registerTier3Emitter( emitter, vert, horiz, vert, horiz )
+  def registerTier3Emitter( emitter : Item, top : AnyRef, right : AnyRef, bottom : AnyRef, left : AnyRef ) : Unit = {
+    GameRegistry.addRecipe( new ItemStack( emitter, 1 ),
+      "ITI",
+      "LDR",
+      "IBI",
+      'I' : Character, Item.ingotIron,
+      'D' : Character, Item.netherStar,
+      'T' : Character, top,
+      'R' : Character, right,
+      'B' : Character, bottom,
+      'L' : Character, left )
+  }
+
   def registerTier1Chamber( chamber : Item, emitter : Item ) : Unit = {
     GameRegistry.addRecipe( new ItemStack( chamber, 1 ),
       "III",

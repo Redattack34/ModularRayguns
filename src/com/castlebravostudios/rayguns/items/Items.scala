@@ -29,6 +29,8 @@ import com.castlebravostudios.rayguns.items.emitters.FortifiedSunlightEmitter
 import com.castlebravostudios.rayguns.items.emitters.LaserEmitter
 import com.castlebravostudios.rayguns.items.chambers.FortifiedSunlightChamber
 import com.castlebravostudios.rayguns.items.chambers.LaserChamber
+import com.castlebravostudios.rayguns.items.emitters.ExplosiveEmitter
+import com.castlebravostudios.rayguns.items.emitters.LaserEmitter
 
 object Items {
 
@@ -61,6 +63,7 @@ object Items {
     registerItem( LifeForceEmitter )
     registerItem( FrostRayEmitter )
     registerItem( FortifiedSunlightEmitter )
+    registerItem( ExplosiveEmitter )
 
     registerItem( LaserChamber )
     registerItem( HeatRayChamber )
