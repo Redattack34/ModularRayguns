@@ -1,13 +1,14 @@
 package com.castlebravostudios.rayguns.entities
 
-import net.minecraft.client.renderer.entity.Render
-import net.minecraft.util.ResourceLocation
-import net.minecraft.entity.Entity
 import org.lwjgl.opengl.GL11
-import net.minecraft.client.renderer.Tessellator
+
+import com.castlebravostudios.rayguns.entities.effects.BaseEffect
+
 import net.minecraft.client.renderer.OpenGlHelper
-import com.castlebravostudios.rayguns.entities.BaseBoltEntity
-import com.castlebravostudios.rayguns.entities.effects._
+import net.minecraft.client.renderer.Tessellator
+import net.minecraft.client.renderer.entity.Render
+import net.minecraft.entity.Entity
+import net.minecraft.util.ResourceLocation
 
 class BoltRenderer extends Render {
 

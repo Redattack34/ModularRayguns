@@ -24,19 +24,15 @@ trait FortifiedSunlightEffect extends BaseEffect {
   private def hitUndead( entity : EntityLivingBase ) : Unit = {
     entity.setFire(8)
     entity.attackEntityFrom(new EntityDamageSource("fortifiedsunlight", shooter), 8)
-    spawnParticles()
   }
 
   private def hitLiving( entity : Entity ) : Unit = {
     entity.attackEntityFrom(new EntityDamageSource("fortifiedsunlight", shooter), 6)
-    spawnParticles()
   }
 
-  def hitBlock(hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Unit = {
-    spawnParticles()
-  }
+  def hitBlock(hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Unit = ()
 
-  private def spawnParticles( ) : Unit = {
+  def createImpactParticles( hitX : Double, hitY : Double, hitZ : Double ) : Unit = {
     def randVel = random.nextGaussian() * 0.02D
     def randPos( x : Double ) = x + ( random.nextFloat().doubleValue() - 0.5)
     for ( _ <- 0 until 4 ) {

@@ -36,6 +36,8 @@ trait HeatRayEffect extends BaseEffect {
     }
   }
 
+  def createImpactParticles( hitX : Double, hitY : Double, hitZ : Double ) : Unit = ()
+
   private def adjustCoords( x : Int, y : Int, z : Int, side : Int ) : (Int, Int, Int) = side match {
     case 0 => (x, y - 1, z)
     case 1 => (x, y + 1, z)

@@ -11,7 +11,8 @@ trait BaseEffect extends Entity {
   def colourAlpha : Float = 1.0f
 
   def hitEntity( entity : Entity ) : Unit
-  def hitBlock(hitX : Int, hitY : Int, hitZ : Int, side : Int )
+  def hitBlock(hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Unit
+  def createImpactParticles( hitX : Double, hitY : Double, hitZ : Double ) : Unit
 
   def collidesWithLiquids : Boolean = false
 

@@ -1,7 +1,7 @@
 package com.castlebravostudios.rayguns.utils
 
 import scala.collection.JavaConverters.asScalaBufferConverter
-import com.castlebravostudios.rayguns.entities.beams.LaserBeam
+import com.castlebravostudios.rayguns.entities.BaseBeamEntity
 import com.castlebravostudios.rayguns.utils.Extensions.WorldExtension
 import cpw.mods.fml.client.FMLClientHandler
 import net.minecraft.entity.Entity
@@ -10,13 +10,14 @@ import net.minecraft.util.{MovingObjectPosition => TraceHit}
 import net.minecraft.util.Vec3
 import net.minecraft.world.World
 import net.minecraft.util.MathHelper
+import com.castlebravostudios.rayguns.entities.effects.BaseEffect
 
 object BeamUtils {
 
-  def spawnSingleShot( fx : LaserBeam, world : World, player : EntityLivingBase ) : Unit = {
+  def spawnSingleShot( fx : BaseBeamEntity with BaseEffect, world : World, player : EntityLivingBase ) : Unit = {
     fx.shooter = player
     val start = getPlayerPosition(world, player)
-    val hit = raytrace( world, player, 20.0d )
+    val hit = raytrace( world, player, 20.0d, fx.collidesWithLiquids )
     if ( hit != null ) {
       fx.onImpact(hit)
       fx.setStart( start )
@@ -29,8 +30,8 @@ object BeamUtils {
     }
   }
 
-  private def raytrace( world: World, player : EntityLivingBase, distance : Double ) : TraceHit = {
-    val hitBlock = raytraceForBlocks( world, player, distance )
+  private def raytrace( world: World, player : EntityLivingBase, distance : Double, hitLiquid : Boolean ) : TraceHit = {
+    val hitBlock = raytraceForBlocks( world, player, distance, hitLiquid )
     val hitEntity = raytraceForEntities( world, player, distance )
 
     (hitBlock, hitEntity) match {
@@ -91,11 +92,11 @@ object BeamUtils {
     else null
   }
 
-  private def raytraceForBlocks( world : World, player : EntityLivingBase, distance : Double ) : TraceHit = {
+  private def raytraceForBlocks( world : World, player : EntityLivingBase, distance : Double, hitLiquid : Boolean ) : TraceHit = {
     val startVector = getPlayerPosition( world, player )
     val endVector = vecMult( player.getLookVec(), distance ).addVector(
         startVector.xCoord, startVector.yCoord, startVector.zCoord )
-    world.clip(startVector, endVector, true);
+    world.clip(startVector, endVector, hitLiquid);
   }
 
   private def getPlayerPosition( world : World, player : EntityLivingBase ) : Vec3 = {

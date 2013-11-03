@@ -20,7 +20,6 @@ trait FrostRayEffect extends BaseEffect {
   def colourGreen : Float = 1.0f
 
   def hitEntity( hit : Entity ) : Unit = {
-    createParticles()
     hit.attackEntityFrom(new EntityDamageSource("frostray", shooter), 2)
 
     val livingShooter = shooter match{
@@ -37,8 +36,6 @@ trait FrostRayEffect extends BaseEffect {
   }
 
   def hitBlock( hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Unit = {
-    createParticles()
-
     val material = worldObj.getBlockMaterial(hitX, hitY, hitZ)
     val metadata = worldObj.getBlockMetadata(hitX, hitY, hitZ)
 
@@ -58,7 +55,7 @@ trait FrostRayEffect extends BaseEffect {
 
   override def collidesWithLiquids = true
 
-  private def createParticles() {
+  def createImpactParticles( hitX : Double, hitY : Double, hitZ : Double ) : Unit = {
     for ( _ <- 0 until 4 ) {
       this.worldObj.spawnParticle("snowballpoof", this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
     }

@@ -17,7 +17,6 @@ trait LifeForceEffect extends BaseEffect {
   def colourGreen : Float = 1.0f
 
   def hitEntity( hit : Entity ) : Unit = {
-    createParticles()
     if ( hit.isInstanceOf[EntityLivingBase] ) {
       val living = hit.asInstanceOf[EntityLivingBase]
 
@@ -30,11 +29,9 @@ trait LifeForceEffect extends BaseEffect {
     }
   }
 
-  def hitBlock( hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Unit = {
-    createParticles()
-  }
+  def hitBlock( hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Unit = ()
 
-  private def createParticles() {
+  def createImpactParticles( hitX : Double, hitY : Double, hitZ : Double ) : Unit = {
     for ( _ <- 0 until 4 ) {
       this.worldObj.spawnParticle("cloud", this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
     }

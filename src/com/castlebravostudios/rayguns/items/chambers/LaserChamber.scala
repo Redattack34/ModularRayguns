@@ -13,8 +13,9 @@ import net.minecraft.item.Item
 import com.castlebravostudios.rayguns.items.lenses.PreciseBeamLens
 import com.castlebravostudios.rayguns.utils.BeamUtils
 import net.minecraft.client.particle.EntityFX
-import com.castlebravostudios.rayguns.entities.beams.LaserBeam
+import com.castlebravostudios.rayguns.entities.BaseBeamEntity
 import com.castlebravostudios.rayguns.entities.effects.LaserBoltEntity
+import com.castlebravostudios.rayguns.entities.effects.LaserBeamEntity
 
 object LaserChamber extends Item( Config.chamberLaser ) with ItemChamber {
 
@@ -39,7 +40,7 @@ object LaserChamber extends Item( Config.chamberLaser ) with ItemChamber {
       }
     }
     case GunComponents(_, LaserChamber, _, Some(PreciseBeamLens), _ ) => { (world, player) =>
-      BeamUtils.spawnSingleShot( new LaserBeam(world), world, player )
+      BeamUtils.spawnSingleShot( new LaserBeamEntity(world), world, player )
     }
   })
 }

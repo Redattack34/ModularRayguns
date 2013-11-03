@@ -1,7 +1,10 @@
 package com.castlebravostudios.rayguns.entities
 
-import com.castlebravostudios.rayguns.entities.beams.LaserBeam
-import com.castlebravostudios.rayguns.entities.effects._
+import com.castlebravostudios.rayguns.entities.effects.FortifiedSunlightBoltEntity
+import com.castlebravostudios.rayguns.entities.effects.FrostRayBoltEntity
+import com.castlebravostudios.rayguns.entities.effects.HeatRayBoltEntity
+import com.castlebravostudios.rayguns.entities.effects.LaserBoltEntity
+import com.castlebravostudios.rayguns.entities.effects.LifeForceBoltEntity
 import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 import cpw.mods.fml.client.registry.RenderingRegistry
@@ -20,7 +23,7 @@ object Entities {
     registerBoltEntity( classOf[FrostRayBoltEntity], "FrostRayBolt", 3 )
     registerBoltEntity( classOf[FortifiedSunlightBoltEntity], "FortifiedSunlightBolt", 4 )
 
-    registerBeamEntity( classOf[LaserBeam], "LaserBeam", 20 )
+    registerBeamEntity( classOf[BaseBeamEntity], "LaserBeam", 20 )
   }
 
   private def registerBoltEntity[T <: Entity]( cls : Class[T], name : String, id : Int ) : Unit = {

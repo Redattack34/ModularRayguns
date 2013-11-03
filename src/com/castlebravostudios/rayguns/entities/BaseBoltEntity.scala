@@ -1,13 +1,14 @@
 package com.castlebravostudios.rayguns.entities
-import net.minecraft.util.MovingObjectPosition
-import net.minecraft.world.World
-import net.minecraft.nbt.NBTTagCompound
-import net.minecraft.util.EnumMovingObjectType
+
+import scala.collection.JavaConversions.asScalaBuffer
 import net.minecraft.entity.Entity
 import net.minecraft.entity.IProjectile
+import net.minecraft.nbt.NBTTagCompound
+import net.minecraft.util.EnumMovingObjectType
 import net.minecraft.util.MathHelper
-import scala.collection.JavaConversions._
-import com.castlebravostudios.rayguns.entities.Shootable
+import net.minecraft.util.MovingObjectPosition
+import net.minecraft.world.World
+import com.castlebravostudios.rayguns.entities.effects.BaseEffect
 
 /**
  * Abstract base class for beam entities. Most of this code is a poor translation
@@ -16,6 +17,7 @@ import com.castlebravostudios.rayguns.entities.Shootable
  * and should not be taken as an example.
  */
 abstract class BaseBoltEntity( world : World ) extends Entity( world ) with Shootable with IProjectile {
+  self : BaseEffect =>
 
   def lifetime = 20
   private var timeRemaining = lifetime
@@ -103,7 +105,7 @@ abstract class BaseBoltEntity( world : World ) extends Entity( world ) with Shoo
   override def setSize( width : Float, height : Float ) = super.setSize( width, height )
 
   def onImpact( pos : MovingObjectPosition ) {
-
+    createImpactParticles(posX, posY, posZ)
     pos.typeOfHit match {
       case EnumMovingObjectType.ENTITY => hitEntity( pos.entityHit )
       case EnumMovingObjectType.TILE => hitBlock( pos.blockX, pos.blockY, pos.blockZ, pos.sideHit )
@@ -111,9 +113,6 @@ abstract class BaseBoltEntity( world : World ) extends Entity( world ) with Shoo
 
     setDead()
   }
-
-  def hitEntity( entity : Entity ) : Unit
-  def hitBlock( hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Unit
 
   override def writeEntityToNBT( tag : NBTTagCompound ) : Unit = {
     super.writeEntityToNBT(tag)

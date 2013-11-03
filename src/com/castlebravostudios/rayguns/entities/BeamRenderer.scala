@@ -1,21 +1,22 @@
 package com.castlebravostudios.rayguns.entities
 
-import net.minecraft.client.renderer.entity.Render
-import net.minecraft.util.ResourceLocation
-import net.minecraft.entity.Entity
 import org.lwjgl.opengl.GL11
-import net.minecraft.client.renderer.Tessellator
+
+import com.castlebravostudios.rayguns.entities.effects.BaseEffect
+
 import net.minecraft.client.renderer.OpenGlHelper
-import com.castlebravostudios.rayguns.entities.BaseBoltEntity
-import com.castlebravostudios.rayguns.entities.beams.LaserBeam
+import net.minecraft.client.renderer.Tessellator
+import net.minecraft.client.renderer.entity.Render
+import net.minecraft.entity.Entity
+import net.minecraft.util.ResourceLocation
 
 class BeamRenderer extends Render {
 
   def doRender( e : Entity, x : Double, y : Double, z : Double, yaw : Float, partialTickTime : Float) : Unit = {
-    doRender( e.asInstanceOf[LaserBeam], x, y, z, yaw, partialTickTime )
+    doRender( e.asInstanceOf[BaseBeamEntity with BaseEffect], x, y, z, yaw, partialTickTime )
   }
 
-  private def doRender( e : LaserBeam, x : Double, y : Double, z : Double, yaw : Float, partialTickTime : Float) : Unit = {
+  private def doRender( e : BaseBeamEntity with BaseEffect, x : Double, y : Double, z : Double, yaw : Float, partialTickTime : Float) : Unit = {
 
     this.bindEntityTexture(e);
     GL11.glPushMatrix();
@@ -32,7 +33,7 @@ class BeamRenderer extends Render {
 
     val tes = Tessellator.instance
 
-    GL11.glColor4f( 1.0f, 1.0f, 1.0f, 1.0f )
+    GL11.glColor4f( e.colourRed, e.colourGreen, e.colourBlue, e.colourAlpha )
 
     for ( _ <- 0 until 3 ) {
       tes.startDrawingQuads();
