@@ -7,11 +7,37 @@ import net.minecraft.util.EntityDamageSource
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.util.MovingObjectPosition
 import net.minecraft.util.EnumMovingObjectType
+import net.minecraft.nbt.NBTTagCompound
+import net.minecraft.util.Vec3
 
-class LaserBeam(world : World) extends EntityFX( world, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d, 0.0d ) {
+class LaserBeam(world : World) extends Entity( world ) {
 
-  var shooter : EntityLivingBase = _
-  particleMaxAge = 3
+  private var _shooter : EntityLivingBase = _
+  private var shooterName : String = ""
+
+  private var timeRemaining = 3
+
+  ignoreFrustumCheck = true
+
+  //I've... repurposed a bunch of the vanilla fields to avoid messing with packets and so on.
+  def setStart( start : Vec3 ) : Unit = {
+    setPosition(start.xCoord, start.yCoord, start.zCoord)
+  }
+
+
+  def length_=( length : Double ) : Unit = motionX = length
+  def length : Double = motionX
+
+  def shooter_=( shooter : EntityLivingBase ) : Unit = {
+    _shooter = shooter
+    shooterName = shooter.getEntityName
+  }
+  def shooter : EntityLivingBase = {
+    if ( _shooter == null && shooterName != null && !shooterName.isEmpty ) {
+      _shooter = this.worldObj.getPlayerEntityByName(shooterName)
+    }
+    _shooter
+  }
 
   def onImpact( pos : MovingObjectPosition ) {
     createSmoke( pos.hitVec.xCoord, pos.hitVec.yCoord, pos.hitVec.zCoord )
@@ -24,11 +50,15 @@ class LaserBeam(world : World) extends EntityFX( world, 0.0d, 0.0d, 0.0d, 0.0d, 
 
   override def onUpdate() : Unit = {
     super.onUpdate
+    timeRemaining -= 1
+    if ( timeRemaining <= 0 ) {
+      setDead()
+    }
   }
 
   def hitEntity( entity : Entity ) : Unit = {
     entity.attackEntityFrom(
-      new EntityDamageSource("laser", shooter), 2f)
+      new EntityDamageSource("laser", shooter), 2.0f)
   }
 
   def hitBlock(hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Unit = {
@@ -39,4 +69,15 @@ class LaserBeam(world : World) extends EntityFX( world, 0.0d, 0.0d, 0.0d, 0.0d, 
       this.worldObj.spawnParticle("smoke", x, y, z, 0.0D, 0.0D, 0.0D);
     }
   }
+
+  override def writeEntityToNBT( tag : NBTTagCompound ) : Unit = {
+    tag.setString("ownerName", shooterName)
+    tag.setShort("lifetime", timeRemaining.shortValue )
+  }
+
+  override def readEntityFromNBT( tag : NBTTagCompound ) : Unit = {
+    shooterName = tag.getString("ownerName")
+    timeRemaining = tag.getShort( "lifetime" )
+  }
+  protected override def entityInit()  : Unit = ()
 }

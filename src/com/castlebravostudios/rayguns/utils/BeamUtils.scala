@@ -1,26 +1,30 @@
 package com.castlebravostudios.rayguns.utils
 
 import scala.collection.JavaConverters.asScalaBufferConverter
-
 import com.castlebravostudios.rayguns.entities.beams.LaserBeam
 import com.castlebravostudios.rayguns.utils.Extensions.WorldExtension
-
 import cpw.mods.fml.client.FMLClientHandler
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.util.{MovingObjectPosition => TraceHit}
 import net.minecraft.util.Vec3
 import net.minecraft.world.World
+import net.minecraft.util.MathHelper
 
 object BeamUtils {
 
   def spawnSingleShot( fx : LaserBeam, world : World, player : EntityLivingBase ) : Unit = {
     if ( world.isOnServer ) return
     fx.shooter = player
+    val start = getPlayerPosition(world, player)
     val hit = raytrace( world, player, 20.0d )
     if ( hit != null ) {
       fx.onImpact(hit)
-      FMLClientHandler.instance().getClient().effectRenderer.addEffect(fx)
+      fx.setStart( start )
+      fx.length = hit.hitVec.distanceTo(start)
+      fx.rotationPitch = player.rotationPitch
+      fx.rotationYaw = player.rotationYaw
+      world.spawnEntityInWorld(fx)
     }
   }
 
@@ -94,8 +98,11 @@ object BeamUtils {
   }
 
   private def getPlayerPosition( world : World, player : EntityLivingBase ) : Vec3 = {
+    def toRadians(yaw: Float): Float = yaw / 180.0F * Math.PI.floatValue
+    val offsetX = (MathHelper.cos(toRadians(player.rotationYaw)) * 0.08F).doubleValue()
+    val offsetZ = (MathHelper.sin(toRadians(player.rotationYaw)) * 0.08F).doubleValue()
     world.getWorldVec3Pool().getVecFromPool(
-        player.posX, player.posY + player.getEyeHeight(), player.posZ)
+        player.posX - offsetX, player.posY + player.getEyeHeight() * -0.2, player.posZ - offsetZ)
   }
 
   private def getPlayerTarget( world : World, player : EntityLivingBase, distance : Double ) : Vec3 = {
