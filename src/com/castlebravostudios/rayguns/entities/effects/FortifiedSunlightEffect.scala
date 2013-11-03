@@ -1,22 +1,20 @@
-package com.castlebravostudios.rayguns.entities
+package com.castlebravostudios.rayguns.entities.effects
 
-import net.minecraft.world.World
-import net.minecraft.util.MovingObjectPosition
-import net.minecraft.util.EntityDamageSource
+import com.castlebravostudios.rayguns.entities.Shootable
+import com.castlebravostudios.rayguns.entities.BaseBoltEntity
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
-import net.minecraft.item.ItemDye
-import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
-import net.minecraft.entity.player.EntityPlayer
-import com.castlebravostudios.rayguns.entities.bolts.BaseBoltEntity
+import net.minecraft.util.EntityDamageSource
+import net.minecraft.world.World
+import java.util.Random
 
 
-class FortifiedSunlightBoltEntity( world : World ) extends BaseBoltEntity(world) {
+trait FortifiedSunlightEffect extends BaseEffect {
+  self : Shootable =>
 
-  override def colorRed : Float = 1.0f
-  override def colorBlue : Float = 0.0f
-  override def colorGreen : Float = 1.0f
+  def colourRed : Float = 1.0f
+  def colourBlue : Float = 0.0f
+  def colourGreen : Float = 1.0f
 
   def hitEntity( entity : Entity ) : Unit = entity match {
     case e : EntityLivingBase if e.isEntityUndead() => hitUndead( e )
@@ -39,11 +37,13 @@ class FortifiedSunlightBoltEntity( world : World ) extends BaseBoltEntity(world)
   }
 
   private def spawnParticles( ) : Unit = {
-    def randVel = rand.nextGaussian() * 0.02D
-    def randPos( x : Double ) = x + ( rand.nextFloat().doubleValue() - 0.5)
+    def randVel = random.nextGaussian() * 0.02D
+    def randPos( x : Double ) = x + ( random.nextFloat().doubleValue() - 0.5)
     for ( _ <- 0 until 4 ) {
-      world.spawnParticle("happyVillager",
+      this.worldObj.spawnParticle("happyVillager",
         randPos( posX ), randPos( posY ), randPos( posZ ), randVel, randVel, randVel);
     }
   }
 }
+
+class FortifiedSunlightBoltEntity( world : World ) extends BaseBoltEntity(world) with FortifiedSunlightEffect

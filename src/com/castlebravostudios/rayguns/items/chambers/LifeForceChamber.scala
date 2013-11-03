@@ -2,7 +2,6 @@ package com.castlebravostudios.rayguns.items.chambers
 
 import com.castlebravostudios.rayguns.api.BeamRegistry
 import com.castlebravostudios.rayguns.api.items.ItemChamber
-import com.castlebravostudios.rayguns.entities.LifeForceBoltEntity
 import com.castlebravostudios.rayguns.items.emitters.LifeForceEmitter
 import com.castlebravostudios.rayguns.items.lenses.PreciseLens
 import com.castlebravostudios.rayguns.items.lenses.WideLens
@@ -10,8 +9,8 @@ import com.castlebravostudios.rayguns.mod.Config
 import com.castlebravostudios.rayguns.utils.BoltUtils
 import com.castlebravostudios.rayguns.utils.GunComponents
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer
-
 import net.minecraft.item.Item
+import com.castlebravostudios.rayguns.entities.effects.LifeForceBoltEntity
 
 
 object LifeForceChamber extends Item( Config.chamberLifeForce ) with ItemChamber {

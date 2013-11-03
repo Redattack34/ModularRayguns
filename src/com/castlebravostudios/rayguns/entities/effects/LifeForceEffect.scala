@@ -1,21 +1,20 @@
-package com.castlebravostudios.rayguns.entities
+package com.castlebravostudios.rayguns.entities.effects
 
-import net.minecraft.world.World
-import net.minecraft.util.MovingObjectPosition
-import net.minecraft.util.EntityDamageSource
-import net.minecraft.util.EnumMovingObjectType
+import com.castlebravostudios.rayguns.entities.Shootable
+import com.castlebravostudios.rayguns.entities.BaseBoltEntity
+
 import net.minecraft.entity.Entity
-import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.block.Block
 import net.minecraft.entity.EntityLivingBase
-import com.castlebravostudios.rayguns.entities.bolts.BaseBoltEntity
+import net.minecraft.util.EntityDamageSource
+import net.minecraft.world.World
 
 
-class LifeForceBoltEntity( world : World ) extends BaseBoltEntity(world) {
+trait LifeForceEffect extends BaseEffect {
+  self : Shootable =>
 
-  override def colorRed : Float = 1.0f
-  override def colorBlue : Float = 1.0f
-  override def colorGreen : Float = 1.0f
+  def colourRed : Float = 1.0f
+  def colourBlue : Float = 1.0f
+  def colourGreen : Float = 1.0f
 
   def hitEntity( hit : Entity ) : Unit = {
     createParticles()
@@ -41,3 +40,5 @@ class LifeForceBoltEntity( world : World ) extends BaseBoltEntity(world) {
     }
   }
 }
+
+class LifeForceBoltEntity( world : World ) extends BaseBoltEntity( world ) with LifeForceEffect

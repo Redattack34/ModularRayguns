@@ -6,7 +6,7 @@ import net.minecraft.entity.Entity
 import org.lwjgl.opengl.GL11
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.client.renderer.OpenGlHelper
-import com.castlebravostudios.rayguns.entities.bolts.BaseBoltEntity
+import com.castlebravostudios.rayguns.entities.BaseBoltEntity
 import com.castlebravostudios.rayguns.entities.beams.LaserBeam
 
 class BeamRenderer extends Render {

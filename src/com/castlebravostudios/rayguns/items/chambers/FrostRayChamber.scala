@@ -2,7 +2,7 @@ package com.castlebravostudios.rayguns.items.chambers
 
 import com.castlebravostudios.rayguns.api.BeamRegistry
 import com.castlebravostudios.rayguns.api.items.ItemChamber
-import com.castlebravostudios.rayguns.entities.FrostRayBoltEntity
+import com.castlebravostudios.rayguns.entities.effects.FrostRayBoltEntity
 import com.castlebravostudios.rayguns.items.emitters.FrostRayEmitter
 import com.castlebravostudios.rayguns.items.lenses.PreciseLens
 import com.castlebravostudios.rayguns.items.lenses.WideLens

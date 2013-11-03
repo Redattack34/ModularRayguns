@@ -1,23 +1,23 @@
-package com.castlebravostudios.rayguns.entities
+package com.castlebravostudios.rayguns.entities.effects
 
-import net.minecraft.world.World
-import net.minecraft.util.MovingObjectPosition
-import net.minecraft.util.EntityDamageSource
-import net.minecraft.util.EnumMovingObjectType
-import net.minecraft.entity.Entity
-import net.minecraft.entity.player.EntityPlayer
+import com.castlebravostudios.rayguns.entities.Shootable
+import com.castlebravostudios.rayguns.entities.BaseBoltEntity
+
 import net.minecraft.block.Block
-import net.minecraft.potion.Potion
-import net.minecraft.entity.EntityLivingBase
 import net.minecraft.block.material.Material
-import com.castlebravostudios.rayguns.entities.bolts.BaseBoltEntity
+import net.minecraft.entity.Entity
+import net.minecraft.entity.EntityLivingBase
+import net.minecraft.potion.Potion
+import net.minecraft.util.EntityDamageSource
+import net.minecraft.world.World
 
 
-class FrostRayBoltEntity( world : World ) extends BaseBoltEntity(world) {
+trait FrostRayEffect extends BaseEffect {
+  self : Shootable =>
 
-  override def colorRed : Float = 0.5f
-  override def colorBlue : Float = 1.0f
-  override def colorGreen : Float = 1.0f
+  def colourRed : Float = 0.5f
+  def colourBlue : Float = 1.0f
+  def colourGreen : Float = 1.0f
 
   def hitEntity( hit : Entity ) : Unit = {
     createParticles()
@@ -39,8 +39,8 @@ class FrostRayBoltEntity( world : World ) extends BaseBoltEntity(world) {
   def hitBlock( hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Unit = {
     createParticles()
 
-    val material = world.getBlockMaterial(hitX, hitY, hitZ)
-    val metadata = world.getBlockMetadata(hitX, hitY, hitZ)
+    val material = worldObj.getBlockMaterial(hitX, hitY, hitZ)
+    val metadata = worldObj.getBlockMetadata(hitX, hitY, hitZ)
 
     val block =
       if ( material == Material.water ) Block.ice
@@ -49,10 +49,10 @@ class FrostRayBoltEntity( world : World ) extends BaseBoltEntity(world) {
       else null
 
     if ( block != null ) {
-      world.setBlock(hitX, hitY, hitZ, block.blockID)
+      worldObj.setBlock(hitX, hitY, hitZ, block.blockID)
     }
-    else if ( material.blocksMovement && world.isAirBlock(hitX, hitY+1, hitZ) && side == 1 ) {
-      world.setBlock( hitX, hitY+1, hitZ, Block.snow.blockID )
+    else if ( material.blocksMovement && worldObj.isAirBlock(hitX, hitY+1, hitZ) && side == 1 ) {
+      worldObj.setBlock( hitX, hitY+1, hitZ, Block.snow.blockID )
     }
   }
 
@@ -64,3 +64,5 @@ class FrostRayBoltEntity( world : World ) extends BaseBoltEntity(world) {
     }
   }
 }
+
+class FrostRayBoltEntity( world : World ) extends BaseBoltEntity(world) with FrostRayEffect

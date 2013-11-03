@@ -1,20 +1,21 @@
-package com.castlebravostudios.rayguns.entities
+package com.castlebravostudios.rayguns.entities.effects
 
-import net.minecraft.world.World
-import net.minecraft.util.MovingObjectPosition
-import net.minecraft.util.EntityDamageSource
-import net.minecraft.util.EnumMovingObjectType
+import com.castlebravostudios.rayguns.entities.Shootable
+import com.castlebravostudios.rayguns.entities.BaseBoltEntity
+
+import net.minecraft.block.Block
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.block.Block
-import com.castlebravostudios.rayguns.entities.bolts.BaseBoltEntity
+import net.minecraft.util.EntityDamageSource
+import net.minecraft.world.World
 
 
-class HeatRayBoltEntity( world : World ) extends BaseBoltEntity(world) {
+trait HeatRayEffect extends BaseEffect {
+  self : Shootable =>
 
-  override def colorRed : Float = 1.0f
-  override def colorBlue : Float = 0.0f
-  override def colorGreen : Float = 0.5f
+  def colourRed : Float = 1.0f
+  def colourBlue : Float = 0.0f
+  def colourGreen : Float = 0.5f
 
   def hitEntity( hit : Entity ) : Unit = {
     hit.setFire(8)
@@ -22,15 +23,15 @@ class HeatRayBoltEntity( world : World ) extends BaseBoltEntity(world) {
   }
 
   def hitBlock( hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Unit = {
-    if ( world.getBlockId(hitX, hitY, hitZ) == Block.ice.blockID ) {
-      world.setBlock( hitX, hitY, hitZ, Block.waterStill.blockID )
+    if ( worldObj.getBlockId(hitX, hitY, hitZ) == Block.ice.blockID ) {
+      worldObj.setBlock( hitX, hitY, hitZ, Block.waterStill.blockID )
     }
 
     val (x, y, z) = adjustCoords( hitX, hitY, hitZ, side )
     if ( !shooter.isInstanceOf[EntityPlayer] ||
          shooter.asInstanceOf[EntityPlayer].canPlayerEdit(x, y, z, side, null) ) {
-      if ( world.isAirBlock(x, y, z) ) {
-        world.setBlock(x, y, z, Block.fire.blockID)
+      if ( worldObj.isAirBlock(x, y, z) ) {
+        worldObj.setBlock(x, y, z, Block.fire.blockID)
       }
     }
   }
@@ -44,3 +45,5 @@ class HeatRayBoltEntity( world : World ) extends BaseBoltEntity(world) {
     case 5 => (x + 1, y, z)
   }
 }
+
+class HeatRayBoltEntity( world : World ) extends BaseBoltEntity(world) with HeatRayEffect

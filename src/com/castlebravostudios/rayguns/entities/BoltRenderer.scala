@@ -6,15 +6,16 @@ import net.minecraft.entity.Entity
 import org.lwjgl.opengl.GL11
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.client.renderer.OpenGlHelper
-import com.castlebravostudios.rayguns.entities.bolts.BaseBoltEntity
+import com.castlebravostudios.rayguns.entities.BaseBoltEntity
+import com.castlebravostudios.rayguns.entities.effects._
 
 class BoltRenderer extends Render {
 
   def doRender( e : Entity, x : Double, y : Double, z : Double, yaw : Float, partialTickTime : Float) : Unit = {
-    doRender( e.asInstanceOf[BaseBoltEntity], x, y, z, yaw, partialTickTime )
+    doRender( e.asInstanceOf[BaseBoltEntity with BaseEffect], x, y, z, yaw, partialTickTime )
   }
 
-  private def doRender( e : BaseBoltEntity, x : Double, y : Double, z : Double, yaw : Float, partialTickTime : Float) : Unit = {
+  private def doRender( e : BaseBoltEntity with BaseEffect, x : Double, y : Double, z : Double, yaw : Float, partialTickTime : Float) : Unit = {
 
     this.bindEntityTexture(e);
     GL11.glPushMatrix();
@@ -30,7 +31,7 @@ class BoltRenderer extends Render {
 
     val tes = Tessellator.instance
 
-    GL11.glColor4f( e.colorRed, e.colorGreen, e.colorBlue, 1.0f )
+    GL11.glColor4f( e.colourRed, e.colourGreen, e.colourBlue, 1.0f )
 
     tes.startDrawingQuads();
     drawWest(tes)
