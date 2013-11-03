@@ -80,4 +80,14 @@ object RecipeRegisterer {
       'L' : Character, GlowstoneGainMedium,
       'E' : Character, emitter )
   }
+
+  def registerTier3Chamber( chamber : Item, emitter : Item ) : Unit = {
+    GameRegistry.addRecipe( new ItemStack( chamber, 1 ),
+      "DDD",
+      "LLE",
+      "DDD",
+      'D' : Character, Item.diamond,
+      'L' : Character, GlowstoneGainMedium,
+      'E' : Character, emitter )
+  }
 }

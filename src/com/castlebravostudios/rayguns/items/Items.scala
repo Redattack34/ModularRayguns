@@ -31,6 +31,8 @@ import com.castlebravostudios.rayguns.items.chambers.FortifiedSunlightChamber
 import com.castlebravostudios.rayguns.items.chambers.LaserChamber
 import com.castlebravostudios.rayguns.items.emitters.ExplosiveEmitter
 import com.castlebravostudios.rayguns.items.emitters.LaserEmitter
+import com.castlebravostudios.rayguns.items.chambers.ExplosiveChamber
+import com.castlebravostudios.rayguns.items.chambers.LaserChamber
 
 object Items {
 
@@ -70,6 +72,7 @@ object Items {
     registerItem( LifeForceChamber )
     registerItem( FrostRayChamber )
     registerItem( FortifiedSunlightChamber )
+    registerItem( ExplosiveChamber )
   }
 
   /**
