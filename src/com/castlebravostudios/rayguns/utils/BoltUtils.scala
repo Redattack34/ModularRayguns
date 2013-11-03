@@ -7,24 +7,28 @@ import net.minecraft.util.MathHelper
 import java.util.Random
 import net.minecraft.entity.player.EntityPlayer
 import com.castlebravostudios.rayguns.entities.BaseBoltEntity
+import com.castlebravostudios.rayguns.utils.Extensions._
 
-object EntityUtils {
+object BoltUtils {
 
   private final val rand = new Random();
 
   def spawnNormal( world : World, bolt : BaseBoltEntity, shooter : EntityLivingBase ) : Unit = {
+    if ( world.isOnClient ) return
     initBolt(bolt, shooter)
     setMotion(bolt, bolt.rotationYaw, getBasePitch(shooter, bolt))
     world.spawnEntityInWorld(bolt)
   }
 
   def spawnPrecise( world : World, bolt : BaseBoltEntity, shooter : EntityLivingBase ) : Unit = {
+    if ( world.isOnClient ) return
     initBolt(bolt, shooter)
     setMotion(bolt, bolt.rotationYaw, getBasePitch(shooter, bolt), velocityMultiplier = 2.0f)
     world.spawnEntityInWorld(bolt)
   }
 
   def spawnScatter( world : World, shooter : EntityLivingBase, shots : Int, scatterFactor: Float )( bolt : () => BaseBoltEntity ) : Unit = {
+    if ( world.isOnClient ) return
     for ( _ <- 0 until shots ) {
       val shot = bolt()
       initBolt( shot, shooter )

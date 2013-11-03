@@ -1,15 +1,14 @@
 package com.castlebravostudios.rayguns.entities
 
-import net.minecraft.entity.EntityLivingBase
-import net.minecraft.entity.projectile.EntityThrowable
-import net.minecraft.util.MovingObjectPosition
-import net.minecraft.world.World
-import net.minecraft.nbt.NBTTagCompound
-import net.minecraft.util.EnumMovingObjectType
+import scala.collection.JavaConversions.asScalaBuffer
 import net.minecraft.entity.Entity
 import net.minecraft.entity.IProjectile
+import net.minecraft.nbt.NBTTagCompound
+import net.minecraft.util.EnumMovingObjectType
 import net.minecraft.util.MathHelper
-import scala.collection.JavaConversions._
+import net.minecraft.util.MovingObjectPosition
+import net.minecraft.world.World
+import com.castlebravostudios.rayguns.entities.effects.BaseEffect
 
 /**
  * Abstract base class for beam entities. Most of this code is a poor translation
@@ -17,28 +16,11 @@ import scala.collection.JavaConversions._
  * onUpdate. Not coincedentally, most of this code is really non-idiomatic Scala
  * and should not be taken as an example.
  */
-abstract class BaseBoltEntity( world : World ) extends Entity( world ) with IProjectile {
-
-  def colorRed : Float = 1.0f
-  def colorBlue : Float = 1.0f
-  def colorGreen : Float = 1.0f
+abstract class BaseBoltEntity( world : World ) extends Entity( world ) with Shootable with IProjectile {
+  self : BaseEffect =>
 
   def lifetime = 20
   private var timeRemaining = lifetime
-
-  private var _shooter : EntityLivingBase = _
-  private var shooterName : String = ""
-
-  def shooter_=( shooter : EntityLivingBase ) : Unit = {
-    _shooter = shooter
-    shooterName = shooter.getEntityName
-  }
-  def shooter : EntityLivingBase = {
-    if ( _shooter == null && shooterName != null && !shooterName.isEmpty ) {
-      _shooter = this.worldObj.getPlayerEntityByName(shooterName)
-    }
-    _shooter
-  }
 
   def pitchOffset : Float = 0.5f
   def velocityMultiplier : Float = 1.5f
@@ -118,12 +100,12 @@ abstract class BaseBoltEntity( world : World ) extends Entity( world ) with IPro
     Option( this.worldObj.clip(startPos, endPos, collidesWithLiquids) )
   }
 
-  def collidesWithLiquids : Boolean = false
+  def collidesWithLiquids : Boolean
 
   override def setSize( width : Float, height : Float ) = super.setSize( width, height )
 
   def onImpact( pos : MovingObjectPosition ) {
-
+    createImpactParticles(posX, posY, posZ)
     pos.typeOfHit match {
       case EnumMovingObjectType.ENTITY => hitEntity( pos.entityHit )
       case EnumMovingObjectType.TILE => hitBlock( pos.blockX, pos.blockY, pos.blockZ, pos.sideHit )
@@ -132,16 +114,13 @@ abstract class BaseBoltEntity( world : World ) extends Entity( world ) with IPro
     setDead()
   }
 
-  def hitEntity( entity : Entity ) : Unit
-  def hitBlock( hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Unit
-
   override def writeEntityToNBT( tag : NBTTagCompound ) : Unit = {
-    tag.setString("ownerName", shooterName)
+    super.writeEntityToNBT(tag)
     tag.setShort("lifetime", timeRemaining.shortValue )
   }
 
   override def readEntityFromNBT( tag : NBTTagCompound ) : Unit = {
-    shooterName = tag.getString("ownerName")
+    super.readEntityFromNBT(tag)
     timeRemaining = tag.getShort( "lifetime" )
   }
 
@@ -176,4 +155,7 @@ abstract class BaseBoltEntity( world : World ) extends Entity( world ) with IPro
   }
 
   protected override def entityInit()  : Unit = ()
+
+  //Workaround for mysterious scala compiler crash
+  def random = this.rand
 }

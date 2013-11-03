@@ -19,7 +19,7 @@ object Config {
 
   var preciseLens : Int = _
   var wideLens : Int = _
-  var beamLens : Int = _
+  var preciseBeamLens : Int = _
 
   var extendedBattery : Int = _
   var refireCapacitor : Int = _
@@ -70,7 +70,7 @@ object Config {
 
     preciseLens = config.getItem( "preciseLens", 5201 ).getInt()
     wideLens = config.getItem( "wideLens", 5202 ).getInt()
-    beamLens = config.getItem( "beamLens", 5203 ).getInt()
+    preciseBeamLens = config.getItem( "beamLens", 5203 ).getInt()
 
     extendedBattery = config.getItem( "extendedBattery", 5301 ).getInt()
     refireCapacitor = config.getItem( "refireCapacitor", 5302 ).getInt()

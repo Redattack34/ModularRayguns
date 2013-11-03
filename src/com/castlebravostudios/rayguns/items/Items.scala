@@ -18,7 +18,7 @@ import com.castlebravostudios.rayguns.items.emitters.HeatRayEmitter
 import com.castlebravostudios.rayguns.items.emitters.LaserEmitter
 import com.castlebravostudios.rayguns.items.emitters.LifeForceEmitter
 import com.castlebravostudios.rayguns.items.emitters.ShrinkRayEmitter
-import com.castlebravostudios.rayguns.items.lenses.BeamLens
+import com.castlebravostudios.rayguns.items.lenses.PreciseBeamLens
 import com.castlebravostudios.rayguns.items.lenses.PreciseLens
 import com.castlebravostudios.rayguns.items.lenses.WideLens
 import com.castlebravostudios.rayguns.items.misc._
@@ -46,7 +46,7 @@ object Items {
 
     registerItem( PreciseLens )
     registerItem( WideLens )
-    registerItem( BeamLens )
+    registerItem( PreciseBeamLens )
 
     registerItem( ExtendedBattery )
     registerItem( RefireCapacitor )
