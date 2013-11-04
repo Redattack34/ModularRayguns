@@ -42,6 +42,7 @@ object Items {
     registerItem( EnergizedDiamond )
     registerItem( GlassGainMedium )
     registerItem( GlowstoneGainMedium )
+    registerItem( DiamondGainMedium )
 
     registerItem( BasicBattery )
     registerItem( AdvancedBattery )

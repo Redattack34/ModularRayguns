@@ -11,6 +11,7 @@ object Config {
   var energizedDiamond : Int = _
   var glassGainMedium : Int = _
   var glowstoneGainMedium : Int = _
+  var diamondGainMedium : Int = _
 
   var basicBattery : Int = _
   var advancedBattery : Int = _
@@ -64,6 +65,7 @@ object Config {
     energizedDiamond = config.getItem( "energizedDiamond", 5001 ).getInt()
     glassGainMedium = config.getItem( "glassGainMedium", 5002 ).getInt()
     glowstoneGainMedium = config.getItem( "glowstoneGainMedium", 5003 ).getInt()
+    diamondGainMedium = config.getItem( "diamondGainMedium", 5004 ).getInt()
 
     basicBattery = config.getItem( "basicBattery", 5101 ).getInt()
     advancedBattery = config.getItem( "advancedBattery", 5102 ).getInt()
