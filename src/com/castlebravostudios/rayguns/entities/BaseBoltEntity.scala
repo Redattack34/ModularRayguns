@@ -114,6 +114,13 @@ abstract class BaseBoltEntity( world : World ) extends Entity( world ) with Shoo
     setDead()
   }
 
+  override def setDead() {
+    if ( this.isInstanceOf[TriggerOnDeath] ) {
+      this.asInstanceOf[TriggerOnDeath].triggerAt(posX, posY, posZ)
+    }
+    super.setDead
+  }
+
   override def writeEntityToNBT( tag : NBTTagCompound ) : Unit = {
     super.writeEntityToNBT(tag)
     tag.setShort("lifetime", timeRemaining.shortValue )

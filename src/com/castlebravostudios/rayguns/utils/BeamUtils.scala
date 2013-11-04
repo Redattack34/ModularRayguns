@@ -11,6 +11,7 @@ import net.minecraft.util.Vec3
 import net.minecraft.world.World
 import net.minecraft.util.MathHelper
 import com.castlebravostudios.rayguns.entities.effects.BaseEffect
+import com.castlebravostudios.rayguns.entities.TriggerOnDeath
 
 object BeamUtils {
 
@@ -26,6 +27,9 @@ object BeamUtils {
     fx.setStart( start )
 
     val target = if ( hit == null ) getPlayerTarget(world, player, maxBeamLength) else hit.hitVec
+    if ( fx.isInstanceOf[TriggerOnDeath] ) {
+      fx.asInstanceOf[TriggerOnDeath].triggerAt(target.xCoord, target.yCoord, target.zCoord)
+    }
     fx.length = target.distanceTo(start)
     fx.rotationPitch = player.rotationPitch
     fx.rotationYaw = player.rotationYaw
