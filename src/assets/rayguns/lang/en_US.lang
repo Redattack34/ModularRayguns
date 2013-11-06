@@ -1,0 +1,48 @@
+item.rayguns.ExtendedBattery.name=Extended Battery
+item.rayguns.RefireCapacitor.name=Refire Capacitor
+item.rayguns.SolarPanel.name=Solar Panel
+
+item.rayguns.AdvancedBattery.name=Advanced Battery
+item.rayguns.BasicBattery.name=Basic Battery
+item.rayguns.InfiniteBattery.name=Infinite Battery
+item.rayguns.UltimateBattery.name=Ultimate Battery
+
+item.rayguns.FireflyBody.name=Firefly Raygun Body
+item.rayguns.MantisBody.name=Mantis Raygun Body
+
+item.rayguns.ExplosiveChamber.name=Explosive Beam Chamber
+item.rayguns.FortifiedSunlightChamber.name=Fortified Sunlight Beam Chamber
+item.rayguns.FrostRayChamber.name=Frost Ray Beam Chamber
+item.rayguns.HeatRayChamber.name=Heat Ray Beam Chamber
+item.rayguns.LaserChamber.name=Laser Beam Chamber
+item.rayguns.LifeForceChamber.name=Life Force Beam Chamber
+
+item.rayguns.ExplosiveEmitter.name=Explosive Emitter
+item.rayguns.FortifiedSunlightEmitter.name=Fortified Sunlight Emitter
+item.rayguns.FrostRayEmitter.name=Frost Ray Emitter
+item.rayguns.HeatRayEmitter.name=Heat Ray Emitter
+item.rayguns.LaserEmitter.name=Laser Emitter
+item.rayguns.LifeForceEmitter.name=Life Force Emitter
+item.rayguns.ShrinkRayEmitter.name=Shrink Ray Emitter
+
+item.rayguns.PreciseBeamLens.name=Precise Beam Lens
+item.rayguns.PreciseLens.name=Precise Bolt Lens
+item.rayguns.WideLens.name=Scatter Bolt Lens
+
+item.rayguns.BrokenRaygun.name=Broken Raygun
+item.rayguns.DiamondGainMedium.name=Diamond Gain Medium
+item.rayguns.EnergizedDiamond.name=Energized Diamond
+item.rayguns.GlassGainMedium.name=Glass Gain Medium
+item.rayguns.GlowstoneGainMedium.name=Glowstone Gain Medium
+item.rayguns.Raygun.name=Raygun
+
+tile.GunBench.name=Raygun Workbench
+tile.LensGrinder.name=Lens Grinder
+
+rayguns.container.grinder=Lens Grinder
+rayguns.container.gunbench=Raygun Workbench
+rayguns.container.gunbench.body=Body:
+rayguns.container.gunbench.lens=Lens:
+rayguns.container.gunbench.acc=Accessory:
+rayguns.container.gunbench.chamber=Chamber:
+rayguns.container.gunbench.battery=Battery:

@@ -11,7 +11,7 @@ import net.minecraft.world.World
 class LensGrinder( id : Int ) extends BaseContainerBlock( id ) {
   setHardness(2.0F)
   setResistance(5.0f)
-  setUnlocalizedName("rayguns.lensGrinder")
+  setUnlocalizedName("rayguns.LensGrinder")
   setCreativeTab(CreativeTabs.tabBlock)
 
   def openGui( player : EntityPlayer, world : World, x : Int, y : Int, z : Int ) : Unit =

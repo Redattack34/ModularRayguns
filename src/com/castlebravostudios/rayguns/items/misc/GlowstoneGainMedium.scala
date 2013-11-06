@@ -13,7 +13,7 @@ import com.castlebravostudios.rayguns.api.LensGrinderRecipeRegistry
 object GlowstoneGainMedium extends Item( Config.glowstoneGainMedium ) {
 
   setCreativeTab(CreativeTabs.tabMaterials)
-  setUnlocalizedName("rayguns.GlowStoneGainMedium")
+  setUnlocalizedName("rayguns.GlowstoneGainMedium")
   setTextureName("rayguns:glowstone_gain_medium")
 
   LensGrinderRecipeRegistry.register(600, new ItemStack( this, 1 ),

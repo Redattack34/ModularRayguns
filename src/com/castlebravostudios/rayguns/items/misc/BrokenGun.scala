@@ -13,7 +13,7 @@ object BrokenGun extends Item( Config.brokenGun ) {
 
   setMaxStackSize(1)
   setCreativeTab(CreativeTabs.tabCombat)
-  setUnlocalizedName("rayguns.brokenRaygun")
+  setUnlocalizedName("rayguns.BrokenRaygun")
 
   override def getDamage( item : ItemStack ) : Int = 1
   override def getDisplayDamage( item : ItemStack ) : Int = getChargeDepleted(item)

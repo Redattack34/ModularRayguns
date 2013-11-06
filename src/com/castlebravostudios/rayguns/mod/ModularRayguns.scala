@@ -14,6 +14,7 @@ import com.castlebravostudios.rayguns.items.Blocks
 import cpw.mods.fml.common.Mod.EventHandler
 import com.castlebravostudios.rayguns.entities.Entities
 import com.castlebravostudios.rayguns.blocks.TileEntities
+import cpw.mods.fml.common.registry.LanguageRegistry
 
 @Mod(modid="ModularRayguns", name="ModularRayguns", version="0.0.0", modLanguage="scala")
 @NetworkMod(clientSideRequired=true, serverSideRequired=true)
