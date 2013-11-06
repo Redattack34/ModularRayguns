@@ -25,7 +25,7 @@ object ExplosiveChamber extends Item( Config.chamberExplosive ) with ItemChamber
   val moduleKey = "ExplosiveChamber"
   val powerModifier = 1.0
   register
-  setUnlocalizedName("rayguns.explosiveChamber")
+  setUnlocalizedName("rayguns.ExplosiveChamber")
   setTextureName("rayguns:chamber_explosive")
 
   RecipeRegisterer.registerTier3Chamber(this, ExplosiveEmitter)

@@ -11,7 +11,7 @@ import com.castlebravostudios.rayguns.utils.RecipeRegisterer
 object FortifiedSunlightEmitter extends Item( Config.emitterFortifiedSunlight ) {
 
   setCreativeTab(CreativeTabs.tabMaterials)
-  setUnlocalizedName("rayguns.SunlightEmitter")
+  setUnlocalizedName("rayguns.FortifiedSunlightEmitter")
   setTextureName("rayguns:emitter_fortified_sunlight")
 
   RecipeRegisterer.registerTier2Emitter(this, Block.wood)

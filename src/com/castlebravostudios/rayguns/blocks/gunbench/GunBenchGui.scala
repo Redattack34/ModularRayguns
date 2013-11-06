@@ -15,12 +15,12 @@ class GunBenchGui( playerInv: InventoryPlayer, tileEntity: GunBenchTileEntity )
   private[this] val color = 0x404040
 
   override def drawGuiContainerForegroundLayer( param1 : Int, param2 : Int ) : Unit = {
-    fontRenderer.drawString("Ray Gun Bench", 8, 6, color)
-    fontRenderer.drawString("Body:", 8, 23, color )
-    fontRenderer.drawString("Lens:", 8, 40, color )
-    fontRenderer.drawString("Accessory:", 8, 58, color )
-    fontRenderer.drawString("Chamber:", 58, 23, color )
-    fontRenderer.drawString("Battery:", 58, 40, color )
+    fontRenderer.drawString(I18n.getString("rayguns.container.gunbench"), 8, 6, color)
+    fontRenderer.drawString(I18n.getString("rayguns.container.gunbench.body"), 8, 23, color )
+    fontRenderer.drawString(I18n.getString("rayguns.container.gunbench.lens"), 8, 40, color )
+    fontRenderer.drawString(I18n.getString("rayguns.container.gunbench.acc"), 8, 58, color )
+    fontRenderer.drawString(I18n.getString("rayguns.container.gunbench.chamber"), 58, 23, color )
+    fontRenderer.drawString(I18n.getString("rayguns.container.gunbench.battery"), 58, 40, color )
     fontRenderer.drawString(I18n.getString("container.inventory"), 8, ySize - 96, color)
   }
 

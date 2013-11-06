@@ -24,7 +24,7 @@ object RayGun extends Item( Config.rayGun ) {
 
   setMaxStackSize(1)
   setCreativeTab(CreativeTabs.tabCombat)
-  setUnlocalizedName("rayguns.raygun")
+  setUnlocalizedName("rayguns.Raygun")
 
   override def onItemRightClick(item : ItemStack, world : World, player : EntityPlayer ) : ItemStack = {
     val components = getComponents( item )
