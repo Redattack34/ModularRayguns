@@ -11,6 +11,7 @@ object Config {
   var energizedDiamond : Int = _
   var glassGainMedium : Int = _
   var glowstoneGainMedium : Int = _
+  var diamondGainMedium : Int = _
 
   var basicBattery : Int = _
   var advancedBattery : Int = _
@@ -37,12 +38,14 @@ object Config {
   var emitterLifeForce : Int = _
   var emitterFrostRay : Int = _
   var emitterFortifiedSunlight : Int = _
+  var emitterExplosive : Int = _
 
   var chamberLaser : Int = _
   var chamberHeatRay : Int = _
   var chamberLifeForce : Int = _
   var chamberFrostRay : Int = _
   var chamberFortifiedSunlight : Int = _
+  var chamberExplosive : Int = _
 
   def load( file : File ) : Unit = {
     val config = new Configuration( file )
@@ -62,6 +65,7 @@ object Config {
     energizedDiamond = config.getItem( "energizedDiamond", 5001 ).getInt()
     glassGainMedium = config.getItem( "glassGainMedium", 5002 ).getInt()
     glowstoneGainMedium = config.getItem( "glowstoneGainMedium", 5003 ).getInt()
+    diamondGainMedium = config.getItem( "diamondGainMedium", 5004 ).getInt()
 
     basicBattery = config.getItem( "basicBattery", 5101 ).getInt()
     advancedBattery = config.getItem( "advancedBattery", 5102 ).getInt()
@@ -85,12 +89,14 @@ object Config {
     emitterLifeForce = config.getItem( "emitterLifeForce", 5503 ).getInt
     emitterFrostRay = config.getItem( "emitterFrostRay", 5504 ).getInt
     emitterFortifiedSunlight = config.getItem( "emitterFortifiedSunlight", 5505 ).getInt
+    emitterExplosive = config.getItem( "emitterExplosive", 5506 ).getInt
 
     chamberLaser = config.getItem( "chamberLaser", 5601 ).getInt
     chamberHeatRay = config.getItem( "chamberHeatRay", 5602 ).getInt
     chamberLifeForce = config.getItem( "chamberLifeForce", 5603 ).getInt
     chamberFrostRay = config.getItem( "chamberFrostRay", 5604 ).getInt
     chamberFortifiedSunlight = config.getItem( "chamberFortifiedSunlight", 5605 ).getInt
+    chamberExplosive = config.getItem( "chamberExplosive", 5606 ).getInt
   }
 
   private def loadBlockIds( config : Configuration ) : Unit = {

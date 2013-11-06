@@ -29,6 +29,10 @@ import com.castlebravostudios.rayguns.items.emitters.FortifiedSunlightEmitter
 import com.castlebravostudios.rayguns.items.emitters.LaserEmitter
 import com.castlebravostudios.rayguns.items.chambers.FortifiedSunlightChamber
 import com.castlebravostudios.rayguns.items.chambers.LaserChamber
+import com.castlebravostudios.rayguns.items.emitters.ExplosiveEmitter
+import com.castlebravostudios.rayguns.items.emitters.LaserEmitter
+import com.castlebravostudios.rayguns.items.chambers.ExplosiveChamber
+import com.castlebravostudios.rayguns.items.chambers.LaserChamber
 
 object Items {
 
@@ -38,6 +42,7 @@ object Items {
     registerItem( EnergizedDiamond )
     registerItem( GlassGainMedium )
     registerItem( GlowstoneGainMedium )
+    registerItem( DiamondGainMedium )
 
     registerItem( BasicBattery )
     registerItem( AdvancedBattery )
@@ -61,12 +66,14 @@ object Items {
     registerItem( LifeForceEmitter )
     registerItem( FrostRayEmitter )
     registerItem( FortifiedSunlightEmitter )
+    registerItem( ExplosiveEmitter )
 
     registerItem( LaserChamber )
     registerItem( HeatRayChamber )
     registerItem( LifeForceChamber )
     registerItem( FrostRayChamber )
     registerItem( FortifiedSunlightChamber )
+    registerItem( ExplosiveChamber )
   }
 
   /**
