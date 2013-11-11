@@ -5,10 +5,14 @@ import net.minecraft.util.MathHelper
 import net.minecraft.world.World
 import net.minecraft.block.Block
 import net.minecraft.util.MovingObjectPosition
+import net.minecraft.util.AxisAlignedBB
+import net.minecraft.entity.Entity
+import scala.collection.JavaConverters._
 
 object RaytraceUtils {
 
   type BlockPos = (Int, Int, Int)
+  type MOP = MovingObjectPosition
 
   case class Vector3( val x : Double, val y : Double, val z : Double ) {
     def this( vec : Vec3 ) = this( vec.xCoord, vec.yCoord, vec.zCoord )
@@ -49,6 +53,7 @@ object RaytraceUtils {
   /**
    * Algorithm taken from:
    * Amanatides, John & Woo, Andrew. A Fast Voxel Traversal Algorithm for Ray Tracing
+   * http://www.cse.yorku.ca/~amana/research/grid.pdf
    */
   def blocks( start : Vector3, end : Vector3 ) : Stream[BlockPos] = {
     val (x, y, z) = start.toBlockPos
@@ -97,19 +102,91 @@ object RaytraceUtils {
     } yield (block, meta, pos)
 
   /**
-   * Get all intersections with blocks matching f along the line segment between start
+   * Get all intersections with blocks along the line segment between start
    * and end. This is lazily computed, so if you only use the first collision
-   * no more will be calculated.
+   * no more will be calculated. The returned stream will be in ascending
+   * order of distance to the start vector.
    */
-  def rayTrace( world : World, start : Vec3, end : Vec3 )( f : (Block, Int) => Boolean ) : Stream[MovingObjectPosition] = {
-    val filtered = blocksHit( world, new Vector3( start ), new Vector3( end ) ).filter{
-      case ( b, m, _ ) => f( b, m )
-    }
-
+  def rayTraceBlocks( world : World, start : Vec3, end : Vec3 ) : Stream[MOP] = {
     for {
-      (b, m, (x, y, z) ) <- filtered
+      (b, m, (x, y, z) ) <- blocksHit( world, new Vector3( start ), new Vector3( end ) )
       hit = b.collisionRayTrace(world, x, y, z, start, end)
       if ( hit != null )
     } yield hit
+  }
+
+  /**
+   * Find all entities that a line segment between start and end could possibly
+   * intersect with.
+   */
+  def reachableEntities( world : World, owner : Entity, start : Vec3, end : Vec3 ) : Seq[Entity] = {
+    var aabb = AxisAlignedBB.getAABBPool.getAABB(start.xCoord, start.yCoord, start.zCoord,
+        start.xCoord, start.yCoord, start.zCoord);
+    aabb = aabb.addCoord(end.xCoord, end.yCoord, end.zCoord)
+    val diffLength = end.subtract(start).lengthVector() * 0.1
+    aabb = aabb.expand(diffLength, diffLength, diffLength)
+    world.getEntitiesWithinAABBExcludingEntity(owner, aabb)
+      .asInstanceOf[java.util.List[Entity]]
+      .asScala
+  }
+
+  def collidableEntities( world : World, owner : Entity, start : Vec3, end : Vec3 ) : Seq[Entity] =
+    for {
+      e <- reachableEntities( world, owner, start, end )
+      if ( e != null )
+      if ( e.canBeCollidedWith() )
+      if ( e.boundingBox != null )
+    } yield e
+
+  def collide( target : Entity, start : Vec3, end : Vec3 ) : MOP = {
+    val border = target.getCollisionBorderSize()
+    val box = target.boundingBox.expand(border, border, border)
+    val intercept = box.calculateIntercept(start, end)
+
+    if ( intercept != null ) {
+      val hit = new MOP( target )
+      hit.hitVec = intercept.hitVec
+      hit
+    }
+    else null
+  }
+
+  /**
+   * Get all intersections with entities along the line segment between start
+   * and end. This is NOT lazily computed, so all collisions will be calculated.
+   * The returned seq will be in ascending order of distance to the start vector.
+   */
+  def rayTraceEntities( world : World, owner : Entity, start : Vec3, end : Vec3 ) : List[MOP] = {
+    val collisions = for {
+      entity <- collidableEntities(world, owner, start, end)
+      mop = collide( entity, start, end )
+      if ( mop != null )
+    } yield mop
+
+    collisions.sortBy( mop => mop.hitVec.squareDistanceTo(start) ).toList
+  }
+
+  /**
+   * Get all intersections with blocks or entities along the line segment
+   * between start and end. The returned stream will be in ascending order or
+   * distance to the start vector.
+   */
+  def rayTrace( world : World, owner : Entity, start : Vec3, end : Vec3 ) : Stream[MOP] = {
+    val blocks = rayTraceBlocks( world, start, end )
+    val entities = rayTraceEntities(world, owner, start, end)
+
+    def combine( blocks : Stream[MOP], entities : List[MOP]) : Stream[MOP] = (blocks, entities) match {
+      case ( b #:: bs, e :: es ) => {
+        val bLen = b.hitVec.squareDistanceTo(start)
+        val eLen = e.hitVec.squareDistanceTo(start)
+
+        if ( bLen < eLen ) b #:: combine( bs, entities )
+        else               e #:: combine( blocks, es )
+      }
+      case ( bs, Nil ) => bs
+      case ( Stream.Empty, es ) => es.toStream
+    }
+
+    combine( blocks, entities )
   }
 }
