@@ -90,15 +90,16 @@ object RaytraceUtils {
 
   /**
    * Get all non-air blocks that could potentially intersect the line segment
-   * between start and end.
+   * between start and end which match f.
    */
-  def blocksHit( world : World, start : Vector3, end : Vector3 ) : Stream[(Block, Int, BlockPos)]=
+  def blocksHit( world : World, start : Vector3, end : Vector3 )( f : (Block, Int) => Boolean ) : Stream[(Block, Int, BlockPos)]=
     for {
       pos <- blocks( start, end )
       (x, y, z) = pos
       if (!world.isAirBlock(x, y, z) )
       block = Block.blocksList( world.getBlockId(x, y, z) )
       meta = world.getBlockMetadata(x, y, z)
+      if ( f( block, meta ) )
     } yield (block, meta, pos)
 
   /**
@@ -107,9 +108,9 @@ object RaytraceUtils {
    * no more will be calculated. The returned stream will be in ascending
    * order of distance to the start vector.
    */
-  def rayTraceBlocks( world : World, start : Vec3, end : Vec3 ) : Stream[MOP] = {
+  def rayTraceBlocks( world : World, start : Vec3, end : Vec3 )( f : (Block, Int) => Boolean ) : Stream[MOP] = {
     for {
-      (b, m, (x, y, z) ) <- blocksHit( world, new Vector3( start ), new Vector3( end ) )
+      (b, m, (x, y, z) ) <- blocksHit( world, new Vector3( start ), new Vector3( end ) )(f)
       hit = b.collisionRayTrace(world, x, y, z, start, end)
       if ( hit != null )
     } yield hit
@@ -130,12 +131,13 @@ object RaytraceUtils {
       .asScala
   }
 
-  def collidableEntities( world : World, owner : Entity, start : Vec3, end : Vec3 ) : Seq[Entity] =
+  def collidableEntities( world : World, owner : Entity, start : Vec3, end : Vec3 )( f : Entity => Boolean ) : Seq[Entity] =
     for {
       e <- reachableEntities( world, owner, start, end )
       if ( e != null )
       if ( e.canBeCollidedWith() )
       if ( e.boundingBox != null )
+      if ( f(e) )
     } yield e
 
   def collide( target : Entity, start : Vec3, end : Vec3 ) : MOP = {
@@ -156,9 +158,9 @@ object RaytraceUtils {
    * and end. This is NOT lazily computed, so all collisions will be calculated.
    * The returned seq will be in ascending order of distance to the start vector.
    */
-  def rayTraceEntities( world : World, owner : Entity, start : Vec3, end : Vec3 ) : List[MOP] = {
+  def rayTraceEntities( world : World, owner : Entity, start : Vec3, end : Vec3 )( f : Entity => Boolean ) : List[MOP] = {
     val collisions = for {
-      entity <- collidableEntities(world, owner, start, end)
+      entity <- collidableEntities(world, owner, start, end)(f)
       mop = collide( entity, start, end )
       if ( mop != null )
     } yield mop
@@ -171,9 +173,10 @@ object RaytraceUtils {
    * between start and end. The returned stream will be in ascending order or
    * distance to the start vector.
    */
-  def rayTrace( world : World, owner : Entity, start : Vec3, end : Vec3 ) : Stream[MOP] = {
-    val blocks = rayTraceBlocks( world, start, end )
-    val entities = rayTraceEntities(world, owner, start, end)
+  def rayTrace( world : World, owner : Entity, start : Vec3, end : Vec3 )
+    ( fB : (Block, Int) => Boolean, fE : Entity => Boolean) : Stream[MOP] = {
+    val blocks = rayTraceBlocks( world, start, end )(fB)
+    val entities = rayTraceEntities(world, owner, start, end)(fE)
 
     def combine( blocks : Stream[MOP], entities : List[MOP]) : Stream[MOP] = (blocks, entities) match {
       case ( b #:: bs, e :: es ) => {

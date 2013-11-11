@@ -12,6 +12,7 @@ import net.minecraft.world.World
 import net.minecraft.util.MathHelper
 import com.castlebravostudios.rayguns.entities.effects.BaseEffect
 import com.castlebravostudios.rayguns.entities.TriggerOnDeath
+import net.minecraft.block.Block
 
 object BeamUtils {
 
@@ -21,7 +22,7 @@ object BeamUtils {
     fx.shooter = player
     val start = getPlayerPosition(world, player)
     val end = getPlayerTarget(world, player, maxBeamLength)
-    val hits = RaytraceUtils.rayTrace( world, player, start, end )
+    val hits = RaytraceUtils.rayTrace( world, player, start, end )( fx.canCollideWithBlock _, fx.canCollideWithEntity _)
     val hit = hits.headOption.orNull
     if ( hit != null ) {
       fx.onImpact(hit)
