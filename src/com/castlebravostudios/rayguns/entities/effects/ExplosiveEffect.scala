@@ -29,8 +29,8 @@ trait ExplosiveEffect extends Entity with BaseEffect with TriggerOnDeath {
   def colourBlue : Float = 0.5f
   def colourGreen : Float = 0.5f
 
-  def hitEntity( entity : Entity ) : Unit = ()
-  def hitBlock(hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Unit = ()
+  def hitEntity( entity : Entity ) = true
+  def hitBlock(hitX : Int, hitY : Int, hitZ : Int, side : Int )  = true
   def createImpactParticles(hitX : Double, hitY : Double, hitZ: Double) = ()
 
   def triggerAt( x : Double, y : Double, z : Double ) = if ( worldObj.isOnServer ) {

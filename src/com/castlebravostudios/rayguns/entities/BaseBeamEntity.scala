@@ -23,7 +23,7 @@ abstract class BaseBeamEntity(world : World) extends Entity( world ) with Shoota
     setPosition(start.xCoord, start.yCoord, start.zCoord)
   }
 
-  def onImpact( pos : MovingObjectPosition ) {
+  def onImpact( pos : MovingObjectPosition ) : Boolean = {
     createImpactParticles(pos.hitVec.xCoord, pos.hitVec.yCoord, pos.hitVec.zCoord)
     pos.typeOfHit match {
       case EnumMovingObjectType.ENTITY => hitEntity( pos.entityHit )

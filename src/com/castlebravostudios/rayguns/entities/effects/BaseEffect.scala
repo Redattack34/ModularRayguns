@@ -14,8 +14,24 @@ trait BaseEffect extends Entity {
   def colourGreen : Float
   def colourAlpha : Float = 1.0f
 
-  def hitEntity( entity : Entity ) : Unit
-  def hitBlock(hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Unit
+  /**
+   * A collision has been detected against the given entity. Return true if the
+   * bolt/beam should stop after this collision, or return false to indicate
+   * that the bolt/beam penetrated through the entity.
+   */
+  def hitEntity( entity : Entity ) : Boolean
+
+  /**
+   * A collision has been detected against the given side of the block at the
+   * given coords. Return true if the bolt/beam should stop after this collision,
+   * or return false to indicate that the bolt/beam penetrated through the block.
+   */
+  def hitBlock(hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Boolean
+
+  /**
+   * A collision has been detected at the given coords. Create impact particles
+   * or perform other effects which require the precise coords.
+   */
   def createImpactParticles( hitX : Double, hitY : Double, hitZ : Double ) : Unit
 
   def canCollideWithBlock( b : Block, metadata : Int ) =

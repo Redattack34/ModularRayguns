@@ -14,12 +14,13 @@ trait LaserEffect extends Entity with BaseEffect {
   def colourBlue : Float = 0.0f
   def colourGreen : Float = 0.0f
 
-  def hitEntity( entity : Entity ) : Unit = {
+  def hitEntity( entity : Entity ) : Boolean = {
     entity.attackEntityFrom(
       new EntityDamageSource("laser", shooter), 2f)
+      true
   }
 
-  def hitBlock(hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Unit = ()
+  def hitBlock(hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Boolean = true
 
   def createImpactParticles( hitX : Double, hitY : Double, hitZ : Double ) : Unit = {
     for ( _ <- 0 until 4 ) {

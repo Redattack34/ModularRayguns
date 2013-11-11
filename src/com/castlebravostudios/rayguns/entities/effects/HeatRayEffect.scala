@@ -17,12 +17,14 @@ trait HeatRayEffect extends BaseEffect {
   def colourBlue : Float = 0.0f
   def colourGreen : Float = 0.5f
 
-  def hitEntity( hit : Entity ) : Unit = {
+  def hitEntity( hit : Entity ) : Boolean = {
     hit.setFire(8)
     hit.attackEntityFrom(new EntityDamageSource("heatray", shooter), 2)
+
+    true
   }
 
-  def hitBlock( hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Unit = {
+  def hitBlock( hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Boolean = {
     if ( worldObj.getBlockId(hitX, hitY, hitZ) == Block.ice.blockID ) {
       worldObj.setBlock( hitX, hitY, hitZ, Block.waterStill.blockID )
     }
@@ -34,6 +36,8 @@ trait HeatRayEffect extends BaseEffect {
         worldObj.setBlock(x, y, z, Block.fire.blockID)
       }
     }
+
+    true
   }
 
   def createImpactParticles( hitX : Double, hitY : Double, hitZ : Double ) : Unit = ()

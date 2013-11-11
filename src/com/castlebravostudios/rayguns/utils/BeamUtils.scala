@@ -13,6 +13,7 @@ import net.minecraft.util.MathHelper
 import com.castlebravostudios.rayguns.entities.effects.BaseEffect
 import com.castlebravostudios.rayguns.entities.TriggerOnDeath
 import net.minecraft.block.Block
+import scala.annotation.tailrec
 
 object BeamUtils {
 
@@ -23,22 +24,29 @@ object BeamUtils {
     val start = getPlayerPosition(world, player)
     val end = getPlayerTarget(world, player, maxBeamLength)
     val hits = RaytraceUtils.rayTrace( world, player, start, end )( fx.canCollideWithBlock _, fx.canCollideWithEntity _)
-    val hit = hits.headOption.orNull
-    if ( hit != null ) {
-      fx.onImpact(hit)
-    }
-    fx.setStart( start )
+    val target = applyHitsUntilStop(end, hits, fx)
 
-    val target = if ( hit == null ) getPlayerTarget(world, player, maxBeamLength) else hit.hitVec
     if ( fx.isInstanceOf[TriggerOnDeath] ) {
       fx.asInstanceOf[TriggerOnDeath].triggerAt(target.xCoord, target.yCoord, target.zCoord)
     }
+    fx.setStart( start )
     fx.length = target.distanceTo(start)
     fx.rotationPitch = player.rotationPitch
     fx.rotationYaw = player.rotationYaw
     if ( world.isOnClient ) {
       world.spawnEntityInWorld(fx)
     }
+  }
+
+  /**
+   * Applies the collisions in hits until the beam signals stop or hits is empty.
+   * Returns the vector of the last collision or the target vector if no collision
+   * stopped the beam.
+   */
+  @tailrec
+  private def applyHitsUntilStop( target : Vec3, hits : Stream[TraceHit], fx : BaseBeamEntity with BaseEffect ) : Vec3 =  hits match {
+    case h #:: hs => if ( fx.onImpact(h) ) h.hitVec else applyHitsUntilStop(target, hs, fx)
+    case _ => target
   }
 
   private def getPlayerPosition( world : World, player : EntityLivingBase ) : Vec3 = {
