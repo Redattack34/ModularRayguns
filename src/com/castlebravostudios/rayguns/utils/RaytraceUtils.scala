@@ -78,9 +78,9 @@ object RaytraceUtils {
     val tMaxZ = rayLength( diff.z, blockSide(z, stepZ) - start.z )
 
     def blocksRec( x : Int, y : Int, z : Int, tMaxX : Double, tMaxY : Double, tMaxZ : Double ) : Stream[BlockPos] = {
-      def branch = if      ( tMaxX < tMaxY && tMaxX < tMaxZ ) blocksRec( x + stepX, y, z, tMaxX + tDeltaX, tMaxY, tMaxZ )
-                   else if ( tMaxY < tMaxX && tMaxY < tMaxZ ) blocksRec( x, y + stepY, z, tMaxX, tMaxY + tDeltaY, tMaxZ )
-                   else if ( tMaxZ < tMaxX && tMaxZ < tMaxY ) blocksRec( x, y, z + stepZ, tMaxX, tMaxY, tMaxZ + tDeltaZ )
+      def branch = if      ( tMaxX <= tMaxY && tMaxX <= tMaxZ ) blocksRec( x + stepX, y, z, tMaxX + tDeltaX, tMaxY, tMaxZ )
+                   else if ( tMaxY <= tMaxX && tMaxY <= tMaxZ ) blocksRec( x, y + stepY, z, tMaxX, tMaxY + tDeltaY, tMaxZ )
+                   else if ( tMaxZ <= tMaxX && tMaxZ <= tMaxY ) blocksRec( x, y, z + stepZ, tMaxX, tMaxY, tMaxZ + tDeltaZ )
                    else throw new IllegalStateException
       (x, y, z) #:: branch
     }
@@ -92,14 +92,14 @@ object RaytraceUtils {
    * Get all non-air blocks that could potentially intersect the line segment
    * between start and end which match f.
    */
-  def blocksHit( world : World, start : Vector3, end : Vector3 )( f : (Block, Int) => Boolean ) : Stream[(Block, Int, BlockPos)]=
+  def blocksHit( world : World, start : Vector3, end : Vector3 )( f : (Block, Int, BlockPos) => Boolean ) : Stream[(Block, Int, BlockPos)]=
     for {
       pos <- blocks( start, end )
       (x, y, z) = pos
       if (!world.isAirBlock(x, y, z) )
       block = Block.blocksList( world.getBlockId(x, y, z) )
       meta = world.getBlockMetadata(x, y, z)
-      if ( f( block, meta ) )
+      if ( f( block, meta, pos ) )
     } yield (block, meta, pos)
 
   /**
@@ -108,7 +108,7 @@ object RaytraceUtils {
    * no more will be calculated. The returned stream will be in ascending
    * order of distance to the start vector.
    */
-  def rayTraceBlocks( world : World, start : Vec3, end : Vec3 )( f : (Block, Int) => Boolean ) : Stream[MOP] = {
+  def rayTraceBlocks( world : World, start : Vec3, end : Vec3 )( f : (Block, Int, BlockPos) => Boolean ) : Stream[MOP] = {
     for {
       (b, m, (x, y, z) ) <- blocksHit( world, new Vector3( start ), new Vector3( end ) )(f)
       hit = b.collisionRayTrace(world, x, y, z, start, end)
@@ -174,7 +174,7 @@ object RaytraceUtils {
    * distance to the start vector.
    */
   def rayTrace( world : World, owner : Entity, start : Vec3, end : Vec3 )
-    ( fB : (Block, Int) => Boolean, fE : Entity => Boolean) : Stream[MOP] = {
+    ( fB :  (Block, Int, BlockPos) => Boolean, fE : Entity => Boolean) : Stream[MOP] = {
     val blocks = rayTraceBlocks( world, start, end )(fB)
     val entities = rayTraceEntities(world, owner, start, end)(fE)
 

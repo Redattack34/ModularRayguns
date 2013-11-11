@@ -8,6 +8,7 @@ import net.minecraft.util.EntityDamageSource
 import net.minecraft.world.World
 import java.util.Random
 import com.castlebravostudios.rayguns.entities.BaseBeamEntity
+import com.castlebravostudios.rayguns.entities.NoDuplicateCollisions
 
 
 trait FortifiedSunlightEffect extends BaseEffect {
@@ -43,5 +44,5 @@ trait FortifiedSunlightEffect extends BaseEffect {
   }
 }
 
-class FortifiedSunlightBoltEntity( world : World ) extends BaseBoltEntity(world) with FortifiedSunlightEffect
+class FortifiedSunlightBoltEntity( world : World ) extends BaseBoltEntity(world) with FortifiedSunlightEffect with NoDuplicateCollisions
 class FortifiedSunlightBeamEntity( world : World ) extends BaseBeamEntity(world) with FortifiedSunlightEffect

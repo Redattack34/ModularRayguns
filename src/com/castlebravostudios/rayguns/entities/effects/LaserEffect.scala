@@ -6,6 +6,7 @@ import net.minecraft.entity.Entity
 import net.minecraft.util.EntityDamageSource
 import net.minecraft.world.World
 import com.castlebravostudios.rayguns.entities.BaseBeamEntity
+import com.castlebravostudios.rayguns.entities.NoDuplicateCollisions
 
 trait LaserEffect extends Entity with BaseEffect {
   self : Shootable =>
@@ -29,5 +30,5 @@ trait LaserEffect extends Entity with BaseEffect {
   }
 }
 
-class LaserBoltEntity(world : World) extends BaseBoltEntity(world) with LaserEffect
+class LaserBoltEntity(world : World) extends BaseBoltEntity(world) with LaserEffect with NoDuplicateCollisions
 class LaserBeamEntity(world : World) extends BaseBeamEntity(world) with LaserEffect

@@ -8,6 +8,7 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.EntityDamageSource
 import net.minecraft.world.World
 import com.castlebravostudios.rayguns.entities.BaseBeamEntity
+import com.castlebravostudios.rayguns.entities.NoDuplicateCollisions
 
 
 trait HeatRayEffect extends BaseEffect {
@@ -52,5 +53,5 @@ trait HeatRayEffect extends BaseEffect {
   }
 }
 
-class HeatRayBoltEntity( world : World ) extends BaseBoltEntity(world) with HeatRayEffect
+class HeatRayBoltEntity( world : World ) extends BaseBoltEntity(world) with HeatRayEffect with NoDuplicateCollisions
 class HeatRayBeamEntity( world : World ) extends BaseBeamEntity(world) with HeatRayEffect

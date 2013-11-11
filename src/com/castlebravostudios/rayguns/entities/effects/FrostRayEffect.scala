@@ -10,6 +10,7 @@ import net.minecraft.potion.Potion
 import net.minecraft.util.EntityDamageSource
 import net.minecraft.world.World
 import com.castlebravostudios.rayguns.entities.BaseBeamEntity
+import com.castlebravostudios.rayguns.entities.NoDuplicateCollisions
 
 
 trait FrostRayEffect extends BaseEffect {
@@ -65,5 +66,5 @@ trait FrostRayEffect extends BaseEffect {
   }
 }
 
-class FrostRayBoltEntity( world : World ) extends BaseBoltEntity(world) with FrostRayEffect
+class FrostRayBoltEntity( world : World ) extends BaseBoltEntity(world) with FrostRayEffect with NoDuplicateCollisions
 class FrostRayBeamEntity( world : World ) extends BaseBeamEntity(world) with FrostRayEffect

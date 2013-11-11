@@ -9,6 +9,8 @@ import net.minecraft.block.BlockFluid
 import net.minecraftforge.fluids.IFluidBlock
 
 trait BaseEffect extends Entity {
+  self : Shootable =>
+
   def colourRed : Float
   def colourBlue : Float
   def colourGreen : Float
@@ -34,11 +36,11 @@ trait BaseEffect extends Entity {
    */
   def createImpactParticles( hitX : Double, hitY : Double, hitZ : Double ) : Unit
 
-  def canCollideWithBlock( b : Block, metadata : Int ) =
+  def canCollideWithBlock( b : Block, metadata : Int, pos : (Int, Int, Int) ) =
     if ( b.isInstanceOf[BlockFluid] || b.isInstanceOf[IFluidBlock] ) collidesWithLiquids
     else true
 
-  def canCollideWithEntity( entity : Entity ) = true
+  def canCollideWithEntity( entity : Entity ) = !(entity == shooter)
 
   def collidesWithLiquids : Boolean = false
 

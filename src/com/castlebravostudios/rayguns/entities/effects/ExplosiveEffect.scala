@@ -10,6 +10,8 @@ import com.castlebravostudios.rayguns.entities.TriggerOnDeath
 import com.castlebravostudios.rayguns.utils.Extensions.WorldExtension
 import net.minecraft.entity.item.EntityTNTPrimed
 import net.minecraft.entity.EntityLivingBase
+import net.minecraft.block.Block
+import com.castlebravostudios.rayguns.entities.NoDuplicateCollisions
 
 trait ExplosiveEffect extends Entity with BaseEffect with TriggerOnDeath {
   self : Shootable =>
@@ -38,5 +40,5 @@ trait ExplosiveEffect extends Entity with BaseEffect with TriggerOnDeath {
   }
 }
 
-class ExplosiveBoltEntity(world : World) extends BaseBoltEntity(world) with ExplosiveEffect
+class ExplosiveBoltEntity(world : World) extends BaseBoltEntity(world) with ExplosiveEffect with NoDuplicateCollisions
 class ExplosiveBeamEntity(world : World) extends BaseBeamEntity(world) with ExplosiveEffect
