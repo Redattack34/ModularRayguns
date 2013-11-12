@@ -16,6 +16,7 @@ item.rayguns.FrostRayChamber.name=Frost Ray Beam Chamber
 item.rayguns.HeatRayChamber.name=Heat Ray Beam Chamber
 item.rayguns.LaserChamber.name=Laser Beam Chamber
 item.rayguns.LifeForceChamber.name=Life Force Beam Chamber
+item.rayguns.DeathRayChamber.name=Death Ray Beam Chamber
 
 item.rayguns.ExplosiveEmitter.name=Explosive Emitter
 item.rayguns.FortifiedSunlightEmitter.name=Fortified Sunlight Emitter
