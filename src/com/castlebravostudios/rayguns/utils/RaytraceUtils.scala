@@ -123,8 +123,7 @@ object RaytraceUtils {
   def reachableEntities( world : World, owner : Entity, start : Vec3, end : Vec3 ) : Seq[Entity] = {
     var aabb = AxisAlignedBB.getAABBPool.getAABB(start.xCoord, start.yCoord, start.zCoord,
         start.xCoord, start.yCoord, start.zCoord);
-    aabb = aabb.addCoord(end.xCoord, end.yCoord, end.zCoord)
-    val diffLength = end.subtract(start).lengthVector() * 0.1
+    val diffLength = end.subtract(start).lengthVector() * 1.1
     aabb = aabb.expand(diffLength, diffLength, diffLength)
     world.getEntitiesWithinAABBExcludingEntity(owner, aabb)
       .asInstanceOf[java.util.List[Entity]]
