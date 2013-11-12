@@ -1,21 +1,10 @@
 package com.castlebravostudios.rayguns.entities
 
-import com.castlebravostudios.rayguns.entities.effects.FortifiedSunlightBoltEntity
-import com.castlebravostudios.rayguns.entities.effects.FrostRayBoltEntity
-import com.castlebravostudios.rayguns.entities.effects.HeatRayBoltEntity
-import com.castlebravostudios.rayguns.entities.effects.LaserBoltEntity
-import com.castlebravostudios.rayguns.entities.effects.LifeForceBoltEntity
 import com.castlebravostudios.rayguns.mod.ModularRayguns
 import cpw.mods.fml.client.registry.RenderingRegistry
 import cpw.mods.fml.common.registry.EntityRegistry
 import net.minecraft.entity.Entity
-import com.castlebravostudios.rayguns.entities.effects.LaserBeamEntity
-import com.castlebravostudios.rayguns.entities.effects.LifeForceBeamEntity
-import com.castlebravostudios.rayguns.entities.effects.FortifiedSunlightBeamEntity
-import com.castlebravostudios.rayguns.entities.effects.ExplosiveBeamEntity
-import com.castlebravostudios.rayguns.entities.effects.FrostRayBeamEntity
-import com.castlebravostudios.rayguns.entities.effects.HeatRayBeamEntity
-import com.castlebravostudios.rayguns.entities.effects.ExplosiveBoltEntity
+import com.castlebravostudios.rayguns.entities.effects._
 
 object Entities {
 
@@ -29,6 +18,7 @@ object Entities {
     registerBoltEntity( classOf[FrostRayBoltEntity], "FrostRayBolt", 3 )
     registerBoltEntity( classOf[FortifiedSunlightBoltEntity], "FortifiedSunlightBolt", 4 )
     registerBoltEntity( classOf[ExplosiveBoltEntity], "ExplosiveBolt", 5 )
+    registerBoltEntity( classOf[DeathRayBoltEntity], "DeathRayBolt", 6 )
 
     registerBeamEntity( classOf[LaserBeamEntity], "LaserBeam", 20 )
     registerBeamEntity( classOf[HeatRayBeamEntity], "HeatRayBeam", 21 )
@@ -36,6 +26,7 @@ object Entities {
     registerBeamEntity( classOf[FrostRayBeamEntity], "FrostRayBeam", 23 )
     registerBeamEntity( classOf[FortifiedSunlightBeamEntity], "FortifiedSunlightBeam", 24 )
     registerBeamEntity( classOf[ExplosiveBeamEntity], "ExplosiveBeam", 25 )
+    registerBeamEntity( classOf[DeathRayBeamEntity], "DeathRayBeam", 26 )
   }
 
   private def registerBoltEntity[T <: Entity]( cls : Class[T], name : String, id : Int ) : Unit = {

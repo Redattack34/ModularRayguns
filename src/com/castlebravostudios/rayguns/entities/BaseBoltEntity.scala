@@ -9,6 +9,10 @@ import net.minecraft.util.MathHelper
 import net.minecraft.util.MovingObjectPosition
 import net.minecraft.world.World
 import com.castlebravostudios.rayguns.entities.effects.BaseEffect
+import com.castlebravostudios.rayguns.utils.RaytraceUtils
+import scala.annotation.tailrec
+import net.minecraft.util.Vec3
+import net.minecraft.block.Block
 
 /**
  * Abstract base class for beam entities. Most of this code is a poor translation
@@ -25,49 +29,20 @@ abstract class BaseBoltEntity( world : World ) extends Entity( world ) with Shoo
   def pitchOffset : Float = 0.5f
   def velocityMultiplier : Float = 1.5f
 
+  protected var hitBlocks = Set[(Int, Int, Int)]()
+  protected var hitEntities = Set[Entity]()
+
   override def onUpdate() : Unit = {
     this.lastTickPosX = this.posX
     this.lastTickPosY = this.posY
     this.lastTickPosZ = this.posZ
     super.onUpdate()
 
-    var movingobjectposition : Option[MovingObjectPosition] = traceCollision()
     val startPos = this.worldObj.getWorldVec3Pool().getVecFromPool(this.posX, this.posY, this.posZ)
-    val endPos =
-      if ( movingobjectposition.isEmpty ) this.worldObj.getWorldVec3Pool().getVecFromPool(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ)
-      else this.worldObj.getWorldVec3Pool().getVecFromPool(movingobjectposition.get.hitVec.xCoord, movingobjectposition.get.hitVec.yCoord, movingobjectposition.get.hitVec.zCoord)
+    val endPos = this.worldObj.getWorldVec3Pool().getVecFromPool(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ)
 
-    if (!this.worldObj.isRemote) {
-        var collidedWith : Entity = null
-        var list = this.worldObj.getEntitiesWithinAABBExcludingEntity(this, this.boundingBox.addCoord(this.motionX, this.motionY, this.motionZ).expand(1.0D, 1.0D, 1.0D))
-        var minDistance = 0.0D
-
-        list.toVector.foreach{ case( entity1 : Entity ) =>
-            if (entity1.canBeCollidedWith() && (entity1 != shooter))
-            {
-                val axisalignedbb = entity1.boundingBox.expand(0.3d, 0.3d, 0.3d)
-                val movingobjectposition1 = axisalignedbb.calculateIntercept(startPos, endPos)
-
-                if (movingobjectposition1 != null)
-                {
-                    val curDistance = startPos.distanceTo(movingobjectposition1.hitVec)
-
-                    if (curDistance < minDistance || minDistance == 0.0D)
-                    {
-                        collidedWith = entity1
-                        minDistance = curDistance
-                    }
-                }
-            }
-        }
-
-        if (collidedWith != null)
-        {
-            movingobjectposition = Some( new MovingObjectPosition(collidedWith) )
-        }
-    }
-
-    movingobjectposition.foreach( this.onImpact _ )
+    val hits = RaytraceUtils.rayTrace(world, this, startPos, endPos)( canCollideWithBlock _, canCollideWithEntity _)
+    applyHitsUntilStop(hits)
 
     this.posX += this.motionX
     this.posY += this.motionY
@@ -94,24 +69,34 @@ abstract class BaseBoltEntity( world : World ) extends Entity( world ) with Shoo
     }
   }
 
-  def traceCollision() : Option[MovingObjectPosition] = {
-    val startPos = this.worldObj.getWorldVec3Pool().getVecFromPool(this.posX, this.posY, this.posZ)
-    val endPos = this.worldObj.getWorldVec3Pool().getVecFromPool(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ)
-    Option( this.worldObj.clip(startPos, endPos, collidesWithLiquids) )
+  /**
+   * Applies the collisions in hits until the beam signals stop or hits is empty.
+   * Returns the vector of the last collision or the target vector if no collision
+   * stopped the beam.
+   */
+  @tailrec
+  private def applyHitsUntilStop( hits : Stream[MovingObjectPosition] ) : Unit =  hits match {
+    case h #:: hs => if ( onImpact(h) ) () else applyHitsUntilStop(hs)
+    case _ => ()
   }
-
-  def collidesWithLiquids : Boolean
 
   override def setSize( width : Float, height : Float ) = super.setSize( width, height )
 
-  def onImpact( pos : MovingObjectPosition ) {
+  def onImpact( pos : MovingObjectPosition ) : Boolean = {
     createImpactParticles(posX, posY, posZ)
-    pos.typeOfHit match {
-      case EnumMovingObjectType.ENTITY => hitEntity( pos.entityHit )
-      case EnumMovingObjectType.TILE => hitBlock( pos.blockX, pos.blockY, pos.blockZ, pos.sideHit )
+    val shouldDie = pos.typeOfHit match {
+      case EnumMovingObjectType.ENTITY => {
+        hitEntities += pos.entityHit
+        hitEntity( pos.entityHit )
+      }
+      case EnumMovingObjectType.TILE => {
+        hitBlocks += ((pos.blockX, pos.blockY, pos.blockZ))
+        hitBlock( pos.blockX, pos.blockY, pos.blockZ, pos.sideHit )
+      }
     }
 
-    setDead()
+    if ( shouldDie ) setDead
+    shouldDie
   }
 
   override def setDead() {
@@ -165,4 +150,13 @@ abstract class BaseBoltEntity( world : World ) extends Entity( world ) with Shoo
 
   //Workaround for mysterious scala compiler crash
   def random = this.rand
+}
+trait NoDuplicateCollisions extends BaseBoltEntity with BaseEffect {
+  override def canCollideWithBlock(block : Block, metadata : Int, pos : (Int, Int, Int) ) : Boolean = {
+    super.canCollideWithBlock(block, metadata, pos) && !hitBlocks.contains(pos)
+  }
+
+  override def canCollideWithEntity(entity : Entity) : Boolean = {
+    super.canCollideWithEntity(entity) && !hitEntities.contains( entity )
+  }
 }

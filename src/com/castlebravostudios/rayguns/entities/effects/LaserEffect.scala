@@ -6,6 +6,7 @@ import net.minecraft.entity.Entity
 import net.minecraft.util.EntityDamageSource
 import net.minecraft.world.World
 import com.castlebravostudios.rayguns.entities.BaseBeamEntity
+import com.castlebravostudios.rayguns.entities.NoDuplicateCollisions
 
 trait LaserEffect extends Entity with BaseEffect {
   self : Shootable =>
@@ -14,12 +15,13 @@ trait LaserEffect extends Entity with BaseEffect {
   def colourBlue : Float = 0.0f
   def colourGreen : Float = 0.0f
 
-  def hitEntity( entity : Entity ) : Unit = {
+  def hitEntity( entity : Entity ) : Boolean = {
     entity.attackEntityFrom(
       new EntityDamageSource("laser", shooter), 2f)
+      true
   }
 
-  def hitBlock(hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Unit = ()
+  def hitBlock(hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Boolean = true
 
   def createImpactParticles( hitX : Double, hitY : Double, hitZ : Double ) : Unit = {
     for ( _ <- 0 until 4 ) {
@@ -28,5 +30,5 @@ trait LaserEffect extends Entity with BaseEffect {
   }
 }
 
-class LaserBoltEntity(world : World) extends BaseBoltEntity(world) with LaserEffect
+class LaserBoltEntity(world : World) extends BaseBoltEntity(world) with LaserEffect with NoDuplicateCollisions
 class LaserBeamEntity(world : World) extends BaseBeamEntity(world) with LaserEffect

@@ -10,6 +10,7 @@ import net.minecraft.potion.Potion
 import net.minecraft.util.EntityDamageSource
 import net.minecraft.world.World
 import com.castlebravostudios.rayguns.entities.BaseBeamEntity
+import com.castlebravostudios.rayguns.entities.NoDuplicateCollisions
 
 
 trait FrostRayEffect extends BaseEffect {
@@ -19,7 +20,7 @@ trait FrostRayEffect extends BaseEffect {
   def colourBlue : Float = 1.0f
   def colourGreen : Float = 1.0f
 
-  def hitEntity( hit : Entity ) : Unit = {
+  def hitEntity( hit : Entity ) : Boolean = {
     hit.attackEntityFrom(new EntityDamageSource("frostray", shooter), 2)
 
     val livingShooter = shooter match{
@@ -33,9 +34,10 @@ trait FrostRayEffect extends BaseEffect {
       }
     }
 
+    true
   }
 
-  def hitBlock( hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Unit = {
+  def hitBlock( hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Boolean = {
     val material = worldObj.getBlockMaterial(hitX, hitY, hitZ)
     val metadata = worldObj.getBlockMetadata(hitX, hitY, hitZ)
 
@@ -51,6 +53,8 @@ trait FrostRayEffect extends BaseEffect {
     else if ( material.blocksMovement && worldObj.isAirBlock(hitX, hitY+1, hitZ) && side == 1 ) {
       worldObj.setBlock( hitX, hitY+1, hitZ, Block.snow.blockID )
     }
+
+    true
   }
 
   override def collidesWithLiquids = true
@@ -62,5 +66,5 @@ trait FrostRayEffect extends BaseEffect {
   }
 }
 
-class FrostRayBoltEntity( world : World ) extends BaseBoltEntity(world) with FrostRayEffect
+class FrostRayBoltEntity( world : World ) extends BaseBoltEntity(world) with FrostRayEffect with NoDuplicateCollisions
 class FrostRayBeamEntity( world : World ) extends BaseBeamEntity(world) with FrostRayEffect

@@ -8,6 +8,7 @@ import net.minecraft.util.EntityDamageSource
 import net.minecraft.world.World
 import java.util.Random
 import com.castlebravostudios.rayguns.entities.BaseBeamEntity
+import com.castlebravostudios.rayguns.entities.NoDuplicateCollisions
 
 
 trait FortifiedSunlightEffect extends BaseEffect {
@@ -17,9 +18,9 @@ trait FortifiedSunlightEffect extends BaseEffect {
   def colourBlue : Float = 0.0f
   def colourGreen : Float = 1.0f
 
-  def hitEntity( entity : Entity ) : Unit = entity match {
-    case e : EntityLivingBase if e.isEntityUndead() => hitUndead( e )
-    case _ => hitLiving( entity )
+  def hitEntity( entity : Entity ) : Boolean = entity match {
+    case e : EntityLivingBase if e.isEntityUndead() => hitUndead( e ); true
+    case _ => hitLiving( entity ); true
   }
 
   private def hitUndead( entity : EntityLivingBase ) : Unit = {
@@ -31,7 +32,7 @@ trait FortifiedSunlightEffect extends BaseEffect {
     entity.attackEntityFrom(new EntityDamageSource("fortifiedsunlight", shooter), 6)
   }
 
-  def hitBlock(hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Unit = ()
+  def hitBlock(hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Boolean = true
 
   def createImpactParticles( hitX : Double, hitY : Double, hitZ : Double ) : Unit = {
     def randVel = random.nextGaussian() * 0.02D
@@ -43,5 +44,5 @@ trait FortifiedSunlightEffect extends BaseEffect {
   }
 }
 
-class FortifiedSunlightBoltEntity( world : World ) extends BaseBoltEntity(world) with FortifiedSunlightEffect
+class FortifiedSunlightBoltEntity( world : World ) extends BaseBoltEntity(world) with FortifiedSunlightEffect with NoDuplicateCollisions
 class FortifiedSunlightBeamEntity( world : World ) extends BaseBeamEntity(world) with FortifiedSunlightEffect
