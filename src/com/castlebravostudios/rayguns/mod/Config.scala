@@ -40,6 +40,7 @@ object Config {
   var emitterFortifiedSunlight : Int = _
   var emitterExplosive : Int = _
   var emitterDeathRay : Int = _
+  var emitterEnder : Int = _
 
   var chamberLaser : Int = _
   var chamberHeatRay : Int = _
@@ -93,6 +94,7 @@ object Config {
     emitterFortifiedSunlight = config.getItem( "emitterFortifiedSunlight", 5505 ).getInt
     emitterExplosive = config.getItem( "emitterExplosive", 5506 ).getInt
     emitterDeathRay = config.getItem( "emitterDeathRay", 5507 ).getInt
+    emitterEnder = config.getItem( "emitterEnder", 5508 ).getInt
 
     chamberLaser = config.getItem( "chamberLaser", 5601 ).getInt
     chamberHeatRay = config.getItem( "chamberHeatRay", 5602 ).getInt

@@ -26,6 +26,7 @@ item.rayguns.LaserEmitter.name=Laser Emitter
 item.rayguns.LifeForceEmitter.name=Life Force Emitter
 item.rayguns.ShrinkRayEmitter.name=Shrink Ray Emitter
 item.rayguns.DeathRayEmitter.name=Death Ray Emitter
+item.rayguns.EnderEmitter.name=Ender Emitter
 
 item.rayguns.PreciseBeamLens.name=Precise Beam Lens
 item.rayguns.PreciseLens.name=Precise Bolt Lens
