@@ -51,6 +51,7 @@ object Config {
   var chamberExplosive : Int = _
   var chamberDeathRay : Int = _
   var chamberEnder : Int = _
+  var chamberLightning : Int = _
 
   def load( file : File ) : Unit = {
     val config = new Configuration( file )
@@ -107,6 +108,7 @@ object Config {
     chamberExplosive = config.getItem( "chamberExplosive", 5606 ).getInt
     chamberDeathRay = config.getItem( "chamberDeathRay", 5607 ).getInt
     chamberEnder = config.getItem( "chamberEnder", 5608 ).getInt
+    chamberLightning = config.getItem( "chamberLightning", 5609 ).getInt
   }
 
   private def loadBlockIds( config : Configuration ) : Unit = {
