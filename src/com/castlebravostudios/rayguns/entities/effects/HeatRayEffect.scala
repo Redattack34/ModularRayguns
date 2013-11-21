@@ -42,15 +42,6 @@ trait HeatRayEffect extends BaseEffect {
   }
 
   def createImpactParticles( hitX : Double, hitY : Double, hitZ : Double ) : Unit = ()
-
-  private def adjustCoords( x : Int, y : Int, z : Int, side : Int ) : (Int, Int, Int) = side match {
-    case 0 => (x, y - 1, z)
-    case 1 => (x, y + 1, z)
-    case 2 => (x, y, z - 1)
-    case 3 => (x, y, z + 1)
-    case 4 => (x - 1, y, z)
-    case 5 => (x + 1, y, z)
-  }
 }
 
 class HeatRayBoltEntity( world : World ) extends BaseBoltEntity(world) with HeatRayEffect with NoDuplicateCollisions

@@ -37,6 +37,10 @@ import com.castlebravostudios.rayguns.items.emitters.LaserEmitter
 import com.castlebravostudios.rayguns.items.emitters.DeathRayEmitter
 import com.castlebravostudios.rayguns.items.chambers.LaserChamber
 import com.castlebravostudios.rayguns.items.chambers.DeathRayChamber
+import com.castlebravostudios.rayguns.items.emitters.LaserEmitter
+import com.castlebravostudios.rayguns.items.emitters.EnderEmitter
+import com.castlebravostudios.rayguns.items.chambers.LaserChamber
+import com.castlebravostudios.rayguns.items.chambers.EnderChamber
 
 object Items {
 
@@ -72,6 +76,7 @@ object Items {
     registerItem( FortifiedSunlightEmitter )
     registerItem( ExplosiveEmitter )
     registerItem( DeathRayEmitter )
+    registerItem( EnderEmitter )
 
     registerItem( LaserChamber )
     registerItem( HeatRayChamber )
@@ -80,6 +85,7 @@ object Items {
     registerItem( FortifiedSunlightChamber )
     registerItem( ExplosiveChamber )
     registerItem( DeathRayChamber )
+    registerItem( EnderChamber )
   }
 
   /**

@@ -19,6 +19,7 @@ object Entities {
     registerBoltEntity( classOf[FortifiedSunlightBoltEntity], "FortifiedSunlightBolt", 4 )
     registerBoltEntity( classOf[ExplosiveBoltEntity], "ExplosiveBolt", 5 )
     registerBoltEntity( classOf[DeathRayBoltEntity], "DeathRayBolt", 6 )
+    registerBoltEntity( classOf[EnderBoltEntity], "EnderBolt", 7 )
 
     registerBeamEntity( classOf[LaserBeamEntity], "LaserBeam", 20 )
     registerBeamEntity( classOf[HeatRayBeamEntity], "HeatRayBeam", 21 )
@@ -27,6 +28,7 @@ object Entities {
     registerBeamEntity( classOf[FortifiedSunlightBeamEntity], "FortifiedSunlightBeam", 24 )
     registerBeamEntity( classOf[ExplosiveBeamEntity], "ExplosiveBeam", 25 )
     registerBeamEntity( classOf[DeathRayBeamEntity], "DeathRayBeam", 26 )
+    registerBeamEntity( classOf[EnderBeamEntity], "EnderBeam", 27 )
   }
 
   private def registerBoltEntity[T <: Entity]( cls : Class[T], name : String, id : Int ) : Unit = {

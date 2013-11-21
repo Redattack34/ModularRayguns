@@ -40,6 +40,7 @@ object Config {
   var emitterFortifiedSunlight : Int = _
   var emitterExplosive : Int = _
   var emitterDeathRay : Int = _
+  var emitterEnder : Int = _
 
   var chamberLaser : Int = _
   var chamberHeatRay : Int = _
@@ -48,6 +49,7 @@ object Config {
   var chamberFortifiedSunlight : Int = _
   var chamberExplosive : Int = _
   var chamberDeathRay : Int = _
+  var chamberEnder : Int = _
 
   def load( file : File ) : Unit = {
     val config = new Configuration( file )
@@ -93,6 +95,7 @@ object Config {
     emitterFortifiedSunlight = config.getItem( "emitterFortifiedSunlight", 5505 ).getInt
     emitterExplosive = config.getItem( "emitterExplosive", 5506 ).getInt
     emitterDeathRay = config.getItem( "emitterDeathRay", 5507 ).getInt
+    emitterEnder = config.getItem( "emitterEnder", 5508 ).getInt
 
     chamberLaser = config.getItem( "chamberLaser", 5601 ).getInt
     chamberHeatRay = config.getItem( "chamberHeatRay", 5602 ).getInt
@@ -101,6 +104,7 @@ object Config {
     chamberFortifiedSunlight = config.getItem( "chamberFortifiedSunlight", 5605 ).getInt
     chamberExplosive = config.getItem( "chamberExplosive", 5606 ).getInt
     chamberDeathRay = config.getItem( "chamberDeathRay", 5607 ).getInt
+    chamberEnder = config.getItem( "chamberEnder", 5608 ).getInt
   }
 
   private def loadBlockIds( config : Configuration ) : Unit = {
