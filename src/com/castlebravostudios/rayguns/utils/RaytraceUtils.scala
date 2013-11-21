@@ -77,8 +77,11 @@ object RaytraceUtils {
     val tMaxY = rayLength( diff.y, blockSide(y, stepY) - start.y )
     val tMaxZ = rayLength( diff.z, blockSide(z, stepZ) - start.z )
 
+    val length = diff.length
+
     def blocksRec( x : Int, y : Int, z : Int, tMaxX : Double, tMaxY : Double, tMaxZ : Double ) : Stream[BlockPos] = {
-      def branch = if      ( tMaxX <= tMaxY && tMaxX <= tMaxZ ) blocksRec( x + stepX, y, z, tMaxX + tDeltaX, tMaxY, tMaxZ )
+      def branch = if ( tMaxX > length && tMaxY > length && tMaxZ > length ) Stream.empty
+                   else if ( tMaxX <= tMaxY && tMaxX <= tMaxZ ) blocksRec( x + stepX, y, z, tMaxX + tDeltaX, tMaxY, tMaxZ )
                    else if ( tMaxY <= tMaxX && tMaxY <= tMaxZ ) blocksRec( x, y + stepY, z, tMaxX, tMaxY + tDeltaY, tMaxZ )
                    else if ( tMaxZ <= tMaxX && tMaxZ <= tMaxY ) blocksRec( x, y, z + stepZ, tMaxX, tMaxY, tMaxZ + tDeltaZ )
                    else throw new IllegalStateException
