@@ -8,47 +8,12 @@ import net.minecraft.util.MovingObjectPosition
 import net.minecraft.util.AxisAlignedBB
 import net.minecraft.entity.Entity
 import scala.collection.JavaConverters._
+import net.minecraft.entity.EntityLivingBase
+import com.castlebravostudios.rayguns.utils.Extensions.WorldExtension
 
 object RaytraceUtils {
 
-  type BlockPos = (Int, Int, Int)
   type MOP = MovingObjectPosition
-
-  case class Vector3( val x : Double, val y : Double, val z : Double ) {
-    def this( vec : Vec3 ) = this( vec.xCoord, vec.yCoord, vec.zCoord )
-    def toBlockPos : BlockPos =
-      (MathHelper.floor_double(x), MathHelper.floor_double(y), MathHelper.floor_double(z) )
-
-    def lengthSquared : Double = x * x + y * y + z * z
-    def length : Double = MathHelper.sqrt_double( lengthSquared )
-
-    def normalized : Vector3 = {
-      val length = this.length
-      if ( length <= 1.0E-4D ) Vector3( 0, 0, 0 )
-      else Vector3( x / length, y / length, z / length )
-    }
-
-    def add( other : Vector3 ) : Vector3 =
-      Vector3( x + other.x, y + other.y, z + other.z )
-
-    def subtract( other : Vector3 ) : Vector3 =
-      Vector3( x - other.x, y - other.y, z - other.z )
-
-    def divideBy( n : Double ) =
-      Vector3( x / n, y / n, z / n )
-
-    def distanceTo( other : Vector3 ) : Double = this.subtract( other ).length
-
-    def distSquared( other : Vector3 ) : Double = {
-      val diff = this.subtract(other)
-      diff.lengthSquared
-    }
-
-    def toList : List[Double] = List( x, y, z )
-
-    def toMinecraft( world : World ) : Vec3 =
-      world.getWorldVec3Pool().getVecFromPool(x, y, z)
-  }
 
   /**
    * Algorithm taken from:
@@ -193,5 +158,28 @@ object RaytraceUtils {
     }
 
     combine( blocks, entities )
+  }
+
+  def getPlayerPosition( world : World, player : EntityLivingBase ) : Vec3 = {
+    def toRadians(yaw: Float): Float = yaw / 180.0F * Math.PI.floatValue
+    val offsetX = (MathHelper.cos(toRadians(player.rotationYaw)) * 0.08F).doubleValue()
+    val offsetZ = (MathHelper.sin(toRadians(player.rotationYaw)) * 0.08F).doubleValue()
+
+    val y = if ( world.isOnClient ) player.posY - 0.035 else player.posY + 1.62
+    world.getWorldVec3Pool().getVecFromPool(
+        player.posX - offsetX, y, player.posZ - offsetZ)
+  }
+
+  def getPlayerTarget( world : World, player : EntityLivingBase, distance : Double ) : Vec3 = {
+    val playerPos = getPlayerPosition(world, player)
+    vecMult( player.getLookVec(), distance ).addVector(
+        playerPos.xCoord, playerPos.yCoord, playerPos.zCoord )
+  }
+
+  private def vecMult( vec : Vec3, factor : Double ) : Vec3 = {
+    vec.xCoord *= factor
+    vec.yCoord *= factor
+    vec.zCoord *= factor
+    vec
   }
 }

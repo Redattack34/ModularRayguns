@@ -10,6 +10,7 @@ import net.minecraft.util.MovingObjectPosition
 import net.minecraft.world.World
 import com.castlebravostudios.rayguns.entities.effects.BaseEffect
 import com.castlebravostudios.rayguns.utils.RaytraceUtils
+import com.castlebravostudios.rayguns.utils.Vector3
 import scala.annotation.tailrec
 import net.minecraft.util.Vec3
 import net.minecraft.block.Block

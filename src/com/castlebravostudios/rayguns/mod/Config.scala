@@ -53,7 +53,11 @@ object Config {
   var chamberEnder : Int = _
   var chamberLightning : Int = _
 
+  var minLightningDetail : Double = _
+  var lightningFlash : Boolean = _
+
   def load( file : File ) : Unit = {
+    println( file.getAbsolutePath() );
     val config = new Configuration( file )
     config.load()
 
@@ -109,6 +113,9 @@ object Config {
     chamberDeathRay = config.getItem( "chamberDeathRay", 5607 ).getInt
     chamberEnder = config.getItem( "chamberEnder", 5608 ).getInt
     chamberLightning = config.getItem( "chamberLightning", 5609 ).getInt
+
+    minLightningDetail = config.get( "misc", "minLightningDetailSize", 0.01d ).getDouble( 0.01d )
+    lightningFlash = config.get( "misc", "lightningFlashEnabled", true ).getBoolean( true )
   }
 
   private def loadBlockIds( config : Configuration ) : Unit = {

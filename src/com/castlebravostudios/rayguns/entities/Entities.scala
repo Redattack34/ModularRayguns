@@ -29,6 +29,14 @@ object Entities {
     registerBeamEntity( classOf[ExplosiveBeamEntity], "ExplosiveBeam", 25 )
     registerBeamEntity( classOf[DeathRayBeamEntity], "DeathRayBeam", 26 )
     registerBeamEntity( classOf[EnderBeamEntity], "EnderBeam", 27 )
+
+    EntityRegistry.registerModEntity(classOf[LightningBoltEntity], "LightningBolt",
+      8, ModularRayguns, 40, 1, true)
+    RenderingRegistry.registerEntityRenderingHandler(classOf[LightningBoltEntity], boltRenderer)
+
+    EntityRegistry.registerModEntity(classOf[LightningBeamEntity], "LightningBeam",
+      28, ModularRayguns, 40, 1, true)
+    RenderingRegistry.registerEntityRenderingHandler(classOf[LightningBeamEntity], new LightningBeamRenderer)
   }
 
   private def registerBoltEntity[T <: Entity]( cls : Class[T], name : String, id : Int ) : Unit = {

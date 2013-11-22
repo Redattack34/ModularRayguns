@@ -2,9 +2,8 @@ package com.castlebravostudios.rayguns.items.chambers
 
 import com.castlebravostudios.rayguns.api.BeamRegistry
 import com.castlebravostudios.rayguns.api.items.ItemChamber
-import com.castlebravostudios.rayguns.entities.BaseBeamEntity
-import com.castlebravostudios.rayguns.entities.effects.LaserBeamEntity
-import com.castlebravostudios.rayguns.entities.effects.LaserBoltEntity
+import com.castlebravostudios.rayguns.entities.effects.LightningBeamEntity
+import com.castlebravostudios.rayguns.entities.effects.LightningBoltEntity
 import com.castlebravostudios.rayguns.items.emitters.LightningEmitter
 import com.castlebravostudios.rayguns.items.lenses.PreciseBeamLens
 import com.castlebravostudios.rayguns.items.lenses.PreciseLens
@@ -14,8 +13,14 @@ import com.castlebravostudios.rayguns.utils.BeamUtils
 import com.castlebravostudios.rayguns.utils.BoltUtils
 import com.castlebravostudios.rayguns.utils.GunComponents
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer
-
 import net.minecraft.item.Item
+import com.castlebravostudios.rayguns.utils.Vector3
+import net.minecraft.world.World
+import cpw.mods.fml.common.network.Player
+import com.castlebravostudios.rayguns.utils.RaytraceUtils
+import net.minecraft.entity.player.EntityPlayer
+import scala.collection.SortedSet
+import com.castlebravostudios.rayguns.utils.MidpointDisplacement
 
 object LightningChamber extends Item( Config.chamberLightning ) with ItemChamber {
 
@@ -27,20 +32,31 @@ object LightningChamber extends Item( Config.chamberLightning ) with ItemChamber
 
   RecipeRegisterer.registerTier1Chamber(this, LightningEmitter)
 
+  private def getPointsList( world : World, player : EntityPlayer, length : Double ) : List[Vector3] = {
+    val start = RaytraceUtils.getPlayerPosition(world, player)
+    val end = RaytraceUtils.getPlayerTarget(world, player, length)
+
+    val blocks = RaytraceUtils.rayTraceBlocks(world, start, end)( (_, _, _) => true )
+    val actualEnd = blocks.headOption.map( _.hitVec ).getOrElse( end )
+
+    MidpointDisplacement.createPositionList( new Vector3( start ), new Vector3( actualEnd ) )
+  }
+
   BeamRegistry.register({
     case GunComponents(_, LightningChamber, _, None, _) => { (world, player) =>
-      BoltUtils.spawnNormal( world, new LaserBoltEntity(world), player )
+      val bolt = new LightningBoltEntity(world)
+      bolt.pointsList = getPointsList( world, player, 30 )
+      BoltUtils.spawnNormal( world, bolt, player )
     }
     case GunComponents(_, LightningChamber, _, Some(PreciseLens), _ ) => { (world, player) =>
-      BoltUtils.spawnPrecise( world, new LaserBoltEntity( world ), player )
-    }
-    case GunComponents(_, LightningChamber, _, Some(WideLens), _ ) => { (world, player) =>
-      BoltUtils.spawnScatter(world, player, 9, 5 ){ () =>
-        new LaserBoltEntity(world)
-      }
+      val bolt = new LightningBoltEntity(world)
+      bolt.pointsList = getPointsList( world, player, 30 )
+      BoltUtils.spawnPrecise( world, bolt, player )
     }
     case GunComponents(_, LightningChamber, _, Some(PreciseBeamLens), _ ) => { (world, player) =>
-      BeamUtils.spawnSingleShot( new LaserBeamEntity(world), world, player )
+      val beam = new LightningBeamEntity(world)
+      beam.pointsList = getPointsList( world, player,  BeamUtils.maxBeamLength )
+      BeamUtils.spawnSingleShot( beam, world, player )
     }
   })
 }
