@@ -9,7 +9,7 @@ object MidpointDisplacement {
 
   private val minDetail = Config.minLightningDetail
 
-  private val pregeneratedBoltLists = Seq.fill(100){
+  private val pregeneratedBoltLists = Vector.fill(100){
     createPositionList( Vector3( 0, 0, 0 ), Vector3( 0, 0, 4 ) )
   }
 

@@ -46,21 +46,20 @@ class LightningBoltRenderer extends Render {
 
     GL11.glColor4f( e.colourRed, e.colourGreen, e.colourBlue, 1.0f )
 
-    val renderOffset = Vector3( 0, 0, -2 )
     tes.startDrawingQuads();
-    for { pair <- e.pointsList.sliding( 2 ) } {
-      val start = pair(0).add(renderOffset)
-      val end = pair(1).add(renderOffset)
+    for { index <- 0 until e.pointsList.size -1 } {
+      val start = e.pointsList( index )
+      val end = e.pointsList( index + 1 )
 
       val offset = 0.125D
-      tes.addVertexWithUV( start.x - offset, start.y, start.z, 0, 0);
-      tes.addVertexWithUV( end.x - offset, end.y, end.z, 0, 1);
-      tes.addVertexWithUV( end.x + offset, end.y, end.z, 1, 1);
-      tes.addVertexWithUV( start.x + offset, start.y, start.z, 1, 0);
-      tes.addVertexWithUV( start.x, start.y - offset, start.z, 0, 0);
-      tes.addVertexWithUV( end.x, end.y - offset, end.z, 0, 1);
-      tes.addVertexWithUV( end.x, end.y + offset, end.z, 1, 1);
-      tes.addVertexWithUV( start.x, start.y + offset, start.z, 1, 0);
+      tes.addVertexWithUV( start.x - offset, start.y, start.z - 2, 0, 0);
+      tes.addVertexWithUV( end.x - offset, end.y, end.z - 2, 0, 1);
+      tes.addVertexWithUV( end.x + offset, end.y, end.z - 2, 1, 1);
+      tes.addVertexWithUV( start.x + offset, start.y, start.z - 2, 1, 0);
+      tes.addVertexWithUV( start.x, start.y - offset, start.z - 2, 0, 0);
+      tes.addVertexWithUV( end.x, end.y - offset, end.z - 2, 0, 1);
+      tes.addVertexWithUV( end.x, end.y + offset, end.z - 2, 1, 1);
+      tes.addVertexWithUV( start.x, start.y + offset, start.z - 2, 1, 0);
     }
     tes.draw();
 

@@ -44,9 +44,9 @@ class LightningBeamRenderer extends Render {
     GL11.glColor4f( e.colourRed, e.colourGreen, e.colourBlue, 1.0f )
 
     tes.startDrawingQuads();
-    for { pair <- e.pointsList.sliding( 2 ) } {
-      val start = pair(0).add(renderLoc)
-      val end = pair(1).add(renderLoc)
+    for { index <- 0 until e.pointsList.size - 1 } {
+      val start = e.pointsList( index ).add(renderLoc)
+      val end = e.pointsList( index + 1 ).add(renderLoc)
 
       val offset = 0.0625D
       tes.addVertexWithUV( start.x - offset, start.y, start.z, 0, 0);
