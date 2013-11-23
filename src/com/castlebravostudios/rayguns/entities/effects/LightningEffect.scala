@@ -10,11 +10,13 @@ import com.castlebravostudios.rayguns.entities.NoDuplicateCollisions
 import com.castlebravostudios.rayguns.utils.Vector3
 import com.castlebravostudios.rayguns.utils.MidpointDisplacement
 import scala.collection.SortedSet
+import com.castlebravostudios.rayguns.mod.Config
+import com.castlebravostudios.rayguns.utils.Extensions._
 
 trait LightningEffect extends Entity with BaseEffect {
   self : Shootable =>
 
-  var pointsList : List[Vector3] = Nil
+  var pointsList : Seq[Vector3] = Seq()
 
   //Number of times this beam/bolt has been rendered. Used for rendering.
   var renderCount : Int = 0
@@ -38,7 +40,16 @@ trait LightningEffect extends Entity with BaseEffect {
   }
 }
 
-class LightningBoltEntity(world : World) extends BaseBoltEntity(world) with LightningEffect with NoDuplicateCollisions
+class LightningBoltEntity(world : World) extends BaseBoltEntity(world) with LightningEffect with NoDuplicateCollisions {
+
+  override def onUpdate() : Unit = {
+    super.onUpdate()
+
+    if ( world.isOnClient ) {
+      pointsList = MidpointDisplacement.getBoltList
+    }
+  }
+}
 class LightningBeamEntity(world : World) extends BaseBeamEntity(world) with LightningEffect {
   override def lifetime = 5
 }

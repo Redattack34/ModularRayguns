@@ -21,6 +21,7 @@ import com.castlebravostudios.rayguns.utils.RaytraceUtils
 import net.minecraft.entity.player.EntityPlayer
 import scala.collection.SortedSet
 import com.castlebravostudios.rayguns.utils.MidpointDisplacement
+import com.castlebravostudios.rayguns.utils.Extensions._
 
 object LightningChamber extends Item( Config.chamberLightning ) with ItemChamber {
 
@@ -32,7 +33,7 @@ object LightningChamber extends Item( Config.chamberLightning ) with ItemChamber
 
   RecipeRegisterer.registerTier1Chamber(this, LightningEmitter)
 
-  private def getPointsList( world : World, player : EntityPlayer, length : Double ) : List[Vector3] = {
+  private def getPointsList( world : World, player : EntityPlayer, length : Double ) : Seq[Vector3] = {
     val start = RaytraceUtils.getPlayerPosition(world, player)
     val end = RaytraceUtils.getPlayerTarget(world, player, length)
 
@@ -44,18 +45,23 @@ object LightningChamber extends Item( Config.chamberLightning ) with ItemChamber
 
   BeamRegistry.register({
     case GunComponents(_, LightningChamber, _, None, _) => { (world, player) =>
-      val bolt = new LightningBoltEntity(world)
-      bolt.pointsList = getPointsList( world, player, 30 )
-      BoltUtils.spawnNormal( world, bolt, player )
+      BoltUtils.spawnNormal( world, new LightningBoltEntity(world), player )
     }
     case GunComponents(_, LightningChamber, _, Some(PreciseLens), _ ) => { (world, player) =>
-      val bolt = new LightningBoltEntity(world)
-      bolt.pointsList = getPointsList( world, player, 30 )
-      BoltUtils.spawnPrecise( world, bolt, player )
+      BoltUtils.spawnPrecise( world, new LightningBoltEntity(world), player )
+    }
+    case GunComponents(_, LightningChamber, _, Some(WideLens), _ ) => { (world, player) =>
+      BoltUtils.spawnScatter(world, player, 9, 5 ){ () =>
+        new LightningBoltEntity(world)
+      }
     }
     case GunComponents(_, LightningChamber, _, Some(PreciseBeamLens), _ ) => { (world, player) =>
       val beam = new LightningBeamEntity(world)
-      beam.pointsList = getPointsList( world, player,  BeamUtils.maxBeamLength )
+
+      if ( world.isOnClient ) {
+        beam.pointsList = getPointsList( world, player,  BeamUtils.maxBeamLength )
+      }
+
       BeamUtils.spawnSingleShot( beam, world, player )
     }
   })

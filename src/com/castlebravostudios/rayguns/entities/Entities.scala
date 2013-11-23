@@ -32,7 +32,7 @@ object Entities {
 
     EntityRegistry.registerModEntity(classOf[LightningBoltEntity], "LightningBolt",
       8, ModularRayguns, 40, 1, true)
-    RenderingRegistry.registerEntityRenderingHandler(classOf[LightningBoltEntity], boltRenderer)
+    RenderingRegistry.registerEntityRenderingHandler(classOf[LightningBoltEntity], new LightningBoltRenderer)
 
     EntityRegistry.registerModEntity(classOf[LightningBeamEntity], "LightningBeam",
       28, ModularRayguns, 40, 1, true)

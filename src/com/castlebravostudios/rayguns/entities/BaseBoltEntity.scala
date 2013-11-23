@@ -25,7 +25,7 @@ abstract class BaseBoltEntity( world : World ) extends Entity( world ) with Shoo
   self : BaseEffect =>
 
   def lifetime = 20
-  private var timeRemaining = lifetime
+  protected var timeRemaining = lifetime
 
   def pitchOffset : Float = 0.5f
   def velocityMultiplier : Float = 1.5f
