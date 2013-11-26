@@ -10,6 +10,9 @@ import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.item.ItemBlock
 import com.castlebravostudios.rayguns.blocks.lensgrinder.LensGrinderTileEntity
 import com.castlebravostudios.rayguns.mod.Config
+import com.castlebravostudios.rayguns.blocks.tech.invred.InvisibleRedstone
+import com.castlebravostudios.rayguns.blocks.tech.invred.InvisibleRedstone
+import com.castlebravostudios.rayguns.blocks.tech.invred.InvisibleRedstoneTileEntity
 
 object Blocks {
 
@@ -21,6 +24,10 @@ object Blocks {
     val lensGrinder = new LensGrinder( Config.lensGrinder )
     GameRegistry.registerBlock(lensGrinder, classOf[ItemBlock], "lensGrinder")
     GameRegistry.registerTileEntity(classOf[LensGrinderTileEntity], "lensGrinderEntity")
+
+    val invred = new InvisibleRedstone( Config.invisibleRedstone )
+    GameRegistry.registerBlock( invred, classOf[ItemBlock], "invisibleRedstone" );
+    GameRegistry.registerTileEntity(classOf[InvisibleRedstoneTileEntity], "invisibleRedstoneEntity" )
 
     NetworkRegistry.instance().registerGuiHandler(ModularRayguns, new ModularRaygunsGuiHandler)
   }

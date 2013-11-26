@@ -12,6 +12,9 @@ import com.castlebravostudios.rayguns.utils.MidpointDisplacement
 import scala.collection.SortedSet
 import com.castlebravostudios.rayguns.mod.Config
 import com.castlebravostudios.rayguns.utils.Extensions._
+import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.block.Block
+import net.minecraft.entity.monster.EntityCreeper
 
 trait LightningEffect extends Entity with BaseEffect {
   self : Shootable =>
@@ -26,6 +29,8 @@ trait LightningEffect extends Entity with BaseEffect {
   def colourGreen : Float = 0.5f
 
   def hitEntity( entity : Entity ) : Boolean = {
+    if ( entity.isInstanceOf[EntityCreeper] ) return true
+
     entity.attackEntityFrom(
       new EntityDamageSource("lightningray", shooter), 4f)
       true
@@ -33,6 +38,13 @@ trait LightningEffect extends Entity with BaseEffect {
 
   def hitBlock(hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Boolean = {
 
+    val (x, y, z) = adjustCoords( hitX, hitY, hitZ, side )
+    if ( !shooter.isInstanceOf[EntityPlayer] ||
+         shooter.asInstanceOf[EntityPlayer].canPlayerEdit(x, y, z, side, null) ) {
+      if ( worldObj.isAirBlock(x, y, z) ) {
+        worldObj.setBlock(x, y, z, Config.invisibleRedstone, side, 3)
+      }
+    }
     true
   }
 

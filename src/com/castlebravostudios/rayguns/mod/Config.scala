@@ -31,6 +31,7 @@ object Config {
 
   var gunBench : Int = _
   var lensGrinder : Int = _
+  var invisibleRedstone : Int = _
 
   var emitterShrinkRay : Int = _
   var emitterLaser : Int = _
@@ -121,5 +122,6 @@ object Config {
   private def loadBlockIds( config : Configuration ) : Unit = {
     gunBench = config.getBlock( "gunBench", 1337 ).getInt()
     lensGrinder = config.getBlock( "lensGrinder", 1338 ).getInt()
+    invisibleRedstone = config.getBlock( "invisibleRedstone", 1339 ).getInt()
   }
 }
