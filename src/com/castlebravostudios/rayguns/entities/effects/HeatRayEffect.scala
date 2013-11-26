@@ -19,7 +19,7 @@ trait HeatRayEffect extends BaseEffect {
   def colourGreen : Float = 0.5f
 
   def hitEntity( hit : Entity ) : Boolean = {
-    hit.setFire(8)
+    hit.setFire(4)
     hit.attackEntityFrom(new EntityDamageSource("heatray", shooter), 2)
 
     true
