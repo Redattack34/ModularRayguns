@@ -31,6 +31,7 @@ object Config {
 
   var gunBench : Int = _
   var lensGrinder : Int = _
+  var invisibleRedstone : Int = _
 
   var emitterShrinkRay : Int = _
   var emitterLaser : Int = _
@@ -41,6 +42,7 @@ object Config {
   var emitterExplosive : Int = _
   var emitterDeathRay : Int = _
   var emitterEnder : Int = _
+  var emitterLightning : Int = _
 
   var chamberLaser : Int = _
   var chamberHeatRay : Int = _
@@ -50,8 +52,13 @@ object Config {
   var chamberExplosive : Int = _
   var chamberDeathRay : Int = _
   var chamberEnder : Int = _
+  var chamberLightning : Int = _
+
+  var minLightningDetail : Double = _
+  var lightningFlash : Boolean = _
 
   def load( file : File ) : Unit = {
+    println( file.getAbsolutePath() );
     val config = new Configuration( file )
     config.load()
 
@@ -96,6 +103,7 @@ object Config {
     emitterExplosive = config.getItem( "emitterExplosive", 5506 ).getInt
     emitterDeathRay = config.getItem( "emitterDeathRay", 5507 ).getInt
     emitterEnder = config.getItem( "emitterEnder", 5508 ).getInt
+    emitterLightning = config.getItem( "emitterLightning", 5509 ).getInt
 
     chamberLaser = config.getItem( "chamberLaser", 5601 ).getInt
     chamberHeatRay = config.getItem( "chamberHeatRay", 5602 ).getInt
@@ -105,10 +113,15 @@ object Config {
     chamberExplosive = config.getItem( "chamberExplosive", 5606 ).getInt
     chamberDeathRay = config.getItem( "chamberDeathRay", 5607 ).getInt
     chamberEnder = config.getItem( "chamberEnder", 5608 ).getInt
+    chamberLightning = config.getItem( "chamberLightning", 5609 ).getInt
+
+    minLightningDetail = config.get( "misc", "minLightningDetailSize", 0.01d ).getDouble( 0.01d )
+    lightningFlash = config.get( "misc", "lightningFlashEnabled", true ).getBoolean( true )
   }
 
   private def loadBlockIds( config : Configuration ) : Unit = {
     gunBench = config.getBlock( "gunBench", 1337 ).getInt()
     lensGrinder = config.getBlock( "lensGrinder", 1338 ).getInt()
+    invisibleRedstone = config.getBlock( "invisibleRedstone", 1339 ).getInt()
   }
 }

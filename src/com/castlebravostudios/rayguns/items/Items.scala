@@ -1,46 +1,13 @@
 package com.castlebravostudios.rayguns.items
 
-import com.castlebravostudios.rayguns.items.accessories.ExtendedBattery
-import com.castlebravostudios.rayguns.items.accessories.RefireCapacitor
-import com.castlebravostudios.rayguns.items.accessories.SolarPanel
-import com.castlebravostudios.rayguns.items.batteries.AdvancedBattery
-import com.castlebravostudios.rayguns.items.batteries.BasicBattery
-import com.castlebravostudios.rayguns.items.batteries.InfiniteBattery
-import com.castlebravostudios.rayguns.items.batteries.UltimateBattery
-import com.castlebravostudios.rayguns.items.bodies.FireflyBody
-import com.castlebravostudios.rayguns.items.bodies.MantisBody
-import com.castlebravostudios.rayguns.items.chambers.FrostRayChamber
-import com.castlebravostudios.rayguns.items.chambers.HeatRayChamber
-import com.castlebravostudios.rayguns.items.chambers.LaserChamber
-import com.castlebravostudios.rayguns.items.chambers.LifeForceChamber
-import com.castlebravostudios.rayguns.items.emitters.FrostRayEmitter
-import com.castlebravostudios.rayguns.items.emitters.HeatRayEmitter
-import com.castlebravostudios.rayguns.items.emitters.LaserEmitter
-import com.castlebravostudios.rayguns.items.emitters.LifeForceEmitter
-import com.castlebravostudios.rayguns.items.emitters.ShrinkRayEmitter
-import com.castlebravostudios.rayguns.items.lenses.PreciseBeamLens
-import com.castlebravostudios.rayguns.items.lenses.PreciseLens
-import com.castlebravostudios.rayguns.items.lenses.WideLens
+import com.castlebravostudios.rayguns.items.accessories._
+import com.castlebravostudios.rayguns.items.batteries._
+import com.castlebravostudios.rayguns.items.bodies._
+import com.castlebravostudios.rayguns.items.chambers._
+import com.castlebravostudios.rayguns.items.emitters._
+import com.castlebravostudios.rayguns.items.lenses._
 import com.castlebravostudios.rayguns.items.misc._
-import com.castlebravostudios.rayguns.items.misc.GlassGainMedium
-import com.castlebravostudios.rayguns.items.misc.GlowstoneGainMedium
 import net.minecraft.item.Item
-import com.castlebravostudios.rayguns.items.emitters.FortifiedSunlightEmitter
-import com.castlebravostudios.rayguns.items.emitters.LaserEmitter
-import com.castlebravostudios.rayguns.items.chambers.FortifiedSunlightChamber
-import com.castlebravostudios.rayguns.items.chambers.LaserChamber
-import com.castlebravostudios.rayguns.items.emitters.ExplosiveEmitter
-import com.castlebravostudios.rayguns.items.emitters.LaserEmitter
-import com.castlebravostudios.rayguns.items.chambers.ExplosiveChamber
-import com.castlebravostudios.rayguns.items.chambers.LaserChamber
-import com.castlebravostudios.rayguns.items.emitters.LaserEmitter
-import com.castlebravostudios.rayguns.items.emitters.DeathRayEmitter
-import com.castlebravostudios.rayguns.items.chambers.LaserChamber
-import com.castlebravostudios.rayguns.items.chambers.DeathRayChamber
-import com.castlebravostudios.rayguns.items.emitters.LaserEmitter
-import com.castlebravostudios.rayguns.items.emitters.EnderEmitter
-import com.castlebravostudios.rayguns.items.chambers.LaserChamber
-import com.castlebravostudios.rayguns.items.chambers.EnderChamber
 
 object Items {
 
@@ -77,6 +44,7 @@ object Items {
     registerItem( ExplosiveEmitter )
     registerItem( DeathRayEmitter )
     registerItem( EnderEmitter )
+    registerItem( LightningEmitter )
 
     registerItem( LaserChamber )
     registerItem( HeatRayChamber )
@@ -86,6 +54,7 @@ object Items {
     registerItem( ExplosiveChamber )
     registerItem( DeathRayChamber )
     registerItem( EnderChamber )
+    registerItem( LightningChamber )
   }
 
   /**

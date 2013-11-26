@@ -12,7 +12,7 @@ import net.minecraft.world.World
 abstract class BaseBeamEntity(world : World) extends Entity( world ) with Shootable {
   self : BaseEffect =>
 
-  val lifetime = 3
+  def lifetime = 3
   var timeRemaining = lifetime
   var length : Double = 0
 

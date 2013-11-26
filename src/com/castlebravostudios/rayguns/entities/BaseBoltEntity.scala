@@ -10,6 +10,7 @@ import net.minecraft.util.MovingObjectPosition
 import net.minecraft.world.World
 import com.castlebravostudios.rayguns.entities.effects.BaseEffect
 import com.castlebravostudios.rayguns.utils.RaytraceUtils
+import com.castlebravostudios.rayguns.utils.Vector3
 import scala.annotation.tailrec
 import net.minecraft.util.Vec3
 import net.minecraft.block.Block
@@ -24,7 +25,7 @@ abstract class BaseBoltEntity( world : World ) extends Entity( world ) with Shoo
   self : BaseEffect =>
 
   def lifetime = 20
-  private var timeRemaining = lifetime
+  protected var timeRemaining = lifetime
 
   def pitchOffset : Float = 0.5f
   def velocityMultiplier : Float = 1.5f
