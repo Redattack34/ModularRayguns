@@ -26,7 +26,7 @@ import com.castlebravostudios.rayguns.utils.Extensions._
 object LightningChamber extends Item( Config.chamberLightning ) with ItemChamber {
 
   val moduleKey = "LightningChamber"
-  val powerModifier = 1.0
+  val powerModifier = 2.0
   register
   setUnlocalizedName("rayguns.LightningChamber")
   setTextureName("rayguns:chamber_lightning")

@@ -27,11 +27,14 @@ trait LightningEffect extends Entity with BaseEffect {
 
   def hitEntity( entity : Entity ) : Boolean = {
     entity.attackEntityFrom(
-      new EntityDamageSource("laser", shooter), 2f)
+      new EntityDamageSource("lightningray", shooter), 4f)
       true
   }
 
-  def hitBlock(hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Boolean = true
+  def hitBlock(hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Boolean = {
+
+    true
+  }
 
   def createImpactParticles( hitX : Double, hitY : Double, hitZ : Double ) : Unit = {
     for ( _ <- 0 until 4 ) {
