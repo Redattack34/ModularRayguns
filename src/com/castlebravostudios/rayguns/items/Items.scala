@@ -56,6 +56,7 @@ object Items {
     registerItem( DeathRayChamber )
     registerItem( EnderChamber )
     registerItem( LightningChamber )
+    registerItem( ImpulseChamber )
   }
 
   /**
