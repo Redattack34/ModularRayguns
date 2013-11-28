@@ -29,6 +29,8 @@ case class Vector3( val x : Double, val y : Double, val z : Double ) {
   def divideBy( n : Double ) =
     Vector3( x / n, y / n, z / n )
 
+  def mult( n : Double ) = Vector3( x * n, y * n, z * n )
+
   def distanceTo( other : Vector3 ) : Double = this.subtract( other ).length
 
   def distSquared( other : Vector3 ) : Double = {
