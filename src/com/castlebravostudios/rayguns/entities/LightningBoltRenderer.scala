@@ -44,8 +44,6 @@ class LightningBoltRenderer extends Render {
 
     val tes = Tessellator.instance
 
-    GL11.glColor4f( e.colourRed, e.colourGreen, e.colourBlue, 1.0f )
-
     tes.startDrawingQuads();
     for { index <- 0 until e.pointsList.size -1 } {
       val start = e.pointsList( index )

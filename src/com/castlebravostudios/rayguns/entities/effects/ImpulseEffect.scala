@@ -14,15 +14,12 @@ import net.minecraft.util.EntityDamageSource
 import net.minecraft.util.MathHelper
 import net.minecraft.world.World
 import net.minecraft.tileentity.TileEntityPiston
+import net.minecraft.util.ResourceLocation
 
 trait ImpulseEffect extends Entity with BaseEffect {
   self : Shootable =>
 
   private def impulseStrength = 1.5
-
-  def colourRed : Float = 0.6f
-  def colourBlue : Float = 0.6f
-  def colourGreen : Float = 1.0f
 
   def hitEntity( entity : Entity ) : Boolean = {
     entity.attackEntityFrom(
@@ -84,5 +81,9 @@ trait ImpulseEffect extends Entity with BaseEffect {
 
 }
 
-class ImpulseBoltEntity(world : World) extends BaseBoltEntity(world) with ImpulseEffect with NoDuplicateCollisions
-class ImpulseBeamEntity(world : World) extends BaseBeamEntity(world) with ImpulseEffect
+class ImpulseBoltEntity(world : World) extends BaseBoltEntity(world) with ImpulseEffect with NoDuplicateCollisions {
+  override val texture = new ResourceLocation( "rayguns", "textures/bolts/impulse_bolt.png" )
+}
+class ImpulseBeamEntity(world : World) extends BaseBeamEntity(world) with ImpulseEffect {
+  override val texture = new ResourceLocation( "rayguns", "textures/beams/impulse_beam.png" )
+}

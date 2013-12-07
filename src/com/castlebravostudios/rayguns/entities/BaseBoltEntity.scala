@@ -2,11 +2,9 @@ package com.castlebravostudios.rayguns.entities
 
 import scala.annotation.tailrec
 import scala.collection.JavaConversions.asScalaBuffer
-
 import com.castlebravostudios.rayguns.entities.effects.BaseEffect
 import com.castlebravostudios.rayguns.utils.BlockPos
 import com.castlebravostudios.rayguns.utils.RaytraceUtils
-
 import net.minecraft.block.Block
 import net.minecraft.entity.Entity
 import net.minecraft.entity.IProjectile
@@ -16,6 +14,7 @@ import net.minecraft.util.MathHelper
 import net.minecraft.util.MovingObjectPosition
 import net.minecraft.util.Vec3
 import net.minecraft.world.World
+import net.minecraft.util.ResourceLocation
 
 /**
  * Abstract base class for beam entities. Most of this code is a poor translation
@@ -153,6 +152,10 @@ abstract class BaseBoltEntity( world : World ) extends Entity( world ) with Shoo
 
   //Workaround for mysterious scala compiler crash
   def random = this.rand
+
+  def texture : ResourceLocation
+
+
 }
 trait NoDuplicateCollisions extends BaseBoltEntity with BaseEffect {
   override def canCollideWithBlock(block : Block, metadata : Int, pos : BlockPos ) : Boolean = {

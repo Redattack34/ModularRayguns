@@ -15,13 +15,10 @@ import net.minecraft.entity.boss.IBossDisplayData
 import com.castlebravostudios.rayguns.utils.RaytraceUtils
 import com.castlebravostudios.rayguns.utils.Extensions.WorldExtension
 import com.castlebravostudios.rayguns.utils.BlockPos
+import net.minecraft.util.ResourceLocation
 
 trait EnderEffect extends Entity with BaseEffect {
   self : Shootable =>
-
-  def colourRed : Float = 1.0f
-  def colourBlue : Float = 1.0f
-  def colourGreen : Float = 0.0f
 
   def hitEntity( entity : Entity ) : Boolean = {
     if ( worldObj.isOnServer ) {
@@ -85,5 +82,9 @@ trait EnderEffect extends Entity with BaseEffect {
 
 }
 
-class EnderBoltEntity(world : World) extends BaseBoltEntity(world) with EnderEffect with NoDuplicateCollisions
-class EnderBeamEntity(world : World) extends BaseBeamEntity(world) with EnderEffect
+class EnderBoltEntity(world : World) extends BaseBoltEntity(world) with EnderEffect with NoDuplicateCollisions{
+  override val texture = new ResourceLocation( "rayguns", "textures/bolts/ender_bolt.png" )
+}
+class EnderBeamEntity(world : World) extends BaseBeamEntity(world) with EnderEffect {
+  override val texture = new ResourceLocation( "rayguns", "textures/beams/ender_beam.png" )
+}

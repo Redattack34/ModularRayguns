@@ -7,13 +7,10 @@ import net.minecraft.util.EntityDamageSource
 import net.minecraft.world.World
 import com.castlebravostudios.rayguns.entities.BaseBeamEntity
 import com.castlebravostudios.rayguns.entities.NoDuplicateCollisions
+import net.minecraft.util.ResourceLocation
 
 trait LaserEffect extends Entity with BaseEffect {
   self : Shootable =>
-
-  def colourRed : Float = 1.0f
-  def colourBlue : Float = 0.0f
-  def colourGreen : Float = 0.0f
 
   def hitEntity( entity : Entity ) : Boolean = {
     entity.attackEntityFrom(
@@ -30,5 +27,9 @@ trait LaserEffect extends Entity with BaseEffect {
   }
 }
 
-class LaserBoltEntity(world : World) extends BaseBoltEntity(world) with LaserEffect with NoDuplicateCollisions
-class LaserBeamEntity(world : World) extends BaseBeamEntity(world) with LaserEffect
+class LaserBoltEntity(world : World) extends BaseBoltEntity(world) with LaserEffect with NoDuplicateCollisions {
+  override val texture = new ResourceLocation( "rayguns", "textures/bolts/laser_bolt.png" )
+}
+class LaserBeamEntity(world : World) extends BaseBeamEntity(world) with LaserEffect {
+  override val texture = new ResourceLocation( "rayguns", "textures/beams/laser_beam.png" )
+}

@@ -32,8 +32,6 @@ class BoltRenderer extends Render {
 
     val tes = Tessellator.instance
 
-    GL11.glColor4f( e.colourRed, e.colourGreen, e.colourBlue, 1.0f )
-
     tes.startDrawingQuads();
     drawWest(tes)
     drawEast(tes)
@@ -51,8 +49,10 @@ class BoltRenderer extends Render {
     GL11.glPopMatrix()
   }
 
-  def getEntityTexture( e : Entity ) : ResourceLocation =
-    new ResourceLocation( "rayguns", "textures/blocks/laser_bolt.png" )
+  def getEntityTexture( e : Entity ) : ResourceLocation = e match {
+    case bolt : BaseBoltEntity => bolt.texture
+    case _ => null
+  }
 
   private def drawWest(tes: Tessellator): Unit = {
     tes.addVertexWithUV(-1.0D, -1.0D, -1.0D, 0, 0);

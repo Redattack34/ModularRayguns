@@ -16,6 +16,7 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.block.Block
 import net.minecraft.entity.monster.EntityCreeper
 import com.castlebravostudios.rayguns.utils.BlockPos
+import net.minecraft.util.ResourceLocation
 
 trait LightningEffect extends Entity with BaseEffect {
   self : Shootable =>
@@ -24,10 +25,6 @@ trait LightningEffect extends Entity with BaseEffect {
 
   //Number of times this beam/bolt has been rendered. Used for rendering.
   var renderCount : Int = 0
-
-  def colourRed : Float = 1.0f
-  def colourBlue : Float = 1.0f
-  def colourGreen : Float = 0.5f
 
   def hitEntity( entity : Entity ) : Boolean = {
     if ( entity.isInstanceOf[EntityCreeper] ) return true
@@ -65,7 +62,11 @@ class LightningBoltEntity(world : World) extends BaseBoltEntity(world) with Ligh
       pointsList = MidpointDisplacement.getBoltList
     }
   }
+
+  override val texture = null //We use the beam texture for lightning bolts.
 }
 class LightningBeamEntity(world : World) extends BaseBeamEntity(world) with LightningEffect {
   override def lifetime = 5
+
+  override val texture = new ResourceLocation( "rayguns", "textures/beams/lightning_beam.png" )
 }

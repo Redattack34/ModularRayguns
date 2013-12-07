@@ -13,13 +13,10 @@ import net.minecraft.entity.player.EntityPlayer
 import com.castlebravostudios.rayguns.items.misc.RayGun
 import net.minecraft.item.ItemStack
 import net.minecraft.entity.EntityLivingBase
+import net.minecraft.util.ResourceLocation
 
 trait DeathRayEffect extends Entity with BaseEffect {
   self : Shootable =>
-
-  def colourRed : Float = 0.0f
-  def colourBlue : Float = 0.0f
-  def colourGreen : Float = 0.0f
 
   def hitEntity( hit : Entity ) : Boolean = {
     if ( hit.isInstanceOf[EntityLivingBase] ) {
@@ -66,5 +63,9 @@ trait DeathRayEffect extends Entity with BaseEffect {
   def createImpactParticles( hitX : Double, hitY : Double, hitZ : Double ) : Unit = ()
 }
 
-class DeathRayBoltEntity(world : World) extends BaseBoltEntity(world) with DeathRayEffect with NoDuplicateCollisions
-class DeathRayBeamEntity(world : World) extends BaseBeamEntity(world) with DeathRayEffect
+class DeathRayBoltEntity(world : World) extends BaseBoltEntity(world) with DeathRayEffect with NoDuplicateCollisions {
+  override val texture = new ResourceLocation( "rayguns", "textures/bolts/death_ray_bolt.png" )
+}
+class DeathRayBeamEntity(world : World) extends BaseBeamEntity(world) with DeathRayEffect {
+  override val texture = new ResourceLocation( "rayguns", "textures/beams/death_ray_beam.png" )
+}
