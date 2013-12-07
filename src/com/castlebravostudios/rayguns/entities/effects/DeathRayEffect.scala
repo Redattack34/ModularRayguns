@@ -14,6 +14,7 @@ import com.castlebravostudios.rayguns.items.misc.RayGun
 import net.minecraft.item.ItemStack
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.util.ResourceLocation
+import com.castlebravostudios.rayguns.entities.BoltRenderer
 
 trait DeathRayEffect extends Entity with BaseEffect {
   self : Shootable =>
@@ -65,6 +66,7 @@ trait DeathRayEffect extends Entity with BaseEffect {
 
 class DeathRayBoltEntity(world : World) extends BaseBoltEntity(world) with DeathRayEffect with NoDuplicateCollisions {
   override val texture = new ResourceLocation( "rayguns", "textures/bolts/death_ray_bolt.png" )
+  override def lineTexture = BoltRenderer.lineWhiteTexture
 }
 class DeathRayBeamEntity(world : World) extends BaseBeamEntity(world) with DeathRayEffect {
   override val texture = new ResourceLocation( "rayguns", "textures/beams/death_ray_beam.png" )

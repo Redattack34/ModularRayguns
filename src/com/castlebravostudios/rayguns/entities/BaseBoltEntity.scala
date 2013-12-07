@@ -154,7 +154,7 @@ abstract class BaseBoltEntity( world : World ) extends Entity( world ) with Shoo
   def random = this.rand
 
   def texture : ResourceLocation
-
+  def lineTexture : ResourceLocation = BoltRenderer.lineBlackTexture
 
 }
 trait NoDuplicateCollisions extends BaseBoltEntity with BaseEffect {
