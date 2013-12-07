@@ -18,6 +18,7 @@ item.rayguns.LaserChamber.name=Laser Beam Chamber
 item.rayguns.LifeForceChamber.name=Life Force Beam Chamber
 item.rayguns.DeathRayChamber.name=Death Ray Beam Chamber
 item.rayguns.LightningRayChamber.name=Lightning Beam Chamber
+item.rayguns.ImpulseRayChamber.name=Impulse Beam Chamber
 
 item.rayguns.ExplosiveEmitter.name=Explosive Emitter
 item.rayguns.FortifiedSunlightEmitter.name=Fortified Sunlight Emitter
@@ -29,6 +30,7 @@ item.rayguns.ShrinkRayEmitter.name=Shrink Ray Emitter
 item.rayguns.DeathRayEmitter.name=Death Ray Emitter
 item.rayguns.EnderEmitter.name=Ender Emitter
 item.rayguns.LightningEmitter.name=Lightning Emitter
+item.rayguns.ImpulseEmitter.name=Impulse Emitter
 
 item.rayguns.PreciseBeamLens.name=Precise Beam Lens
 item.rayguns.PreciseLens.name=Precise Bolt Lens

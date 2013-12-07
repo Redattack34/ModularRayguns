@@ -14,6 +14,7 @@ import net.minecraft.util.DamageSource
 import net.minecraft.entity.boss.IBossDisplayData
 import com.castlebravostudios.rayguns.utils.RaytraceUtils
 import com.castlebravostudios.rayguns.utils.Extensions.WorldExtension
+import com.castlebravostudios.rayguns.utils.BlockPos
 
 trait EnderEffect extends Entity with BaseEffect {
   self : Shootable =>
@@ -37,15 +38,15 @@ trait EnderEffect extends Entity with BaseEffect {
     }
   }
 
-  private def getNewCoords(entity : EntityLivingBase, x : Int, y : Int, z : Int) : (Int, Int, Int) = {
+  private def getNewCoords(entity : EntityLivingBase, x : Int, y : Int, z : Int) : BlockPos = {
     val start = worldObj.getWorldVec3Pool().getVecFromPool(entity.posX, entity.posY, entity.posZ)
     val end = worldObj.getWorldVec3Pool().getVecFromPool(x, y, z)
     val hit = RaytraceUtils.rayTraceBlocks(worldObj, start, end){
       (b, m, p) => b.blockMaterial.blocksMovement() }.headOption
 
     hit match {
-      case Some( mop ) => adjustCoords( mop.blockX, mop.blockY, mop.blockZ, mop.sideHit)
-      case None => (x, y, z)
+      case Some( mop ) => adjustCoords( mop.blockX, mop.blockY, mop.blockZ, mop.sideHit )
+      case None => BlockPos(x, y, z)
     }
   }
 
@@ -69,7 +70,7 @@ trait EnderEffect extends Entity with BaseEffect {
     if ( optY.isEmpty ) return
     val y = optY.get
 
-    val (newX, newY, newZ) : (Int, Int, Int) = getNewCoords( living, x, y, z )
+    val BlockPos(newX, newY, newZ) = getNewCoords( living, x, y, z )
     val event = new EnderTeleportEvent( living, newX + (newX.signum * 0.5), newY, newZ + (newZ.signum * 0.5), 5 );
 
     if (!MinecraftForge.EVENT_BUS.post(event)) {

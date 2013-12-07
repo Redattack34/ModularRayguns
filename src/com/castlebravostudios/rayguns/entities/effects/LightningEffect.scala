@@ -15,6 +15,7 @@ import com.castlebravostudios.rayguns.utils.Extensions._
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.block.Block
 import net.minecraft.entity.monster.EntityCreeper
+import com.castlebravostudios.rayguns.utils.BlockPos
 
 trait LightningEffect extends Entity with BaseEffect {
   self : Shootable =>
@@ -38,7 +39,7 @@ trait LightningEffect extends Entity with BaseEffect {
 
   def hitBlock(hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Boolean = {
 
-    val (x, y, z) = adjustCoords( hitX, hitY, hitZ, side )
+    val BlockPos(x, y, z) = adjustCoords( hitX, hitY, hitZ, side )
     if ( !shooter.isInstanceOf[EntityPlayer] ||
          shooter.asInstanceOf[EntityPlayer].canPlayerEdit(x, y, z, side, null) ) {
       if ( worldObj.isAirBlock(x, y, z) ) {

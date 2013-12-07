@@ -45,6 +45,7 @@ object Items {
     registerItem( DeathRayEmitter )
     registerItem( EnderEmitter )
     registerItem( LightningEmitter )
+    registerItem( ImpulseEmitter )
 
     registerItem( LaserChamber )
     registerItem( HeatRayChamber )
@@ -55,6 +56,7 @@ object Items {
     registerItem( DeathRayChamber )
     registerItem( EnderChamber )
     registerItem( LightningChamber )
+    registerItem( ImpulseChamber )
   }
 
   /**

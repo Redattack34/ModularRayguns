@@ -24,15 +24,17 @@ object BeamUtils {
     val start = RaytraceUtils.getPlayerPosition(world, player)
     val end = RaytraceUtils.getPlayerTarget(world, player, maxBeamLength)
     val hits = RaytraceUtils.rayTrace( world, player, start, end )( fx.canCollideWithBlock _, fx.canCollideWithEntity _)
+
+    fx.setStart( start )
+    fx.rotationPitch = player.rotationPitch
+    fx.rotationYaw = player.rotationYaw
+
     val target = applyHitsUntilStop(end, hits, fx)
+    fx.length = target.distanceTo(start)
 
     if ( fx.isInstanceOf[TriggerOnDeath] ) {
       fx.asInstanceOf[TriggerOnDeath].triggerAt(target.xCoord, target.yCoord, target.zCoord)
     }
-    fx.setStart( start )
-    fx.length = target.distanceTo(start)
-    fx.rotationPitch = player.rotationPitch
-    fx.rotationYaw = player.rotationYaw
     if ( world.isOnClient ) {
       world.spawnEntityInWorld(fx)
     }
