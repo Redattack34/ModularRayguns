@@ -9,14 +9,11 @@ import net.minecraft.world.World
 import java.util.Random
 import com.castlebravostudios.rayguns.entities.BaseBeamEntity
 import com.castlebravostudios.rayguns.entities.NoDuplicateCollisions
+import net.minecraft.util.ResourceLocation
 
 
 trait FortifiedSunlightEffect extends BaseEffect {
   self : Shootable =>
-
-  def colourRed : Float = 1.0f
-  def colourBlue : Float = 0.0f
-  def colourGreen : Float = 1.0f
 
   def hitEntity( entity : Entity ) : Boolean = entity match {
     case e : EntityLivingBase if e.isEntityUndead() => hitUndead( e ); true
@@ -44,5 +41,9 @@ trait FortifiedSunlightEffect extends BaseEffect {
   }
 }
 
-class FortifiedSunlightBoltEntity( world : World ) extends BaseBoltEntity(world) with FortifiedSunlightEffect with NoDuplicateCollisions
-class FortifiedSunlightBeamEntity( world : World ) extends BaseBeamEntity(world) with FortifiedSunlightEffect
+class FortifiedSunlightBoltEntity( world : World ) extends BaseBoltEntity(world) with FortifiedSunlightEffect with NoDuplicateCollisions {
+  override val texture = new ResourceLocation( "rayguns", "textures/bolts/sunlight_bolt.png" )
+}
+class FortifiedSunlightBeamEntity( world : World ) extends BaseBeamEntity(world) with FortifiedSunlightEffect {
+  override val texture = new ResourceLocation( "rayguns", "textures/beams/sunlight_beam.png" )
+}

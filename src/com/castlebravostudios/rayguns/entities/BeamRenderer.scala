@@ -1,14 +1,13 @@
 package com.castlebravostudios.rayguns.entities
 
 import org.lwjgl.opengl.GL11
-
 import com.castlebravostudios.rayguns.entities.effects.BaseEffect
-
 import net.minecraft.client.renderer.OpenGlHelper
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.client.renderer.entity.Render
 import net.minecraft.entity.Entity
 import net.minecraft.util.ResourceLocation
+import com.castlebravostudios.rayguns.entities.effects.DeathRayEffect
 
 class BeamRenderer extends Render {
 
@@ -28,7 +27,7 @@ class BeamRenderer extends Render {
     GL11.glDisable(GL11.GL_LIGHTING)
     GL11.glDisable(GL11.GL_CULL_FACE)
     GL11.glEnable(GL11.GL_BLEND);
-    if ( e.colourRed == 0.0d && e.colourBlue == 0.0d && e.colourGreen == 0.0d ) {
+    if ( e.isInstanceOf[DeathRayEffect] ) {
       GL11.glBlendFunc(GL11.GL_ZERO, GL11.GL_ONE_MINUS_SRC_ALPHA);
     }
     else {
@@ -41,8 +40,8 @@ class BeamRenderer extends Render {
 
     val tes = Tessellator.instance
 
-    GL11.glColor4f( e.colourRed, e.colourGreen, e.colourBlue,
-      e.colourAlpha * ( e.timeRemaining.toFloat / e.lifetime.toFloat ) )
+    GL11.glColor4f( 1.0f, 1.0f, 1.0f,
+      ( e.timeRemaining.toFloat / e.lifetime.toFloat ) )
 
     for ( _ <- 0 until 3 ) {
       tes.startDrawingQuads();
@@ -65,6 +64,8 @@ class BeamRenderer extends Render {
     GL11.glPopMatrix()
   }
 
-  def getEntityTexture( e : Entity ) : ResourceLocation =
-    new ResourceLocation( "rayguns", "textures/effects/blank_beam.png" )
+  def getEntityTexture( e : Entity ) : ResourceLocation = e match {
+    case beam : BaseBeamEntity => beam.texture
+    case _ => null
+  }
 }

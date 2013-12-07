@@ -12,11 +12,6 @@ import com.castlebravostudios.rayguns.utils.BlockPos
 trait BaseEffect extends Entity {
   self : Shootable =>
 
-  def colourRed : Float
-  def colourBlue : Float
-  def colourGreen : Float
-  def colourAlpha : Float = 1.0f
-
   /**
    * A collision has been detected against the given entity. Return true if the
    * bolt/beam should stop after this collision, or return false to indicate

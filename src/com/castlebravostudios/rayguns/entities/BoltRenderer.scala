@@ -11,6 +11,7 @@ import net.minecraft.entity.Entity
 import net.minecraft.util.ResourceLocation
 
 class BoltRenderer extends Render {
+  import BoltRenderer._
 
   def doRender( e : Entity, x : Double, y : Double, z : Double, yaw : Float, partialTickTime : Float) : Unit = {
     doRender( e.asInstanceOf[BaseBoltEntity with BaseEffect], x, y, z, yaw, partialTickTime )
@@ -18,8 +19,8 @@ class BoltRenderer extends Render {
 
   private def doRender( e : BaseBoltEntity with BaseEffect, x : Double, y : Double, z : Double, yaw : Float, partialTickTime : Float) : Unit = {
 
-    this.bindEntityTexture(e);
-    GL11.glPushMatrix();
+    this.bindEntityTexture(e)
+    GL11.glPushMatrix()
 
     GL11.glTranslated(x, y, z)
     GL11.glRotatef(e.rotationYaw, 0.0f, 1.0f, 0.0f)
@@ -32,16 +33,10 @@ class BoltRenderer extends Render {
 
     val tes = Tessellator.instance
 
-    GL11.glColor4f( e.colourRed, e.colourGreen, e.colourBlue, 1.0f )
-
-    tes.startDrawingQuads();
-    drawWest(tes)
-    drawEast(tes)
-    drawTop(tes)
-    drawBottom(tes)
-    drawSouth(tes)
-    drawNorth(tes)
-    tes.draw();
+    drawVertices( tes, cubeVertices )
+    GL11.glScalef(1.1f, 1.1f, 1.01f)
+    bindTexture( e.lineTexture )
+    drawVertices( tes, reversedVertices )
 
     OpenGlHelper.setActiveTexture(OpenGlHelper.lightmapTexUnit)
     GL11.glEnable(GL11.GL_TEXTURE_2D)
@@ -51,48 +46,48 @@ class BoltRenderer extends Render {
     GL11.glPopMatrix()
   }
 
-  def getEntityTexture( e : Entity ) : ResourceLocation =
-    new ResourceLocation( "rayguns", "textures/blocks/laser_bolt.png" )
-
-  private def drawWest(tes: Tessellator): Unit = {
-    tes.addVertexWithUV(-1.0D, -1.0D, -1.0D, 0, 0);
-    tes.addVertexWithUV(-1.0D, -1.0D, 1.0D, 0, 1);
-    tes.addVertexWithUV(-1.0D, 1.0D, 1.0D, 1, 1);
-    tes.addVertexWithUV(-1.0D, 1.0D, -1.0D, 1, 0);
+  private def drawVertices( tes : Tessellator, vertices : Seq[Vertex] ) : Unit = {
+      tes.startDrawingQuads()
+      vertices.foreach( ( tes.addVertexWithUV _ ).tupled )
+      tes.draw()
   }
 
-  private def drawEast(tes: Tessellator): Unit = {
-    tes.addVertexWithUV(1.0D, -1.0D, 1.0D, 1, 0);
-    tes.addVertexWithUV(1.0D, -1.0D, -1.0D, 1, 1);
-    tes.addVertexWithUV(1.0D, 1.0D, -1.0D, 0, 1);
-    tes.addVertexWithUV(1.0D, 1.0D, 1.0D, 0, 0);
+  def getEntityTexture( e : Entity ) : ResourceLocation = e match {
+    case bolt : BaseBoltEntity => bolt.texture
+    case _ => null
   }
+}
+object BoltRenderer {
 
-  private def drawTop(tes: Tessellator): Unit = {
-    tes.addVertexWithUV(-1.0D, 1.0D, -1.0D, 0, 0);
-    tes.addVertexWithUV(-1.0D, 1.0D, 1.0D, 0, 1);
-    tes.addVertexWithUV(1.0D, 1.0D, 1.0D, 1, 1);
-    tes.addVertexWithUV(1.0D, 1.0D, -1.0D, 1, 0);
-  }
+  type Vertex = (Double, Double, Double, Double, Double)
+  private val cubeVertices = Array[Vertex](
+    (-1.0D, -1.0D, -1.0D, 0, 0),
+    (-1.0D, -1.0D, 1.0D, 0, 1),
+    (-1.0D, 1.0D, 1.0D, 1, 1),
+    (-1.0D, 1.0D, -1.0D, 1, 0),
+    (1.0D, -1.0D, 1.0D, 1, 0),
+    (1.0D, -1.0D, -1.0D, 1, 1),
+    (1.0D, 1.0D, -1.0D, 0, 1),
+    (1.0D, 1.0D, 1.0D, 0, 0),
+    (-1.0D, 1.0D, -1.0D, 0, 0),
+    (-1.0D, 1.0D, 1.0D, 0, 1),
+    (1.0D, 1.0D, 1.0D, 1, 1),
+    (1.0D, 1.0D, -1.0D, 1, 0),
+    (-1.0D, -1.0D, 1.0D, 1, 0),
+    (-1.0D, -1.0D, -1.0D, 1, 1),
+    (1.0D, -1.0D, -1.0D, 0, 1),
+    (1.0D, -1.0D, 1.0D, 0, 0),
+    (-1.0D, 1.0D, 1.0D, 0, 1),
+    (-1.0D, -1.0D, 1.0D, 0, 0),
+    (1.0D, -1.0D, 1.0D, 1, 0),
+    (1.0D, 1.0D, 1.0D, 1, 1),
+    (-1.0D, -1.0D, -1.0D, 1, 1),
+    (-1.0D, 1.0D, -1.0D, 1, 0),
+    (1.0D, 1.0D, -1.0D, 0, 0),
+    (1.0D, -1.0D, -1.0D, 0, 1)
+  )
+  private val reversedVertices = cubeVertices.view.reverse
 
-  private def drawBottom(tes: Tessellator): Unit = {
-    tes.addVertexWithUV(-1.0D, -1.0D, 1.0D, 1, 0);
-    tes.addVertexWithUV(-1.0D, -1.0D, -1.0D, 1, 1);
-    tes.addVertexWithUV(1.0D, -1.0D, -1.0D, 0, 1);
-    tes.addVertexWithUV(1.0D, -1.0D, 1.0D, 0, 0);
-  }
-
-  private def drawSouth(tes: Tessellator): Unit = {
-    tes.addVertexWithUV(-1.0D, 1.0D, 1.0D, 0, 1);
-    tes.addVertexWithUV(-1.0D, -1.0D, 1.0D, 0, 0);
-    tes.addVertexWithUV(1.0D, -1.0D, 1.0D, 1, 0);
-    tes.addVertexWithUV(1.0D, 1.0D, 1.0D, 1, 1);
-  }
-
-  private def drawNorth(tes: Tessellator): Unit = {
-    tes.addVertexWithUV(-1.0D, -1.0D, -1.0D, 1, 1);
-    tes.addVertexWithUV(-1.0D, 1.0D, -1.0D, 1, 0);
-    tes.addVertexWithUV(1.0D, 1.0D, -1.0D, 0, 0);
-    tes.addVertexWithUV(1.0D, -1.0D, -1.0D, 0, 1);
-  }
+  val lineBlackTexture = new ResourceLocation( "rayguns", "textures/bolts/bolt_line_black.png" )
+  val lineWhiteTexture = new ResourceLocation( "rayguns", "textures/bolts/bolt_line_white.png" )
 }

@@ -1,13 +1,13 @@
 package com.castlebravostudios.rayguns.entities
 
 import com.castlebravostudios.rayguns.entities.effects.BaseEffect
-
 import net.minecraft.entity.Entity
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.EnumMovingObjectType
 import net.minecraft.util.MovingObjectPosition
 import net.minecraft.util.Vec3
 import net.minecraft.world.World
+import net.minecraft.util.ResourceLocation
 
 abstract class BaseBeamEntity(world : World) extends Entity( world ) with Shootable {
   self : BaseEffect =>
@@ -50,4 +50,6 @@ abstract class BaseBeamEntity(world : World) extends Entity( world ) with Shoota
   protected override def entityInit()  : Unit = ()
 
   def random = this.rand
+
+  def texture : ResourceLocation
 }

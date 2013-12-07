@@ -10,14 +10,11 @@ import net.minecraft.world.World
 import com.castlebravostudios.rayguns.entities.BaseBeamEntity
 import com.castlebravostudios.rayguns.entities.NoDuplicateCollisions
 import com.castlebravostudios.rayguns.utils.BlockPos
+import net.minecraft.util.ResourceLocation
 
 
 trait HeatRayEffect extends BaseEffect {
   self : Shootable =>
-
-  def colourRed : Float = 1.0f
-  def colourBlue : Float = 0.0f
-  def colourGreen : Float = 0.5f
 
   def hitEntity( hit : Entity ) : Boolean = {
     hit.setFire(4)
@@ -45,5 +42,9 @@ trait HeatRayEffect extends BaseEffect {
   def createImpactParticles( hitX : Double, hitY : Double, hitZ : Double ) : Unit = ()
 }
 
-class HeatRayBoltEntity( world : World ) extends BaseBoltEntity(world) with HeatRayEffect with NoDuplicateCollisions
-class HeatRayBeamEntity( world : World ) extends BaseBeamEntity(world) with HeatRayEffect
+class HeatRayBoltEntity( world : World ) extends BaseBoltEntity(world) with HeatRayEffect with NoDuplicateCollisions {
+  override val texture = new ResourceLocation( "rayguns", "textures/bolts/heat_bolt.png" )
+}
+class HeatRayBeamEntity( world : World ) extends BaseBeamEntity(world) with HeatRayEffect {
+  override val texture = new ResourceLocation( "rayguns", "textures/beams/heat_beam.png" )
+}

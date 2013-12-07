@@ -11,14 +11,11 @@ import net.minecraft.util.EntityDamageSource
 import net.minecraft.world.World
 import com.castlebravostudios.rayguns.entities.BaseBeamEntity
 import com.castlebravostudios.rayguns.entities.NoDuplicateCollisions
+import net.minecraft.util.ResourceLocation
 
 
 trait FrostRayEffect extends BaseEffect {
   self : Shootable =>
-
-  def colourRed : Float = 0.5f
-  def colourBlue : Float = 1.0f
-  def colourGreen : Float = 1.0f
 
   def hitEntity( hit : Entity ) : Boolean = {
     hit.attackEntityFrom(new EntityDamageSource("frostray", shooter), 2)
@@ -66,5 +63,9 @@ trait FrostRayEffect extends BaseEffect {
   }
 }
 
-class FrostRayBoltEntity( world : World ) extends BaseBoltEntity(world) with FrostRayEffect with NoDuplicateCollisions
-class FrostRayBeamEntity( world : World ) extends BaseBeamEntity(world) with FrostRayEffect
+class FrostRayBoltEntity( world : World ) extends BaseBoltEntity(world) with FrostRayEffect with NoDuplicateCollisions {
+  override val texture = new ResourceLocation( "rayguns", "textures/bolts/frost_bolt.png" )
+}
+class FrostRayBeamEntity( world : World ) extends BaseBeamEntity(world) with FrostRayEffect {
+  override val texture = new ResourceLocation( "rayguns", "textures/beams/frost_beam.png" )
+}

@@ -12,6 +12,7 @@ import net.minecraft.entity.item.EntityTNTPrimed
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.block.Block
 import com.castlebravostudios.rayguns.entities.NoDuplicateCollisions
+import net.minecraft.util.ResourceLocation
 
 trait ExplosiveEffect extends Entity with BaseEffect with TriggerOnDeath {
   self : Shootable =>
@@ -27,10 +28,6 @@ trait ExplosiveEffect extends Entity with BaseEffect with TriggerOnDeath {
     }
   }
 
-  def colourRed : Float = 0.5f
-  def colourBlue : Float = 0.5f
-  def colourGreen : Float = 0.5f
-
   def hitEntity( entity : Entity ) = true
   def hitBlock(hitX : Int, hitY : Int, hitZ : Int, side : Int )  = true
   def createImpactParticles(hitX : Double, hitY : Double, hitZ: Double) = ()
@@ -40,5 +37,9 @@ trait ExplosiveEffect extends Entity with BaseEffect with TriggerOnDeath {
   }
 }
 
-class ExplosiveBoltEntity(world : World) extends BaseBoltEntity(world) with ExplosiveEffect with NoDuplicateCollisions
-class ExplosiveBeamEntity(world : World) extends BaseBeamEntity(world) with ExplosiveEffect
+class ExplosiveBoltEntity(world : World) extends BaseBoltEntity(world) with ExplosiveEffect with NoDuplicateCollisions {
+  override val texture = new ResourceLocation( "rayguns", "textures/bolts/explosive_bolt.png" )
+}
+class ExplosiveBeamEntity(world : World) extends BaseBeamEntity(world) with ExplosiveEffect {
+  override val texture = new ResourceLocation( "rayguns", "textures/beams/explosive_beam.png" )
+}
