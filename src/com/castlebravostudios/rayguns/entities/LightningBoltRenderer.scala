@@ -71,5 +71,5 @@ class LightningBoltRenderer extends Render {
   }
 
   def getEntityTexture( e : Entity ) : ResourceLocation =
-    new ResourceLocation( "rayguns", "textures/effects/blank_beam.png" )
+    new ResourceLocation( "rayguns", "textures/beams/lightning_beam.png" )
 }
