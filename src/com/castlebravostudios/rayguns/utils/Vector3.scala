@@ -9,7 +9,7 @@ case class Vector3( val x : Double, val y : Double, val z : Double ) {
 
   def this( vec : Vec3 ) = this( vec.xCoord, vec.yCoord, vec.zCoord )
   def toBlockPos : BlockPos =
-    (MathHelper.floor_double(x), MathHelper.floor_double(y), MathHelper.floor_double(z) )
+    BlockPos( MathHelper.floor_double(x), MathHelper.floor_double(y), MathHelper.floor_double(z) )
 
   def lengthSquared : Double = x * x + y * y + z * z
   def length : Double = MathHelper.sqrt_double( lengthSquared )

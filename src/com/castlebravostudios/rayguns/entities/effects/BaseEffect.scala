@@ -7,6 +7,7 @@ import cpw.mods.fml.common.Mod.Metadata
 import net.minecraft.block.Block
 import net.minecraft.block.BlockFluid
 import net.minecraftforge.fluids.IFluidBlock
+import com.castlebravostudios.rayguns.utils.BlockPos
 
 trait BaseEffect extends Entity {
   self : Shootable =>
@@ -36,7 +37,7 @@ trait BaseEffect extends Entity {
    */
   def createImpactParticles( hitX : Double, hitY : Double, hitZ : Double ) : Unit
 
-  def canCollideWithBlock( b : Block, metadata : Int, pos : (Int, Int, Int) ) =
+  def canCollideWithBlock( b : Block, metadata : Int, pos : BlockPos ) =
     if ( b.isInstanceOf[BlockFluid] || b.isInstanceOf[IFluidBlock] ) collidesWithLiquids
     else true
 
@@ -47,14 +48,29 @@ trait BaseEffect extends Entity {
   def random : Random
 
   /**
+   * Get the opposite side of the given side.
+   */
+  def invertSide( side : Int ) = side match {
+      case 0 => 1
+      case 1 => 0
+      case 2 => 3
+      case 3 => 2
+      case 4 => 5
+      case 5 => 4
+    }
+
+  def hitOffset( side : Int ) : BlockPos = side match {
+    case 0 => BlockPos(0, -1, 0)
+    case 1 => BlockPos(0, +1, 0)
+    case 2 => BlockPos(0, 0, -1)
+    case 3 => BlockPos(0, 0, +1)
+    case 4 => BlockPos(-1, 0, 0)
+    case 5 => BlockPos(+1, 0, 0)
+  }
+
+  /**
    * Adjust the coords to the block adjacent to the struck side.
    */
-  def adjustCoords( x : Int, y : Int, z : Int, side : Int ) : (Int, Int, Int) = side match {
-    case 0 => (x, y - 1, z)
-    case 1 => (x, y + 1, z)
-    case 2 => (x, y, z - 1)
-    case 3 => (x, y, z + 1)
-    case 4 => (x - 1, y, z)
-    case 5 => (x + 1, y, z)
-  }
+  def adjustCoords( x : Int, y : Int, z : Int, side : Int ) : BlockPos =
+    BlockPos( x, y, z ).add( hitOffset( side ) )
 }

@@ -9,6 +9,7 @@ import net.minecraft.util.EntityDamageSource
 import net.minecraft.world.World
 import com.castlebravostudios.rayguns.entities.BaseBeamEntity
 import com.castlebravostudios.rayguns.entities.NoDuplicateCollisions
+import com.castlebravostudios.rayguns.utils.BlockPos
 
 
 trait HeatRayEffect extends BaseEffect {
@@ -30,7 +31,7 @@ trait HeatRayEffect extends BaseEffect {
       worldObj.setBlock( hitX, hitY, hitZ, Block.waterStill.blockID )
     }
 
-    val (x, y, z) = adjustCoords( hitX, hitY, hitZ, side )
+    val BlockPos(x, y, z) = adjustCoords( hitX, hitY, hitZ, side )
     if ( !shooter.isInstanceOf[EntityPlayer] ||
          shooter.asInstanceOf[EntityPlayer].canPlayerEdit(x, y, z, side, null) ) {
       if ( worldObj.isAirBlock(x, y, z) ) {

@@ -1,19 +1,21 @@
 package com.castlebravostudios.rayguns.entities
 
+import scala.annotation.tailrec
 import scala.collection.JavaConversions.asScalaBuffer
+
+import com.castlebravostudios.rayguns.entities.effects.BaseEffect
+import com.castlebravostudios.rayguns.utils.BlockPos
+import com.castlebravostudios.rayguns.utils.RaytraceUtils
+
+import net.minecraft.block.Block
 import net.minecraft.entity.Entity
 import net.minecraft.entity.IProjectile
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.EnumMovingObjectType
 import net.minecraft.util.MathHelper
 import net.minecraft.util.MovingObjectPosition
-import net.minecraft.world.World
-import com.castlebravostudios.rayguns.entities.effects.BaseEffect
-import com.castlebravostudios.rayguns.utils.RaytraceUtils
-import com.castlebravostudios.rayguns.utils.Vector3
-import scala.annotation.tailrec
 import net.minecraft.util.Vec3
-import net.minecraft.block.Block
+import net.minecraft.world.World
 
 /**
  * Abstract base class for beam entities. Most of this code is a poor translation
@@ -30,7 +32,7 @@ abstract class BaseBoltEntity( world : World ) extends Entity( world ) with Shoo
   def pitchOffset : Float = 0.5f
   def velocityMultiplier : Float = 1.5f
 
-  protected var hitBlocks = Set[(Int, Int, Int)]()
+  protected var hitBlocks = Set[BlockPos]()
   protected var hitEntities = Set[Entity]()
 
   override def onUpdate() : Unit = {
@@ -91,7 +93,7 @@ abstract class BaseBoltEntity( world : World ) extends Entity( world ) with Shoo
         hitEntity( pos.entityHit )
       }
       case EnumMovingObjectType.TILE => {
-        hitBlocks += ((pos.blockX, pos.blockY, pos.blockZ))
+        hitBlocks += BlockPos(pos.blockX, pos.blockY, pos.blockZ)
         hitBlock( pos.blockX, pos.blockY, pos.blockZ, pos.sideHit )
       }
     }
@@ -153,7 +155,7 @@ abstract class BaseBoltEntity( world : World ) extends Entity( world ) with Shoo
   def random = this.rand
 }
 trait NoDuplicateCollisions extends BaseBoltEntity with BaseEffect {
-  override def canCollideWithBlock(block : Block, metadata : Int, pos : (Int, Int, Int) ) : Boolean = {
+  override def canCollideWithBlock(block : Block, metadata : Int, pos : BlockPos ) : Boolean = {
     super.canCollideWithBlock(block, metadata, pos) && !hitBlocks.contains(pos)
   }
 

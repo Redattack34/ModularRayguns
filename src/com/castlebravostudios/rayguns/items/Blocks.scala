@@ -3,16 +3,17 @@ package com.castlebravostudios.rayguns.items
 import com.castlebravostudios.rayguns.blocks.gunbench.GunBench
 import com.castlebravostudios.rayguns.blocks.gunbench.GunBenchTileEntity
 import com.castlebravostudios.rayguns.blocks.lensgrinder.LensGrinder
-import com.castlebravostudios.rayguns.gui.ModularRaygunsGuiHandler
-import com.castlebravostudios.rayguns.mod.ModularRayguns
-import cpw.mods.fml.common.network.NetworkRegistry
-import cpw.mods.fml.common.registry.GameRegistry
-import net.minecraft.item.ItemBlock
 import com.castlebravostudios.rayguns.blocks.lensgrinder.LensGrinderTileEntity
-import com.castlebravostudios.rayguns.mod.Config
 import com.castlebravostudios.rayguns.blocks.tech.invred.InvisibleRedstone
 import com.castlebravostudios.rayguns.blocks.tech.invred.InvisibleRedstone
 import com.castlebravostudios.rayguns.blocks.tech.invred.InvisibleRedstoneTileEntity
+import com.castlebravostudios.rayguns.gui.ModularRaygunsGuiHandler
+import com.castlebravostudios.rayguns.mod.Config
+import com.castlebravostudios.rayguns.mod.ModularRayguns
+
+import cpw.mods.fml.common.network.NetworkRegistry
+import cpw.mods.fml.common.registry.GameRegistry
+import net.minecraft.item.ItemBlock
 
 object Blocks {
 

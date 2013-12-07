@@ -21,7 +21,7 @@ object RaytraceUtils {
    * http://www.cse.yorku.ca/~amana/research/grid.pdf
    */
   def blocks( start : Vector3, end : Vector3 ) : Stream[BlockPos] = {
-    val (x, y, z) = start.toBlockPos
+    val BlockPos(x, y, z) = start.toBlockPos
     val endPos = end.toBlockPos
     val diff = end.subtract(start)
     val (stepX, stepY, stepZ) = (diff.x.signum, diff.y.signum, diff.z.signum)
@@ -50,7 +50,7 @@ object RaytraceUtils {
                    else if ( tMaxY <= tMaxX && tMaxY <= tMaxZ ) blocksRec( x, y + stepY, z, tMaxX, tMaxY + tDeltaY, tMaxZ )
                    else if ( tMaxZ <= tMaxX && tMaxZ <= tMaxY ) blocksRec( x, y, z + stepZ, tMaxX, tMaxY, tMaxZ + tDeltaZ )
                    else throw new IllegalStateException
-      (x, y, z) #:: branch
+      BlockPos(x, y, z) #:: branch
     }
 
     blocksRec(x, y, z, tMaxX, tMaxY, tMaxZ).takeWhile( _ != endPos ).append(Stream(endPos))
@@ -63,7 +63,7 @@ object RaytraceUtils {
   def blocksHit( world : World, start : Vector3, end : Vector3 )( f : (Block, Int, BlockPos) => Boolean ) : Stream[(Block, Int, BlockPos)]=
     for {
       pos <- blocks( start, end )
-      (x, y, z) = pos
+      BlockPos(x, y, z) = pos
       if (!world.isAirBlock(x, y, z) )
       block = Block.blocksList( world.getBlockId(x, y, z) )
       meta = world.getBlockMetadata(x, y, z)
@@ -78,7 +78,7 @@ object RaytraceUtils {
    */
   def rayTraceBlocks( world : World, start : Vec3, end : Vec3 )( f : (Block, Int, BlockPos) => Boolean ) : Stream[MOP] = {
     for {
-      (b, m, (x, y, z) ) <- blocksHit( world, new Vector3( start ), new Vector3( end ) )(f)
+      (b, m, BlockPos(x, y, z) ) <- blocksHit( world, new Vector3( start ), new Vector3( end ) )(f)
       hit = b.collisionRayTrace(world, x, y, z, start, end)
       if ( hit != null )
     } yield hit
