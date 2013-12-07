@@ -36,7 +36,7 @@ trait FortifiedSunlightEffect extends BaseEffect {
     def randPos( x : Double ) = x + ( random.nextFloat().doubleValue() - 0.5)
     for ( _ <- 0 until 4 ) {
       this.worldObj.spawnParticle("happyVillager",
-        randPos( posX ), randPos( posY ), randPos( posZ ), randVel, randVel, randVel);
+        randPos( hitX ), randPos( hitY ), randPos( hitZ ), randVel, randVel, randVel);
     }
   }
 }
