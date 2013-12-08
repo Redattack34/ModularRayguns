@@ -33,7 +33,7 @@ object FortifiedSunlightChamber extends Item( Config.chamberFortifiedSunlight ) 
       BoltUtils.spawnPrecise( world, new FortifiedSunlightBoltEntity( world ), player )
     }
     case GunComponents(_, FortifiedSunlightChamber, _, Some(WideLens), _ ) => { (world, player) =>
-      BoltUtils.spawnScatter(world, player, 9, 5 ){ () =>
+      BoltUtils.spawnScatter(world, player, 9, 0.1f ){ () =>
         new FortifiedSunlightBoltEntity(world)
       }
     }

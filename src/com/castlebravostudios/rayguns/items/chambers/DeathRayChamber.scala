@@ -34,7 +34,7 @@ object DeathRayChamber extends Item( Config.chamberDeathRay ) with ItemChamber {
       BoltUtils.spawnPrecise( world, new DeathRayBoltEntity( world ), player )
     }
     case GunComponents(_, DeathRayChamber, _, Some(WideLens), _ ) => { (world, player) =>
-      BoltUtils.spawnScatter(world, player, 9, 5 ){ () =>
+      BoltUtils.spawnScatter(world, player, 9, 0.1f ){ () =>
         new DeathRayBoltEntity(world)
       }
     }

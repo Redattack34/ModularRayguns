@@ -34,7 +34,7 @@ object ImpulseChamber extends Item( Config.chamberImpulse ) with ItemChamber {
       BoltUtils.spawnPrecise( world, new ImpulseBoltEntity( world ), player )
     }
     case GunComponents(_, ImpulseChamber, _, Some(WideLens), _ ) => { (world, player) =>
-      BoltUtils.spawnScatter(world, player, 9, 5 ){ () =>
+      BoltUtils.spawnScatter(world, player, 9, 0.1f ){ () =>
         new ImpulseBoltEntity(world)
       }
     }

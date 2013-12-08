@@ -8,6 +8,7 @@ import java.util.Random
 import net.minecraft.entity.player.EntityPlayer
 import com.castlebravostudios.rayguns.entities.BaseBoltEntity
 import com.castlebravostudios.rayguns.utils.Extensions._
+import net.minecraft.util.Vec3
 
 object BoltUtils {
 
@@ -16,28 +17,38 @@ object BoltUtils {
   def spawnNormal( world : World, bolt : BaseBoltEntity, shooter : EntityLivingBase ) : Unit = {
     if ( world.isOnClient ) return
     initBolt(bolt, shooter)
-    setMotion(bolt, bolt.rotationYaw, getBasePitch(shooter, bolt))
+    setMotion(bolt, aimVector( shooter ) )
     world.spawnEntityInWorld(bolt)
   }
 
   def spawnPrecise( world : World, bolt : BaseBoltEntity, shooter : EntityLivingBase ) : Unit = {
     if ( world.isOnClient ) return
     initBolt(bolt, shooter)
-    setMotion(bolt, bolt.rotationYaw, getBasePitch(shooter, bolt), velocityMultiplier = 2.0f)
+    setMotion(bolt, aimVector( shooter ), velocityMultiplier = 2.0f)
     world.spawnEntityInWorld(bolt)
   }
 
   def spawnScatter( world : World, shooter : EntityLivingBase, shots : Int, scatterFactor: Float )( bolt : () => BaseBoltEntity ) : Unit = {
     if ( world.isOnClient ) return
+    val lookVec = aimVector( shooter )
     for ( _ <- 0 until shots ) {
       val shot = bolt()
+      val shotVec = scatter( lookVec, scatterFactor )
       initBolt( shot, shooter )
-      val scatterYaw : Float = (getClampedGaussian * scatterFactor)
-      val scatterPitch : Float = (getClampedGaussian * scatterFactor).floatValue
-      setMotion( shot, shot.rotationYaw + scatterYaw, getBasePitch(shooter, shot) + scatterPitch )
+      setMotion( shot, shotVec )
       world.spawnEntityInWorld( shot )
     }
   }
+
+  private def aimVector( shooter : EntityLivingBase ) : Vector3 = {
+    val look = new Vector3( shooter.getLookVec )
+
+    if ( shooter.isSneaking && !isCreativeFlying( shooter ) ) look.copy( y = 0 ) else look
+  }
+
+  private def scatter( vec : Vector3, factor : Float ) : Vector3 =
+    vec.modify( _ + (getClampedGaussian() * factor) )
+      .normalized
 
   private def getClampedGaussian() : Float =
     MathHelper.clamp_float(-2.0f, rand.nextGaussian().floatValue, 2.0f)
@@ -77,17 +88,13 @@ object BoltUtils {
    * Sets the motion values to produce a given base velocity in the given
    * direction. Useful for changing the direction without affecting the velocity.
    */
-  private def setMotion(bolt: BaseBoltEntity, yaw: Float, pitch: Float, velocityMultiplier : Float = 1.0f): Unit = {
+  private def setMotion(bolt: BaseBoltEntity, motion : Vector3, velocityMultiplier : Float = 1.0f): Unit = {
     val baseVelocity = 0.4
-    bolt.motionX = (-MathHelper.sin(toRadians(yaw)) * MathHelper.cos(toRadians(pitch)) * baseVelocity).doubleValue;
-    bolt.motionZ = (MathHelper.cos(toRadians(yaw)) * MathHelper.cos(toRadians(pitch)) * baseVelocity).doubleValue;
-    bolt.motionY = (-MathHelper.sin(toRadians(pitch + bolt.pitchOffset)) * baseVelocity).doubleValue;
+    bolt.motionX = motion.x
+    bolt.motionZ = motion.z
+    bolt.motionY = motion.y
     bolt.setThrowableHeading(bolt.motionX, bolt.motionY, bolt.motionZ, bolt.velocityMultiplier * velocityMultiplier, 1.0F);
   }
-
-  private def getBasePitch(shooter : EntityLivingBase, bolt: BaseBoltEntity): Float =
-    if ( shooter.isSneaking() && !isCreativeFlying( shooter ) ) 0.0f
-    else bolt.rotationPitch
 
   private def isCreativeFlying( shooter : EntityLivingBase ) = shooter match {
       case p : EntityPlayer => p.capabilities.isFlying

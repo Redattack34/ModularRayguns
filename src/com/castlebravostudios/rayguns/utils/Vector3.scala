@@ -40,6 +40,8 @@ case class Vector3( val x : Double, val y : Double, val z : Double ) {
 
   def toList : List[Double] = List( x, y, z )
 
+  def modify( f : Double => Double ) = Vector3( f(x), f(y), f(z) )
+
   def toMinecraft( world : World ) : Vec3 =
     world.getWorldVec3Pool().getVecFromPool(x, y, z)
 }
