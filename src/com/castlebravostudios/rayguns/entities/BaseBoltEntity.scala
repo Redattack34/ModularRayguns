@@ -15,11 +15,12 @@ import net.minecraft.util.MovingObjectPosition
 import net.minecraft.util.Vec3
 import net.minecraft.world.World
 import net.minecraft.util.ResourceLocation
+import com.castlebravostudios.rayguns.utils.Extensions._
 
 /**
  * Abstract base class for beam entities. Most of this code is a poor translation
  * of the source of EntityThrowable, since I needed to modify something deep in
- * onUpdate. Not coincedentally, most of this code is really non-idiomatic Scala
+ * onUpdate. Not coincidentally, most of this code is really non-idiomatic Scala
  * and should not be taken as an example.
  */
 abstract class BaseBoltEntity( world : World ) extends Entity( world ) with Shootable with IProjectile {
@@ -46,9 +47,18 @@ abstract class BaseBoltEntity( world : World ) extends Entity( world ) with Shoo
     val hits = RaytraceUtils.rayTrace(world, this, startPos, endPos)( canCollideWithBlock _, canCollideWithEntity _)
     applyHitsUntilStop(hits)
 
+    if ( world.isOnClient ) {
+      world.debug( "Before Pos", f"X: $posX%5.5f, Y: $posY%5.5f, Z: $posZ%5.5f" )
+    }
+
     this.posX += this.motionX
     this.posY += this.motionY
     this.posZ += this.motionZ
+
+
+    if ( world.isOnClient ) {
+      world.debug( " After Pos", f"X: $posX%5.5f, Y: $posY%5.5f, Z: $posZ%5.5f" )
+    }
 
     if (this.isInWater())
     {
@@ -73,8 +83,6 @@ abstract class BaseBoltEntity( world : World ) extends Entity( world ) with Shoo
 
   /**
    * Applies the collisions in hits until the beam signals stop or hits is empty.
-   * Returns the vector of the last collision or the target vector if no collision
-   * stopped the beam.
    */
   @tailrec
   private def applyHitsUntilStop( hits : Stream[MovingObjectPosition] ) : Unit =  hits match {
@@ -155,6 +163,11 @@ abstract class BaseBoltEntity( world : World ) extends Entity( world ) with Shoo
 
   def texture : ResourceLocation
   def lineTexture : ResourceLocation = BoltRenderer.lineBlackTexture
+
+  override def setPositionAndRotation2( x: Double, y : Double, z : Double, yaw : Float, pitch : Float, par9 : Int ) : Unit = {
+    setPosition(x, y, z)
+    setRotation(yaw, pitch)
+  }
 
 }
 trait NoDuplicateCollisions extends BaseBoltEntity with BaseEffect {
