@@ -15,6 +15,7 @@ import com.castlebravostudios.rayguns.utils.RaygunNbtUtils.buildBrokenGun
 import com.castlebravostudios.rayguns.utils.RaygunNbtUtils.getChargeDepleted
 import com.castlebravostudios.rayguns.utils.RaygunNbtUtils.getTagCompound
 import com.castlebravostudios.rayguns.utils.GunComponents
+import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 object RayGun extends Item( Config.rayGun ) {
 
@@ -23,7 +24,7 @@ object RayGun extends Item( Config.rayGun ) {
   private val cooldownTime = "CooldownTime"
 
   setMaxStackSize(1)
-  setCreativeTab(CreativeTabs.tabCombat)
+  setCreativeTab(ModularRayguns.raygunsTab)
   setUnlocalizedName("rayguns.Raygun")
 
   override def onItemRightClick(item : ItemStack, world : World, player : EntityPlayer ) : ItemStack = {

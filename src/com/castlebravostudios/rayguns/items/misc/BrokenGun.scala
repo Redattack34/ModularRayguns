@@ -6,13 +6,14 @@ import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
 import net.minecraft.item.ItemStack
 import com.castlebravostudios.rayguns.mod.Config
 import com.castlebravostudios.rayguns.utils.RaygunNbtUtils.getChargeDepleted
+import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 object BrokenGun extends Item( Config.brokenGun ) {
 
   import RaygunNbtUtils._
 
   setMaxStackSize(1)
-  setCreativeTab(CreativeTabs.tabCombat)
+  setCreativeTab(ModularRayguns.raygunsTab)
   setUnlocalizedName("rayguns.BrokenRaygun")
 
   override def getDamage( item : ItemStack ) : Int = 1

@@ -54,3 +54,5 @@ rayguns.container.gunbench.lens=Lens:
 rayguns.container.gunbench.acc=Accessory:
 rayguns.container.gunbench.chamber=Chamber:
 rayguns.container.gunbench.battery=Battery:
+
+itemGroup.tabRayguns=Modular Rayguns

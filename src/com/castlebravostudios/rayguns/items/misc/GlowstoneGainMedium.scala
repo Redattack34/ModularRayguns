@@ -9,10 +9,11 @@ import net.minecraft.creativetab.CreativeTabs
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer
 import com.castlebravostudios.rayguns.api.LensGrinderRecipe
 import com.castlebravostudios.rayguns.api.LensGrinderRecipeRegistry
+import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 object GlowstoneGainMedium extends Item( Config.glowstoneGainMedium ) {
 
-  setCreativeTab(CreativeTabs.tabMaterials)
+  setCreativeTab(ModularRayguns.raygunsTab)
   setUnlocalizedName("rayguns.GlowstoneGainMedium")
   setTextureName("rayguns:glowstone_gain_medium")
 

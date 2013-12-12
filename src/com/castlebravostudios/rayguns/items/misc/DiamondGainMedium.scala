@@ -9,10 +9,11 @@ import net.minecraft.creativetab.CreativeTabs
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer
 import com.castlebravostudios.rayguns.api.LensGrinderRecipe
 import com.castlebravostudios.rayguns.api.LensGrinderRecipeRegistry
+import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 object DiamondGainMedium extends Item( Config.diamondGainMedium ) {
 
-  setCreativeTab(CreativeTabs.tabMaterials)
+  setCreativeTab(ModularRayguns.raygunsTab)
   setUnlocalizedName("rayguns.DiamondGainMedium")
   setTextureName("rayguns:diamond_gain_medium")
 

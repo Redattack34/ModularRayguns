@@ -4,6 +4,7 @@ import net.minecraft.item.Item
 import com.castlebravostudios.rayguns.items.Items
 import com.castlebravostudios.rayguns.api.ModuleRegistry
 import net.minecraft.creativetab.CreativeTabs
+import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 trait ItemModule extends Item {
 
@@ -31,5 +32,5 @@ trait ItemModule extends Item {
   protected def register = ModuleRegistry.registerModule(this)
 
   setMaxStackSize(1)
-  setCreativeTab(CreativeTabs.tabCombat)
+  setCreativeTab(ModularRayguns.raygunsTab)
 }

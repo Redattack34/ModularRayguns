@@ -7,10 +7,11 @@ import com.castlebravostudios.rayguns.mod.Config
 import net.minecraft.block.Block
 import net.minecraft.creativetab.CreativeTabs
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer
+import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 object EnergizedDiamond extends Item( Config.energizedDiamond ) {
 
-  setCreativeTab(CreativeTabs.tabMaterials)
+  setCreativeTab(ModularRayguns.raygunsTab)
   setUnlocalizedName("rayguns.EnergizedDiamond")
   setTextureName("rayguns:energized_diamond")
 

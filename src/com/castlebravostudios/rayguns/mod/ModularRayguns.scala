@@ -15,6 +15,10 @@ import cpw.mods.fml.common.Mod.EventHandler
 import com.castlebravostudios.rayguns.entities.Entities
 import com.castlebravostudios.rayguns.blocks.TileEntities
 import cpw.mods.fml.common.registry.LanguageRegistry
+import net.minecraft.creativetab.CreativeTabs
+import com.castlebravostudios.rayguns.items.bodies.MantisBody
+import net.minecraft.item.ItemStack
+import com.castlebravostudios.rayguns.items.bodies.FireflyBody
 
 @Mod(modid="ModularRayguns", name="ModularRayguns", version="0.0.0", modLanguage="scala")
 @NetworkMod(clientSideRequired=true, serverSideRequired=true)
@@ -37,5 +41,9 @@ object ModularRayguns {
     Blocks.registerBlocks
     Entities.registerEntities
     TileEntities.registerTileEntities
+  }
+
+  val raygunsTab  = new CreativeTabs("tabRayguns") {
+    override def getIconItemStack : ItemStack = new ItemStack( FireflyBody, 1, 0 )
   }
 }
