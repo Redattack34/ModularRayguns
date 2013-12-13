@@ -13,6 +13,8 @@ import com.castlebravostudios.rayguns.api.items.ItemAccessory
 import com.castlebravostudios.rayguns.api.items.ItemBattery
 import com.castlebravostudios.rayguns.items.misc.RayGun
 import com.castlebravostudios.rayguns.items.misc.BrokenGun
+import net.minecraft.util.StatCollector
+import net.minecraft.item.Item
 
 case class GunComponents(body : ItemBody, chamber : ItemChamber, battery : ItemBattery,
     lens : Option[ItemLens], acc : Option[ItemAccessory] ) {
@@ -52,6 +54,12 @@ object RaygunNbtUtils {
           accessory = getComponent(item, ACC_STR)(getAccessory) }
       yield GunComponents( body, chamber, battery, lens, accessory )
     }
+
+  def getAdditionalInfo( item : ItemStack ) : Iterable[String] =
+    getAllValidComponents( item ).productIterator.flatMap {
+      case Some( comp : Item ) => Some( StatCollector.translateToLocal( comp.getUnlocalizedName() + ".name" ) )
+      case _ => None
+    }.toSeq
 
   private def getComponent[T <: ItemModule](item : ItemStack, key: String )(f : String => Option[T]) : Option[T] = {
     for { name <- getModuleName( item, key )

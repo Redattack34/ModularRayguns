@@ -1,23 +1,27 @@
 package com.castlebravostudios.rayguns.items.misc
 
 import com.castlebravostudios.rayguns.api.BeamRegistry
-import net.minecraft.creativetab.CreativeTabs
-import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
-import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.world.World
-import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
-import net.minecraft.entity.Entity
 import com.castlebravostudios.rayguns.items.accessories.RefireCapacitor
 import com.castlebravostudios.rayguns.mod.Config
-import net.minecraft.util.Icon
+import com.castlebravostudios.rayguns.mod.ModularRayguns
+import com.castlebravostudios.rayguns.utils.GunComponents
+import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
 import com.castlebravostudios.rayguns.utils.RaygunNbtUtils.buildBrokenGun
 import com.castlebravostudios.rayguns.utils.RaygunNbtUtils.getChargeDepleted
 import com.castlebravostudios.rayguns.utils.RaygunNbtUtils.getTagCompound
-import com.castlebravostudios.rayguns.utils.GunComponents
-import com.castlebravostudios.rayguns.mod.ModularRayguns
+import net.minecraft.creativetab.CreativeTabs
+import net.minecraft.entity.Entity
+import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.item.Item
+import net.minecraft.item.ItemStack
+import net.minecraft.util.Icon
+import net.minecraft.world.World
+import com.castlebravostudios.rayguns.items.ScalaItem
+import net.minecraft.util.StringTranslate
+import net.minecraft.util.StatCollector
+import com.castlebravostudios.rayguns.items.MoreInformation
 
-object RayGun extends Item( Config.rayGun ) {
+object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation {
 
   import RaygunNbtUtils._
 
@@ -26,6 +30,9 @@ object RayGun extends Item( Config.rayGun ) {
   setMaxStackSize(1)
   setCreativeTab(ModularRayguns.raygunsTab)
   setUnlocalizedName("rayguns.Raygun")
+
+  override def getAdditionalInfo(item : ItemStack, player : EntityPlayer) : Iterable[String] =
+    RaygunNbtUtils.getAdditionalInfo(item)
 
   override def onItemRightClick(item : ItemStack, world : World, player : EntityPlayer ) : ItemStack = {
     val components = getComponents( item )
