@@ -8,6 +8,7 @@ import com.castlebravostudios.rayguns.items.emitters._
 import com.castlebravostudios.rayguns.items.lenses._
 import com.castlebravostudios.rayguns.items.misc._
 import net.minecraft.item.Item
+import com.castlebravostudios.rayguns.items.chambers.LaserChamber
 
 object Items {
 
@@ -58,6 +59,7 @@ object Items {
     registerItem( EnderChamber )
     registerItem( LightningChamber )
     registerItem( ImpulseChamber )
+    registerItem( TractorChamber )
   }
 
   /**

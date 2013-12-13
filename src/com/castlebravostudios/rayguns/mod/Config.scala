@@ -56,6 +56,7 @@ object Config {
   var chamberEnder : Int = _
   var chamberLightning : Int = _
   var chamberImpulse : Int = _
+  var chamberTractor : Int = _
 
   var minLightningDetail : Double = _
   var lightningFlash : Boolean = _
@@ -120,6 +121,7 @@ object Config {
     chamberEnder = config.getItem( "chamberEnder", 5608 ).getInt
     chamberLightning = config.getItem( "chamberLightning", 5609 ).getInt
     chamberImpulse = config.getItem( "chamberImpulse", 5610 ).getInt
+    chamberTractor = config.getItem( "chamberTractor", 5611 ).getInt
 
     minLightningDetail = config.get( "misc", "minLightningDetailSize", 0.01d ).getDouble( 0.01d )
     lightningFlash = config.get( "misc", "lightningFlashEnabled", true ).getBoolean( true )
