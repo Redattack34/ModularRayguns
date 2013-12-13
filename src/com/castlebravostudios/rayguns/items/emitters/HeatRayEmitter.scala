@@ -14,5 +14,5 @@ object HeatRayEmitter extends Item( Config.emitterHeatRay ) {
   setUnlocalizedName("rayguns.HeatRayEmitter")
   setTextureName("rayguns:emitter_heat_ray")
 
-  RecipeRegisterer.registerTier1Emitter(this, Item.coal, Item.flintAndSteel)
+  RecipeRegisterer.registerTier1Emitter(this, Item.coal, Item.bucketLava)
 }
