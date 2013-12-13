@@ -46,6 +46,7 @@ object Items {
     registerItem( EnderEmitter )
     registerItem( LightningEmitter )
     registerItem( ImpulseEmitter )
+    registerItem( TractorEmitter )
 
     registerItem( LaserChamber )
     registerItem( HeatRayChamber )

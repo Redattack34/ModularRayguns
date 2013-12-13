@@ -44,6 +44,7 @@ object Config {
   var emitterEnder : Int = _
   var emitterLightning : Int = _
   var emitterImpulse : Int = _
+  var emitterTractor : Int = _
 
   var chamberLaser : Int = _
   var chamberHeatRay : Int = _
@@ -107,6 +108,7 @@ object Config {
     emitterEnder = config.getItem( "emitterEnder", 5508 ).getInt
     emitterLightning = config.getItem( "emitterLightning", 5509 ).getInt
     emitterImpulse = config.getItem( "emitterImpulse", 5510 ).getInt
+    emitterTractor = config.getItem( "emitterTractor", 5511 ).getInt
 
     chamberLaser = config.getItem( "chamberLaser", 5601 ).getInt
     chamberHeatRay = config.getItem( "chamberHeatRay", 5602 ).getInt
