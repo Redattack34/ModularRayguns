@@ -24,7 +24,7 @@ object ImpulseChamber extends Item( Config.chamberImpulse ) with ItemChamber {
   setUnlocalizedName("rayguns.ImpulseChamber")
   setTextureName("rayguns:chamber_impulse")
 
-  RecipeRegisterer.registerTier1Chamber(this, ImpulseEmitter)
+  RecipeRegisterer.registerTier2Chamber(this, ImpulseEmitter)
 
   BeamRegistry.register({
     case GunComponents(_, ImpulseChamber, _, None, _) => { (world, player) =>
