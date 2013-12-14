@@ -21,7 +21,7 @@ object BrokenGun extends ScalaItem( Config.brokenGun ) with MoreInformation {
   setUnlocalizedName("rayguns.BrokenRaygun")
 
   override def getAdditionalInfo(item : ItemStack, player : EntityPlayer) : Iterable[String] =
-    RaygunNbtUtils.getAdditionalInfo(item)
+    RaygunNbtUtils.getComponentInfo(item)
 
   override def getDamage( item : ItemStack ) : Int = 1
   override def getDisplayDamage( item : ItemStack ) : Int = getChargeDepleted(item)

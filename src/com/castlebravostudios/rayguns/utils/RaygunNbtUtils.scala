@@ -55,11 +55,11 @@ object RaygunNbtUtils {
       yield GunComponents( body, chamber, battery, lens, accessory )
     }
 
-  def getAdditionalInfo( item : ItemStack ) : Iterable[String] =
+  def getComponentInfo( item : ItemStack ): List[String] =
     getAllValidComponents( item ).productIterator.flatMap {
       case Some( comp : Item ) => Some( StatCollector.translateToLocal( comp.getUnlocalizedName() + ".name" ) )
       case _ => None
-    }.toSeq
+    }.toList
 
   private def getComponent[T <: ItemModule](item : ItemStack, key: String )(f : String => Option[T]) : Option[T] = {
     for { name <- getModuleName( item, key )

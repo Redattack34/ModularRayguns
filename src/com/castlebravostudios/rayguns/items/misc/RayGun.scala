@@ -31,8 +31,12 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation {
   setCreativeTab(ModularRayguns.raygunsTab)
   setUnlocalizedName("rayguns.Raygun")
 
-  override def getAdditionalInfo(item : ItemStack, player : EntityPlayer) : Iterable[String] =
-    RaygunNbtUtils.getAdditionalInfo(item)
+  override def getAdditionalInfo(item : ItemStack, player : EntityPlayer) : Iterable[String] = {
+    val components = RaygunNbtUtils.getComponentInfo( item )
+    val maxCharge = RaygunNbtUtils.getMaxDamage( item )
+    val depleted = RaygunNbtUtils.getChargeDepleted( item )
+    ( (maxCharge - depleted) + "/" + maxCharge ) :: components
+  }
 
   override def onItemRightClick(item : ItemStack, world : World, player : EntityPlayer ) : ItemStack = {
     val components = getComponents( item )
