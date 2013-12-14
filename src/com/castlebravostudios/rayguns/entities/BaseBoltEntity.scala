@@ -47,18 +47,9 @@ abstract class BaseBoltEntity( world : World ) extends Entity( world ) with Shoo
     val hits = RaytraceUtils.rayTrace(world, this, startPos, endPos)( canCollideWithBlock _, canCollideWithEntity _)
     applyHitsUntilStop(hits)
 
-    if ( world.isOnClient ) {
-      world.debug( "Before Pos", f"X: $posX%5.5f, Y: $posY%5.5f, Z: $posZ%5.5f" )
-    }
-
     this.posX += this.motionX
     this.posY += this.motionY
     this.posZ += this.motionZ
-
-
-    if ( world.isOnClient ) {
-      world.debug( " After Pos", f"X: $posX%5.5f, Y: $posY%5.5f, Z: $posZ%5.5f" )
-    }
 
     if (this.isInWater())
     {
