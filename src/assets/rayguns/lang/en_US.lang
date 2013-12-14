@@ -20,6 +20,7 @@ item.rayguns.LifeForceChamber.name=Life Force Beam Chamber
 item.rayguns.DeathRayChamber.name=Death Ray Beam Chamber
 item.rayguns.LightningChamber.name=Lightning Beam Chamber
 item.rayguns.ImpulseChamber.name=Impulse Beam Chamber
+item.rayguns.TractorChamber.name=Tractor Beam Chamber
 
 item.rayguns.ExplosiveEmitter.name=Explosive Emitter
 item.rayguns.FortifiedSunlightEmitter.name=Fortified Sunlight Emitter
