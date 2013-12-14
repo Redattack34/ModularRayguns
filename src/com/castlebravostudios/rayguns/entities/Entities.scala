@@ -21,6 +21,7 @@ object Entities {
     registerBoltEntity( classOf[DeathRayBoltEntity], "DeathRayBolt", 6 )
     registerBoltEntity( classOf[EnderBoltEntity], "EnderBolt", 7 )
     registerBoltEntity( classOf[ImpulseBoltEntity], "ImpulseBolt", 9 )
+    registerBoltEntity( classOf[TractorBoltEntity], "TractorBolt", 10 )
 
     registerBeamEntity( classOf[LaserBeamEntity], "LaserBeam", 20 )
     registerBeamEntity( classOf[HeatRayBeamEntity], "HeatRayBeam", 21 )
@@ -31,6 +32,7 @@ object Entities {
     registerBeamEntity( classOf[DeathRayBeamEntity], "DeathRayBeam", 26 )
     registerBeamEntity( classOf[EnderBeamEntity], "EnderBeam", 27 )
     registerBeamEntity( classOf[ImpulseBeamEntity], "ImpulseBeam", 29 )
+    registerBeamEntity( classOf[TractorBeamEntity], "TractorBeam", 30 )
 
     EntityRegistry.registerModEntity(classOf[LightningBoltEntity], "LightningBolt",
       8, ModularRayguns, 40, 1, true)
