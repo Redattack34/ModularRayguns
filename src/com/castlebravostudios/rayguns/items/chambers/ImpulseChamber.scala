@@ -4,7 +4,7 @@ import com.castlebravostudios.rayguns.api.BeamRegistry
 import com.castlebravostudios.rayguns.api.items.ItemChamber
 import com.castlebravostudios.rayguns.entities.effects.ImpulseBeamEntity
 import com.castlebravostudios.rayguns.entities.effects.ImpulseBoltEntity
-import com.castlebravostudios.rayguns.items.emitters.ImpulseEmitter
+import com.castlebravostudios.rayguns.items.emitters.Emitters
 import com.castlebravostudios.rayguns.items.lenses.PreciseBeamLens
 import com.castlebravostudios.rayguns.items.lenses.PreciseLens
 import com.castlebravostudios.rayguns.items.lenses.WideLens
@@ -24,7 +24,7 @@ object ImpulseChamber extends Item( Config.chamberImpulse ) with ItemChamber {
   setUnlocalizedName("rayguns.ImpulseChamber")
   setTextureName("rayguns:chamber_impulse")
 
-  RecipeRegisterer.registerTier2Chamber(this, ImpulseEmitter)
+  RecipeRegisterer.registerTier2Chamber(this, Emitters.impulseEmitter)
 
   BeamRegistry.register({
     case GunComponents(_, ImpulseChamber, _, None, _) => { (world, player) =>

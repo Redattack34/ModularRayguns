@@ -4,7 +4,7 @@ import com.castlebravostudios.rayguns.api.BeamRegistry
 import com.castlebravostudios.rayguns.api.items.ItemChamber
 import com.castlebravostudios.rayguns.entities.effects.LightningBeamEntity
 import com.castlebravostudios.rayguns.entities.effects.LightningBoltEntity
-import com.castlebravostudios.rayguns.items.emitters.LightningEmitter
+import com.castlebravostudios.rayguns.items.emitters.Emitters
 import com.castlebravostudios.rayguns.items.lenses.PreciseBeamLens
 import com.castlebravostudios.rayguns.items.lenses.PreciseLens
 import com.castlebravostudios.rayguns.items.lenses.WideLens
@@ -30,7 +30,7 @@ object LightningChamber extends Item( Config.chamberLightning ) with ItemChamber
   setUnlocalizedName("rayguns.LightningChamber")
   setTextureName("rayguns:chamber_lightning")
 
-  RecipeRegisterer.registerTier1Chamber(this, LightningEmitter)
+  RecipeRegisterer.registerTier1Chamber(this, Emitters.lightningEmitter)
 
   private def getPointsList( world : World, player : EntityPlayer, length : Double ) : Seq[Vector3] = {
     val start = RaytraceUtils.getPlayerPosition(world, player)

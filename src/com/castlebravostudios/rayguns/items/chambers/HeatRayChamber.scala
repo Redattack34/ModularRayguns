@@ -4,7 +4,7 @@ import com.castlebravostudios.rayguns.api.BeamRegistry
 import com.castlebravostudios.rayguns.api.items.ItemChamber
 import com.castlebravostudios.rayguns.entities.effects.HeatRayBeamEntity
 import com.castlebravostudios.rayguns.entities.effects.HeatRayBoltEntity
-import com.castlebravostudios.rayguns.items.emitters.HeatRayEmitter
+import com.castlebravostudios.rayguns.items.emitters.Emitters
 import com.castlebravostudios.rayguns.items.lenses.PreciseBeamLens
 import com.castlebravostudios.rayguns.items.lenses.PreciseLens
 import com.castlebravostudios.rayguns.items.lenses.WideLens
@@ -25,7 +25,7 @@ object HeatRayChamber extends Item( Config.chamberHeatRay ) with ItemChamber {
   setUnlocalizedName("rayguns.HeatRayChamber")
   setTextureName("rayguns:chamber_heat_ray")
 
-  RecipeRegisterer.registerTier1Chamber(this, HeatRayEmitter)
+  RecipeRegisterer.registerTier1Chamber(this, Emitters.heatRayEmitter)
 
   BeamRegistry.register({
     case GunComponents(_, HeatRayChamber, _, None, _) => { (world, player) =>

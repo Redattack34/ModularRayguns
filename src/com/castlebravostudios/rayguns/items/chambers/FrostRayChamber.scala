@@ -4,7 +4,7 @@ import com.castlebravostudios.rayguns.api.BeamRegistry
 import com.castlebravostudios.rayguns.api.items.ItemChamber
 import com.castlebravostudios.rayguns.entities.effects.FrostRayBeamEntity
 import com.castlebravostudios.rayguns.entities.effects.FrostRayBoltEntity
-import com.castlebravostudios.rayguns.items.emitters.FrostRayEmitter
+import com.castlebravostudios.rayguns.items.emitters.Emitters
 import com.castlebravostudios.rayguns.items.lenses.PreciseBeamLens
 import com.castlebravostudios.rayguns.items.lenses.PreciseLens
 import com.castlebravostudios.rayguns.items.lenses.WideLens
@@ -25,7 +25,7 @@ object FrostRayChamber extends Item( Config.chamberFrostRay ) with ItemChamber {
   setUnlocalizedName("rayguns.FrostRayChamber")
   setTextureName("rayguns:chamber_frost_ray")
 
-  RecipeRegisterer.registerTier2Chamber(this, FrostRayEmitter)
+  RecipeRegisterer.registerTier2Chamber(this, Emitters.frostRayEmitter)
 
   BeamRegistry.register({
     case GunComponents(_, FrostRayChamber, _, None, _) => { (world, player) =>

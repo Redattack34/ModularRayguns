@@ -4,7 +4,7 @@ import com.castlebravostudios.rayguns.api.BeamRegistry
 import com.castlebravostudios.rayguns.api.items.ItemChamber
 import com.castlebravostudios.rayguns.entities.effects.LaserBeamEntity
 import com.castlebravostudios.rayguns.entities.effects.LaserBoltEntity
-import com.castlebravostudios.rayguns.items.emitters.LaserEmitter
+import com.castlebravostudios.rayguns.items.emitters.Emitters
 import com.castlebravostudios.rayguns.items.lenses.PreciseBeamLens
 import com.castlebravostudios.rayguns.items.lenses.PreciseLens
 import com.castlebravostudios.rayguns.items.lenses.WideLens
@@ -24,7 +24,7 @@ object LaserChamber extends Item( Config.chamberLaser ) with ItemChamber {
   setUnlocalizedName("rayguns.LaserChamber")
   setTextureName("rayguns:chamber_laser")
 
-  RecipeRegisterer.registerTier1Chamber(this, LaserEmitter)
+  RecipeRegisterer.registerTier1Chamber(this, Emitters.laserEmitter)
 
   BeamRegistry.register({
     case GunComponents(_, LaserChamber, _, None, _) => { (world, player) =>

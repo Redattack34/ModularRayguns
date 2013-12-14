@@ -4,7 +4,7 @@ import com.castlebravostudios.rayguns.api.BeamRegistry
 import com.castlebravostudios.rayguns.api.items.ItemChamber
 import com.castlebravostudios.rayguns.entities.effects.TractorBeamEntity
 import com.castlebravostudios.rayguns.entities.effects.TractorBoltEntity
-import com.castlebravostudios.rayguns.items.emitters.TractorEmitter
+import com.castlebravostudios.rayguns.items.emitters.Emitters
 import com.castlebravostudios.rayguns.items.lenses.PreciseBeamLens
 import com.castlebravostudios.rayguns.items.lenses.PreciseLens
 import com.castlebravostudios.rayguns.items.lenses.WideLens
@@ -24,7 +24,7 @@ object TractorChamber extends Item( Config.chamberTractor ) with ItemChamber {
   setUnlocalizedName("rayguns.TractorChamber")
   setTextureName("rayguns:chamber_tractor")
 
-  RecipeRegisterer.registerTier2Chamber(this, TractorEmitter)
+  RecipeRegisterer.registerTier2Chamber(this, Emitters.tractorEmitter)
 
   BeamRegistry.register({
     case GunComponents(_, TractorChamber, _, None, _) => { (world, player) =>

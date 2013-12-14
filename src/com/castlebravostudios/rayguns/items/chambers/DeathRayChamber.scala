@@ -4,7 +4,6 @@ import com.castlebravostudios.rayguns.api.BeamRegistry
 import com.castlebravostudios.rayguns.api.items.ItemChamber
 import com.castlebravostudios.rayguns.entities.effects.DeathRayBeamEntity
 import com.castlebravostudios.rayguns.entities.effects.DeathRayBoltEntity
-import com.castlebravostudios.rayguns.items.emitters.DeathRayEmitter
 import com.castlebravostudios.rayguns.items.lenses.PreciseBeamLens
 import com.castlebravostudios.rayguns.items.lenses.PreciseLens
 import com.castlebravostudios.rayguns.items.lenses.WideLens
@@ -13,8 +12,8 @@ import com.castlebravostudios.rayguns.utils.BeamUtils
 import com.castlebravostudios.rayguns.utils.BoltUtils
 import com.castlebravostudios.rayguns.utils.GunComponents
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer
-
 import net.minecraft.item.Item
+import com.castlebravostudios.rayguns.items.emitters.Emitters
 
 object DeathRayChamber extends Item( Config.chamberDeathRay ) with ItemChamber {
 
@@ -24,7 +23,7 @@ object DeathRayChamber extends Item( Config.chamberDeathRay ) with ItemChamber {
   setUnlocalizedName("rayguns.DeathRayChamber")
   setTextureName("rayguns:chamber_death_ray")
 
-  RecipeRegisterer.registerTier3Chamber(this, DeathRayEmitter)
+  RecipeRegisterer.registerTier3Chamber(this, Emitters.deathRayEmitter)
 
   BeamRegistry.register({
     case GunComponents(_, DeathRayChamber, _, None, _) => { (world, player) =>

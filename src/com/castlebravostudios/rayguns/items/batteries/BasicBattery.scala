@@ -1,12 +1,13 @@
 package com.castlebravostudios.rayguns.items.batteries
 
 import com.castlebravostudios.rayguns.api.items.ItemBattery
+import com.castlebravostudios.rayguns.items.emitters.Emitters
 import com.castlebravostudios.rayguns.mod.Config
+
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.Block
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
-import com.castlebravostudios.rayguns.items.emitters.ShrinkRayEmitter
 
 object BasicBattery extends Item( Config.basicBattery ) with ItemBattery {
 
@@ -21,7 +22,7 @@ object BasicBattery extends Item( Config.basicBattery ) with ItemBattery {
       "SG ",
       "IRI",
       "IRI",
-      'S' : Character, ShrinkRayEmitter,
+      'S' : Character, Emitters.shrinkRayEmitter,
       'G' : Character, Item.ingotGold,
       'I' : Character, Item.ingotIron,
       'R' : Character, Block.blockRedstone )

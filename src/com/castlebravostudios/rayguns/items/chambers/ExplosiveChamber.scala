@@ -4,7 +4,7 @@ import com.castlebravostudios.rayguns.api.BeamRegistry
 import com.castlebravostudios.rayguns.api.items.ItemChamber
 import com.castlebravostudios.rayguns.entities.effects.ExplosiveBeamEntity
 import com.castlebravostudios.rayguns.entities.effects.ExplosiveBoltEntity
-import com.castlebravostudios.rayguns.items.emitters.ExplosiveEmitter
+import com.castlebravostudios.rayguns.items.emitters.Emitters
 import com.castlebravostudios.rayguns.items.lenses.PreciseBeamLens
 import com.castlebravostudios.rayguns.items.lenses.PreciseLens
 import com.castlebravostudios.rayguns.mod.Config
@@ -23,7 +23,7 @@ object ExplosiveChamber extends Item( Config.chamberExplosive ) with ItemChamber
   setUnlocalizedName("rayguns.ExplosiveChamber")
   setTextureName("rayguns:chamber_explosive")
 
-  RecipeRegisterer.registerTier3Chamber(this, ExplosiveEmitter)
+  RecipeRegisterer.registerTier3Chamber(this, Emitters.explosiveEmitter)
 
   BeamRegistry.register({
     case GunComponents(_, ExplosiveChamber, _, None, _) => { (world, player) =>

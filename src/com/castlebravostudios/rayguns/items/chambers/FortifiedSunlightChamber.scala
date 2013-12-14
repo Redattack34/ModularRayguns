@@ -4,7 +4,6 @@ import com.castlebravostudios.rayguns.api.BeamRegistry
 import com.castlebravostudios.rayguns.api.items.ItemChamber
 import com.castlebravostudios.rayguns.entities.effects.FortifiedSunlightBeamEntity
 import com.castlebravostudios.rayguns.entities.effects.FortifiedSunlightBoltEntity
-import com.castlebravostudios.rayguns.items.emitters.FortifiedSunlightEmitter
 import com.castlebravostudios.rayguns.items.lenses.PreciseBeamLens
 import com.castlebravostudios.rayguns.items.lenses.PreciseLens
 import com.castlebravostudios.rayguns.items.lenses.WideLens
@@ -13,8 +12,8 @@ import com.castlebravostudios.rayguns.utils.BeamUtils
 import com.castlebravostudios.rayguns.utils.BoltUtils
 import com.castlebravostudios.rayguns.utils.GunComponents
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer
-
 import net.minecraft.item.Item
+import com.castlebravostudios.rayguns.items.emitters.Emitters
 
 object FortifiedSunlightChamber extends Item( Config.chamberFortifiedSunlight ) with ItemChamber {
 
@@ -24,7 +23,7 @@ object FortifiedSunlightChamber extends Item( Config.chamberFortifiedSunlight ) 
   setUnlocalizedName("rayguns.FortifiedSunlightChamber")
   setTextureName("rayguns:chamber_fortified_sunlight")
 
-  RecipeRegisterer.registerTier2Chamber(this, FortifiedSunlightEmitter)
+  RecipeRegisterer.registerTier2Chamber(this, Emitters.fortifiedSunlightEmitter)
 
   BeamRegistry.register({
     case GunComponents(_, FortifiedSunlightChamber, _, None, _) => { (world, player) =>

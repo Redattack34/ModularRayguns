@@ -4,7 +4,7 @@ import com.castlebravostudios.rayguns.api.BeamRegistry
 import com.castlebravostudios.rayguns.api.items.ItemChamber
 import com.castlebravostudios.rayguns.entities.effects.EnderBeamEntity
 import com.castlebravostudios.rayguns.entities.effects.EnderBoltEntity
-import com.castlebravostudios.rayguns.items.emitters.EnderEmitter
+import com.castlebravostudios.rayguns.items.emitters.Emitters
 import com.castlebravostudios.rayguns.items.lenses.PreciseBeamLens
 import com.castlebravostudios.rayguns.items.lenses.PreciseLens
 import com.castlebravostudios.rayguns.items.lenses.WideLens
@@ -24,7 +24,7 @@ object EnderChamber extends Item( Config.chamberEnder ) with ItemChamber {
   setUnlocalizedName("rayguns.EnderChamber")
   setTextureName("rayguns:chamber_ender")
 
-  RecipeRegisterer.registerTier2Chamber(this, EnderEmitter)
+  RecipeRegisterer.registerTier2Chamber(this, Emitters.enderEmitter )
 
   BeamRegistry.register({
     case GunComponents(_, EnderChamber, _, None, _) => { (world, player) =>
