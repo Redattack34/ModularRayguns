@@ -19,7 +19,7 @@ import net.minecraft.item.Item
 object EnderChamber extends Item( Config.chamberEnder ) with ItemChamber {
 
   val moduleKey = "EnderChamber"
-  val powerModifier = 1.0
+  val powerModifier = 2.0
   register
   setUnlocalizedName("rayguns.EnderChamber")
   setTextureName("rayguns:chamber_ender")

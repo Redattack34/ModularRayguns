@@ -19,7 +19,7 @@ import net.minecraft.item.Item
 object TractorChamber extends Item( Config.chamberTractor ) with ItemChamber {
 
   val moduleKey = "TractorChamber"
-  val powerModifier = 1.0
+  val powerModifier = 1.5
   register
   setUnlocalizedName("rayguns.TractorChamber")
   setTextureName("rayguns:chamber_tractor")

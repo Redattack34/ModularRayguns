@@ -19,7 +19,7 @@ import net.minecraft.item.Item
 object ImpulseChamber extends Item( Config.chamberImpulse ) with ItemChamber {
 
   val moduleKey = "ImpulseChamber"
-  val powerModifier = 1.0
+  val powerModifier = 1.5
   register
   setUnlocalizedName("rayguns.ImpulseChamber")
   setTextureName("rayguns:chamber_impulse")

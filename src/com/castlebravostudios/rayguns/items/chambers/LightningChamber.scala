@@ -11,17 +11,16 @@ import com.castlebravostudios.rayguns.items.lenses.WideLens
 import com.castlebravostudios.rayguns.mod.Config
 import com.castlebravostudios.rayguns.utils.BeamUtils
 import com.castlebravostudios.rayguns.utils.BoltUtils
-import com.castlebravostudios.rayguns.utils.GunComponents
-import com.castlebravostudios.rayguns.utils.RecipeRegisterer
-import net.minecraft.item.Item
-import com.castlebravostudios.rayguns.utils.Vector3
-import net.minecraft.world.World
-import cpw.mods.fml.common.network.Player
-import com.castlebravostudios.rayguns.utils.RaytraceUtils
-import net.minecraft.entity.player.EntityPlayer
-import scala.collection.SortedSet
-import com.castlebravostudios.rayguns.utils.MidpointDisplacement
 import com.castlebravostudios.rayguns.utils.Extensions._
+import com.castlebravostudios.rayguns.utils.GunComponents
+import com.castlebravostudios.rayguns.utils.MidpointDisplacement
+import com.castlebravostudios.rayguns.utils.RaytraceUtils
+import com.castlebravostudios.rayguns.utils.RecipeRegisterer
+import com.castlebravostudios.rayguns.utils.Vector3
+
+import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.item.Item
+import net.minecraft.world.World
 
 object LightningChamber extends Item( Config.chamberLightning ) with ItemChamber {
 
