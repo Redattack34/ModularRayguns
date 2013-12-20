@@ -48,6 +48,9 @@ object Items {
     registerItem( Emitters.lightningEmitter )
     registerItem( Emitters.impulseEmitter )
     registerItem( Emitters.tractorEmitter )
+    registerItem( Emitters.tier1CuttingEmitter )
+    registerItem( Emitters.tier2CuttingEmitter )
+    registerItem( Emitters.tier3CuttingEmitter )
 
     registerItem( LaserChamber )
     registerItem( HeatRayChamber )
