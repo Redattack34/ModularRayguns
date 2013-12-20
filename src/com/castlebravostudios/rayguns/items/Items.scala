@@ -63,6 +63,9 @@ object Items {
     registerItem( LightningChamber )
     registerItem( ImpulseChamber )
     registerItem( TractorChamber )
+    registerItem( Tier1CuttingChamber )
+    registerItem( Tier2CuttingChamber )
+    registerItem( Tier3CuttingChamber )
   }
 
   /**
