@@ -8,6 +8,7 @@ import net.minecraft.block.Block
 import net.minecraft.block.BlockFluid
 import net.minecraftforge.fluids.IFluidBlock
 import com.castlebravostudios.rayguns.utils.BlockPos
+import net.minecraft.nbt.NBTTagCompound
 
 trait BaseEffect extends Entity {
   self : Shootable =>
@@ -68,4 +69,7 @@ trait BaseEffect extends Entity {
    */
   def adjustCoords( x : Int, y : Int, z : Int, side : Int ) : BlockPos =
     BlockPos( x, y, z ).add( hitOffset( side ) )
+
+  def readEffectFromNbt( tag : NBTTagCompound ) : Unit = ()
+  def writeEffectToNbt( tag : NBTTagCompound ) : Unit = ()
 }

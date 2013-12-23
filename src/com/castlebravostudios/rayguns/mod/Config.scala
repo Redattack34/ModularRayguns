@@ -45,6 +45,9 @@ object Config {
   var emitterLightning : Int = _
   var emitterImpulse : Int = _
   var emitterTractor : Int = _
+  var emitterTier1Cutting : Int = _
+  var emitterTier2Cutting : Int = _
+  var emitterTier3Cutting : Int = _
 
   var chamberLaser : Int = _
   var chamberHeatRay : Int = _
@@ -57,6 +60,9 @@ object Config {
   var chamberLightning : Int = _
   var chamberImpulse : Int = _
   var chamberTractor : Int = _
+  var chamberCuttingTier1 : Int = _
+  var chamberCuttingTier2 : Int = _
+  var chamberCuttingTier3 : Int = _
 
   var minLightningDetail : Double = _
   var lightningFlash : Boolean = _
@@ -110,6 +116,9 @@ object Config {
     emitterLightning = config.getItem( "emitterLightning", 5509 ).getInt
     emitterImpulse = config.getItem( "emitterImpulse", 5510 ).getInt
     emitterTractor = config.getItem( "emitterTractor", 5511 ).getInt
+    emitterTier1Cutting = config.getItem( "emitterTier1Cutting", 5512 ).getInt
+    emitterTier2Cutting = config.getItem( "emitterTier2Cutting", 5513 ).getInt
+    emitterTier3Cutting = config.getItem( "emitterTier3Cutting", 5514 ).getInt
 
     chamberLaser = config.getItem( "chamberLaser", 5601 ).getInt
     chamberHeatRay = config.getItem( "chamberHeatRay", 5602 ).getInt
@@ -122,6 +131,9 @@ object Config {
     chamberLightning = config.getItem( "chamberLightning", 5609 ).getInt
     chamberImpulse = config.getItem( "chamberImpulse", 5610 ).getInt
     chamberTractor = config.getItem( "chamberTractor", 5611 ).getInt
+    chamberCuttingTier1 = config.getItem( "chamberCuttingTier1", 5612 ).getInt
+    chamberCuttingTier2 = config.getItem( "chamberCuttingTier2", 5613 ).getInt
+    chamberCuttingTier3 = config.getItem( "chamberCuttingTier3", 5614 ).getInt
 
     minLightningDetail = config.get( "misc", "minLightningDetailSize", 0.01d ).getDouble( 0.01d )
     lightningFlash = config.get( "misc", "lightningFlashEnabled", true ).getBoolean( true )

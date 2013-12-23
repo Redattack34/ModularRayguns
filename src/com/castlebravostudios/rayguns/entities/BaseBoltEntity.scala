@@ -110,11 +110,13 @@ abstract class BaseBoltEntity( world : World ) extends Entity( world ) with Shoo
   override def writeEntityToNBT( tag : NBTTagCompound ) : Unit = {
     super.writeEntityToNBT(tag)
     tag.setShort("lifetime", timeRemaining.shortValue )
+    writeEffectToNbt(tag)
   }
 
   override def readEntityFromNBT( tag : NBTTagCompound ) : Unit = {
     super.readEntityFromNBT(tag)
     timeRemaining = tag.getShort( "lifetime" )
+    readEffectFromNbt(tag)
   }
 
   override def isInRangeToRenderDist(limit : Double) : Boolean = {
