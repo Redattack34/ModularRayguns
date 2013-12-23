@@ -41,10 +41,12 @@ abstract class BaseBeamEntity(world : World) extends Entity( world ) with Shoota
 
   override def writeEntityToNBT( tag : NBTTagCompound ) : Unit = {
     tag.setShort("lifetime", timeRemaining.shortValue )
+    writeEffectToNbt(tag)
   }
 
   override def readEntityFromNBT( tag : NBTTagCompound ) : Unit = {
     timeRemaining = tag.getShort( "lifetime" )
+    readEffectFromNbt(tag)
   }
 
   protected override def entityInit()  : Unit = ()

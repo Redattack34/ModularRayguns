@@ -78,17 +78,17 @@ object Emitters {
     .setTextureName("rayguns:emitter_tractor")
 
   val tier1CuttingEmitter = new Emitter( Config.emitterTier1Cutting )
-    .registerRecipe( Tier1, Item.pickaxeStone, Item.axeStone )
+    .registerRecipe( Tier1, Item.pickaxeStone, Item.shovelStone )
     .setUnlocalizedName("rayguns.Tier1CuttingEmitter")
     .setTextureName("rayguns:emitter_cutting_t1")
 
   val tier2CuttingEmitter = new Emitter( Config.emitterTier2Cutting )
-    .registerRecipe( Tier1, Item.pickaxeIron, Item.axeIron )
+    .registerRecipe( Tier1, Item.pickaxeIron, Item.shovelIron )
     .setUnlocalizedName("rayguns.Tier2CuttingEmitter")
     .setTextureName("rayguns:emitter_cutting_t2")
 
   val tier3CuttingEmitter = new Emitter( Config.emitterTier3Cutting )
-    .registerRecipe( Tier3, Item.pickaxeDiamond, Item.axeDiamond )
+    .registerRecipe( Tier3, Item.pickaxeDiamond, Item.shovelDiamond )
     .setUnlocalizedName("rayguns.Tier3CuttingEmitter")
     .setTextureName("rayguns:emitter_cutting_t3")
 
