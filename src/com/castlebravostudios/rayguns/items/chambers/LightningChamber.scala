@@ -12,7 +12,7 @@ import com.castlebravostudios.rayguns.mod.Config
 import com.castlebravostudios.rayguns.utils.BeamUtils
 import com.castlebravostudios.rayguns.utils.BoltUtils
 import com.castlebravostudios.rayguns.utils.Extensions._
-import com.castlebravostudios.rayguns.utils.GunComponents
+import com.castlebravostudios.rayguns.utils.DefaultFireEvent
 import com.castlebravostudios.rayguns.utils.MidpointDisplacement
 import com.castlebravostudios.rayguns.utils.RaytraceUtils
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer
@@ -43,18 +43,18 @@ object LightningChamber extends Item( Config.chamberLightning ) with ItemChamber
   }
 
   BeamRegistry.register({
-    case GunComponents(_, LightningChamber, _, None, _) => { (world, player) =>
+    case DefaultFireEvent(_, LightningChamber, _, None, _) => { (world, player) =>
       BoltUtils.spawnNormal( world, new LightningBoltEntity(world), player )
     }
-    case GunComponents(_, LightningChamber, _, Some(PreciseLens), _ ) => { (world, player) =>
+    case DefaultFireEvent(_, LightningChamber, _, Some(PreciseLens), _ ) => { (world, player) =>
       BoltUtils.spawnPrecise( world, new LightningBoltEntity(world), player )
     }
-    case GunComponents(_, LightningChamber, _, Some(WideLens), _ ) => { (world, player) =>
+    case DefaultFireEvent(_, LightningChamber, _, Some(WideLens), _ ) => { (world, player) =>
       BoltUtils.spawnScatter(world, player, 9, 0.1f ){ () =>
         new LightningBoltEntity(world)
       }
     }
-    case GunComponents(_, LightningChamber, _, Some(PreciseBeamLens), _ ) => { (world, player) =>
+    case DefaultFireEvent(_, LightningChamber, _, Some(PreciseBeamLens), _ ) => { (world, player) =>
       val beam = new LightningBeamEntity(world)
 
       if ( world.isOnClient ) {

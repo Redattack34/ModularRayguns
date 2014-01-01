@@ -5,13 +5,12 @@ import com.castlebravostudios.rayguns.api.items.ItemChamber
 import com.castlebravostudios.rayguns.entities.effects.LaserBeamEntity
 import com.castlebravostudios.rayguns.entities.effects.LaserBoltEntity
 import com.castlebravostudios.rayguns.items.emitters.Emitters
-import com.castlebravostudios.rayguns.items.lenses.PreciseBeamLens
-import com.castlebravostudios.rayguns.items.lenses.PreciseLens
-import com.castlebravostudios.rayguns.items.lenses.WideLens
+import com.castlebravostudios.rayguns.items.lenses._
 import com.castlebravostudios.rayguns.mod.Config
 import com.castlebravostudios.rayguns.utils.BeamUtils
 import com.castlebravostudios.rayguns.utils.BoltUtils
-import com.castlebravostudios.rayguns.utils.GunComponents
+import com.castlebravostudios.rayguns.utils.ChargeFireEvent
+import com.castlebravostudios.rayguns.utils.DefaultFireEvent
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer
 
 import net.minecraft.item.Item
@@ -27,19 +26,25 @@ object LaserChamber extends Item( Config.chamberLaser ) with ItemChamber {
   RecipeRegisterer.registerTier1Chamber(this, Emitters.laserEmitter)
 
   BeamRegistry.register({
-    case GunComponents(_, LaserChamber, _, None, _) => { (world, player) =>
+    case DefaultFireEvent(_, LaserChamber, _, None, _) => { (world, player) =>
       BoltUtils.spawnNormal( world, new LaserBoltEntity(world), player )
     }
-    case GunComponents(_, LaserChamber, _, Some(PreciseLens), _ ) => { (world, player) =>
+    case DefaultFireEvent(_, LaserChamber, _, Some(PreciseLens), _ ) => { (world, player) =>
       BoltUtils.spawnPrecise( world, new LaserBoltEntity( world ), player )
     }
-    case GunComponents(_, LaserChamber, _, Some(WideLens), _ ) => { (world, player) =>
+    case DefaultFireEvent(_, LaserChamber, _, Some(WideLens), _ ) => { (world, player) =>
       BoltUtils.spawnScatter(world, player, 9, 0.1f ){ () =>
         new LaserBoltEntity(world)
       }
     }
-    case GunComponents(_, LaserChamber, _, Some(PreciseBeamLens), _ ) => { (world, player) =>
+    case DefaultFireEvent(_, LaserChamber, _, Some(PreciseBeamLens), _ ) => { (world, player) =>
       BeamUtils.spawnSingleShot( new LaserBeamEntity(world), world, player )
+    }
+    case ChargeFireEvent(_, LaserChamber, _, Some(ChargeLens), _, charge ) => { (world, player) =>
+      BoltUtils.spawnNormal( world, new LaserBoltEntity(world), player )
+    }
+    case ChargeFireEvent(_, LaserChamber, _, Some(ChargeBeamLens), _, charge ) => { (world, player) =>
+        Some(ChargeLens)
     }
   })
 }

@@ -15,6 +15,7 @@ import com.castlebravostudios.rayguns.utils.GunComponents
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer
 import net.minecraft.item.Item
 import com.castlebravostudios.rayguns.entities.effects.CuttingEffect
+import com.castlebravostudios.rayguns.utils.DefaultFireEvent
 
 abstract class CuttingChamber(id : Int) extends Item( id ) with ItemChamber {
 
@@ -28,18 +29,18 @@ abstract class CuttingChamber(id : Int) extends Item( id ) with ItemChamber {
   }
 
   BeamRegistry.register({
-    case GunComponents(_, ch, _, None, _) if ch eq this => { (world, player) =>
+    case DefaultFireEvent(_, ch, _, None, _) if ch eq this => { (world, player) =>
       BoltUtils.spawnNormal( world, init( new CuttingBoltEntity(world) ), player )
     }
-    case GunComponents(_, ch, _, Some(PreciseLens), _ ) if ch eq this => { (world, player) =>
+    case DefaultFireEvent(_, ch, _, Some(PreciseLens), _ ) if ch eq this => { (world, player) =>
       BoltUtils.spawnPrecise( world, init( new CuttingBoltEntity( world ) ), player )
     }
-    case GunComponents(_, ch, _, Some(WideLens), _ ) if ch eq this => { (world, player) =>
+    case DefaultFireEvent(_, ch, _, Some(WideLens), _ ) if ch eq this => { (world, player) =>
       BoltUtils.spawnScatter(world, player, 9, 0.1f ){ () =>
         init( new CuttingBoltEntity(world) )
       }
     }
-    case GunComponents(_, ch, _, Some(PreciseBeamLens), _ ) if ch eq this => { (world, player) =>
+    case DefaultFireEvent(_, ch, _, Some(PreciseBeamLens), _ ) if ch eq this => { (world, player) =>
       BeamUtils.spawnSingleShot( init( new CuttingBeamEntity(world) ), world, player )
     }
   })
