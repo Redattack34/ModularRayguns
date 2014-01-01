@@ -2,7 +2,7 @@ package com.castlebravostudios.rayguns.items.batteries
 
 import com.castlebravostudios.rayguns.api.items.ItemBattery
 import com.castlebravostudios.rayguns.mod.Config
-import com.castlebravostudios.rayguns.utils.GunComponents
+import com.castlebravostudios.rayguns.utils.FiringConfiguration
 
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.Item
@@ -17,5 +17,5 @@ object InfiniteBattery extends Item( Config.infiniteBattery ) with ItemBattery {
   setUnlocalizedName("rayguns.InfiniteBattery")
   setTextureName("rayguns:battery_infinite")
 
-  override def drainPower( player : EntityPlayer, item : ItemStack, comp : GunComponents ) : Boolean = true
+  override def drainPower( player : EntityPlayer, item : ItemStack, comp : FiringConfiguration ) : Boolean = true
 }

@@ -1,6 +1,6 @@
 package com.castlebravostudios.rayguns.api.items
 
-import com.castlebravostudios.rayguns.utils.GunComponents
+import com.castlebravostudios.rayguns.utils.FiringConfiguration
 import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
 
 import net.minecraft.entity.player.EntityPlayer
@@ -17,7 +17,7 @@ trait ItemBattery extends ItemModule {
   override def getDisplayDamage( item : ItemStack ) : Int = getChargeDepleted(item)
   override def isDamaged( item : ItemStack ) = getDisplayDamage( item ) > 0
 
-  def drainPower( player : EntityPlayer, item : ItemStack, comp : GunComponents ) : Boolean = {
+  def drainPower( player : EntityPlayer, item : ItemStack, comp : FiringConfiguration ) : Boolean = {
     val powerMult = comp.powerMultiplier
     val powerDrain = powerMult * powerBase
     if ( getChargeDepleted( item ) + powerDrain <= maxCapacity ) {
