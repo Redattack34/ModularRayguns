@@ -16,6 +16,9 @@ import com.castlebravostudios.rayguns.utils.RecipeRegisterer
 import net.minecraft.item.Item
 import com.castlebravostudios.rayguns.entities.effects.CuttingEffect
 import com.castlebravostudios.rayguns.utils.DefaultFireEvent
+import com.castlebravostudios.rayguns.utils.ChargeFireEvent
+import com.castlebravostudios.rayguns.items.lenses.ChargeLens
+import com.castlebravostudios.rayguns.items.lenses.ChargeBeamLens
 
 abstract class CuttingChamber(id : Int) extends Item( id ) with ItemChamber {
 
@@ -42,6 +45,16 @@ abstract class CuttingChamber(id : Int) extends Item( id ) with ItemChamber {
     }
     case DefaultFireEvent(_, ch, _, Some(PreciseBeamLens), _ ) if ch eq this => { (world, player) =>
       BeamUtils.spawnSingleShot( init( new CuttingBeamEntity(world) ), world, player )
+    }
+    case ChargeFireEvent(_, ch, _, Some(ChargeLens), _, charge ) if ch eq this => { (world, player) =>
+      val bolt = init( new CuttingBoltEntity(world) )
+      bolt.charge = charge
+      BoltUtils.spawnNormal( world, bolt, player )
+    }
+    case ChargeFireEvent(_, ch, _, Some(ChargeBeamLens), _, charge ) if ch eq this => { (world, player) =>
+      val beam = init( new CuttingBeamEntity(world) )
+      beam.charge = charge
+      BeamUtils.spawnSingleShot( beam, world, player )
     }
   })
 }

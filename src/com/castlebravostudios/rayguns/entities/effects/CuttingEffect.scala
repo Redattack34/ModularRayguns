@@ -84,11 +84,13 @@ trait CuttingEffect extends Entity with BaseEffect with IEntityAdditionalSpawnDa
     tag.setFloat( "remainingPower", remainingPower )
   }
 
-  def writeSpawnData( out : ByteArrayDataOutput ) : Unit = {
+  abstract override def writeSpawnData( out : ByteArrayDataOutput ) : Unit = {
+    super.writeSpawnData(out)
     out.writeInt( harvestLevel )
   }
 
-  def readSpawnData( in : ByteArrayDataInput ) : Unit = {
+  abstract override def readSpawnData( in : ByteArrayDataInput ) : Unit = {
+    super.readSpawnData(in)
     harvestLevel = in.readInt()
   }
 }

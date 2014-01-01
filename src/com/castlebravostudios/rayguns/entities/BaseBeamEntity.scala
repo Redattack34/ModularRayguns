@@ -8,12 +8,15 @@ import net.minecraft.util.MovingObjectPosition
 import net.minecraft.util.Vec3
 import net.minecraft.world.World
 import net.minecraft.util.ResourceLocation
+import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData
+import com.google.common.io.ByteArrayDataInput
+import com.google.common.io.ByteArrayDataOutput
 
-abstract class BaseBeamEntity(world : World) extends Entity( world ) with Shootable {
+abstract class BaseBeamEntity(world : World) extends Entity( world ) with Shootable with IEntityAdditionalSpawnData {
   self : BaseEffect =>
 
-  def lifetime = 3
-  var timeRemaining = lifetime
+  var charge : Double = 1.0d
+  def depletionRate = 0.3d
   var length : Double = 0
 
   ignoreFrustumCheck = true
@@ -33,20 +36,28 @@ abstract class BaseBeamEntity(world : World) extends Entity( world ) with Shoota
 
   override def onUpdate() : Unit = {
     super.onUpdate
-    timeRemaining -= 1
-    if ( timeRemaining <= 0 ) {
+    charge -= depletionRate
+    if ( charge <= 0 ) {
       setDead()
     }
   }
 
   override def writeEntityToNBT( tag : NBTTagCompound ) : Unit = {
-    tag.setShort("lifetime", timeRemaining.shortValue )
+    tag.setDouble("charge", charge)
     writeEffectToNbt(tag)
   }
 
   override def readEntityFromNBT( tag : NBTTagCompound ) : Unit = {
-    timeRemaining = tag.getShort( "lifetime" )
+    charge = tag.getDouble("charge")
     readEffectFromNbt(tag)
+  }
+
+  def writeSpawnData( out : ByteArrayDataOutput ) : Unit = {
+    out.writeDouble( charge )
+  }
+
+  def readSpawnData( in : ByteArrayDataInput ) : Unit = {
+    charge = in.readDouble()
   }
 
   protected override def entityInit()  : Unit = ()

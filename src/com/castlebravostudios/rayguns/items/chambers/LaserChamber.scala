@@ -41,10 +41,14 @@ object LaserChamber extends Item( Config.chamberLaser ) with ItemChamber {
       BeamUtils.spawnSingleShot( new LaserBeamEntity(world), world, player )
     }
     case ChargeFireEvent(_, LaserChamber, _, Some(ChargeLens), _, charge ) => { (world, player) =>
-      BoltUtils.spawnNormal( world, new LaserBoltEntity(world), player )
+      val bolt = new LaserBoltEntity(world)
+      bolt.charge = charge
+      BoltUtils.spawnNormal( world, bolt, player )
     }
     case ChargeFireEvent(_, LaserChamber, _, Some(ChargeBeamLens), _, charge ) => { (world, player) =>
-        Some(ChargeLens)
+      val beam = new LaserBeamEntity(world)
+      beam.charge = charge
+      BeamUtils.spawnSingleShot( beam, world, player )
     }
   })
 }

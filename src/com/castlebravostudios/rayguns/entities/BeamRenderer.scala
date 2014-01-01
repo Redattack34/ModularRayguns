@@ -23,7 +23,7 @@ class BeamRenderer extends Render {
     GL11.glTranslated(x, y, z)
     GL11.glRotatef(180 - e.rotationYaw, 0.0f, 1.0f, 0.0f)
     GL11.glRotatef(180 - e.rotationPitch, 1.0f, 0.0f, 0.0f)
-    GL11.glScalef(0.025f, 0.025f, 1.0f)
+    GL11.glScalef(0.025f * e.charge.toFloat, 0.025f * e.charge.toFloat, 1.0f)
     GL11.glDisable(GL11.GL_LIGHTING)
     GL11.glDisable(GL11.GL_CULL_FACE)
     GL11.glEnable(GL11.GL_BLEND);
@@ -40,8 +40,7 @@ class BeamRenderer extends Render {
 
     val tes = Tessellator.instance
 
-    GL11.glColor4f( 1.0f, 1.0f, 1.0f,
-      ( e.timeRemaining.toFloat / e.lifetime.toFloat ) )
+    GL11.glColor4f( 1.0f, 1.0f, 1.0f, 1.0f )
 
     for ( _ <- 0 until 3 ) {
       tes.startDrawingQuads();

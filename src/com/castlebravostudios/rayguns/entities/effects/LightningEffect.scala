@@ -66,7 +66,7 @@ class LightningBoltEntity(world : World) extends BaseBoltEntity(world) with Ligh
   override val texture = null //We use the beam texture for lightning bolts.
 }
 class LightningBeamEntity(world : World) extends BaseBeamEntity(world) with LightningEffect {
-  override def lifetime = 5
+  override def depletionRate = 0.2d
 
   override val texture = new ResourceLocation( "rayguns", "textures/beams/lightning_beam.png" )
 }

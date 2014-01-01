@@ -9,9 +9,13 @@ import net.minecraft.block.BlockFluid
 import net.minecraftforge.fluids.IFluidBlock
 import com.castlebravostudios.rayguns.utils.BlockPos
 import net.minecraft.nbt.NBTTagCompound
+import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData
 
 trait BaseEffect extends Entity {
   self : Shootable =>
+
+  def charge : Double
+  def charge_=( charge : Double ) : Unit
 
   /**
    * A collision has been detected against the given entity. Return true if the

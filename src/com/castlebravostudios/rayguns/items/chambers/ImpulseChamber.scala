@@ -13,8 +13,10 @@ import com.castlebravostudios.rayguns.utils.BeamUtils
 import com.castlebravostudios.rayguns.utils.BoltUtils
 import com.castlebravostudios.rayguns.utils.DefaultFireEvent
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer
-
 import net.minecraft.item.Item
+import com.castlebravostudios.rayguns.utils.ChargeFireEvent
+import com.castlebravostudios.rayguns.items.lenses.ChargeLens
+import com.castlebravostudios.rayguns.items.lenses.ChargeBeamLens
 
 object ImpulseChamber extends Item( Config.chamberImpulse ) with ItemChamber {
 
@@ -40,6 +42,16 @@ object ImpulseChamber extends Item( Config.chamberImpulse ) with ItemChamber {
     }
     case DefaultFireEvent(_, ImpulseChamber, _, Some(PreciseBeamLens), _ ) => { (world, player) =>
       BeamUtils.spawnSingleShot( new ImpulseBeamEntity(world), world, player )
+    }
+    case ChargeFireEvent(_, ImpulseChamber, _, Some(ChargeLens), _, charge ) => { (world, player) =>
+      val bolt = new ImpulseBoltEntity(world)
+      bolt.charge = charge
+      BoltUtils.spawnNormal( world, bolt, player )
+    }
+    case ChargeFireEvent(_, ImpulseChamber, _, Some(ChargeBeamLens), _, charge ) => { (world, player) =>
+      val beam = new ImpulseBeamEntity(world)
+      beam.charge = charge
+      BeamUtils.spawnSingleShot( beam, world, player )
     }
   })
 }

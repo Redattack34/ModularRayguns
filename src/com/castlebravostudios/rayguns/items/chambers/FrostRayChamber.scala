@@ -13,8 +13,10 @@ import com.castlebravostudios.rayguns.utils.BeamUtils
 import com.castlebravostudios.rayguns.utils.BoltUtils
 import com.castlebravostudios.rayguns.utils.DefaultFireEvent
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer
-
 import net.minecraft.item.Item
+import com.castlebravostudios.rayguns.utils.ChargeFireEvent
+import com.castlebravostudios.rayguns.items.lenses.ChargeLens
+import com.castlebravostudios.rayguns.items.lenses.ChargeBeamLens
 
 
 object FrostRayChamber extends Item( Config.chamberFrostRay ) with ItemChamber {
@@ -41,6 +43,16 @@ object FrostRayChamber extends Item( Config.chamberFrostRay ) with ItemChamber {
     }
     case DefaultFireEvent(_, FrostRayChamber, _, Some(PreciseBeamLens), _ ) => { (world, player) =>
       BeamUtils.spawnSingleShot( new FrostRayBeamEntity(world), world, player )
+    }
+    case ChargeFireEvent(_, FrostRayChamber, _, Some(ChargeLens), _, charge ) => { (world, player) =>
+      val bolt = new FrostRayBoltEntity(world)
+      bolt.charge = charge
+      BoltUtils.spawnNormal( world, bolt, player )
+    }
+    case ChargeFireEvent(_, FrostRayChamber, _, Some(ChargeBeamLens), _, charge ) => { (world, player) =>
+      val beam = new FrostRayBeamEntity(world)
+      beam.charge = charge
+      BeamUtils.spawnSingleShot( beam, world, player )
     }
   })
 }
