@@ -16,6 +16,9 @@ import net.minecraft.util.Vec3
 import net.minecraft.world.World
 import net.minecraft.util.ResourceLocation
 import com.castlebravostudios.rayguns.utils.Extensions._
+import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData
+import com.google.common.io.ByteArrayDataInput
+import com.google.common.io.ByteArrayDataOutput
 
 /**
  * Abstract base class for beam entities. Most of this code is a poor translation
@@ -23,11 +26,11 @@ import com.castlebravostudios.rayguns.utils.Extensions._
  * onUpdate. Not coincidentally, most of this code is really non-idiomatic Scala
  * and should not be taken as an example.
  */
-abstract class BaseBoltEntity( world : World ) extends Entity( world ) with Shootable with IProjectile {
+abstract class BaseBoltEntity( world : World ) extends Entity( world ) with Shootable with IProjectile with IEntityAdditionalSpawnData {
   self : BaseEffect =>
 
-  def lifetime = 20
-  protected var timeRemaining = lifetime
+  var charge : Double = 1.0d
+  var depletionRate : Double = 0.05d
 
   def pitchOffset : Float = 0.5f
   def velocityMultiplier : Float = 1.5f
@@ -66,8 +69,8 @@ abstract class BaseBoltEntity( world : World ) extends Entity( world ) with Shoo
 
     this.setPosition(this.posX, this.posY, this.posZ)
 
-    timeRemaining -= 1
-    if ( timeRemaining <= 0 ) {
+    charge -= depletionRate
+    if ( charge <= 0 ) {
       setDead()
     }
   }
@@ -109,14 +112,26 @@ abstract class BaseBoltEntity( world : World ) extends Entity( world ) with Shoo
 
   override def writeEntityToNBT( tag : NBTTagCompound ) : Unit = {
     super.writeEntityToNBT(tag)
-    tag.setShort("lifetime", timeRemaining.shortValue )
+    tag.setDouble("charge", charge)
+    tag.setDouble("depletionRate", depletionRate)
     writeEffectToNbt(tag)
   }
 
   override def readEntityFromNBT( tag : NBTTagCompound ) : Unit = {
     super.readEntityFromNBT(tag)
-    timeRemaining = tag.getShort( "lifetime" )
+    charge = tag.getDouble("charge")
+    depletionRate = tag.getDouble("depletionRate")
     readEffectFromNbt(tag)
+  }
+
+  def writeSpawnData( out : ByteArrayDataOutput ) : Unit = {
+    out.writeDouble( charge )
+    out.writeDouble( depletionRate )
+  }
+
+  def readSpawnData( in : ByteArrayDataInput ) : Unit = {
+    charge = in.readDouble()
+    depletionRate = in.readDouble()
   }
 
   override def isInRangeToRenderDist(limit : Double) : Boolean = {

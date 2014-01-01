@@ -14,7 +14,7 @@ trait LaserEffect extends Entity with BaseEffect {
 
   def hitEntity( entity : Entity ) : Boolean = {
     entity.attackEntityFrom(
-      new EntityDamageSource("laser", shooter), 2f)
+      new EntityDamageSource("laser", shooter), 2f * charge.toFloat )
       true
   }
 

@@ -19,7 +19,7 @@ import net.minecraft.util.ResourceLocation
 trait TractorEffect extends Entity with BaseEffect {
   self : Shootable =>
 
-  private def impulseStrength = 1.5
+  private def impulseStrength = 1.5 * charge
 
   def hitEntity( entity : Entity ) : Boolean = {
     entity.attackEntityFrom(

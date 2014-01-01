@@ -19,10 +19,10 @@ trait LifeForceEffect extends BaseEffect {
       val living = hit.asInstanceOf[EntityLivingBase]
 
       if ( living.isEntityUndead() ) {
-        living.attackEntityFrom(new EntityDamageSource("lifeforce", shooter), 4)
+        living.attackEntityFrom(new EntityDamageSource("lifeforce", shooter), charge.toFloat * 3 )
       }
       else {
-        living.heal(4)
+        living.heal( charge.toFloat * 3 )
       }
     }
 

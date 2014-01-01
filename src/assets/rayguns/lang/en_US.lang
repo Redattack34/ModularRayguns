@@ -44,6 +44,8 @@ item.rayguns.Tier3CuttingEmitter.name=Cutting Beam Emitter Mk. 3
 item.rayguns.PreciseBeamLens.name=Precise Beam Lens
 item.rayguns.PreciseLens.name=Precise Bolt Lens
 item.rayguns.WideLens.name=Scatter Bolt Lens
+item.rayguns.ChargeLens.name=Charge Lens
+item.rayguns.ChargeBeamLens.name=Charge Beam Lens
 
 item.rayguns.BrokenRaygun.name=Broken Raygun
 item.rayguns.DiamondGainMedium.name=Diamond Gain Medium

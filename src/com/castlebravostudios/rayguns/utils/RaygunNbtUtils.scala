@@ -16,16 +16,6 @@ import com.castlebravostudios.rayguns.items.misc.BrokenGun
 import net.minecraft.util.StatCollector
 import net.minecraft.item.Item
 
-case class GunComponents(body : ItemBody, chamber : ItemChamber, battery : ItemBattery,
-    lens : Option[ItemLens], acc : Option[ItemAccessory] ) {
-
-  def powerMultiplier : Double = body.powerModifier * chamber.powerModifier * battery.powerModifier *
-    lens.map(_.powerModifier).getOrElse(1.0) * acc.map(_.powerModifier).getOrElse(1.0)
-
-  def components : Seq[ItemModule] = Seq( body, chamber, battery ) ++ lens ++ acc
-
-  def isValid : Boolean = components.forall( c => c != null && ModuleRegistry.isRegistered(c) )
-}
 object RaygunNbtUtils {
 
   import ModuleRegistry._
@@ -80,7 +70,7 @@ object RaygunNbtUtils {
   }
 
   def buildGun( components : GunComponents ) : Option[ItemStack] =
-    if ( BeamRegistry.isValid(components) ) Some( buildValidGun( components ) )
+    if ( components.isValid && BeamRegistry.isValid(components.getFireEvent(1.0d)) ) Some( buildValidGun( components ) )
     else None
 
   private def buildValidGun( components : GunComponents ) : ItemStack = {
@@ -160,13 +150,5 @@ object RaygunNbtUtils {
       item.setTagCompound( new NBTTagCompound() );
     }
     item.getTagCompound()
-  }
-
-  case class OptionalGunComponents(
-    body : Option[ItemBody], chamber : Option[ItemChamber], battery : Option[ItemBattery],
-    lens : Option[ItemLens], acc : Option[ItemAccessory] ) {
-
-    def this( comp : GunComponents ) = this( Some( comp.body ),
-        Some( comp.chamber ), Some( comp.battery ), comp.lens, comp.acc );
   }
 }

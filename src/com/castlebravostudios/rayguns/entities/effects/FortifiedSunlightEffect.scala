@@ -10,6 +10,10 @@ import java.util.Random
 import com.castlebravostudios.rayguns.entities.BaseBeamEntity
 import com.castlebravostudios.rayguns.entities.NoDuplicateCollisions
 import net.minecraft.util.ResourceLocation
+import net.minecraft.item.ItemDye
+import net.minecraft.item.Item
+import net.minecraft.item.ItemStack
+import net.minecraft.entity.player.EntityPlayer
 
 
 trait FortifiedSunlightEffect extends BaseEffect {
@@ -21,15 +25,21 @@ trait FortifiedSunlightEffect extends BaseEffect {
   }
 
   private def hitUndead( entity : EntityLivingBase ) : Unit = {
-    entity.setFire(8)
-    entity.attackEntityFrom(new EntityDamageSource("fortifiedsunlight", shooter), 8)
+    entity.setFire( Math.round( charge.toFloat * 3  ) )
+    entity.attackEntityFrom(new EntityDamageSource("fortifiedsunlight", shooter), charge.toFloat * 4 )
   }
 
   private def hitLiving( entity : Entity ) : Unit = {
-    entity.attackEntityFrom(new EntityDamageSource("fortifiedsunlight", shooter), 6)
+    entity.attackEntityFrom(new EntityDamageSource("fortifiedsunlight", shooter), charge.toFloat * 3 )
   }
 
-  def hitBlock(hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Boolean = true
+  def hitBlock(hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Boolean = {
+    if ( charge > 2.5 && shooter.isInstanceOf[EntityPlayer] ) {
+      ItemDye.applyBonemeal(new ItemStack( Item.dyePowder, 1 ), worldObj,
+          hitX, hitY, hitZ, shooter.asInstanceOf[EntityPlayer])
+    }
+    true
+  }
 
   def createImpactParticles( hitX : Double, hitY : Double, hitZ : Double ) : Unit = {
     def randVel = random.nextGaussian() * 0.02D

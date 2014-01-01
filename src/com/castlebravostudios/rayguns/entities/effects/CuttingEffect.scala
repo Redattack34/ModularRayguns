@@ -22,7 +22,11 @@ trait CuttingEffect extends Entity with BaseEffect with IEntityAdditionalSpawnDa
   self : Shootable =>
 
   var harvestLevel : Int = 1
-  var remainingPower : Float = 0
+  var powerMultiplier : Float = 1.0f
+  def harvestPower : Float = charge.toFloat * powerMultiplier
+  def harvestPower_=( power : Float ) = {
+    charge = power / powerMultiplier
+  }
 
   def hitEntity( entity : Entity ) : Boolean = true
 
@@ -38,7 +42,7 @@ trait CuttingEffect extends Entity with BaseEffect with IEntityAdditionalSpawnDa
 
     if ( !canBreakBlock( hitX, hitY, hitZ, block ) ) { return true }
     else {
-      remainingPower -= block.getBlockHardness(worldObj, hitX, hitY, hitZ)
+      harvestPower -= block.getBlockHardness(worldObj, hitX, hitY, hitZ)
       val player = shooter match {
         case pl : EntityPlayer => pl
         case _ => null
@@ -69,27 +73,31 @@ trait CuttingEffect extends Entity with BaseEffect with IEntityAdditionalSpawnDa
       return false
     }
 
-    hardness <= remainingPower && ( pickCanHarvest || shovelCanHarvest )
+    hardness <= harvestPower && ( pickCanHarvest || shovelCanHarvest )
   }
 
   def createImpactParticles( hitX : Double, hitY : Double, hitZ : Double ) : Unit = ()
 
   override def readEffectFromNbt( tag : NBTTagCompound ) : Unit = {
     harvestLevel = tag.getInteger("harvestLevel")
-    remainingPower = tag.getFloat( "remainingPower" )
+    powerMultiplier = tag.getFloat( "powerMultiplier" )
   }
 
   override def writeEffectToNbt( tag : NBTTagCompound ) : Unit = {
     tag.setInteger( "harvestLevel", harvestLevel )
-    tag.setFloat( "remainingPower", remainingPower )
+    tag.setFloat( "powerMultiplier", powerMultiplier )
   }
 
-  def writeSpawnData( out : ByteArrayDataOutput ) : Unit = {
+  abstract override def writeSpawnData( out : ByteArrayDataOutput ) : Unit = {
+    super.writeSpawnData(out)
     out.writeInt( harvestLevel )
+    out.writeFloat( powerMultiplier )
   }
 
-  def readSpawnData( in : ByteArrayDataInput ) : Unit = {
+  abstract override def readSpawnData( in : ByteArrayDataInput ) : Unit = {
+    super.readSpawnData(in)
     harvestLevel = in.readInt()
+    powerMultiplier = in.readFloat()
   }
 }
 

@@ -10,7 +10,7 @@ import com.castlebravostudios.rayguns.items.lenses.WideLens
 import com.castlebravostudios.rayguns.mod.Config
 import com.castlebravostudios.rayguns.utils.BeamUtils
 import com.castlebravostudios.rayguns.utils.BoltUtils
-import com.castlebravostudios.rayguns.utils.GunComponents
+import com.castlebravostudios.rayguns.utils.DefaultFireEvent
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer
 import net.minecraft.item.Item
 import com.castlebravostudios.rayguns.items.emitters.Emitters
@@ -26,18 +26,18 @@ object DeathRayChamber extends Item( Config.chamberDeathRay ) with ItemChamber {
   RecipeRegisterer.registerTier3Chamber(this, Emitters.deathRayEmitter)
 
   BeamRegistry.register({
-    case GunComponents(_, DeathRayChamber, _, None, _) => { (world, player) =>
+    case DefaultFireEvent(_, DeathRayChamber, _, None, _) => { (world, player) =>
       BoltUtils.spawnNormal( world, new DeathRayBoltEntity(world), player )
     }
-    case GunComponents(_, DeathRayChamber, _, Some(PreciseLens), _ ) => { (world, player) =>
+    case DefaultFireEvent(_, DeathRayChamber, _, Some(PreciseLens), _ ) => { (world, player) =>
       BoltUtils.spawnPrecise( world, new DeathRayBoltEntity( world ), player )
     }
-    case GunComponents(_, DeathRayChamber, _, Some(WideLens), _ ) => { (world, player) =>
+    case DefaultFireEvent(_, DeathRayChamber, _, Some(WideLens), _ ) => { (world, player) =>
       BoltUtils.spawnScatter(world, player, 9, 0.1f ){ () =>
         new DeathRayBoltEntity(world)
       }
     }
-    case GunComponents(_, DeathRayChamber, _, Some(PreciseBeamLens), _ ) => { (world, player) =>
+    case DefaultFireEvent(_, DeathRayChamber, _, Some(PreciseBeamLens), _ ) => { (world, player) =>
       BeamUtils.spawnSingleShot( new DeathRayBeamEntity(world), world, player )
     }
   })

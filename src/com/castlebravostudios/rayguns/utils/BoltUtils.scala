@@ -24,7 +24,8 @@ object BoltUtils {
   def spawnPrecise( world : World, bolt : BaseBoltEntity, shooter : EntityLivingBase ) : Unit = {
     if ( world.isOnClient ) return
     initBolt(bolt, shooter)
-    setMotion(bolt, aimVector( shooter ), velocityMultiplier = 2.0f)
+    bolt.depletionRate = 0.025d
+    setMotion(bolt, aimVector( shooter ) )
     world.spawnEntityInWorld(bolt)
   }
 
@@ -88,12 +89,12 @@ object BoltUtils {
    * Sets the motion values to produce a given base velocity in the given
    * direction. Useful for changing the direction without affecting the velocity.
    */
-  private def setMotion(bolt: BaseBoltEntity, motion : Vector3, velocityMultiplier : Float = 1.0f): Unit = {
+  private def setMotion(bolt: BaseBoltEntity, motion : Vector3): Unit = {
     val baseVelocity = 0.4
     bolt.motionX = motion.x
     bolt.motionZ = motion.z
     bolt.motionY = motion.y
-    bolt.setThrowableHeading(bolt.motionX, bolt.motionY, bolt.motionZ, bolt.velocityMultiplier * velocityMultiplier, 1.0F);
+    bolt.setThrowableHeading(bolt.motionX, bolt.motionY, bolt.motionZ, bolt.velocityMultiplier, 1.0F);
   }
 
   private def isCreativeFlying( shooter : EntityLivingBase ) = shooter match {

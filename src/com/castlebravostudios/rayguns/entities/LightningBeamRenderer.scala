@@ -46,15 +46,15 @@ class LightningBeamRenderer extends Render {
       val start = e.pointsList( index ).add(renderLoc)
       val end = e.pointsList( index + 1 ).add(renderLoc)
 
-      val offset = 0.0625D
-      tes.addVertexWithUV( start.x - offset, start.y, start.z, 0, 0);
-      tes.addVertexWithUV( end.x - offset, end.y, end.z, 0, 1);
-      tes.addVertexWithUV( end.x + offset, end.y, end.z, 1, 1);
-      tes.addVertexWithUV( start.x + offset, start.y, start.z, 1, 0);
-      tes.addVertexWithUV( start.x, start.y - offset, start.z, 0, 0);
-      tes.addVertexWithUV( end.x, end.y - offset, end.z, 0, 1);
-      tes.addVertexWithUV( end.x, end.y + offset, end.z, 1, 1);
-      tes.addVertexWithUV( start.x, start.y + offset, start.z, 1, 0);
+      val thickness = 0.0625D * e.charge
+      tes.addVertexWithUV( start.x - thickness, start.y, start.z, 0, 0);
+      tes.addVertexWithUV( end.x - thickness, end.y, end.z, 0, 1);
+      tes.addVertexWithUV( end.x + thickness, end.y, end.z, 1, 1);
+      tes.addVertexWithUV( start.x + thickness, start.y, start.z, 1, 0);
+      tes.addVertexWithUV( start.x, start.y - thickness, start.z, 0, 0);
+      tes.addVertexWithUV( end.x, end.y - thickness, end.z, 0, 1);
+      tes.addVertexWithUV( end.x, end.y + thickness, end.z, 1, 1);
+      tes.addVertexWithUV( start.x, start.y + thickness, start.z, 1, 0);
     }
     tes.draw();
 

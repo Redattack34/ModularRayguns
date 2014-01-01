@@ -10,7 +10,7 @@ import com.castlebravostudios.rayguns.items.lenses.PreciseLens
 import com.castlebravostudios.rayguns.mod.Config
 import com.castlebravostudios.rayguns.utils.BeamUtils
 import com.castlebravostudios.rayguns.utils.BoltUtils
-import com.castlebravostudios.rayguns.utils.GunComponents
+import com.castlebravostudios.rayguns.utils.DefaultFireEvent
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer
 
 import net.minecraft.item.Item
@@ -26,13 +26,13 @@ object ExplosiveChamber extends Item( Config.chamberExplosive ) with ItemChamber
   RecipeRegisterer.registerTier3Chamber(this, Emitters.explosiveEmitter)
 
   BeamRegistry.register({
-    case GunComponents(_, ExplosiveChamber, _, None, _) => { (world, player) =>
+    case DefaultFireEvent(_, ExplosiveChamber, _, None, _) => { (world, player) =>
       BoltUtils.spawnNormal( world, new ExplosiveBoltEntity(world), player )
     }
-    case GunComponents(_, ExplosiveChamber, _, Some(PreciseLens), _ ) => { (world, player) =>
+    case DefaultFireEvent(_, ExplosiveChamber, _, Some(PreciseLens), _ ) => { (world, player) =>
       BoltUtils.spawnPrecise( world, new ExplosiveBoltEntity( world ), player )
     }
-    case GunComponents(_, ExplosiveChamber, _, Some(PreciseBeamLens), _ ) => { (world, player) =>
+    case DefaultFireEvent(_, ExplosiveChamber, _, Some(PreciseBeamLens), _ ) => { (world, player) =>
       BeamUtils.spawnSingleShot( new ExplosiveBeamEntity(world), world, player )
     }
   })

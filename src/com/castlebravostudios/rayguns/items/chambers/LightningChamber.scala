@@ -12,15 +12,17 @@ import com.castlebravostudios.rayguns.mod.Config
 import com.castlebravostudios.rayguns.utils.BeamUtils
 import com.castlebravostudios.rayguns.utils.BoltUtils
 import com.castlebravostudios.rayguns.utils.Extensions._
-import com.castlebravostudios.rayguns.utils.GunComponents
+import com.castlebravostudios.rayguns.utils.DefaultFireEvent
 import com.castlebravostudios.rayguns.utils.MidpointDisplacement
 import com.castlebravostudios.rayguns.utils.RaytraceUtils
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer
 import com.castlebravostudios.rayguns.utils.Vector3
-
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.Item
 import net.minecraft.world.World
+import com.castlebravostudios.rayguns.utils.ChargeFireEvent
+import com.castlebravostudios.rayguns.items.lenses.ChargeLens
+import com.castlebravostudios.rayguns.items.lenses.ChargeBeamLens
 
 object LightningChamber extends Item( Config.chamberLightning ) with ItemChamber {
 
@@ -43,24 +45,37 @@ object LightningChamber extends Item( Config.chamberLightning ) with ItemChamber
   }
 
   BeamRegistry.register({
-    case GunComponents(_, LightningChamber, _, None, _) => { (world, player) =>
+    case DefaultFireEvent(_, LightningChamber, _, None, _) => { (world, player) =>
       BoltUtils.spawnNormal( world, new LightningBoltEntity(world), player )
     }
-    case GunComponents(_, LightningChamber, _, Some(PreciseLens), _ ) => { (world, player) =>
+    case DefaultFireEvent(_, LightningChamber, _, Some(PreciseLens), _ ) => { (world, player) =>
       BoltUtils.spawnPrecise( world, new LightningBoltEntity(world), player )
     }
-    case GunComponents(_, LightningChamber, _, Some(WideLens), _ ) => { (world, player) =>
+    case DefaultFireEvent(_, LightningChamber, _, Some(WideLens), _ ) => { (world, player) =>
       BoltUtils.spawnScatter(world, player, 9, 0.1f ){ () =>
         new LightningBoltEntity(world)
       }
     }
-    case GunComponents(_, LightningChamber, _, Some(PreciseBeamLens), _ ) => { (world, player) =>
+    case DefaultFireEvent(_, LightningChamber, _, Some(PreciseBeamLens), _ ) => { (world, player) =>
       val beam = new LightningBeamEntity(world)
 
       if ( world.isOnClient ) {
         beam.pointsList = getPointsList( world, player,  BeamUtils.maxBeamLength )
       }
 
+      BeamUtils.spawnSingleShot( beam, world, player )
+    }
+    case ChargeFireEvent(_, LightningChamber, _, Some(ChargeLens), _, charge ) => { (world, player) =>
+      val bolt = new LightningBoltEntity(world)
+      bolt.charge = charge
+      BoltUtils.spawnNormal( world, bolt, player )
+    }
+    case ChargeFireEvent(_, LightningChamber, _, Some(ChargeBeamLens), _, charge ) => { (world, player) =>
+      val beam = new LightningBeamEntity(world)
+      if ( world.isOnClient ) {
+        beam.pointsList = getPointsList( world, player,  BeamUtils.maxBeamLength )
+      }
+      beam.charge = charge
       BeamUtils.spawnSingleShot( beam, world, player )
     }
   })
