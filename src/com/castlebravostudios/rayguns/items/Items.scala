@@ -28,6 +28,8 @@ object Items {
     registerItem( PreciseLens )
     registerItem( WideLens )
     registerItem( PreciseBeamLens )
+    registerItem( ChargeLens )
+    registerItem( ChargeBeamLens )
 
     registerItem( ExtendedBattery )
     registerItem( RefireCapacitor )
