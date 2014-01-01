@@ -56,19 +56,21 @@ trait EnderEffect extends Entity with BaseEffect {
     return None
   }
 
+  def maxTeleportDistance : Double = charge * 16
+
   def doTeleport(entity: Entity) : Unit = {
     if ( entity.isInstanceOf[IBossDisplayData] ) return
     if ( !entity.isInstanceOf[EntityLivingBase] ) return
     val living = entity.asInstanceOf[EntityLivingBase]
 
-    val x = (entity.posX + ( random.nextFloat() - 0.5 ) * 16).toInt
-    val z = (entity.posZ + ( random.nextFloat() - 0.5 ) * 16).toInt
+    val x = (entity.posX + ( random.nextFloat() - 0.5 ) * maxTeleportDistance).toInt
+    val z = (entity.posZ + ( random.nextFloat() - 0.5 ) * maxTeleportDistance).toInt
     val optY = getTeleportY( x, living.posY.toInt, z )
     if ( optY.isEmpty ) return
     val y = optY.get
 
     val BlockPos(newX, newY, newZ) = getNewCoords( living, x, y, z )
-    val event = new EnderTeleportEvent( living, newX + (newX.signum * 0.5), newY, newZ + (newZ.signum * 0.5), 5 );
+    val event = new EnderTeleportEvent( living, newX + (newX.signum * 0.5), newY, newZ + (newZ.signum * 0.5), 1.5f * charge.toFloat );
 
     if (!MinecraftForge.EVENT_BUS.post(event)) {
       living.setPositionAndUpdate(event.targetX, event.targetY, event.targetZ);

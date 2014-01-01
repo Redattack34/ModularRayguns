@@ -1,15 +1,15 @@
 package com.castlebravostudios.rayguns.entities.effects
 
-import com.castlebravostudios.rayguns.entities.Shootable
-import net.minecraft.entity.Entity
 import java.util.Random
-import cpw.mods.fml.common.Mod.Metadata
+
+import com.castlebravostudios.rayguns.entities.Shootable
+import com.castlebravostudios.rayguns.utils.BlockPos
+
 import net.minecraft.block.Block
 import net.minecraft.block.BlockFluid
-import net.minecraftforge.fluids.IFluidBlock
-import com.castlebravostudios.rayguns.utils.BlockPos
+import net.minecraft.entity.Entity
 import net.minecraft.nbt.NBTTagCompound
-import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData
+import net.minecraftforge.fluids.IFluidBlock
 
 trait BaseEffect extends Entity {
   self : Shootable =>

@@ -23,11 +23,11 @@ import com.castlebravostudios.rayguns.items.lenses.ChargeBeamLens
 abstract class CuttingChamber(id : Int) extends Item( id ) with ItemChamber {
 
   def harvestLevel : Int
-  def startingPower : Float
+  def harvestPowerMultiplier : Float
 
   def init[T <: CuttingEffect]( entity : T ) : T = {
     entity.harvestLevel = harvestLevel
-    entity.remainingPower = startingPower
+    entity.powerMultiplier = harvestPowerMultiplier
     entity
   }
 
@@ -66,7 +66,7 @@ object Tier1CuttingChamber extends CuttingChamber( Config.chamberCuttingTier1 ) 
   setTextureName("rayguns:chamber_cutting_t1")
 
   val harvestLevel = 1
-  val startingPower = 3.0f
+  val harvestPowerMultiplier = 3.0f
 
   RecipeRegisterer.registerTier1Chamber(this, Emitters.tier1CuttingEmitter)
 }
@@ -78,7 +78,7 @@ object Tier2CuttingChamber extends CuttingChamber( Config.chamberCuttingTier2 ) 
   setTextureName("rayguns:chamber_cutting_t2")
 
   val harvestLevel = 2
-  val startingPower = 6.0f
+  val harvestPowerMultiplier = 4.5f
 
   RecipeRegisterer.registerTier2Chamber(this, Emitters.tier2CuttingEmitter)
 }
@@ -90,7 +90,7 @@ object Tier3CuttingChamber extends CuttingChamber( Config.chamberCuttingTier3 ) 
   setTextureName("rayguns:chamber_cutting_t3")
 
   val harvestLevel = 3
-  val startingPower = 10.0f
+  val harvestPowerMultiplier = 6.0f
 
   RecipeRegisterer.registerTier3Chamber(this, Emitters.tier3CuttingEmitter)
 }

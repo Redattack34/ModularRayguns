@@ -19,7 +19,7 @@ import net.minecraft.util.ResourceLocation
 trait ImpulseEffect extends Entity with BaseEffect {
   self : Shootable =>
 
-  private def impulseStrength = 1.5
+  private def impulseStrength = 1.5 * charge
 
   def hitEntity( entity : Entity ) : Boolean = {
     entity.attackEntityFrom(
@@ -33,7 +33,7 @@ trait ImpulseEffect extends Entity with BaseEffect {
   def hitBlock(hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Boolean = {
     val hitPos = BlockPos( hitX, hitY, hitZ )
     val offset = hitOffset( invertSide( side ) )
-    if ( canPushBlocks( hitPos, offset, 6 ) ) {
+    if ( canPushBlocks( hitPos, offset, Math.round( charge.toFloat * 3 ) ) ) {
       doPushBlocks( hitPos, offset, invertSide( side ) )
     }
 

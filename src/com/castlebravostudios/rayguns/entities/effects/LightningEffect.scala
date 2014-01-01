@@ -30,7 +30,7 @@ trait LightningEffect extends Entity with BaseEffect {
     if ( entity.isInstanceOf[EntityCreeper] ) return true
 
     entity.attackEntityFrom(
-      new EntityDamageSource("lightningray", shooter), 4f)
+      new EntityDamageSource("lightningray", shooter), charge.toFloat * 4.0f )
       true
   }
 
