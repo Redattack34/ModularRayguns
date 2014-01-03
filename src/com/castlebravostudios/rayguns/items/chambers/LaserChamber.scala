@@ -2,8 +2,7 @@ package com.castlebravostudios.rayguns.items.chambers
 
 import com.castlebravostudios.rayguns.api.BeamRegistry
 import com.castlebravostudios.rayguns.api.items.ItemChamber
-import com.castlebravostudios.rayguns.entities.effects.LaserBeamEntity
-import com.castlebravostudios.rayguns.entities.effects.LaserBoltEntity
+import com.castlebravostudios.rayguns.entities.effects.LaserEffect
 import com.castlebravostudios.rayguns.items.emitters.Emitters
 import com.castlebravostudios.rayguns.items.lenses._
 import com.castlebravostudios.rayguns.mod.Config
@@ -27,26 +26,26 @@ object LaserChamber extends Item( Config.chamberLaser ) with ItemChamber {
 
   BeamRegistry.register({
     case DefaultFireEvent(_, LaserChamber, _, None, _) => { (world, player) =>
-      BoltUtils.spawnNormal( world, new LaserBoltEntity(world), player )
+      BoltUtils.spawnNormal( world, LaserEffect.createBoltEntity(world), player )
     }
     case DefaultFireEvent(_, LaserChamber, _, Some(PreciseLens), _ ) => { (world, player) =>
-      BoltUtils.spawnPrecise( world, new LaserBoltEntity( world ), player )
+      BoltUtils.spawnPrecise( world, LaserEffect.createBoltEntity( world ), player )
     }
     case DefaultFireEvent(_, LaserChamber, _, Some(WideLens), _ ) => { (world, player) =>
       BoltUtils.spawnScatter(world, player, 9, 0.1f ){ () =>
-        new LaserBoltEntity(world)
+        LaserEffect.createBoltEntity(world)
       }
     }
     case DefaultFireEvent(_, LaserChamber, _, Some(PreciseBeamLens), _ ) => { (world, player) =>
-      BeamUtils.spawnSingleShot( new LaserBeamEntity(world), world, player )
+      BeamUtils.spawnSingleShot( LaserEffect.createBeamEntity(world), world, player )
     }
     case ChargeFireEvent(_, LaserChamber, _, Some(ChargeLens), _, charge ) => { (world, player) =>
-      val bolt = new LaserBoltEntity(world)
+      val bolt = LaserEffect.createBoltEntity(world)
       bolt.charge = charge
       BoltUtils.spawnNormal( world, bolt, player )
     }
     case ChargeFireEvent(_, LaserChamber, _, Some(ChargeBeamLens), _, charge ) => { (world, player) =>
-      val beam = new LaserBeamEntity(world)
+      val beam = LaserEffect.createBeamEntity(world)
       beam.charge = charge
       BeamUtils.spawnSingleShot( beam, world, player )
     }

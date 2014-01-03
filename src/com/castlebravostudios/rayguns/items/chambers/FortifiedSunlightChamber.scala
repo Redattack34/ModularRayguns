@@ -2,8 +2,7 @@ package com.castlebravostudios.rayguns.items.chambers
 
 import com.castlebravostudios.rayguns.api.BeamRegistry
 import com.castlebravostudios.rayguns.api.items.ItemChamber
-import com.castlebravostudios.rayguns.entities.effects.FortifiedSunlightBeamEntity
-import com.castlebravostudios.rayguns.entities.effects.FortifiedSunlightBoltEntity
+import com.castlebravostudios.rayguns.entities.effects.FortifiedSunlightEffect
 import com.castlebravostudios.rayguns.items.emitters.Emitters
 import com.castlebravostudios.rayguns.mod.Config
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer
@@ -26,26 +25,26 @@ object FortifiedSunlightChamber extends Item( Config.chamberFortifiedSunlight ) 
 
   BeamRegistry.register({
     case DefaultFireEvent(_, FortifiedSunlightChamber, _, None, _) => { (world, player) =>
-      BoltUtils.spawnNormal( world, new FortifiedSunlightBoltEntity(world), player )
+      BoltUtils.spawnNormal( world, FortifiedSunlightEffect.createBoltEntity(world), player )
     }
     case DefaultFireEvent(_, FortifiedSunlightChamber, _, Some(PreciseLens), _ ) => { (world, player) =>
-      BoltUtils.spawnPrecise( world, new FortifiedSunlightBoltEntity( world ), player )
+      BoltUtils.spawnPrecise( world, FortifiedSunlightEffect.createBoltEntity( world ), player )
     }
     case DefaultFireEvent(_, FortifiedSunlightChamber, _, Some(WideLens), _ ) => { (world, player) =>
       BoltUtils.spawnScatter(world, player, 9, 0.1f ){ () =>
-        new FortifiedSunlightBoltEntity(world)
+        FortifiedSunlightEffect.createBoltEntity(world)
       }
     }
     case DefaultFireEvent(_, FortifiedSunlightChamber, _, Some(PreciseBeamLens), _ ) => { (world, player) =>
-      BeamUtils.spawnSingleShot( new FortifiedSunlightBeamEntity(world), world, player )
+      BeamUtils.spawnSingleShot( FortifiedSunlightEffect.createBeamEntity(world), world, player )
     }
     case ChargeFireEvent(_, FortifiedSunlightChamber, _, Some(ChargeLens), _, charge ) => { (world, player) =>
-      val bolt = new FortifiedSunlightBoltEntity(world)
+      val bolt = FortifiedSunlightEffect.createBoltEntity(world)
       bolt.charge = charge
       BoltUtils.spawnNormal( world, bolt, player )
     }
     case ChargeFireEvent(_, FortifiedSunlightChamber, _, Some(ChargeBeamLens), _, charge ) => { (world, player) =>
-      val beam = new FortifiedSunlightBeamEntity(world)
+      val beam = FortifiedSunlightEffect.createBeamEntity(world)
       beam.charge = charge
       BeamUtils.spawnSingleShot( beam, world, player )
     }

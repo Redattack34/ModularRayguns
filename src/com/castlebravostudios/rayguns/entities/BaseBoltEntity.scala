@@ -19,15 +19,17 @@ import com.castlebravostudios.rayguns.utils.Extensions._
 import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData
 import com.google.common.io.ByteArrayDataInput
 import com.google.common.io.ByteArrayDataOutput
+import com.castlebravostudios.rayguns.api.EffectRegistry
 
 /**
- * Abstract base class for beam entities. Most of this code is a poor translation
+ * Base class for beam entities. Most of this code is a poor translation
  * of the source of EntityThrowable, since I needed to modify something deep in
  * onUpdate. Not coincidentally, most of this code is really non-idiomatic Scala
  * and should not be taken as an example.
  */
-abstract class BaseBoltEntity( world : World ) extends Entity( world ) with Shootable with IProjectile with IEntityAdditionalSpawnData {
-  self : BaseEffect =>
+class BaseBoltEntity( world : World ) extends Entity( world ) with Shootable with IProjectile with IEntityAdditionalSpawnData {
+
+  var effect : BaseEffect = _
 
   var charge : Double = 1.0d
   var depletionRate : Double = 0.05d
@@ -47,7 +49,9 @@ abstract class BaseBoltEntity( world : World ) extends Entity( world ) with Shoo
     val startPos = this.worldObj.getWorldVec3Pool().getVecFromPool(this.posX, this.posY, this.posZ)
     val endPos = this.worldObj.getWorldVec3Pool().getVecFromPool(this.posX + this.motionX, this.posY + this.motionY, this.posZ + this.motionZ)
 
-    val hits = RaytraceUtils.rayTrace(world, this, startPos, endPos)( canCollideWithBlock _, canCollideWithEntity _)
+    val hits = RaytraceUtils.rayTrace(world, this, startPos, endPos)(
+        ( block, metadata, pos ) => effect.canCollideWithBlock( this, block, metadata, pos ) && !hitBlocks.contains(pos),
+        ( entity ) => effect.canCollideWithEntity(this, entity ) && !hitEntities.contains( entity ) )
     applyHitsUntilStop(hits)
 
     this.posX += this.motionX
@@ -87,15 +91,15 @@ abstract class BaseBoltEntity( world : World ) extends Entity( world ) with Shoo
   override def setSize( width : Float, height : Float ) = super.setSize( width, height )
 
   def onImpact( pos : MovingObjectPosition ) : Boolean = {
-    createImpactParticles(posX, posY, posZ)
+    effect.createImpactParticles( this, posX, posY, posZ )
     val shouldDie = pos.typeOfHit match {
       case EnumMovingObjectType.ENTITY => {
         hitEntities += pos.entityHit
-        hitEntity( pos.entityHit )
+        effect.hitEntity( this, pos.entityHit )
       }
       case EnumMovingObjectType.TILE => {
         hitBlocks += BlockPos(pos.blockX, pos.blockY, pos.blockZ)
-        hitBlock( pos.blockX, pos.blockY, pos.blockZ, pos.sideHit )
+        effect.hitBlock( this, pos.blockX, pos.blockY, pos.blockZ, pos.sideHit )
       }
     }
 
@@ -104,8 +108,9 @@ abstract class BaseBoltEntity( world : World ) extends Entity( world ) with Shoo
   }
 
   override def setDead() {
-    if ( this.isInstanceOf[TriggerOnDeath] ) {
-      this.asInstanceOf[TriggerOnDeath].triggerAt(posX, posY, posZ)
+    effect match {
+      case e : TriggerOnDeath => e.triggerAt(this, posX, posY, posZ)
+      case _ => ()
     }
     super.setDead
   }
@@ -114,24 +119,40 @@ abstract class BaseBoltEntity( world : World ) extends Entity( world ) with Shoo
     super.writeEntityToNBT(tag)
     tag.setDouble("charge", charge)
     tag.setDouble("depletionRate", depletionRate)
-    writeEffectToNbt(tag)
+    tag.setString("effect", effect.effectKey )
   }
 
   override def readEntityFromNBT( tag : NBTTagCompound ) : Unit = {
     super.readEntityFromNBT(tag)
     charge = tag.getDouble("charge")
     depletionRate = tag.getDouble("depletionRate")
-    readEffectFromNbt(tag)
+
+    val key = tag.getString( "effect" )
+    initEffect( key )
   }
 
   def writeSpawnData( out : ByteArrayDataOutput ) : Unit = {
     out.writeDouble( charge )
     out.writeDouble( depletionRate )
+    out.writeUTF( effect.effectKey )
   }
 
   def readSpawnData( in : ByteArrayDataInput ) : Unit = {
     charge = in.readDouble()
     depletionRate = in.readDouble()
+    val key = in.readUTF()
+    initEffect( key )
+  }
+
+  private def initEffect( key : String ) : Unit = {
+    val e = EffectRegistry.getEffect( key )
+      e match {
+      case Some(effect) => this.effect = effect
+      case None => {
+        System.err.println("Unknown effect key: " + key )
+        super.setDead()
+      }
+    }
   }
 
   override def isInRangeToRenderDist(limit : Double) : Boolean = {
@@ -169,21 +190,9 @@ abstract class BaseBoltEntity( world : World ) extends Entity( world ) with Shoo
   //Workaround for mysterious scala compiler crash
   def random = this.rand
 
-  def texture : ResourceLocation
-  def lineTexture : ResourceLocation = BoltRenderer.lineBlackTexture
-
   override def setPositionAndRotation2( x: Double, y : Double, z : Double, yaw : Float, pitch : Float, par9 : Int ) : Unit = {
     setPosition(x, y, z)
     setRotation(yaw, pitch)
   }
 
-}
-trait NoDuplicateCollisions extends BaseBoltEntity with BaseEffect {
-  override def canCollideWithBlock(block : Block, metadata : Int, pos : BlockPos ) : Boolean = {
-    super.canCollideWithBlock(block, metadata, pos) && !hitBlocks.contains(pos)
-  }
-
-  override def canCollideWithEntity(entity : Entity) : Boolean = {
-    super.canCollideWithEntity(entity) && !hitEntities.contains( entity )
-  }
 }

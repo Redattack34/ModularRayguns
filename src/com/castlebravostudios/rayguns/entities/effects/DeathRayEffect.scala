@@ -1,25 +1,24 @@
 package com.castlebravostudios.rayguns.entities.effects
 
-import com.castlebravostudios.rayguns.entities.Shootable
-import com.castlebravostudios.rayguns.entities.BaseBoltEntity
-import net.minecraft.entity.Entity
-import net.minecraft.util.EntityDamageSource
-import net.minecraft.world.World
-import com.castlebravostudios.rayguns.entities.BaseBeamEntity
-import com.castlebravostudios.rayguns.entities.NoDuplicateCollisions
-import net.minecraftforge.common.IPlantable
-import net.minecraft.block.Block
-import net.minecraft.entity.player.EntityPlayer
-import com.castlebravostudios.rayguns.items.misc.RayGun
-import net.minecraft.item.ItemStack
-import net.minecraft.entity.EntityLivingBase
-import net.minecraft.util.ResourceLocation
 import com.castlebravostudios.rayguns.entities.BoltRenderer
 
-trait DeathRayEffect extends Entity with BaseEffect {
-  self : Shootable =>
+import com.castlebravostudios.rayguns.entities.Shootable
+import com.castlebravostudios.rayguns.items.misc.RayGun
 
-  def hitEntity( hit : Entity ) : Boolean = {
+import net.minecraft.block.Block
+import net.minecraft.entity.Entity
+import net.minecraft.entity.EntityLivingBase
+import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.item.ItemStack
+import net.minecraft.util.EntityDamageSource
+import net.minecraft.util.ResourceLocation
+import net.minecraftforge.common.IPlantable
+
+object DeathRayEffect extends BaseEffect {
+
+  val effectKey = "DeathRay"
+
+  def hitEntity( shootable : Shootable, hit : Entity ) : Boolean = {
     if ( hit.isInstanceOf[EntityLivingBase] ) {
       val living = hit.asInstanceOf[EntityLivingBase]
 
@@ -28,26 +27,26 @@ trait DeathRayEffect extends Entity with BaseEffect {
       }
       else {
         hit.attackEntityFrom(
-          new EntityDamageSource("deathRay", shooter), 10f)
+          new EntityDamageSource("deathRay", shootable.shooter), 10f)
       }
     }
 
     false
   }
 
-  def hitBlock(hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Boolean = {
-
+  def hitBlock( shootable : Shootable, hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Boolean = {
+    val worldObj = shootable.worldObj
     val blockId = worldObj.getBlockId(hitX, hitY, hitZ)
     val block = Block.blocksList(blockId)
-    if ( canEdit( hitX, hitY, hitZ, side ) && blockMatch.isDefinedAt( block ) ) {
+    if ( canEdit(  shootable, hitX, hitY, hitZ, side ) && blockMatch.isDefinedAt( block ) ) {
       worldObj.setBlock(hitX, hitY, hitZ, blockMatch( block ))
     }
 
     false
   }
 
-  private def canEdit( x : Int, y : Int, z : Int, side : Int ) : Boolean = {
-    shooter match {
+  private def canEdit( shootable : Shootable, x : Int, y : Int, z : Int, side : Int ) : Boolean = {
+    shootable.shooter match {
       case player : EntityPlayer => player.canPlayerEdit(x, y, z, side, new ItemStack( RayGun ) )
       case _ => false
     }
@@ -61,13 +60,7 @@ trait DeathRayEffect extends Entity with BaseEffect {
     case b if b == Block.vine => 0
   }
 
-  def createImpactParticles( hitX : Double, hitY : Double, hitZ : Double ) : Unit = ()
-}
-
-class DeathRayBoltEntity(world : World) extends BaseBoltEntity(world) with DeathRayEffect with NoDuplicateCollisions {
-  override val texture = new ResourceLocation( "rayguns", "textures/bolts/death_ray_bolt.png" )
+  val boltTexture = new ResourceLocation( "rayguns", "textures/bolts/death_ray_bolt.png" )
+  val beamTexture = new ResourceLocation( "rayguns", "textures/beams/death_ray_beam.png" )
   override def lineTexture = BoltRenderer.lineWhiteTexture
-}
-class DeathRayBeamEntity(world : World) extends BaseBeamEntity(world) with DeathRayEffect {
-  override val texture = new ResourceLocation( "rayguns", "textures/beams/death_ray_beam.png" )
 }

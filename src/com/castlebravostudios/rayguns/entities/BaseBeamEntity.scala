@@ -11,9 +11,11 @@ import net.minecraft.util.ResourceLocation
 import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData
 import com.google.common.io.ByteArrayDataInput
 import com.google.common.io.ByteArrayDataOutput
+import com.castlebravostudios.rayguns.api.EffectRegistry
 
-abstract class BaseBeamEntity(world : World) extends Entity( world ) with Shootable with IEntityAdditionalSpawnData {
-  self : BaseEffect =>
+class BaseBeamEntity(world : World) extends Entity( world ) with Shootable with IEntityAdditionalSpawnData {
+
+  var effect : BaseEffect = _
 
   var charge : Double = 1.0d
   def depletionRate = 0.3d
@@ -27,10 +29,10 @@ abstract class BaseBeamEntity(world : World) extends Entity( world ) with Shoota
   }
 
   def onImpact( pos : MovingObjectPosition ) : Boolean = {
-    createImpactParticles(pos.hitVec.xCoord, pos.hitVec.yCoord, pos.hitVec.zCoord)
+    effect.createImpactParticles( this, pos.hitVec.xCoord, pos.hitVec.yCoord, pos.hitVec.zCoord)
     pos.typeOfHit match {
-      case EnumMovingObjectType.ENTITY => hitEntity( pos.entityHit )
-      case EnumMovingObjectType.TILE => hitBlock( pos.blockX, pos.blockY, pos.blockZ, pos.sideHit )
+      case EnumMovingObjectType.ENTITY => effect.hitEntity( this, pos.entityHit )
+      case EnumMovingObjectType.TILE => effect.hitBlock( this, pos.blockX, pos.blockY, pos.blockZ, pos.sideHit )
     }
   }
 
@@ -44,25 +46,40 @@ abstract class BaseBeamEntity(world : World) extends Entity( world ) with Shoota
 
   override def writeEntityToNBT( tag : NBTTagCompound ) : Unit = {
     tag.setDouble("charge", charge)
-    writeEffectToNbt(tag)
+    tag.setString("effect", effect.effectKey )
   }
 
   override def readEntityFromNBT( tag : NBTTagCompound ) : Unit = {
     charge = tag.getDouble("charge")
-    readEffectFromNbt(tag)
+
+    val key = tag.getString( "effect" )
+    initEffect( key )
   }
 
   def writeSpawnData( out : ByteArrayDataOutput ) : Unit = {
     out.writeDouble( charge )
+    out.writeUTF( effect.effectKey )
   }
 
   def readSpawnData( in : ByteArrayDataInput ) : Unit = {
     charge = in.readDouble()
+    val key = in.readUTF()
+    initEffect( key )
   }
 
-  protected override def entityInit()  : Unit = ()
+  private def initEffect( key : String ) : Unit = {
+    val e = EffectRegistry.getEffect( key )
+    e match {
+      case Some(effect) => this.effect = effect
+      case None => {
+        System.err.println("Unknown effect key: " + key )
+        setDead()
+      }
+    }
+  }
+
+  def entityInit() : Unit = ()
 
   def random = this.rand
 
-  def texture : ResourceLocation
 }

@@ -2,8 +2,7 @@ package com.castlebravostudios.rayguns.items.chambers
 
 import com.castlebravostudios.rayguns.api.BeamRegistry
 import com.castlebravostudios.rayguns.api.items.ItemChamber
-import com.castlebravostudios.rayguns.entities.effects.ExplosiveBeamEntity
-import com.castlebravostudios.rayguns.entities.effects.ExplosiveBoltEntity
+import com.castlebravostudios.rayguns.entities.effects.ExplosiveEffect
 import com.castlebravostudios.rayguns.items.emitters.Emitters
 import com.castlebravostudios.rayguns.items.lenses.PreciseBeamLens
 import com.castlebravostudios.rayguns.items.lenses.PreciseLens
@@ -27,13 +26,13 @@ object ExplosiveChamber extends Item( Config.chamberExplosive ) with ItemChamber
 
   BeamRegistry.register({
     case DefaultFireEvent(_, ExplosiveChamber, _, None, _) => { (world, player) =>
-      BoltUtils.spawnNormal( world, new ExplosiveBoltEntity(world), player )
+      BoltUtils.spawnNormal( world, ExplosiveEffect.createBoltEntity(world), player )
     }
     case DefaultFireEvent(_, ExplosiveChamber, _, Some(PreciseLens), _ ) => { (world, player) =>
-      BoltUtils.spawnPrecise( world, new ExplosiveBoltEntity( world ), player )
+      BoltUtils.spawnPrecise( world, ExplosiveEffect.createBoltEntity( world ), player )
     }
     case DefaultFireEvent(_, ExplosiveChamber, _, Some(PreciseBeamLens), _ ) => { (world, player) =>
-      BeamUtils.spawnSingleShot( new ExplosiveBeamEntity(world), world, player )
+      BeamUtils.spawnSingleShot( ExplosiveEffect.createBeamEntity(world), world, player )
     }
   })
 }

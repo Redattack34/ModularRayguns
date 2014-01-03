@@ -1,49 +1,43 @@
 package com.castlebravostudios.rayguns.entities.effects
 
-import com.castlebravostudios.rayguns.entities.BaseBeamEntity
-import com.castlebravostudios.rayguns.entities.BaseBoltEntity
-import com.castlebravostudios.rayguns.entities.NoDuplicateCollisions
 import com.castlebravostudios.rayguns.entities.Shootable
 import com.castlebravostudios.rayguns.utils.Extensions._
-import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData
+
 import net.minecraft.block.Block
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.Item
 import net.minecraft.item.ItemPickaxe
 import net.minecraft.item.ItemSpade
-import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.ResourceLocation
-import net.minecraft.world.World
-import com.google.common.io.ByteArrayDataOutput
-import com.google.common.io.ByteArrayDataInput
 
-trait CuttingEffect extends Entity with BaseEffect with IEntityAdditionalSpawnData {
-  self : Shootable =>
+class CuttingEffect( val key : String, val harvestLevel : Int, val powerMultiplier : Float ) extends BaseEffect {
 
-  var harvestLevel : Int = 1
-  var powerMultiplier : Float = 1.0f
-  def harvestPower : Float = charge.toFloat * powerMultiplier
-  def harvestPower_=( power : Float ) = {
-    charge = power / powerMultiplier
+  implicit class ShootableExtension(val shootable : Shootable) {
+    def harvestPower( ) : Float = shootable.charge.toFloat * powerMultiplier
+    def setHarvestPower( power : Float ) = {
+      shootable.charge = power / powerMultiplier
+    }
   }
 
-  def hitEntity( entity : Entity ) : Boolean = true
 
-  def hitBlock(hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Boolean = {
+  def hitEntity( shootable : Shootable, entity : Entity ) : Boolean = true
+
+  def hitBlock( shootable : Shootable,  hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Boolean = {
+    val worldObj = shootable.worldObj
     val blockId = worldObj.getBlockId(hitX, hitY, hitZ)
     val block = Block.blocksList(blockId)
     val meta = worldObj.getBlockMetadata(hitX, hitY, hitZ)
 
     val particleStr = s"tilecrack_${blockId}_${meta}"
     for ( k <- 0 until 4 ) {
-      this.worldObj.spawnParticle(particleStr, hitX, hitY, hitZ, 0.0D, 0.0D, 0.0D);
+      worldObj.spawnParticle(particleStr, hitX, hitY, hitZ, 0.0D, 0.0D, 0.0D);
     }
 
-    if ( !canBreakBlock( hitX, hitY, hitZ, block ) ) { return true }
+    if ( !canBreakBlock( shootable, hitX, hitY, hitZ, block ) ) { return true }
     else {
-      harvestPower -= block.getBlockHardness(worldObj, hitX, hitY, hitZ)
-      val player = shooter match {
+      shootable.setHarvestPower( shootable.harvestPower - block.getBlockHardness(worldObj, hitX, hitY, hitZ) )
+      val player = shootable.shooter match {
         case pl : EntityPlayer => pl
         case _ => null
       }
@@ -56,7 +50,7 @@ trait CuttingEffect extends Entity with BaseEffect with IEntityAdditionalSpawnDa
     }
   }
 
-  def canBreakBlock( x : Int, y : Int, z : Int, block : Block ) : Boolean = {
+  def canBreakBlock( shootable : Shootable, x : Int, y : Int, z : Int, block : Block ) : Boolean = {
     val pick = harvestLevel match {
       case 0 => Item.pickaxeWood
       case 1 => Item.pickaxeStone
@@ -68,42 +62,16 @@ trait CuttingEffect extends Entity with BaseEffect with IEntityAdditionalSpawnDa
 
     val shovelCanHarvest = ItemSpade.blocksEffectiveAgainst.contains( block )
 
-    val hardness = block.getBlockHardness(worldObj, x, y, z)
+    val hardness = block.getBlockHardness(shootable.worldObj, x, y, z)
     if ( hardness == -1.0f ) {
       return false
     }
 
-    hardness <= harvestPower && ( pickCanHarvest || shovelCanHarvest )
+    hardness <= shootable.harvestPower && ( pickCanHarvest || shovelCanHarvest )
   }
 
-  def createImpactParticles( hitX : Double, hitY : Double, hitZ : Double ) : Unit = ()
+  def effectKey : String = key
 
-  override def readEffectFromNbt( tag : NBTTagCompound ) : Unit = {
-    harvestLevel = tag.getInteger("harvestLevel")
-    powerMultiplier = tag.getFloat( "powerMultiplier" )
-  }
-
-  override def writeEffectToNbt( tag : NBTTagCompound ) : Unit = {
-    tag.setInteger( "harvestLevel", harvestLevel )
-    tag.setFloat( "powerMultiplier", powerMultiplier )
-  }
-
-  abstract override def writeSpawnData( out : ByteArrayDataOutput ) : Unit = {
-    super.writeSpawnData(out)
-    out.writeInt( harvestLevel )
-    out.writeFloat( powerMultiplier )
-  }
-
-  abstract override def readSpawnData( in : ByteArrayDataInput ) : Unit = {
-    super.readSpawnData(in)
-    harvestLevel = in.readInt()
-    powerMultiplier = in.readFloat()
-  }
-}
-
-class CuttingBoltEntity(world : World) extends BaseBoltEntity(world) with CuttingEffect with NoDuplicateCollisions {
-  override def texture = new ResourceLocation( "rayguns", s"textures/bolts/cutting_bolt_t${harvestLevel}.png" )
-}
-class CuttingBeamEntity(world : World) extends BaseBeamEntity(world) with CuttingEffect {
-  override def texture = new ResourceLocation( "rayguns", s"textures/beams/cutting_beam_t${harvestLevel}.png" )
+  def boltTexture = new ResourceLocation( "rayguns", s"textures/bolts/cutting_bolt_t${harvestLevel}.png" )
+  def beamTexture = new ResourceLocation( "rayguns", s"textures/beams/cutting_beam_t${harvestLevel}.png" )
 }

@@ -2,8 +2,7 @@ package com.castlebravostudios.rayguns.items.chambers
 
 import com.castlebravostudios.rayguns.api.BeamRegistry
 import com.castlebravostudios.rayguns.api.items.ItemChamber
-import com.castlebravostudios.rayguns.entities.effects.LightningBeamEntity
-import com.castlebravostudios.rayguns.entities.effects.LightningBoltEntity
+import com.castlebravostudios.rayguns.entities.effects.LightningEffect
 import com.castlebravostudios.rayguns.items.emitters.Emitters
 import com.castlebravostudios.rayguns.items.lenses.PreciseBeamLens
 import com.castlebravostudios.rayguns.items.lenses.PreciseLens
@@ -34,9 +33,9 @@ object LightningChamber extends Item( Config.chamberLightning ) with ItemChamber
 
   RecipeRegisterer.registerTier1Chamber(this, Emitters.lightningEmitter)
 
-  private def getPointsList( world : World, player : EntityPlayer, length : Double ) : Seq[Vector3] = {
+  private def getPointsList( world : World, player : EntityPlayer ) : Seq[Vector3] = {
     val start = RaytraceUtils.getPlayerPosition(world, player)
-    val end = RaytraceUtils.getPlayerTarget(world, player, length)
+    val end = RaytraceUtils.getPlayerTarget(world, player, BeamUtils.maxBeamLength)
 
     val blocks = RaytraceUtils.rayTraceBlocks(world, start, end)( (_, _, _) => true )
     val actualEnd = blocks.headOption.map( _.hitVec ).getOrElse( end )
@@ -46,34 +45,34 @@ object LightningChamber extends Item( Config.chamberLightning ) with ItemChamber
 
   BeamRegistry.register({
     case DefaultFireEvent(_, LightningChamber, _, None, _) => { (world, player) =>
-      BoltUtils.spawnNormal( world, new LightningBoltEntity(world), player )
+      BoltUtils.spawnNormal( world, LightningEffect.createBoltEntity(world), player )
     }
     case DefaultFireEvent(_, LightningChamber, _, Some(PreciseLens), _ ) => { (world, player) =>
-      BoltUtils.spawnPrecise( world, new LightningBoltEntity(world), player )
+      BoltUtils.spawnPrecise( world, LightningEffect.createBoltEntity(world), player )
     }
     case DefaultFireEvent(_, LightningChamber, _, Some(WideLens), _ ) => { (world, player) =>
       BoltUtils.spawnScatter(world, player, 9, 0.1f ){ () =>
-        new LightningBoltEntity(world)
+        LightningEffect.createBoltEntity(world)
       }
     }
     case DefaultFireEvent(_, LightningChamber, _, Some(PreciseBeamLens), _ ) => { (world, player) =>
-      val beam = new LightningBeamEntity(world)
+      val beam = LightningEffect.createBeamEntity(world)
 
       if ( world.isOnClient ) {
-        beam.pointsList = getPointsList( world, player,  BeamUtils.maxBeamLength )
+        beam.pointsList = getPointsList( world, player)
       }
 
       BeamUtils.spawnSingleShot( beam, world, player )
     }
     case ChargeFireEvent(_, LightningChamber, _, Some(ChargeLens), _, charge ) => { (world, player) =>
-      val bolt = new LightningBoltEntity(world)
+      val bolt = LightningEffect.createBoltEntity(world)
       bolt.charge = charge
       BoltUtils.spawnNormal( world, bolt, player )
     }
     case ChargeFireEvent(_, LightningChamber, _, Some(ChargeBeamLens), _, charge ) => { (world, player) =>
-      val beam = new LightningBeamEntity(world)
+      val beam = LightningEffect.createBeamEntity(world)
       if ( world.isOnClient ) {
-        beam.pointsList = getPointsList( world, player,  BeamUtils.maxBeamLength )
+        beam.pointsList = getPointsList( world, player )
       }
       beam.charge = charge
       BeamUtils.spawnSingleShot( beam, world, player )

@@ -2,8 +2,7 @@ package com.castlebravostudios.rayguns.items.chambers
 
 import com.castlebravostudios.rayguns.api.BeamRegistry
 import com.castlebravostudios.rayguns.api.items.ItemChamber
-import com.castlebravostudios.rayguns.entities.effects.HeatRayBeamEntity
-import com.castlebravostudios.rayguns.entities.effects.HeatRayBoltEntity
+import com.castlebravostudios.rayguns.entities.effects.HeatRayEffect
 import com.castlebravostudios.rayguns.items.emitters.Emitters
 import com.castlebravostudios.rayguns.items.lenses.PreciseBeamLens
 import com.castlebravostudios.rayguns.items.lenses.PreciseLens
@@ -31,26 +30,26 @@ object HeatRayChamber extends Item( Config.chamberHeatRay ) with ItemChamber {
 
   BeamRegistry.register({
     case DefaultFireEvent(_, HeatRayChamber, _, None, _) => { (world, player) =>
-      BoltUtils.spawnNormal( world, new HeatRayBoltEntity(world), player )
+      BoltUtils.spawnNormal( world, HeatRayEffect.createBoltEntity(world), player )
     }
     case DefaultFireEvent(_, HeatRayChamber, _, Some(PreciseLens), _ ) => { (world, player) =>
-      BoltUtils.spawnPrecise( world, new HeatRayBoltEntity( world ), player )
+      BoltUtils.spawnPrecise( world, HeatRayEffect.createBoltEntity( world ), player )
     }
     case DefaultFireEvent(_, HeatRayChamber, _, Some(WideLens), _ ) => { (world, player) =>
       BoltUtils.spawnScatter(world, player, 9, 0.1f ){ () =>
-        new HeatRayBoltEntity(world)
+        HeatRayEffect.createBoltEntity(world)
       }
     }
     case DefaultFireEvent(_, HeatRayChamber, _, Some(PreciseBeamLens), _ ) => { (world, player) =>
-      BeamUtils.spawnSingleShot( new HeatRayBeamEntity(world), world, player )
+      BeamUtils.spawnSingleShot( HeatRayEffect.createBeamEntity(world), world, player )
     }
     case ChargeFireEvent(_, HeatRayChamber, _, Some(ChargeLens), _, charge ) => { (world, player) =>
-      val bolt = new HeatRayBoltEntity(world)
+      val bolt = HeatRayEffect.createBoltEntity(world)
       bolt.charge = charge
       BoltUtils.spawnNormal( world, bolt, player )
     }
     case ChargeFireEvent(_, HeatRayChamber, _, Some(ChargeBeamLens), _, charge ) => { (world, player) =>
-      val beam = new HeatRayBeamEntity(world)
+      val beam = HeatRayEffect.createBeamEntity(world)
       beam.charge = charge
       BeamUtils.spawnSingleShot( beam, world, player )
     }

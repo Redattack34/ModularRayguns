@@ -1,41 +1,40 @@
 package com.castlebravostudios.rayguns.entities.effects
 
 import com.castlebravostudios.rayguns.entities.Shootable
-import com.castlebravostudios.rayguns.entities.BaseBoltEntity
-import net.minecraft.entity.Entity
-import net.minecraft.util.EntityDamageSource
-import net.minecraft.world.World
-import com.castlebravostudios.rayguns.entities.BaseBeamEntity
-import com.castlebravostudios.rayguns.entities.NoDuplicateCollisions
-import net.minecraftforge.event.entity.living.EnderTeleportEvent
-import net.minecraft.entity.EntityLivingBase
-import net.minecraftforge.common.MinecraftForge
-import net.minecraft.util.DamageSource
-import net.minecraft.entity.boss.IBossDisplayData
-import com.castlebravostudios.rayguns.utils.RaytraceUtils
-import com.castlebravostudios.rayguns.utils.Extensions.WorldExtension
 import com.castlebravostudios.rayguns.utils.BlockPos
+import com.castlebravostudios.rayguns.utils.Extensions.WorldExtension
+import com.castlebravostudios.rayguns.utils.RaytraceUtils
+
+import net.minecraft.entity.Entity
+import net.minecraft.entity.EntityLivingBase
+import net.minecraft.entity.boss.IBossDisplayData
+import net.minecraft.util.DamageSource
 import net.minecraft.util.ResourceLocation
+import net.minecraft.world.World
+import net.minecraftforge.common.MinecraftForge
+import net.minecraftforge.event.entity.living.EnderTeleportEvent
 
-trait EnderEffect extends Entity with BaseEffect {
-  self : Shootable =>
+object EnderEffect extends BaseEffect {
 
-  def hitEntity( entity : Entity ) : Boolean = {
-    if ( worldObj.isOnServer ) {
-      doTeleport( entity )
+  val effectKey = "Ender"
+
+  def hitEntity( shootable : Shootable, entity : Entity ) : Boolean = {
+    if ( shootable.worldObj.isOnServer ) {
+      doTeleport( shootable, entity )
     }
     true
   }
 
-  def hitBlock(hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Boolean = true
+  def hitBlock( shootable : Shootable, hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Boolean = true
 
-  def createImpactParticles( hitX : Double, hitY : Double, hitZ : Double ) : Unit = {
+  override def createImpactParticles( shootable : Shootable, hitX : Double, hitY : Double, hitZ : Double ) : Unit = {
     for ( _ <- 0 until 16 ) {
-        this.worldObj.spawnParticle("portal", hitX, hitY, hitZ, random.nextGaussian(), 0.0D, random.nextGaussian());
+        shootable.worldObj.spawnParticle("portal", hitX, hitY, hitZ,
+            shootable.random.nextGaussian(), 0.0D, shootable.random.nextGaussian());
     }
   }
 
-  private def getNewCoords(entity : EntityLivingBase, x : Int, y : Int, z : Int) : BlockPos = {
+  private def getNewCoords( worldObj : World, entity : EntityLivingBase, x : Int, y : Int, z : Int) : BlockPos = {
     val start = worldObj.getWorldVec3Pool().getVecFromPool(entity.posX, entity.posY, entity.posZ)
     val end = worldObj.getWorldVec3Pool().getVecFromPool(x, y, z)
     val hit = RaytraceUtils.rayTraceBlocks(worldObj, start, end){
@@ -47,7 +46,7 @@ trait EnderEffect extends Entity with BaseEffect {
     }
   }
 
-  def getTeleportY(x: Int, y: Int, z: Int) : Option[Int] = {
+  def getTeleportY( worldObj : World, x: Int, y: Int, z: Int) : Option[Int] = {
     var newY = y;
     while ( newY < y + 32 ) {
       if ( worldObj.isAirBlock(x, newY, z) && worldObj.isAirBlock(x, newY + 1, z) ) return Some( newY )
@@ -56,21 +55,24 @@ trait EnderEffect extends Entity with BaseEffect {
     return None
   }
 
-  def maxTeleportDistance : Double = charge * 16
+  def maxTeleportDistance( shootable : Shootable ) : Double = shootable.charge * 16
 
-  def doTeleport(entity: Entity) : Unit = {
+  def doTeleport( shootable : Shootable, entity: Entity ) : Unit = {
     if ( entity.isInstanceOf[IBossDisplayData] ) return
     if ( !entity.isInstanceOf[EntityLivingBase] ) return
     val living = entity.asInstanceOf[EntityLivingBase]
 
-    val x = (entity.posX + ( random.nextFloat() - 0.5 ) * maxTeleportDistance).toInt
-    val z = (entity.posZ + ( random.nextFloat() - 0.5 ) * maxTeleportDistance).toInt
-    val optY = getTeleportY( x, living.posY.toInt, z )
+    val maxTeleportDistance = this.maxTeleportDistance(shootable)
+
+    val x = (entity.posX + ( shootable.random.nextFloat() - 0.5 ) * maxTeleportDistance).toInt
+    val z = (entity.posZ + ( shootable.random.nextFloat() - 0.5 ) * maxTeleportDistance).toInt
+    val optY = getTeleportY( shootable.worldObj, x, living.posY.toInt, z )
     if ( optY.isEmpty ) return
     val y = optY.get
 
-    val BlockPos(newX, newY, newZ) = getNewCoords( living, x, y, z )
-    val event = new EnderTeleportEvent( living, newX + (newX.signum * 0.5), newY, newZ + (newZ.signum * 0.5), 1.5f * charge.toFloat );
+    val BlockPos(newX, newY, newZ) = getNewCoords( shootable.worldObj, living, x, y, z )
+    val event = new EnderTeleportEvent( living, newX + (newX.signum * 0.5), newY,
+        newZ + (newZ.signum * 0.5), 1.5f * shootable.charge.toFloat );
 
     if (!MinecraftForge.EVENT_BUS.post(event)) {
       living.setPositionAndUpdate(event.targetX, event.targetY, event.targetZ);
@@ -82,11 +84,6 @@ trait EnderEffect extends Entity with BaseEffect {
     }
   }
 
-}
-
-class EnderBoltEntity(world : World) extends BaseBoltEntity(world) with EnderEffect with NoDuplicateCollisions{
-  override val texture = new ResourceLocation( "rayguns", "textures/bolts/ender_bolt.png" )
-}
-class EnderBeamEntity(world : World) extends BaseBeamEntity(world) with EnderEffect {
-  override val texture = new ResourceLocation( "rayguns", "textures/beams/ender_beam.png" )
+  val boltTexture = new ResourceLocation( "rayguns", "textures/bolts/ender_bolt.png" )
+  val beamTexture = new ResourceLocation( "rayguns", "textures/beams/ender_beam.png" )
 }

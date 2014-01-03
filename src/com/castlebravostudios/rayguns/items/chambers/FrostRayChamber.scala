@@ -2,8 +2,7 @@ package com.castlebravostudios.rayguns.items.chambers
 
 import com.castlebravostudios.rayguns.api.BeamRegistry
 import com.castlebravostudios.rayguns.api.items.ItemChamber
-import com.castlebravostudios.rayguns.entities.effects.FrostRayBeamEntity
-import com.castlebravostudios.rayguns.entities.effects.FrostRayBoltEntity
+import com.castlebravostudios.rayguns.entities.effects.FrostRayEffect
 import com.castlebravostudios.rayguns.items.emitters.Emitters
 import com.castlebravostudios.rayguns.items.lenses.PreciseBeamLens
 import com.castlebravostudios.rayguns.items.lenses.PreciseLens
@@ -31,26 +30,26 @@ object FrostRayChamber extends Item( Config.chamberFrostRay ) with ItemChamber {
 
   BeamRegistry.register({
     case DefaultFireEvent(_, FrostRayChamber, _, None, _) => { (world, player) =>
-      BoltUtils.spawnNormal( world, new FrostRayBoltEntity(world), player )
+      BoltUtils.spawnNormal( world, FrostRayEffect.createBoltEntity(world), player )
     }
     case DefaultFireEvent(_, FrostRayChamber, _, Some(PreciseLens), _ ) => { (world, player) =>
-      BoltUtils.spawnPrecise( world, new FrostRayBoltEntity( world ), player )
+      BoltUtils.spawnPrecise( world, FrostRayEffect.createBoltEntity( world ), player )
     }
     case DefaultFireEvent(_, FrostRayChamber, _, Some(WideLens), _ ) => { (world, player) =>
       BoltUtils.spawnScatter(world, player, 9, 0.1f ){ () =>
-        new FrostRayBoltEntity(world)
+        FrostRayEffect.createBoltEntity(world)
       }
     }
     case DefaultFireEvent(_, FrostRayChamber, _, Some(PreciseBeamLens), _ ) => { (world, player) =>
-      BeamUtils.spawnSingleShot( new FrostRayBeamEntity(world), world, player )
+      BeamUtils.spawnSingleShot( FrostRayEffect.createBeamEntity(world), world, player )
     }
     case ChargeFireEvent(_, FrostRayChamber, _, Some(ChargeLens), _, charge ) => { (world, player) =>
-      val bolt = new FrostRayBoltEntity(world)
+      val bolt = FrostRayEffect.createBoltEntity(world)
       bolt.charge = charge
       BoltUtils.spawnNormal( world, bolt, player )
     }
     case ChargeFireEvent(_, FrostRayChamber, _, Some(ChargeBeamLens), _, charge ) => { (world, player) =>
-      val beam = new FrostRayBeamEntity(world)
+      val beam = FrostRayEffect.createBeamEntity(world)
       beam.charge = charge
       BeamUtils.spawnSingleShot( beam, world, player )
     }

@@ -4,9 +4,12 @@ import cpw.mods.fml.common.registry.IThrowableEntity
 import net.minecraft.entity.Entity
 import net.minecraft.world.World
 import net.minecraft.nbt.NBTTagCompound
+import java.util.Random
 
 trait Shootable extends Entity with IThrowableEntity {
 
+  def charge : Double
+  def charge_=( charge : Double ) : Unit
 
   private var _shooter : Entity = _
   private var shooterName : String = ""
@@ -30,4 +33,6 @@ trait Shootable extends Entity with IThrowableEntity {
   override def readEntityFromNBT( tag : NBTTagCompound ) : Unit = {
     shooterName = tag.getString("ownerName")
   }
+
+  def random : Random
 }

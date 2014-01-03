@@ -19,11 +19,13 @@ object BeamUtils {
 
   val maxBeamLength = 40
 
-  def spawnSingleShot( fx : BaseBeamEntity with BaseEffect, world : World, player : EntityLivingBase ) : Unit = {
+  def spawnSingleShot( fx : BaseBeamEntity, world : World, player : EntityLivingBase ) : Unit = {
     fx.shooter = player
     val start = RaytraceUtils.getPlayerPosition(world, player)
     val end = RaytraceUtils.getPlayerTarget(world, player, maxBeamLength)
-    val hits = RaytraceUtils.rayTrace( world, player, start, end )( fx.canCollideWithBlock _, fx.canCollideWithEntity _)
+    val hits = RaytraceUtils.rayTrace( world, player, start, end )(
+        ( block, metadata, pos ) => fx.effect.canCollideWithBlock( fx, block, metadata, pos),
+        ( entity ) => fx.effect.canCollideWithEntity( fx, entity ) )
 
     fx.setStart( start )
     fx.rotationPitch = player.rotationPitch
@@ -32,8 +34,9 @@ object BeamUtils {
     val target = applyHitsUntilStop(end, hits, fx)
     fx.length = target.distanceTo(start)
 
-    if ( fx.isInstanceOf[TriggerOnDeath] ) {
-      fx.asInstanceOf[TriggerOnDeath].triggerAt(target.xCoord, target.yCoord, target.zCoord)
+    fx.effect match {
+      case t : TriggerOnDeath => t.triggerAt( fx, target.xCoord, target.yCoord, target.zCoord )
+      case _ => ()
     }
     if ( world.isOnClient ) {
       world.spawnEntityInWorld(fx)
@@ -46,7 +49,7 @@ object BeamUtils {
    * stopped the beam.
    */
   @tailrec
-  private def applyHitsUntilStop( target : Vec3, hits : Stream[TraceHit], fx : BaseBeamEntity with BaseEffect ) : Vec3 =  hits match {
+  private def applyHitsUntilStop( target : Vec3, hits : Stream[TraceHit], fx : BaseBeamEntity) : Vec3 =  hits match {
     case h #:: hs => if ( fx.onImpact(h) ) h.hitVec else applyHitsUntilStop(target, hs, fx)
     case _ => target
   }
