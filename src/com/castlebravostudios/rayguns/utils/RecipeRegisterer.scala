@@ -13,6 +13,7 @@ object RecipeRegisterer {
 
   sealed trait RecipeTier {
     def registerEmitter( emitter : Item, top : AnyRef, right : AnyRef, bottom : AnyRef, left : AnyRef ) : Unit
+    def registerChamber( chamber : Item, emitter : Item )
   }
   object Tier1 extends RecipeTier {
     def registerEmitter( emitter : Item, top : AnyRef, right : AnyRef, bottom : AnyRef, left : AnyRef ) : Unit = {
@@ -26,6 +27,16 @@ object RecipeRegisterer {
         'R' : Character, right,
         'B' : Character, bottom,
         'L' : Character, left )
+    }
+
+    def registerChamber( chamber : Item, emitter : Item ) : Unit = {
+      GameRegistry.addRecipe( new ItemStack( chamber, 1 ),
+        "III",
+        "GGE",
+        "III",
+        'I' : Character, Item.ingotIron,
+        'G' : Character, GlassGainMedium,
+        'E' : Character, emitter )
     }
   }
 
@@ -42,6 +53,16 @@ object RecipeRegisterer {
         'B' : Character, bottom,
         'L' : Character, left )
     }
+
+    def registerChamber( chamber : Item, emitter : Item ) : Unit = {
+      GameRegistry.addRecipe( new ItemStack( chamber, 1 ),
+        "GGG",
+        "LLE",
+        "GGG",
+        'G' : Character, Item.ingotGold,
+        'L' : Character, GlowstoneGainMedium,
+        'E' : Character, emitter )
+    }
   }
 
   object Tier3 extends RecipeTier {
@@ -57,6 +78,16 @@ object RecipeRegisterer {
         'B' : Character, bottom,
         'L' : Character, left )
     }
+
+    def registerChamber( chamber : Item, emitter : Item ) : Unit = {
+      GameRegistry.addRecipe( new ItemStack( chamber, 1 ),
+        "DDD",
+        "LLE",
+        "DDD",
+        'D' : Character, Item.diamond,
+        'L' : Character, DiamondGainMedium,
+        'E' : Character, emitter )
+    }
   }
 
   def registerEmitter( tier : RecipeTier, emitter : Item, item : AnyRef) : Unit =
@@ -66,33 +97,7 @@ object RecipeRegisterer {
   def registerEmitter( tier : RecipeTier, emitter : Item, top : AnyRef, right : AnyRef, bottom : AnyRef, left : AnyRef ) : Unit =
     tier.registerEmitter(emitter, top, right, bottom, left)
 
-  def registerTier1Chamber( chamber : Item, emitter : Item ) : Unit = {
-    GameRegistry.addRecipe( new ItemStack( chamber, 1 ),
-      "III",
-      "GGE",
-      "III",
-      'I' : Character, Item.ingotIron,
-      'G' : Character, GlassGainMedium,
-      'E' : Character, emitter )
-  }
-
-  def registerTier2Chamber( chamber : Item, emitter : Item ) : Unit = {
-    GameRegistry.addRecipe( new ItemStack( chamber, 1 ),
-      "GGG",
-      "LLE",
-      "GGG",
-      'G' : Character, Item.ingotGold,
-      'L' : Character, GlowstoneGainMedium,
-      'E' : Character, emitter )
-  }
-
-  def registerTier3Chamber( chamber : Item, emitter : Item ) : Unit = {
-    GameRegistry.addRecipe( new ItemStack( chamber, 1 ),
-      "DDD",
-      "LLE",
-      "DDD",
-      'D' : Character, Item.diamond,
-      'L' : Character, DiamondGainMedium,
-      'E' : Character, emitter )
+  def registerChamber( tier : RecipeTier, chamber : Item, emitter : Item ) : Unit = {
+    tier.registerChamber(chamber, emitter)
   }
 }

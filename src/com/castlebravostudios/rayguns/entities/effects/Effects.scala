@@ -8,9 +8,9 @@ import com.castlebravostudios.rayguns.items.chambers.Tier3CuttingChamber
 object Effects {
 
   def registerEffects() : Unit = {
-    EffectRegistry.registerEffect( Tier1CuttingChamber.effect )
-    EffectRegistry.registerEffect( Tier2CuttingChamber.effect )
-    EffectRegistry.registerEffect( Tier3CuttingChamber.effect )
+    EffectRegistry.registerEffect( Tier1CuttingChamber.shotEffect )
+    EffectRegistry.registerEffect( Tier2CuttingChamber.shotEffect )
+    EffectRegistry.registerEffect( Tier3CuttingChamber.shotEffect )
     EffectRegistry.registerEffect( DeathRayEffect )
     EffectRegistry.registerEffect( EnderEffect )
     EffectRegistry.registerEffect( ExplosiveEffect )
