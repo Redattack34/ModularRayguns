@@ -1,12 +1,12 @@
 package com.castlebravostudios.rayguns.items.chambers
 
+import com.castlebravostudios.rayguns.api.ModuleRegistry
+
 import com.castlebravostudios.rayguns.entities.effects.CuttingEffect
+import com.castlebravostudios.rayguns.items.emitters.Emitters
 import com.castlebravostudios.rayguns.mod.Config
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer._
-import com.castlebravostudios.rayguns.items.emitters.Emitters
-
-import net.minecraft.item.Item
 
 object Tier1CuttingChamber extends BaseChamber( Config.chamberCuttingTier1 ) {
   val moduleKey = "Tier1CuttingChamber"
@@ -15,7 +15,7 @@ object Tier1CuttingChamber extends BaseChamber( Config.chamberCuttingTier1 ) {
   setUnlocalizedName("rayguns.Tier1CuttingChamber")
   setTextureName("rayguns:chamber_cutting_t1")
 
-  register
+  ModuleRegistry.registerModule(this)
   RecipeRegisterer.registerChamber( Tier1, this, Emitters.tier1CuttingEmitter)
 
   registerSingleShotHandlers()
@@ -29,7 +29,7 @@ object Tier2CuttingChamber extends BaseChamber( Config.chamberCuttingTier2 ) {
   setUnlocalizedName("rayguns.Tier2CuttingChamber")
   setTextureName("rayguns:chamber_cutting_t2")
 
-  register
+  ModuleRegistry.registerModule(this)
   RecipeRegisterer.registerChamber( Tier2, this, Emitters.tier2CuttingEmitter)
 
   registerSingleShotHandlers()
@@ -43,7 +43,7 @@ object Tier3CuttingChamber extends BaseChamber( Config.chamberCuttingTier3 ) {
   setUnlocalizedName("rayguns.Tier3CuttingChamber")
   setTextureName("rayguns:chamber_cutting_t3")
 
-  register
+  ModuleRegistry.registerModule(this)
   RecipeRegisterer.registerChamber( Tier3, this, Emitters.tier3CuttingEmitter)
 
   registerSingleShotHandlers()

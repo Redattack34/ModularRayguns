@@ -1,12 +1,12 @@
 package com.castlebravostudios.rayguns.items.chambers
 
+import com.castlebravostudios.rayguns.api.ModuleRegistry
+
 import com.castlebravostudios.rayguns.entities.effects.DeathRayEffect
+import com.castlebravostudios.rayguns.items.emitters.Emitters
 import com.castlebravostudios.rayguns.mod.Config
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer._
-import com.castlebravostudios.rayguns.items.emitters.Emitters
-
-import net.minecraft.item.Item
 
 object DeathRayChamber extends BaseChamber( Config.chamberDeathRay ) {
   val moduleKey = "DeathRayChamber"
@@ -15,7 +15,7 @@ object DeathRayChamber extends BaseChamber( Config.chamberDeathRay ) {
   setUnlocalizedName("rayguns.DeathRayChamber")
   setTextureName("rayguns:chamber_death_ray")
 
-  register
+  ModuleRegistry.registerModule(this)
   RecipeRegisterer.registerChamber(Tier3, this, Emitters.deathRayEmitter)
 
   registerSingleShotHandlers()

@@ -1,12 +1,12 @@
 package com.castlebravostudios.rayguns.items.chambers
 
+import com.castlebravostudios.rayguns.api.ModuleRegistry
+
 import com.castlebravostudios.rayguns.entities.effects.EnderEffect
+import com.castlebravostudios.rayguns.items.emitters.Emitters
 import com.castlebravostudios.rayguns.mod.Config
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer._
-import com.castlebravostudios.rayguns.items.emitters.Emitters
-
-import net.minecraft.item.Item
 
 object EnderChamber extends BaseChamber( Config.chamberEnder ) {
   val moduleKey = "EnderChamber"
@@ -15,7 +15,7 @@ object EnderChamber extends BaseChamber( Config.chamberEnder ) {
   setUnlocalizedName("rayguns.EnderChamber")
   setTextureName("rayguns:chamber_ender")
 
-  register
+  ModuleRegistry.registerModule(this)
   RecipeRegisterer.registerChamber(Tier2, this, Emitters.enderEmitter )
 
   registerSingleShotHandlers()

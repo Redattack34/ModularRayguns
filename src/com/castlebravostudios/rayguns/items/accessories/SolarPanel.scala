@@ -4,6 +4,7 @@ import java.util.Random
 
 import scala.collection.mutable.WeakHashMap
 
+import com.castlebravostudios.rayguns.api.ModuleRegistry
 import com.castlebravostudios.rayguns.api.items.ItemAccessory
 import com.castlebravostudios.rayguns.items.emitters.Emitters
 import com.castlebravostudios.rayguns.mod.Config
@@ -20,7 +21,7 @@ object SolarPanel extends Item( Config.solarPanel ) with ItemAccessory {
 
   val moduleKey = "SolarPanel"
   val powerModifier = 1.0
-  register
+  
   setUnlocalizedName("rayguns.SolarPanel")
   setTextureName("rayguns:solar_panel")
 
@@ -51,6 +52,7 @@ object SolarPanel extends Item( Config.solarPanel ) with ItemAccessory {
     !isRaining && world.isDaytime() && world.canBlockSeeTheSky(x, y, z)
   }
 
+  ModuleRegistry.registerModule(this)
   GameRegistry.addRecipe( new ItemStack( this, 1 ),
     "S  ",
     "GGG",

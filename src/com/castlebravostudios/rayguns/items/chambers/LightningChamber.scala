@@ -1,20 +1,22 @@
 package com.castlebravostudios.rayguns.items.chambers
 
+import com.castlebravostudios.rayguns.api.ModuleRegistry
+
 import com.castlebravostudios.rayguns.entities.BaseBeamEntity
-import com.castlebravostudios.rayguns.entities.effects.LightningEffect
 import com.castlebravostudios.rayguns.entities.effects.LightningBeamEntity
+import com.castlebravostudios.rayguns.entities.effects.LightningEffect
+import com.castlebravostudios.rayguns.items.emitters.Emitters
 import com.castlebravostudios.rayguns.mod.Config
+import com.castlebravostudios.rayguns.utils.BeamUtils
 import com.castlebravostudios.rayguns.utils.Extensions.WorldExtension
+import com.castlebravostudios.rayguns.utils.MidpointDisplacement
 import com.castlebravostudios.rayguns.utils.RaytraceUtils
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer._
-import com.castlebravostudios.rayguns.utils.MidpointDisplacement
 import com.castlebravostudios.rayguns.utils.Vector3
-import com.castlebravostudios.rayguns.utils.BeamUtils
-import com.castlebravostudios.rayguns.items.emitters.Emitters
-import net.minecraft.item.Item
-import net.minecraft.world.World
+
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.world.World
 
 object LightningChamber extends BaseChamber( Config.chamberLightning ) {
 
@@ -25,7 +27,7 @@ object LightningChamber extends BaseChamber( Config.chamberLightning ) {
   setUnlocalizedName("rayguns.LightningChamber")
   setTextureName("rayguns:chamber_lightning")
 
-  register
+  ModuleRegistry.registerModule(this)
   RecipeRegisterer.registerChamber( Tier1, this, Emitters.lightningEmitter)
 
   registerSingleShotHandlers()

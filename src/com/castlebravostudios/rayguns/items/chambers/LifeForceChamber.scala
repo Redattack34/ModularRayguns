@@ -1,12 +1,12 @@
 package com.castlebravostudios.rayguns.items.chambers
 
+import com.castlebravostudios.rayguns.api.ModuleRegistry
+
 import com.castlebravostudios.rayguns.entities.effects.LifeForceEffect
+import com.castlebravostudios.rayguns.items.emitters.Emitters
 import com.castlebravostudios.rayguns.mod.Config
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer._
-import com.castlebravostudios.rayguns.items.emitters.Emitters
-
-import net.minecraft.item.Item
 
 
 object LifeForceChamber extends BaseChamber( Config.chamberLifeForce ) {
@@ -17,7 +17,7 @@ object LifeForceChamber extends BaseChamber( Config.chamberLifeForce ) {
   setUnlocalizedName("rayguns.LifeForceChamber")
   setTextureName("rayguns:chamber_life_force")
 
-  register
+  ModuleRegistry.registerModule(this)
   RecipeRegisterer.registerChamber( Tier2, this, Emitters.lifeForceEmitter)
 
   registerSingleShotHandlers()

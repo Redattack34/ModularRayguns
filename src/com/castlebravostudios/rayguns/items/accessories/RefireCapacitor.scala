@@ -1,5 +1,7 @@
 package com.castlebravostudios.rayguns.items.accessories
 
+import com.castlebravostudios.rayguns.api.ModuleRegistry
+
 import com.castlebravostudios.rayguns.api.items.ItemAccessory
 import com.castlebravostudios.rayguns.items.emitters.Emitters
 import com.castlebravostudios.rayguns.mod.Config
@@ -13,10 +15,11 @@ object RefireCapacitor extends Item( Config.refireCapacitor ) with ItemAccessory
 
   val moduleKey = "RefireCapacitor"
   val powerModifier = 1.0
-  register
+
   setUnlocalizedName("rayguns.RefireCapacitor")
   setTextureName("rayguns:refire_capacitor")
 
+  ModuleRegistry.registerModule(this)
   GameRegistry.addRecipe( new ItemStack( this, 1 ),
     "SI ",
     "IRI",
