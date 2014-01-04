@@ -1,5 +1,7 @@
 package com.castlebravostudios.rayguns.items.batteries
 
+import com.castlebravostudios.rayguns.api.ModuleRegistry
+
 import com.castlebravostudios.rayguns.api.items.ItemBattery
 import com.castlebravostudios.rayguns.mod.Config
 import com.castlebravostudios.rayguns.utils.FireEvent
@@ -12,10 +14,12 @@ object InfiniteBattery extends Item( Config.infiniteBattery ) with ItemBattery {
 
   val moduleKey = "InfiniteBattery"
   val powerModifier = 1.0d;
+
   setMaxDamage( Integer.MAX_VALUE )
-  register
   setUnlocalizedName("rayguns.InfiniteBattery")
   setTextureName("rayguns:battery_infinite")
 
   override def drainPower( player : EntityPlayer, item : ItemStack, event : FireEvent ) : Boolean = true
+
+  ModuleRegistry.registerModule(this)
 }

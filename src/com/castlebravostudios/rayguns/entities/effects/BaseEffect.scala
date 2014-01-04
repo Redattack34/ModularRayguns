@@ -1,51 +1,56 @@
 package com.castlebravostudios.rayguns.entities.effects
 
-import java.util.Random
-
+import com.castlebravostudios.rayguns.entities.BaseBeamEntity
+import com.castlebravostudios.rayguns.entities.BaseBoltEntity
+import com.castlebravostudios.rayguns.entities.BoltRenderer
 import com.castlebravostudios.rayguns.entities.Shootable
 import com.castlebravostudios.rayguns.utils.BlockPos
 
 import net.minecraft.block.Block
 import net.minecraft.block.BlockFluid
 import net.minecraft.entity.Entity
-import net.minecraft.nbt.NBTTagCompound
+import net.minecraft.util.ResourceLocation
+import net.minecraft.world.World
 import net.minecraftforge.fluids.IFluidBlock
 
-trait BaseEffect extends Entity {
-  self : Shootable =>
+trait BaseEffect {
 
-  def charge : Double
-  def charge_=( charge : Double ) : Unit
+  /**
+   * Get the module key for this module. This key will be stored in the data
+   * of the bolts and beams fired so that the effect can be looked up again
+   * client-side.
+   *
+   * IMPORTANT NOTE: This key must not be changed once your plugin is released!
+   */
+  def effectKey : String
 
   /**
    * A collision has been detected against the given entity. Return true if the
    * bolt/beam should stop after this collision, or return false to indicate
    * that the bolt/beam penetrated through the entity.
    */
-  def hitEntity( entity : Entity ) : Boolean
+  def hitEntity( shootable : Shootable, entity : Entity ) : Boolean
 
   /**
    * A collision has been detected against the given side of the block at the
    * given coords. Return true if the bolt/beam should stop after this collision,
    * or return false to indicate that the bolt/beam penetrated through the block.
    */
-  def hitBlock(hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Boolean
+  def hitBlock( shootable : Shootable, hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Boolean
 
   /**
    * A collision has been detected at the given coords. Create impact particles
    * or perform other effects which require the precise coords.
    */
-  def createImpactParticles( hitX : Double, hitY : Double, hitZ : Double ) : Unit
+  def createImpactParticles( shootable : Shootable, hitX : Double, hitY : Double, hitZ : Double ) : Unit = ()
 
-  def canCollideWithBlock( b : Block, metadata : Int, pos : BlockPos ) =
-    if ( b.isInstanceOf[BlockFluid] || b.isInstanceOf[IFluidBlock] ) collidesWithLiquids
+  def canCollideWithBlock( shootable : Shootable, b : Block, metadata : Int, pos : BlockPos ) =
+    if ( b.isInstanceOf[BlockFluid] || b.isInstanceOf[IFluidBlock] ) collidesWithLiquids(shootable)
     else true
 
-  def canCollideWithEntity( entity : Entity ) = !(entity == shooter)
+  def canCollideWithEntity( shootable : Shootable, entity : Entity ) = !(entity == shootable.shooter)
 
-  def collidesWithLiquids : Boolean = false
-
-  def random : Random
+  def collidesWithLiquids( shootable : Shootable ) : Boolean = false
 
   /**
    * Get the opposite side of the given side.
@@ -74,6 +79,19 @@ trait BaseEffect extends Entity {
   def adjustCoords( x : Int, y : Int, z : Int, side : Int ) : BlockPos =
     BlockPos( x, y, z ).add( hitOffset( side ) )
 
-  def readEffectFromNbt( tag : NBTTagCompound ) : Unit = ()
-  def writeEffectToNbt( tag : NBTTagCompound ) : Unit = ()
+  def boltTexture : ResourceLocation
+  def beamTexture : ResourceLocation
+  def lineTexture : ResourceLocation = BoltRenderer.lineBlackTexture
+
+  def createBeamEntity( world : World ) : BaseBeamEntity = {
+    val beam = new BaseBeamEntity( world )
+    beam.effect = this
+    beam
+  }
+
+  def createBoltEntity( world : World ) : BaseBoltEntity = {
+    val bolt = new BaseBoltEntity( world )
+    bolt.effect = this
+    bolt
+  }
 }

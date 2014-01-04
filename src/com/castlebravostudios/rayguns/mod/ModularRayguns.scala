@@ -19,6 +19,7 @@ import net.minecraft.creativetab.CreativeTabs
 import com.castlebravostudios.rayguns.items.bodies.MantisBody
 import net.minecraft.item.ItemStack
 import com.castlebravostudios.rayguns.items.bodies.FireflyBody
+import com.castlebravostudios.rayguns.entities.effects.Effects
 
 @Mod(modid="ModularRayguns", name="ModularRayguns", version="0.0.0", modLanguage="scala")
 @NetworkMod(clientSideRequired=true, serverSideRequired=true)
@@ -41,6 +42,7 @@ object ModularRayguns {
     Blocks.registerBlocks
     Entities.registerEntities
     TileEntities.registerTileEntities
+    Effects.registerEffects
   }
 
   val raygunsTab  = new CreativeTabs("tabRayguns") {

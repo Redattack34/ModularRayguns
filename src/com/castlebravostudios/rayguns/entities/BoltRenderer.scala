@@ -35,7 +35,7 @@ class BoltRenderer extends Render {
 
     drawVertices( tes, cubeVertices )
     GL11.glScalef(1.1f, 1.1f, 1.01f)
-    bindTexture( e.lineTexture )
+    bindTexture( e.effect.lineTexture )
     drawVertices( tes, reversedVertices )
 
     OpenGlHelper.setActiveTexture(OpenGlHelper.lightmapTexUnit)
@@ -53,7 +53,7 @@ class BoltRenderer extends Render {
   }
 
   def getEntityTexture( e : Entity ) : ResourceLocation = e match {
-    case bolt : BaseBoltEntity => bolt.texture
+    case bolt : BaseBoltEntity => bolt.effect.boltTexture
     case _ => null
   }
 }

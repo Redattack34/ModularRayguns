@@ -1,8 +1,5 @@
 package com.castlebravostudios.rayguns.entities.effects
 
-import com.castlebravostudios.rayguns.entities.BaseBeamEntity
-import com.castlebravostudios.rayguns.entities.BaseBoltEntity
-import com.castlebravostudios.rayguns.entities.NoDuplicateCollisions
 import com.castlebravostudios.rayguns.entities.Shootable
 import com.castlebravostudios.rayguns.utils.BlockPos
 
@@ -11,22 +8,22 @@ import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.EntityDamageSource
 import net.minecraft.util.ResourceLocation
-import net.minecraft.world.World
 
 
-trait HeatRayEffect extends BaseEffect {
-  self : Shootable =>
+object HeatRayEffect extends BaseEffect {
 
-  def hitEntity( hit : Entity ) : Boolean = {
-    hit.setFire( Math.round( charge.toFloat * 2 ) )
-    hit.attackEntityFrom(new EntityDamageSource("heatray", shooter), charge.toFloat.round )
+  val effectKey = "HeatRay"
+
+  def hitEntity( shootable : Shootable, hit : Entity ) : Boolean = {
+    hit.setFire( Math.round( shootable.charge.toFloat * 2 ) )
+    hit.attackEntityFrom(new EntityDamageSource("heatray", shootable.shooter), shootable.charge.toFloat.round )
 
     true
   }
 
-  def hitBlock( hitX : Int, hitY : Int, hitZ : Int, side : Int ): Boolean = {
+  def hitBlock( shootable : Shootable, hitX : Int, hitY : Int, hitZ : Int, side : Int ): Boolean = {
     val BlockPos(centerX, centerY, centerZ) = adjustCoords( hitX, hitY, hitZ, side )
-    val burnRadius = charge.toFloat.round
+    val burnRadius = shootable.charge.toFloat.round
 
     for {
       x <- -burnRadius to burnRadius
@@ -34,13 +31,15 @@ trait HeatRayEffect extends BaseEffect {
       z <- -burnRadius to burnRadius
       if ( x.abs + y.abs + z.abs < burnRadius )
     } {
-      heatBlock(centerX + x, centerY + y, centerZ + z, side )
+      heatBlock( shootable, centerX + x, centerY + y, centerZ + z, side )
     }
 
     true
   }
 
-  private def heatBlock(x: Int, y: Int, z: Int, side : Int): AnyVal = {
+  private def heatBlock( shootable : Shootable, x: Int, y: Int, z: Int, side : Int): AnyVal = {
+    val worldObj = shootable.worldObj
+    val shooter = shootable.shooter
     if ( worldObj.getBlockId(x, y, z) == Block.ice.blockID ) {
       worldObj.setBlock( x, y, z, Block.waterStill.blockID )
     }
@@ -52,12 +51,6 @@ trait HeatRayEffect extends BaseEffect {
     }
   }
 
-  def createImpactParticles( hitX : Double, hitY : Double, hitZ : Double ) : Unit = ()
-}
-
-class HeatRayBoltEntity( world : World ) extends BaseBoltEntity(world) with HeatRayEffect with NoDuplicateCollisions {
-  override val texture = new ResourceLocation( "rayguns", "textures/bolts/heat_bolt.png" )
-}
-class HeatRayBeamEntity( world : World ) extends BaseBeamEntity(world) with HeatRayEffect {
-  override val texture = new ResourceLocation( "rayguns", "textures/beams/heat_beam.png" )
+  val boltTexture = new ResourceLocation( "rayguns", "textures/bolts/heat_bolt.png" )
+  val beamTexture = new ResourceLocation( "rayguns", "textures/beams/heat_beam.png" )
 }

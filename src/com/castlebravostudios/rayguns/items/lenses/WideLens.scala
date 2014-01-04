@@ -1,21 +1,23 @@
 package com.castlebravostudios.rayguns.items.lenses
 
 import com.castlebravostudios.rayguns.api.LensGrinderRecipeRegistry
-import net.minecraft.item.ItemStack
+import com.castlebravostudios.rayguns.api.ModuleRegistry
+import com.castlebravostudios.rayguns.api.items.ItemLens
+import com.castlebravostudios.rayguns.mod.Config
+
 import net.minecraft.block.Block
 import net.minecraft.item.Item
-import com.castlebravostudios.rayguns.mod.Config
-import com.castlebravostudios.rayguns.api.items.ItemLens
+import net.minecraft.item.ItemStack
 
 object WideLens extends Item( Config.wideLens ) with ItemLens {
 
   val moduleKey = "WideLens"
   val powerModifier = 3.0
-  register
-  setUnlocalizedName("rayguns.WideLens")
 
+  setUnlocalizedName("rayguns.WideLens")
   setTextureName("rayguns:lens_wide")
 
+  ModuleRegistry.registerModule(this)
   LensGrinderRecipeRegistry.register( 1200, new ItemStack(this),
       "IGI",
       "GDG",

@@ -1,58 +1,27 @@
 package com.castlebravostudios.rayguns.items.chambers
 
-import com.castlebravostudios.rayguns.api.BeamRegistry
-import com.castlebravostudios.rayguns.api.items.ItemChamber
-import com.castlebravostudios.rayguns.entities.effects.HeatRayBeamEntity
-import com.castlebravostudios.rayguns.entities.effects.HeatRayBoltEntity
+import com.castlebravostudios.rayguns.api.ModuleRegistry
+
+import com.castlebravostudios.rayguns.entities.effects.HeatRayEffect
 import com.castlebravostudios.rayguns.items.emitters.Emitters
-import com.castlebravostudios.rayguns.items.lenses.PreciseBeamLens
-import com.castlebravostudios.rayguns.items.lenses.PreciseLens
-import com.castlebravostudios.rayguns.items.lenses.WideLens
 import com.castlebravostudios.rayguns.mod.Config
-import com.castlebravostudios.rayguns.utils.BeamUtils
-import com.castlebravostudios.rayguns.utils.BoltUtils
-import com.castlebravostudios.rayguns.utils.DefaultFireEvent
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer
-import net.minecraft.item.Item
-import com.castlebravostudios.rayguns.utils.ChargeFireEvent
-import com.castlebravostudios.rayguns.items.lenses.ChargeLens
-import com.castlebravostudios.rayguns.items.lenses.ChargeBeamLens
+import com.castlebravostudios.rayguns.utils.RecipeRegisterer._
 
 
-object HeatRayChamber extends Item( Config.chamberHeatRay ) with ItemChamber {
+object HeatRayChamber extends BaseChamber( Config.chamberHeatRay ) {
 
   val moduleKey = "HeatRayChamber"
   val powerModifier = 1.5
-  register
+  val shotEffect = HeatRayEffect
+
   setUnlocalizedName("rayguns.HeatRayChamber")
   setTextureName("rayguns:chamber_heat_ray")
 
-  RecipeRegisterer.registerTier1Chamber(this, Emitters.heatRayEmitter)
+  ModuleRegistry.registerModule(this)
+  RecipeRegisterer.registerChamber( Tier1, this, Emitters.heatRayEmitter)
 
-  BeamRegistry.register({
-    case DefaultFireEvent(_, HeatRayChamber, _, None, _) => { (world, player) =>
-      BoltUtils.spawnNormal( world, new HeatRayBoltEntity(world), player )
-    }
-    case DefaultFireEvent(_, HeatRayChamber, _, Some(PreciseLens), _ ) => { (world, player) =>
-      BoltUtils.spawnPrecise( world, new HeatRayBoltEntity( world ), player )
-    }
-    case DefaultFireEvent(_, HeatRayChamber, _, Some(WideLens), _ ) => { (world, player) =>
-      BoltUtils.spawnScatter(world, player, 9, 0.1f ){ () =>
-        new HeatRayBoltEntity(world)
-      }
-    }
-    case DefaultFireEvent(_, HeatRayChamber, _, Some(PreciseBeamLens), _ ) => { (world, player) =>
-      BeamUtils.spawnSingleShot( new HeatRayBeamEntity(world), world, player )
-    }
-    case ChargeFireEvent(_, HeatRayChamber, _, Some(ChargeLens), _, charge ) => { (world, player) =>
-      val bolt = new HeatRayBoltEntity(world)
-      bolt.charge = charge
-      BoltUtils.spawnNormal( world, bolt, player )
-    }
-    case ChargeFireEvent(_, HeatRayChamber, _, Some(ChargeBeamLens), _, charge ) => { (world, player) =>
-      val beam = new HeatRayBeamEntity(world)
-      beam.charge = charge
-      BeamUtils.spawnSingleShot( beam, world, player )
-    }
-  })
+  registerSingleShotHandlers()
+  registerScatterShotHandler()
+  registerChargedShotHandler()
 }

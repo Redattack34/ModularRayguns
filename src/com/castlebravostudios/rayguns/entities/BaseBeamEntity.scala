@@ -11,11 +11,10 @@ import net.minecraft.util.ResourceLocation
 import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData
 import com.google.common.io.ByteArrayDataInput
 import com.google.common.io.ByteArrayDataOutput
+import com.castlebravostudios.rayguns.api.EffectRegistry
 
-abstract class BaseBeamEntity(world : World) extends Entity( world ) with Shootable with IEntityAdditionalSpawnData {
-  self : BaseEffect =>
+class BaseBeamEntity(world : World) extends BaseShootable( world ) {
 
-  var charge : Double = 1.0d
   def depletionRate = 0.3d
   var length : Double = 0
 
@@ -27,10 +26,10 @@ abstract class BaseBeamEntity(world : World) extends Entity( world ) with Shoota
   }
 
   def onImpact( pos : MovingObjectPosition ) : Boolean = {
-    createImpactParticles(pos.hitVec.xCoord, pos.hitVec.yCoord, pos.hitVec.zCoord)
+    effect.createImpactParticles( this, pos.hitVec.xCoord, pos.hitVec.yCoord, pos.hitVec.zCoord)
     pos.typeOfHit match {
-      case EnumMovingObjectType.ENTITY => hitEntity( pos.entityHit )
-      case EnumMovingObjectType.TILE => hitBlock( pos.blockX, pos.blockY, pos.blockZ, pos.sideHit )
+      case EnumMovingObjectType.ENTITY => effect.hitEntity( this, pos.entityHit )
+      case EnumMovingObjectType.TILE => effect.hitBlock( this, pos.blockX, pos.blockY, pos.blockZ, pos.sideHit )
     }
   }
 
@@ -41,28 +40,4 @@ abstract class BaseBeamEntity(world : World) extends Entity( world ) with Shoota
       setDead()
     }
   }
-
-  override def writeEntityToNBT( tag : NBTTagCompound ) : Unit = {
-    tag.setDouble("charge", charge)
-    writeEffectToNbt(tag)
-  }
-
-  override def readEntityFromNBT( tag : NBTTagCompound ) : Unit = {
-    charge = tag.getDouble("charge")
-    readEffectFromNbt(tag)
-  }
-
-  def writeSpawnData( out : ByteArrayDataOutput ) : Unit = {
-    out.writeDouble( charge )
-  }
-
-  def readSpawnData( in : ByteArrayDataInput ) : Unit = {
-    charge = in.readDouble()
-  }
-
-  protected override def entityInit()  : Unit = ()
-
-  def random = this.rand
-
-  def texture : ResourceLocation
 }

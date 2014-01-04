@@ -6,7 +6,6 @@ import net.minecraft.entity.Entity
 import net.minecraft.util.EntityDamageSource
 import net.minecraft.world.World
 import com.castlebravostudios.rayguns.entities.BaseBeamEntity
-import com.castlebravostudios.rayguns.entities.NoDuplicateCollisions
 import com.castlebravostudios.rayguns.utils.Vector3
 import com.castlebravostudios.rayguns.utils.MidpointDisplacement
 import scala.collection.SortedSet
@@ -18,24 +17,21 @@ import net.minecraft.entity.monster.EntityCreeper
 import com.castlebravostudios.rayguns.utils.BlockPos
 import net.minecraft.util.ResourceLocation
 
-trait LightningEffect extends Entity with BaseEffect {
-  self : Shootable =>
+object LightningEffect extends BaseEffect {
 
-  var pointsList : Seq[Vector3] = Seq()
+  val effectKey = "Lightning"
 
-  //Number of times this beam/bolt has been rendered. Used for rendering.
-  var renderCount : Int = 0
-
-  def hitEntity( entity : Entity ) : Boolean = {
+  def hitEntity( shootable : Shootable, entity : Entity ) : Boolean = {
     if ( entity.isInstanceOf[EntityCreeper] ) return true
 
     entity.attackEntityFrom(
-      new EntityDamageSource("lightningray", shooter), charge.toFloat * 4.0f )
+      new EntityDamageSource("lightningRay", shootable.shooter), shootable.charge.toFloat * 4.0f )
       true
   }
 
-  def hitBlock(hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Boolean = {
-
+  def hitBlock( shootable : Shootable, hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Boolean = {
+    val worldObj = shootable.worldObj
+    val shooter = shootable.shooter
     val BlockPos(x, y, z) = adjustCoords( hitX, hitY, hitZ, side )
     if ( !shooter.isInstanceOf[EntityPlayer] ||
          shooter.asInstanceOf[EntityPlayer].canPlayerEdit(x, y, z, side, null) ) {
@@ -46,15 +42,37 @@ trait LightningEffect extends Entity with BaseEffect {
     true
   }
 
-  def createImpactParticles( hitX : Double, hitY : Double, hitZ : Double ) : Unit = {
+  override def createImpactParticles( shootable : Shootable, hitX : Double, hitY : Double, hitZ : Double ) : Unit = {
     for ( _ <- 0 until 4 ) {
-      this.worldObj.spawnParticle("smoke", hitX, hitY, hitZ, 0.0D, 0.0D, 0.0D);
+      shootable.worldObj.spawnParticle("smoke", hitX, hitY, hitZ, 0.0D, 0.0D, 0.0D);
     }
   }
+
+  override def createBeamEntity( world : World ) : LightningBeamEntity = {
+    val beam = new LightningBeamEntity( world )
+    beam.effect = this
+    beam
+  }
+
+  override def createBoltEntity( world : World ) : LightningBoltEntity = {
+    val bolt = new LightningBoltEntity( world )
+    bolt.effect = this
+    bolt
+  }
+
+  val beamTexture = new ResourceLocation( "rayguns", "textures/beams/lightning_beam.png" )
+  val boltTexture = beamTexture
 }
 
-class LightningBoltEntity(world : World) extends BaseBoltEntity(world) with LightningEffect with NoDuplicateCollisions {
+trait LightningShootable {
 
+  var pointsList : Seq[Vector3] = Seq()
+
+  //Number of times this beam/bolt has been rendered. Used for rendering.
+  var renderCount : Int = 0
+
+}
+class LightningBoltEntity(world : World) extends BaseBoltEntity(world) with LightningShootable {
   override def onUpdate() : Unit = {
     super.onUpdate()
 
@@ -62,11 +80,7 @@ class LightningBoltEntity(world : World) extends BaseBoltEntity(world) with Ligh
       pointsList = MidpointDisplacement.getBoltList
     }
   }
-
-  override val texture = null //We use the beam texture for lightning bolts.
 }
-class LightningBeamEntity(world : World) extends BaseBeamEntity(world) with LightningEffect {
+class LightningBeamEntity(world : World) extends BaseBeamEntity(world) with LightningShootable {
   override def depletionRate = 0.2d
-
-  override val texture = new ResourceLocation( "rayguns", "textures/beams/lightning_beam.png" )
 }

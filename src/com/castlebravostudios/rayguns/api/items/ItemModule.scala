@@ -26,11 +26,6 @@ trait ItemModule extends Item {
    */
   def powerModifier : Double
 
-  /**
-   * Alias for ModuleRegistry.registerModule(this)
-   */
-  protected def register = ModuleRegistry.registerModule(this)
-
   setMaxStackSize(1)
   setCreativeTab(ModularRayguns.raygunsTab)
 }

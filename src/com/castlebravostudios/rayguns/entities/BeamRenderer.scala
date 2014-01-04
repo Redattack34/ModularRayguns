@@ -12,10 +12,10 @@ import com.castlebravostudios.rayguns.entities.effects.DeathRayEffect
 class BeamRenderer extends Render {
 
   def doRender( e : Entity, x : Double, y : Double, z : Double, yaw : Float, partialTickTime : Float) : Unit = {
-    doRender( e.asInstanceOf[BaseBeamEntity with BaseEffect], x, y, z, yaw, partialTickTime )
+    doRender( e.asInstanceOf[BaseBeamEntity], x, y, z, yaw, partialTickTime )
   }
 
-  private def doRender( e : BaseBeamEntity with BaseEffect, x : Double, y : Double, z : Double, yaw : Float, partialTickTime : Float) : Unit = {
+  private def doRender( e : BaseBeamEntity, x : Double, y : Double, z : Double, yaw : Float, partialTickTime : Float) : Unit = {
 
     this.bindEntityTexture(e);
     GL11.glPushMatrix();
@@ -27,7 +27,7 @@ class BeamRenderer extends Render {
     GL11.glDisable(GL11.GL_LIGHTING)
     GL11.glDisable(GL11.GL_CULL_FACE)
     GL11.glEnable(GL11.GL_BLEND);
-    if ( e.isInstanceOf[DeathRayEffect] ) {
+    if ( e.effect == DeathRayEffect ) {
       GL11.glBlendFunc(GL11.GL_ZERO, GL11.GL_ONE_MINUS_SRC_ALPHA);
     }
     else {
@@ -64,7 +64,7 @@ class BeamRenderer extends Render {
   }
 
   def getEntityTexture( e : Entity ) : ResourceLocation = e match {
-    case beam : BaseBeamEntity => beam.texture
+    case beam : BaseBeamEntity => beam.effect.beamTexture
     case _ => null
   }
 }
