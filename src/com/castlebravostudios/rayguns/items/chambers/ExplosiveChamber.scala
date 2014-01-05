@@ -12,6 +12,8 @@ object ExplosiveChamber extends BaseChamber( Config.chamberExplosive ) {
   val moduleKey = "ExplosiveChamber"
   val powerModifier = 10.0
   val shotEffect = ExplosiveEffect
+  val nameSegmentKey = "rayguns.ExplosiveChamber.segment"
+
   setUnlocalizedName("rayguns.ExplosiveChamber")
   setTextureName("rayguns:chamber_explosive")
 

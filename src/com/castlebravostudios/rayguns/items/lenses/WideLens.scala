@@ -10,9 +10,9 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 
 object WideLens extends Item( Config.wideLens ) with ItemLens {
-
   val moduleKey = "WideLens"
   val powerModifier = 3.0
+  val nameSegmentKey = "rayguns.WideLens.segment"
 
   setUnlocalizedName("rayguns.WideLens")
   setTextureName("rayguns:lens_wide")

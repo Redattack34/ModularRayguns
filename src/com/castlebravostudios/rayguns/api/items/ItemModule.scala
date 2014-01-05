@@ -26,6 +26,12 @@ trait ItemModule extends Item {
    */
   def powerModifier : Double
 
+  /**
+   * Get a string that will be looked up in the internationalization file
+   * and used to replace an appropriate segment of the raygun name pattern.
+   */
+  def nameSegmentKey : String
+
   setMaxStackSize(1)
   setCreativeTab(ModularRayguns.raygunsTab)
 }

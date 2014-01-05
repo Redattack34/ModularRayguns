@@ -12,6 +12,7 @@ object ImpulseChamber extends BaseChamber( Config.chamberImpulse ) {
   val moduleKey = "ImpulseChamber"
   val powerModifier = 1.5
   val shotEffect = ImpulseEffect
+  val nameSegmentKey = "rayguns.ImpulseChamber.segment"
 
   setUnlocalizedName("rayguns.ImpulseChamber")
   setTextureName("rayguns:chamber_impulse")

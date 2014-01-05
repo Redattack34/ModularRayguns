@@ -18,10 +18,10 @@ import net.minecraft.item.ItemStack
 import net.minecraft.world.World
 
 object SolarPanel extends Item( Config.solarPanel ) with ItemAccessory {
-
   val moduleKey = "SolarPanel"
   val powerModifier = 1.0
-  
+  val nameSegmentKey = "rayguns.SolarPanel.segment"
+
   setUnlocalizedName("rayguns.SolarPanel")
   setTextureName("rayguns:solar_panel")
 

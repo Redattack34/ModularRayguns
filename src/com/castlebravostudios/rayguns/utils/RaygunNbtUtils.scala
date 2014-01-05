@@ -15,6 +15,7 @@ import com.castlebravostudios.rayguns.items.misc.RayGun
 import com.castlebravostudios.rayguns.items.misc.BrokenGun
 import net.minecraft.util.StatCollector
 import net.minecraft.item.Item
+import net.minecraft.client.resources.I18n
 
 object RaygunNbtUtils {
 
@@ -77,6 +78,7 @@ object RaygunNbtUtils {
     val stack = new ItemStack( RayGun )
     stack.stackSize = 1
     stack.setTagInfo( MODULES_TAG, buildModuleTag( components ) )
+    stack.setItemName( getRaygunName( components ) )
     stack
   }
 
@@ -94,6 +96,34 @@ object RaygunNbtUtils {
 
   private def setTag( tag : NBTTagCompound, str : String )( item : ItemModule ) : Unit = {
     tag.setString(str, item.moduleKey)
+  }
+
+  /**
+   * Constructs a name for the given set of components based on data in the
+   * localization file.<p>
+   *
+   * The name is constructed by replacing sections of a pattern, looked up under
+   * the localization key of "rayguns.RaygunNamePattern". This pattern contains
+   * strings which will be replaced with the localized value of the nameSegmentKey
+   * field of the appropriate component):<p>
+   *
+   * {@literal : @accessory@}<br>
+   * {@literal : @chamber@}<br>
+   * {@literal : @lens@}<br>
+   * {@literal : @battery@}<br>
+   * {@literal : @body@}<p>
+   *
+   * Note that not all of the replacements are used in the default en_US language file.
+   */
+  def getRaygunName( components : GunComponents ) : String = {
+    def translate( opt : ItemModule) = I18n.getString( opt.nameSegmentKey )
+
+    I18n.getString("rayguns.RaygunNamePattern")
+      .replaceAll("@chamber@", translate( components.chamber ) )
+      .replaceAll("@body@", translate( components.body ) )
+      .replaceAll("@battery@", translate( components.battery ) )
+      .replaceAll("@accessory@", components.accessory.map( translate ).getOrElse("") )
+      .replaceAll("@lens@", components.lens.map( translate ).getOrElse("Blaster") )
   }
 
   def buildBrokenGun( item : ItemStack ) : ItemStack = {

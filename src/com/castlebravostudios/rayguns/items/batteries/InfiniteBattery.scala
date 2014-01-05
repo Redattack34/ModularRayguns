@@ -11,9 +11,9 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 
 object InfiniteBattery extends Item( Config.infiniteBattery ) with ItemBattery {
-
   val moduleKey = "InfiniteBattery"
   val powerModifier = 1.0d;
+  val nameSegmentKey = "rayguns.InfiniteBattery.segment"
 
   setMaxDamage( Integer.MAX_VALUE )
   setUnlocalizedName("rayguns.InfiniteBattery")

@@ -9,9 +9,9 @@ import net.minecraft.item.ItemStack
 import com.castlebravostudios.rayguns.api.ModuleRegistry
 
 object UltimateBattery extends Item( Config.ultimateBattery ) with ItemBattery {
-
   val moduleKey = "UltimateBattery"
   val powerModifier = 1.0d;
+  val nameSegmentKey = "rayguns.UltimateBattery.segment"
 
   setMaxDamage( 5000 )
   setUnlocalizedName("rayguns.UltimateBattery")

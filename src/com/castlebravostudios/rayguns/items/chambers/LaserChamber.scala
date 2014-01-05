@@ -12,6 +12,7 @@ object LaserChamber extends BaseChamber( Config.chamberLaser ) {
   val moduleKey = "LaserChamber"
   val powerModifier = 1.0
   val shotEffect = LaserEffect
+  val nameSegmentKey = "rayguns.LaserChamber.segment"
 
   setUnlocalizedName("rayguns.LaserChamber")
   setTextureName("rayguns:chamber_laser")

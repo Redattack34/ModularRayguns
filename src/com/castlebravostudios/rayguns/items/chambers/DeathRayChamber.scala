@@ -12,6 +12,8 @@ object DeathRayChamber extends BaseChamber( Config.chamberDeathRay ) {
   val moduleKey = "DeathRayChamber"
   val powerModifier = 5.0
   val shotEffect = DeathRayEffect
+  val nameSegmentKey = "rayguns.DeathRayChamber.segment"
+
   setUnlocalizedName("rayguns.DeathRayChamber")
   setTextureName("rayguns:chamber_death_ray")
 

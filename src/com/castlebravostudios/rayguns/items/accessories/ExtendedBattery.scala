@@ -12,9 +12,9 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 
 object ExtendedBattery extends Item( Config.extendedBattery ) with ItemAccessory {
-
   val moduleKey = "ExtendedBattery"
   val powerModifier = 2.0 / 3.0
+  val nameSegmentKey = "rayguns.ExtendedBattery.segment"
 
   setUnlocalizedName("rayguns.ExtendedBattery")
   setTextureName("rayguns:extended_battery")

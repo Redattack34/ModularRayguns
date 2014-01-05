@@ -19,10 +19,10 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.world.World
 
 object LightningChamber extends BaseChamber( Config.chamberLightning ) {
-
   val moduleKey = "LightningChamber"
   val powerModifier = 2.0
   val shotEffect = LightningEffect
+  val nameSegmentKey = "rayguns.LightningChamber.segment"
 
   setUnlocalizedName("rayguns.LightningChamber")
   setTextureName("rayguns:chamber_lightning")

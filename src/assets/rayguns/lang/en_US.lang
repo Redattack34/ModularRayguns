@@ -67,3 +67,31 @@ rayguns.container.gunbench.battery=Battery:
 rayguns.moreinfo=Hold SHIFT for more information
 
 itemGroup.tabRayguns=Modular Rayguns
+
+# See RaygunNbtUtils.getRaygunName for more details.
+rayguns.RaygunNamePattern=@accessory@ @chamber@ @lens@
+
+rayguns.PreciseBeamLens.segment=Precise Beam
+rayguns.PreciseLens.segment=Precise Blaster
+rayguns.WideLens.segment=Scatter Blaster
+rayguns.ChargeLens.segment=Charging Blaster
+rayguns.ChargeBeamLens.segment=Charging Beam
+
+rayguns.ExplosiveChamber.segment=Explosive
+rayguns.FortifiedSunlightChamber.segment=Fortified Sunlight
+rayguns.FrostRayChamber.segment=Frost Ray
+rayguns.HeatRayChamber.segment=Heat Ray
+rayguns.LaserChamber.segment=Laser
+rayguns.EnderChamber.segment=Ender
+rayguns.LifeForceChamber.segment=Life Force
+rayguns.DeathRayChamber.segment=Death Ray
+rayguns.LightningChamber.segment=Lightning
+rayguns.ImpulseChamber.segment=Impulse
+rayguns.TractorChamber.segment=Tractor
+rayguns.Tier1CuttingChamber.segment=Mk. 1 Cutting 
+rayguns.Tier2CuttingChamber.segment=Mk. 2 Cutting
+rayguns.Tier3CuttingChamber.segment=Mk. 3 Cutting
+
+rayguns.ExtendedBattery.segment=Extended
+rayguns.RefireCapacitor.segment=Rapid
+rayguns.SolarPanel.segment=Solar

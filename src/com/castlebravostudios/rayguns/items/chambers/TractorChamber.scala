@@ -12,6 +12,7 @@ object TractorChamber extends BaseChamber( Config.chamberTractor ) {
   val moduleKey = "TractorChamber"
   val powerModifier = 1.5
   val shotEffect = TractorEffect
+  val nameSegmentKey = "rayguns.TractorChamber.segment"
 
   setUnlocalizedName("rayguns.TractorChamber")
   setTextureName("rayguns:chamber_tractor")

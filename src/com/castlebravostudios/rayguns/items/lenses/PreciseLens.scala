@@ -9,9 +9,9 @@ import com.castlebravostudios.rayguns.api.items.ItemLens
 import com.castlebravostudios.rayguns.api.ModuleRegistry
 
 object PreciseLens extends Item( Config.preciseLens ) with ItemLens {
-
   val moduleKey = "PreciseLens"
   val powerModifier = 1.5
+  val nameSegmentKey = "rayguns.PreciseLens.segment"
 
   setUnlocalizedName("rayguns.PreciseLens")
   setTextureName("rayguns:lens_precise")

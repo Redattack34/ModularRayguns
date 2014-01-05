@@ -12,7 +12,8 @@ import net.minecraft.item.ItemStack
 object FireflyBody extends Item( Config.fireflyBody ) with ItemBody {
   val moduleKey = "FireflyBody"
   val powerModifier = 1.0
-  
+  val nameSegmentKey = "rayguns.FireflyBody.segment"
+
   setUnlocalizedName("rayguns.FireflyBody")
   setTextureName("rayguns:body_firefly")
 

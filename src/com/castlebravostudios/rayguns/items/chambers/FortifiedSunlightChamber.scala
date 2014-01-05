@@ -12,6 +12,7 @@ object FortifiedSunlightChamber extends BaseChamber( Config.chamberFortifiedSunl
   val moduleKey = "FortifiedSunlightChamber"
   val powerModifier = 4.0
   val shotEffect = FortifiedSunlightEffect
+  val nameSegmentKey = "rayguns.FortifiedSunlightChamber.segment"
 
   setUnlocalizedName("rayguns.FortifiedSunlightChamber")
   setTextureName("rayguns:chamber_fortified_sunlight")

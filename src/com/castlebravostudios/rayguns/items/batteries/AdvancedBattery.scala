@@ -14,6 +14,7 @@ object AdvancedBattery extends Item( Config.advancedBattery ) with ItemBattery {
 
   val moduleKey = "AdvancedBattery"
   val powerModifier = 1.0d;
+  val nameSegmentKey = "rayguns.AdvancedBattery.segment"
 
   setMaxDamage( 3000 )
   setUnlocalizedName("rayguns.AdvancedBattery")

@@ -12,6 +12,8 @@ object EnderChamber extends BaseChamber( Config.chamberEnder ) {
   val moduleKey = "EnderChamber"
   val powerModifier = 2.0
   val shotEffect = EnderEffect
+  val nameSegmentKey = "rayguns.EnderChamber.segment"
+
   setUnlocalizedName("rayguns.EnderChamber")
   setTextureName("rayguns:chamber_ender")
 

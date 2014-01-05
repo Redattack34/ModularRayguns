@@ -10,9 +10,9 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 
 object MantisBody extends Item( Config.mantisBody ) with ItemBody {
-
   val moduleKey = "MantisBody"
   val powerModifier = 1.0
+  val nameSegmentKey = "rayguns.MantisBody.segment"
 
   setUnlocalizedName("rayguns.MantisBody")
   setTextureName("rayguns:body_mantis")

@@ -11,11 +11,11 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 
 object PreciseBeamLens extends Item( Config.preciseBeamLens ) with ItemLens {
-
   val moduleKey = "PreciseBeamLens"
   val powerModifier = 1.2
-  setUnlocalizedName("rayguns.PreciseBeamLens")
+  val nameSegmentKey = "rayguns.PreciseBeamLens.segment"
 
+  setUnlocalizedName("rayguns.PreciseBeamLens")
   setTextureName("rayguns:lens_beam_precise")
 
   ModuleRegistry.registerModule(this)

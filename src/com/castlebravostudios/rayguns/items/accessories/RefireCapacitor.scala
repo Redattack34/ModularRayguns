@@ -12,9 +12,9 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 
 object RefireCapacitor extends Item( Config.refireCapacitor ) with ItemAccessory {
-
   val moduleKey = "RefireCapacitor"
   val powerModifier = 1.0
+  val nameSegmentKey = "rayguns.RefireCapacitor.segment"
 
   setUnlocalizedName("rayguns.RefireCapacitor")
   setTextureName("rayguns:refire_capacitor")

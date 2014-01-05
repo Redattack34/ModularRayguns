@@ -13,6 +13,7 @@ object FrostRayChamber extends BaseChamber( Config.chamberFrostRay ) {
   val moduleKey = "FrostRayChamber"
   val powerModifier = 2.0
   val shotEffect = FrostRayEffect
+  val nameSegmentKey = "rayguns.FrostRayChamber.segment"
 
   setUnlocalizedName("rayguns.FrostRayChamber")
   setTextureName("rayguns:chamber_frost_ray")

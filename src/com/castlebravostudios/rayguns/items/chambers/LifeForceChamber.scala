@@ -13,6 +13,7 @@ object LifeForceChamber extends BaseChamber( Config.chamberLifeForce ) {
   val moduleKey = "LifeForceChamber"
   val powerModifier = 3.0
   val shotEffect = LifeForceEffect
+  val nameSegmentKey = "rayguns.LifeForceChamber.segment"
 
   setUnlocalizedName("rayguns.LifeForceChamber")
   setTextureName("rayguns:chamber_life_force")

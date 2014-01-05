@@ -15,7 +15,8 @@ object BasicBattery extends Item( Config.basicBattery ) with ItemBattery {
 
   val moduleKey = "BasicBattery"
   val powerModifier = 1.0d;
-  
+  val nameSegmentKey = "rayguns.BasicBattery.segment"
+
   setMaxDamage( 1000 )
   setUnlocalizedName("rayguns.BasicBattery")
   setTextureName("rayguns:battery_basic")

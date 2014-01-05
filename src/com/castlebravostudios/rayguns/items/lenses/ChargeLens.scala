@@ -10,11 +10,11 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 
 object ChargeLens extends Item( Config.chargeLens ) with ItemLens {
-
   val moduleKey = "ChargeLens"
   val powerModifier = 1.5
-  setUnlocalizedName("rayguns.ChargeLens")
+  val nameSegmentKey = "rayguns.ChargeLens.segment"
 
+  setUnlocalizedName("rayguns.ChargeLens")
   setTextureName("rayguns:lens_charge")
 
   ModuleRegistry.registerModule(this)

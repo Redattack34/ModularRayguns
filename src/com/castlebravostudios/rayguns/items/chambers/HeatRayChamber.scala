@@ -10,10 +10,10 @@ import com.castlebravostudios.rayguns.utils.RecipeRegisterer._
 
 
 object HeatRayChamber extends BaseChamber( Config.chamberHeatRay ) {
-
   val moduleKey = "HeatRayChamber"
   val powerModifier = 1.5
   val shotEffect = HeatRayEffect
+  val nameSegmentKey = "rayguns.HeatRayChamber.segment"
 
   setUnlocalizedName("rayguns.HeatRayChamber")
   setTextureName("rayguns:chamber_heat_ray")
