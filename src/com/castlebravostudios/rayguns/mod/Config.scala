@@ -74,40 +74,57 @@ object Config {
     val config = new Configuration( file )
     config.load()
 
-    loadItemIds( config )
+    loadMiscItemIds( config )
+    loadBatteryItemIds(config)
+    loadLensItemIds(config)
+    loadAccessoryItemIds(config)
+    loadGunBodyItemIds(config)
+    loadEmitterItemIds(config)
+    loadChamberItemIds(config)
     loadBlockIds( config )
+    loadMisc( config )
 
     if ( config.hasChanged() ) {
       config.save()
     }
   }
 
-  private def loadItemIds( config : Configuration ) : Unit = {
+  private def loadMiscItemIds( config : Configuration ) : Unit = {
     rayGun = config.getItem( "rayGun", 4999 ).getInt()
     brokenGun = config.getItem( "brokenGun", 5000 ).getInt()
     energizedDiamond = config.getItem( "energizedDiamond", 5001 ).getInt()
     glassGainMedium = config.getItem( "glassGainMedium", 5002 ).getInt()
     glowstoneGainMedium = config.getItem( "glowstoneGainMedium", 5003 ).getInt()
     diamondGainMedium = config.getItem( "diamondGainMedium", 5004 ).getInt()
+  }
 
+  private def loadBatteryItemIds( config : Configuration ) : Unit = {
     basicBattery = config.getItem( "basicBattery", 5101 ).getInt()
     advancedBattery = config.getItem( "advancedBattery", 5102 ).getInt()
     ultimateBattery = config.getItem( "ultimateBattery", 5103 ).getInt()
     infiniteBattery = config.getItem( "infiniteBattery", 5104 ).getInt()
+  }
 
+  private def loadLensItemIds( config : Configuration ) : Unit = {
     preciseLens = config.getItem( "preciseLens", 5201 ).getInt()
     wideLens = config.getItem( "wideLens", 5202 ).getInt()
     preciseBeamLens = config.getItem( "beamLens", 5203 ).getInt()
     chargeLens = config.getItem( "chargeLens", 5204 ).getInt()
     chargeBeamLens = config.getItem( "chargeBeamLens", 5205 ).getInt()
+  }
 
+  private def loadAccessoryItemIds( config : Configuration ) : Unit = {
     extendedBattery = config.getItem( "extendedBattery", 5301 ).getInt()
     refireCapacitor = config.getItem( "refireCapacitor", 5302 ).getInt()
     solarPanel = config.getItem( "solarPanel", 5303 ).getInt()
+  }
 
+  private def loadGunBodyItemIds( config : Configuration ) : Unit = {
     mantisBody = config.getItem( "mantisBody", 5401 ).getInt
     fireflyBody = config.getItem( "fireflyBody", 5402 ).getInt
+  }
 
+  private def loadEmitterItemIds( config : Configuration ) : Unit = {
     emitterShrinkRay = config.getItem( "emitterShrinkRay", 5500 ).getInt
     emitterLaser = config.getItem( "emitterLaser", 5501 ).getInt
     emitterHeatRay = config.getItem( "emitterHeatRay", 5502 ).getInt
@@ -123,7 +140,9 @@ object Config {
     emitterTier1Cutting = config.getItem( "emitterTier1Cutting", 5512 ).getInt
     emitterTier2Cutting = config.getItem( "emitterTier2Cutting", 5513 ).getInt
     emitterTier3Cutting = config.getItem( "emitterTier3Cutting", 5514 ).getInt
+  }
 
+  private def loadChamberItemIds( config : Configuration ) : Unit = {
     chamberLaser = config.getItem( "chamberLaser", 5601 ).getInt
     chamberHeatRay = config.getItem( "chamberHeatRay", 5602 ).getInt
     chamberLifeForce = config.getItem( "chamberLifeForce", 5603 ).getInt
@@ -138,7 +157,9 @@ object Config {
     chamberCuttingTier1 = config.getItem( "chamberCuttingTier1", 5612 ).getInt
     chamberCuttingTier2 = config.getItem( "chamberCuttingTier2", 5613 ).getInt
     chamberCuttingTier3 = config.getItem( "chamberCuttingTier3", 5614 ).getInt
+  }
 
+  private def loadMisc( config : Configuration ) : Unit = {
     minLightningDetail = config.get( "misc", "minLightningDetailSize", 0.01d ).getDouble( 0.01d )
     lightningFlash = config.get( "misc", "lightningFlashEnabled", true ).getBoolean( true )
   }
