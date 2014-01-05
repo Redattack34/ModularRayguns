@@ -8,6 +8,7 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import com.castlebravostudios.rayguns.api.items.BaseRaygunModule
 import com.castlebravostudios.rayguns.api.items.ItemModule
+import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 object FireflyBody extends BaseRaygunModule with RaygunBody {
   val moduleKey = "FireflyBody"
@@ -17,6 +18,8 @@ object FireflyBody extends BaseRaygunModule with RaygunBody {
   def createItem( id : Int ) = new ItemModule( id, this )
     .setUnlocalizedName("rayguns.FireflyBody")
     .setTextureName("rayguns:body_firefly")
+    .setCreativeTab( ModularRayguns.raygunsTab )
+    .setMaxStackSize(1)
 
   def registerRecipe() : Unit =
     GameRegistry.addRecipe( new ItemStack( item, 1 ),

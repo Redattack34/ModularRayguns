@@ -7,6 +7,7 @@ import com.castlebravostudios.rayguns.mod.Config
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer._
 import com.castlebravostudios.rayguns.api.items.ItemModule
+import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 
 object HeatRayChamber extends BaseChamber {
@@ -18,6 +19,8 @@ object HeatRayChamber extends BaseChamber {
   def createItem( id : Int ) = new ItemModule( id, this )
     .setUnlocalizedName("rayguns.HeatRayChamber")
     .setTextureName("rayguns:chamber_heat_ray")
+    .setCreativeTab( ModularRayguns.raygunsTab )
+    .setMaxStackSize(1)
 
   def registerRecipe() : Unit =
     RecipeRegisterer.registerChamber( Tier1, this, Emitters.heatRayEmitter)

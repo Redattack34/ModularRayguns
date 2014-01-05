@@ -9,6 +9,7 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import com.castlebravostudios.rayguns.api.items.BaseRaygunModule
 import com.castlebravostudios.rayguns.api.items.ItemModule
+import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 object InfiniteBattery extends BaseRaygunModule with RaygunBattery {
   val moduleKey = "InfiniteBattery"
@@ -20,6 +21,8 @@ object InfiniteBattery extends BaseRaygunModule with RaygunBattery {
     .setMaxDamage( Integer.MAX_VALUE )
     .setUnlocalizedName("rayguns.InfiniteBattery")
     .setTextureName("rayguns:battery_infinite")
+    .setCreativeTab( ModularRayguns.raygunsTab )
+    .setMaxStackSize(1)
 
   override def drainPower( player : EntityPlayer, item : ItemStack, event : FireEvent ) : Boolean = true
 

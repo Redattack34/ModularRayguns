@@ -7,6 +7,7 @@ import com.castlebravostudios.rayguns.mod.Config
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer._
 import com.castlebravostudios.rayguns.api.items.ItemModule
+import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 object TractorChamber extends BaseChamber {
   val moduleKey = "TractorChamber"
@@ -17,6 +18,8 @@ object TractorChamber extends BaseChamber {
   def createItem( id : Int ) = new ItemModule( id, this )
     .setUnlocalizedName("rayguns.TractorChamber")
     .setTextureName("rayguns:chamber_tractor")
+    .setCreativeTab( ModularRayguns.raygunsTab )
+    .setMaxStackSize(1)
 
   def registerRecipe() : Unit =
     RecipeRegisterer.registerChamber( Tier2, this, Emitters.tractorEmitter)

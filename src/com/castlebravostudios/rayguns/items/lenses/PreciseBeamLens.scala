@@ -9,6 +9,7 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import com.castlebravostudios.rayguns.api.items.BaseRaygunModule
 import com.castlebravostudios.rayguns.api.items.ItemModule
+import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 object PreciseBeamLens extends BaseRaygunModule with RaygunLens {
   val moduleKey = "PreciseBeamLens"
@@ -18,6 +19,8 @@ object PreciseBeamLens extends BaseRaygunModule with RaygunLens {
   def createItem( id : Int ) = new ItemModule( id, this )
     .setUnlocalizedName("rayguns.PreciseBeamLens")
     .setTextureName("rayguns:lens_beam_precise")
+    .setCreativeTab( ModularRayguns.raygunsTab )
+    .setMaxStackSize(1)
 
   def registerRecipe() : Unit =
     LensGrinderRecipeRegistry.register( 600, new ItemStack(item),

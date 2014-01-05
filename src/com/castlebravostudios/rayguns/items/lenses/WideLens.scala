@@ -9,6 +9,7 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import com.castlebravostudios.rayguns.api.items.BaseRaygunModule
 import com.castlebravostudios.rayguns.api.items.ItemModule
+import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 object WideLens extends BaseRaygunModule with RaygunLens {
   val moduleKey = "WideLens"
@@ -18,6 +19,8 @@ object WideLens extends BaseRaygunModule with RaygunLens {
   def createItem( id : Int ) = new ItemModule( id, this )
     .setUnlocalizedName("rayguns.WideLens")
     .setTextureName("rayguns:lens_wide")
+    .setCreativeTab( ModularRayguns.raygunsTab )
+    .setMaxStackSize(1)
 
   def registerRecipe() : Unit =
     LensGrinderRecipeRegistry.register( 1200, new ItemStack(item),

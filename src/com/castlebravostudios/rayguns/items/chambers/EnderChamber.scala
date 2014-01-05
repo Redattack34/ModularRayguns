@@ -7,6 +7,7 @@ import com.castlebravostudios.rayguns.mod.Config
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer._
 import com.castlebravostudios.rayguns.api.items.ItemModule
+import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 object EnderChamber extends BaseChamber {
   val moduleKey = "EnderChamber"
@@ -17,6 +18,8 @@ object EnderChamber extends BaseChamber {
   def createItem( id : Int ) = new ItemModule( id, this )
     .setUnlocalizedName("rayguns.EnderChamber")
     .setTextureName("rayguns:chamber_ender")
+    .setCreativeTab( ModularRayguns.raygunsTab )
+    .setMaxStackSize(1)
 
   def registerRecipe() : Unit =
     RecipeRegisterer.registerChamber(Tier2, this, Emitters.enderEmitter )

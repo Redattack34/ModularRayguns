@@ -15,6 +15,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.world.World
 import com.castlebravostudios.rayguns.api.items.BaseRaygunModule
 import com.castlebravostudios.rayguns.api.items.ItemModule
+import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 object SolarPanel extends BaseRaygunModule with RaygunAccessory {
   val moduleKey = "SolarPanel"
@@ -24,6 +25,8 @@ object SolarPanel extends BaseRaygunModule with RaygunAccessory {
   def createItem( id : Int ) = new ItemModule( id, this )
     .setUnlocalizedName("rayguns.SolarPanel")
     .setTextureName("rayguns:solar_panel")
+    .setCreativeTab( ModularRayguns.raygunsTab )
+    .setMaxStackSize(1)
 
   private[this] val entityMap = WeakHashMap[Entity, Boolean]()
   private[this] val random = new Random()

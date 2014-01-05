@@ -7,6 +7,7 @@ import com.castlebravostudios.rayguns.mod.Config
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer._
 import com.castlebravostudios.rayguns.api.items.ItemModule
+import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 object Tier1CuttingChamber extends BaseChamber {
   val moduleKey = "Tier1CuttingChamber"
@@ -17,6 +18,8 @@ object Tier1CuttingChamber extends BaseChamber {
   def createItem( id : Int ) = new ItemModule( id, this )
     .setUnlocalizedName("rayguns.Tier1CuttingChamber")
     .setTextureName("rayguns:chamber_cutting_t1")
+    .setCreativeTab( ModularRayguns.raygunsTab )
+    .setMaxStackSize(1)
 
   def registerRecipe() : Unit =
     RecipeRegisterer.registerChamber( Tier1, this, Emitters.tier1CuttingEmitter)
@@ -36,6 +39,8 @@ object Tier2CuttingChamber extends BaseChamber {
   def createItem( id : Int ) = new ItemModule( id, this )
     .setUnlocalizedName("rayguns.Tier2CuttingChamber")
     .setTextureName("rayguns:chamber_cutting_t2")
+    .setCreativeTab( ModularRayguns.raygunsTab )
+    .setMaxStackSize(1)
 
   def registerRecipe() : Unit =
     RecipeRegisterer.registerChamber( Tier2, this, Emitters.tier2CuttingEmitter)
@@ -55,6 +60,8 @@ object Tier3CuttingChamber extends BaseChamber {
   def createItem( id : Int ) = new ItemModule( id, this )
     .setUnlocalizedName("rayguns.Tier3CuttingChamber")
     .setTextureName("rayguns:chamber_cutting_t3")
+    .setCreativeTab( ModularRayguns.raygunsTab )
+    .setMaxStackSize(1)
 
   def registerRecipe() : Unit =
     RecipeRegisterer.registerChamber( Tier3, this, Emitters.tier3CuttingEmitter)

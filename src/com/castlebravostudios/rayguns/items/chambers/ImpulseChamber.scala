@@ -7,6 +7,7 @@ import com.castlebravostudios.rayguns.mod.Config
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer._
 import com.castlebravostudios.rayguns.api.items.ItemModule
+import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 object ImpulseChamber extends BaseChamber {
   val moduleKey = "ImpulseChamber"
@@ -17,6 +18,8 @@ object ImpulseChamber extends BaseChamber {
   def createItem( id : Int ) = new ItemModule( id, this )
     .setUnlocalizedName("rayguns.ImpulseChamber")
     .setTextureName("rayguns:chamber_impulse")
+    .setCreativeTab( ModularRayguns.raygunsTab )
+    .setMaxStackSize(1)
 
   def registerRecipe() : Unit =
     RecipeRegisterer.registerChamber( Tier2, this, Emitters.impulseEmitter)

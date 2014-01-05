@@ -8,6 +8,7 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import com.castlebravostudios.rayguns.api.items.BaseRaygunModule
 import com.castlebravostudios.rayguns.api.items.ItemModule
+import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 object MantisBody extends BaseRaygunModule with RaygunBody {
   val moduleKey = "MantisBody"
@@ -17,6 +18,8 @@ object MantisBody extends BaseRaygunModule with RaygunBody {
   def createItem( id : Int ) = new ItemModule( id, this )
     .setUnlocalizedName("rayguns.MantisBody")
     .setTextureName("rayguns:body_mantis")
+    .setCreativeTab( ModularRayguns.raygunsTab )
+    .setMaxStackSize(1)
 
   def registerRecipe() : Unit =
     GameRegistry.addRecipe( new ItemStack( item, 1 ),

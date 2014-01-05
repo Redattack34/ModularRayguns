@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack
 import com.castlebravostudios.rayguns.api.ModuleRegistry
 import com.castlebravostudios.rayguns.api.items.BaseRaygunModule
 import com.castlebravostudios.rayguns.api.items.ItemModule
+import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 object UltimateBattery extends BaseRaygunModule with RaygunBattery {
   val moduleKey = "UltimateBattery"
@@ -20,6 +21,8 @@ object UltimateBattery extends BaseRaygunModule with RaygunBattery {
     .setMaxDamage( maxCapacity )
     .setUnlocalizedName("rayguns.UltimateBattery")
     .setTextureName("rayguns:battery_ultimate")
+    .setCreativeTab( ModularRayguns.raygunsTab )
+    .setMaxStackSize(1)
 
   def registerRecipe() : Unit =
     GameRegistry.addRecipe( new ItemStack( item, 1 ),

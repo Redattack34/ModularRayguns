@@ -9,6 +9,7 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import com.castlebravostudios.rayguns.api.items.BaseRaygunModule
 import com.castlebravostudios.rayguns.api.items.ItemModule
+import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 object ChargeBeamLens extends BaseRaygunModule with RaygunLens {
   val moduleKey = "ChargeBeamLens"
@@ -18,6 +19,8 @@ object ChargeBeamLens extends BaseRaygunModule with RaygunLens {
   def createItem( id : Int ) = new ItemModule( id, this )
     .setUnlocalizedName("rayguns.ChargeBeamLens")
     .setTextureName("rayguns:lens_charge_beam")
+    .setCreativeTab( ModularRayguns.raygunsTab )
+    .setMaxStackSize(1)
 
   def registerRecipe() : Unit =
     GameRegistry.addShapelessRecipe( new ItemStack( item, 1 ),

@@ -16,6 +16,7 @@ import com.castlebravostudios.rayguns.utils.Vector3
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.world.World
 import com.castlebravostudios.rayguns.api.items.ItemModule
+import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 object LightningChamber extends BaseChamber {
   val moduleKey = "LightningChamber"
@@ -26,6 +27,8 @@ object LightningChamber extends BaseChamber {
   def createItem( id : Int ) = new ItemModule( id, this )
     .setUnlocalizedName("rayguns.LightningChamber")
     .setTextureName("rayguns:chamber_lightning")
+    .setCreativeTab( ModularRayguns.raygunsTab )
+    .setMaxStackSize(1)
 
   def registerRecipe() : Unit =
     RecipeRegisterer.registerChamber( Tier1, this, Emitters.lightningEmitter)
