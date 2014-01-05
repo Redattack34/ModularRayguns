@@ -1,29 +1,29 @@
 package com.castlebravostudios.rayguns.items.accessories
 
 import java.util.Random
-
 import scala.collection.mutable.WeakHashMap
-
 import com.castlebravostudios.rayguns.api.ModuleRegistry
 import com.castlebravostudios.rayguns.api.items.RaygunAccessory
 import com.castlebravostudios.rayguns.items.emitters.Emitters
 import com.castlebravostudios.rayguns.mod.Config
 import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
-
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.Block
 import net.minecraft.entity.Entity
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.world.World
+import com.castlebravostudios.rayguns.api.items.BaseRaygunModule
+import com.castlebravostudios.rayguns.api.items.ItemModule
 
-object SolarPanel extends Item( Config.solarPanel ) with RaygunAccessory {
+object SolarPanel extends BaseRaygunModule with RaygunAccessory {
   val moduleKey = "SolarPanel"
   val powerModifier = 1.0
   val nameSegmentKey = "rayguns.SolarPanel.segment"
 
-  setUnlocalizedName("rayguns.SolarPanel")
-  setTextureName("rayguns:solar_panel")
+  def createItem( id : Int ) = new ItemModule( id, this )
+    .setUnlocalizedName("rayguns.SolarPanel")
+    .setTextureName("rayguns:solar_panel")
 
   private[this] val entityMap = WeakHashMap[Entity, Boolean]()
   private[this] val random = new Random()
@@ -53,7 +53,7 @@ object SolarPanel extends Item( Config.solarPanel ) with RaygunAccessory {
   }
 
   ModuleRegistry.registerModule(this)
-  GameRegistry.addRecipe( new ItemStack( this, 1 ),
+  GameRegistry.addRecipe( new ItemStack( item, 1 ),
     "S  ",
     "GGG",
     "RIR",

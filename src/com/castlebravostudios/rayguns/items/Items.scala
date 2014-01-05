@@ -75,7 +75,7 @@ object Items {
    * I don't actually have to register them anywhere. This merely forces the
    * VM to load (and thus register for me) the Objects.
    */
-  private def registerItem( item : Item ) : Unit = {
+  private def registerItem( item : Any) : Unit = {
     item.hashCode()
   }
 }

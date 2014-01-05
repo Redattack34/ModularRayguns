@@ -2,24 +2,25 @@ package com.castlebravostudios.rayguns.items.lenses
 
 import com.castlebravostudios.rayguns.api.LensGrinderRecipeRegistry
 import com.castlebravostudios.rayguns.api.ModuleRegistry
-
 import com.castlebravostudios.rayguns.api.items.RaygunLens
 import com.castlebravostudios.rayguns.mod.Config
-
 import net.minecraft.block.Block
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
+import com.castlebravostudios.rayguns.api.items.BaseRaygunModule
+import com.castlebravostudios.rayguns.api.items.ItemModule
 
-object PreciseBeamLens extends Item( Config.preciseBeamLens ) with RaygunLens {
+object PreciseBeamLens extends BaseRaygunModule with RaygunLens {
   val moduleKey = "PreciseBeamLens"
   val powerModifier = 1.2
   val nameSegmentKey = "rayguns.PreciseBeamLens.segment"
 
-  setUnlocalizedName("rayguns.PreciseBeamLens")
-  setTextureName("rayguns:lens_beam_precise")
+  def createItem( id : Int ) = new ItemModule( id, this )
+    .setUnlocalizedName("rayguns.PreciseBeamLens")
+    .setTextureName("rayguns:lens_beam_precise")
 
   ModuleRegistry.registerModule(this)
-  LensGrinderRecipeRegistry.register( 600, new ItemStack(this),
+  LensGrinderRecipeRegistry.register( 600, new ItemStack(item),
     "IGI",
     "GGG",
     "IGI",

@@ -6,7 +6,7 @@ import com.castlebravostudios.rayguns.api.ModuleRegistry
 import net.minecraft.creativetab.CreativeTabs
 import com.castlebravostudios.rayguns.mod.ModularRayguns
 
-trait RaygunModule extends Item {
+trait RaygunModule {
 
   /**
    * Get the module key for this module. This key will be stored in the NBT data
@@ -32,6 +32,15 @@ trait RaygunModule extends Item {
    */
   def nameSegmentKey : String
 
-  setMaxStackSize(1)
-  setCreativeTab(ModularRayguns.raygunsTab)
+  /**
+   * Get the item associated with this module, or null if not registered/disabled.
+   */
+  def item : ItemModule
+
+  /**
+   * Create the ItemModule associated with this module and register it with the
+   * game under the given ID. If ID is less than or equal to zero, this method
+   * should do nothing - this module has been disabled in the configuration file.
+   */
+  def registerItem( id : Int ) : Unit
 }

@@ -18,6 +18,7 @@ import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
 import com.castlebravostudios.rayguns.items.misc.RayGun
 import com.castlebravostudios.rayguns.blocks.BaseInventoryTileEntity
 import com.castlebravostudios.rayguns.utils.GunComponents
+import com.castlebravostudios.rayguns.api.items.RaygunModule
 
 class GunBenchTileEntity extends BaseInventoryTileEntity {
   private[this] val inv = Array.fill[ItemStack](6)(null)
@@ -35,7 +36,7 @@ class GunBenchTileEntity extends BaseInventoryTileEntity {
   }
 
   def onSlotChanged( slot : Int ) : Unit = {
-      def toStack( item : Item ) = new ItemStack( item, 1 )
+      def toStack( module : RaygunModule ) = new ItemStack( module.item, 1 )
       def setSlot( slot : Int ) ( item : ItemStack ) = setInventorySlotContents( slot, item )
       if ( slot == OUTPUT_SLOT && inv(OUTPUT_SLOT) != null ) {
         val components = getAllValidComponents( inv(OUTPUT_SLOT) )

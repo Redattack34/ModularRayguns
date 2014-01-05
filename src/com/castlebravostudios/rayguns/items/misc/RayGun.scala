@@ -123,7 +123,7 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation {
   override def getRenderPasses(metadata : Int) = 1
 
   override def getIcon( item : ItemStack, pass : Int ) : Icon = {
-    getComponents( item ).map( _.body.getIconFromDamage(0) ).getOrElse(itemIcon)
+    getComponents( item ).map( _.body.item.getIconFromDamage(0) ).getOrElse(itemIcon)
   }
 
   override def getMaxItemUseDuration( item : ItemStack ) : Int = {

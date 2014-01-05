@@ -11,11 +11,7 @@ trait RaygunBattery extends RaygunModule {
   import RaygunBattery._
   import RaygunNbtUtils._
 
-  def maxCapacity = getMaxDamage
-
-  override def getDamage( item : ItemStack ) : Int = 1
-  override def getDisplayDamage( item : ItemStack ) : Int = getChargeDepleted(item)
-  override def isDamaged( item : ItemStack ) = getDisplayDamage( item ) > 0
+  def maxCapacity : Int
 
   def drainPower( player : EntityPlayer, item : ItemStack, event : FireEvent ) : Boolean = {
     val powerMult = event.powerMultiplier

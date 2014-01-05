@@ -1,28 +1,30 @@
 package com.castlebravostudios.rayguns.items.batteries
 
 import com.castlebravostudios.rayguns.api.ModuleRegistry
-
+import com.castlebravostudios.rayguns.api.items.BaseRaygunModule
+import com.castlebravostudios.rayguns.api.items.ItemModule
 import com.castlebravostudios.rayguns.api.items.RaygunBattery
 import com.castlebravostudios.rayguns.items.emitters.Emitters
-import com.castlebravostudios.rayguns.mod.Config
 
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.Block
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 
-object BasicBattery extends Item( Config.basicBattery ) with RaygunBattery {
+object BasicBattery extends BaseRaygunModule with RaygunBattery {
 
   val moduleKey = "BasicBattery"
   val powerModifier = 1.0d;
   val nameSegmentKey = "rayguns.BasicBattery.segment"
+  val maxCapacity = 1000
 
-  setMaxDamage( 1000 )
-  setUnlocalizedName("rayguns.BasicBattery")
-  setTextureName("rayguns:battery_basic")
+  def createItem( id : Int ) = new ItemModule( id, this )
+    .setMaxDamage( maxCapacity )
+    .setUnlocalizedName("rayguns.BasicBattery")
+    .setTextureName("rayguns:battery_basic")
 
   ModuleRegistry.registerModule(this)
-  GameRegistry.addRecipe( new ItemStack( this, 1 ),
+  GameRegistry.addRecipe( new ItemStack( item, 1 ),
       "SG ",
       "IRI",
       "IRI",
