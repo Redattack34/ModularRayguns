@@ -172,8 +172,12 @@ object RaytraceUtils {
 
   def getPlayerTarget( world : World, player : EntityLivingBase, distance : Double ) : Vec3 = {
     val playerPos = getPlayerPosition(world, player)
-    vecMult( player.getLookVec(), distance ).addVector(
+    val lookVector = vecMult( player.getLookVec(), distance ).addVector(
         playerPos.xCoord, playerPos.yCoord, playerPos.zCoord )
+    if ( player.isSneaking() ) {
+      lookVector.yCoord = playerPos.yCoord
+    }
+    lookVector
   }
 
   private def vecMult( vec : Vec3, factor : Double ) : Vec3 = {

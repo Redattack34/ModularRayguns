@@ -28,7 +28,7 @@ object BeamUtils {
         ( entity ) => fx.effect.canCollideWithEntity( fx, entity ) )
 
     fx.setStart( start )
-    fx.rotationPitch = player.rotationPitch
+    fx.rotationPitch = if ( player.isSneaking() ) 0 else player.rotationPitch
     fx.rotationYaw = player.rotationYaw
 
     val target = applyHitsUntilStop(end, hits, fx)
