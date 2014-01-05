@@ -30,24 +30,25 @@ class CuttingEffect( val key : String, val harvestLevel : Int, val powerMultipli
     val meta = worldObj.getBlockMetadata(hitX, hitY, hitZ)
 
     val particleStr = s"tilecrack_${blockId}_${meta}"
-    for ( k <- 0 until 4 ) {
+    for ( k <- 0 until 10 ) {
       worldObj.spawnParticle(particleStr, hitX, hitY, hitZ, 0.0D, 0.0D, 0.0D);
     }
 
     if ( !canBreakBlock( shootable, hitX, hitY, hitZ, block ) ) { return true }
-    else {
+    else if ( shootable.worldObj.isOnServer ) {
       shootable.setHarvestPower( shootable.harvestPower - block.getBlockHardness(worldObj, hitX, hitY, hitZ) )
       val player = shootable.shooter match {
         case pl : EntityPlayer => pl
         case _ => null
       }
-      if ( block.removeBlockByPlayer(worldObj, player, hitX, hitY, hitZ) ) {
-        block.onBlockDestroyedByPlayer(worldObj, hitX, hitY, hitZ, meta)
-      }
-      block.harvestBlock(worldObj, player, hitX, hitY, hitZ, meta)
-      block.onBlockHarvested(worldObj, hitX, hitY, hitZ, meta, player)
+        if ( block.removeBlockByPlayer(worldObj, player, hitX, hitY, hitZ) ) {
+          block.onBlockDestroyedByPlayer(worldObj, hitX, hitY, hitZ, meta)
+        }
+        block.harvestBlock(worldObj, player, hitX, hitY, hitZ, meta)
+        block.onBlockHarvested(worldObj, hitX, hitY, hitZ, meta, player)
       false
     }
+    else true
   }
 
   def canBreakBlock( shootable : Shootable, x : Int, y : Int, z : Int, block : Block ) : Boolean = {
