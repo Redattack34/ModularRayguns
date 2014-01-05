@@ -25,7 +25,7 @@ import com.castlebravostudios.rayguns.entities.effects.Effects
 @NetworkMod(clientSideRequired=true, serverSideRequired=true)
 object ModularRayguns {
 
-  @SidedProxy(clientSide="com.castlebravostudios.rayguns.mod.CommonProxy",
+  @SidedProxy(clientSide="com.castlebravostudios.rayguns.mod.ClientProxy",
       serverSide="com.castlebravostudios.rayguns.mod.CommonProxy")
   var proxy : CommonProxy = null
 
@@ -43,6 +43,9 @@ object ModularRayguns {
     Entities.registerEntities
     TileEntities.registerTileEntities
     Effects.registerEffects
+
+    proxy.registerRenderers()
+    proxy.loadTextures()
   }
 
   val raygunsTab  = new CreativeTabs("tabRayguns") {
