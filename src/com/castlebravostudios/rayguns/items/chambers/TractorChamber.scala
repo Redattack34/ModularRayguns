@@ -18,7 +18,6 @@ object TractorChamber extends BaseChamber {
     .setUnlocalizedName("rayguns.TractorChamber")
     .setTextureName("rayguns:chamber_tractor")
 
-  ModuleRegistry.registerModule(this)
   def registerRecipe() : Unit =
     RecipeRegisterer.registerChamber( Tier2, this, Emitters.tractorEmitter)
 

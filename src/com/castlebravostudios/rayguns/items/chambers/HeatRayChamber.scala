@@ -19,7 +19,6 @@ object HeatRayChamber extends BaseChamber {
     .setUnlocalizedName("rayguns.HeatRayChamber")
     .setTextureName("rayguns:chamber_heat_ray")
 
-  ModuleRegistry.registerModule(this)
   def registerRecipe() : Unit =
     RecipeRegisterer.registerChamber( Tier1, this, Emitters.heatRayEmitter)
 

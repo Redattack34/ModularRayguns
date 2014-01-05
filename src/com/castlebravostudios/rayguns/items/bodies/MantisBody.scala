@@ -18,7 +18,6 @@ object MantisBody extends BaseRaygunModule with RaygunBody {
     .setUnlocalizedName("rayguns.MantisBody")
     .setTextureName("rayguns:body_mantis")
 
-  ModuleRegistry.registerModule(this)
   def registerRecipe() : Unit =
     GameRegistry.addRecipe( new ItemStack( item, 1 ),
       "G  ",

@@ -52,7 +52,6 @@ object SolarPanel extends BaseRaygunModule with RaygunAccessory {
     !isRaining && world.isDaytime() && world.canBlockSeeTheSky(x, y, z)
   }
 
-  ModuleRegistry.registerModule(this)
   def registerRecipe() : Unit =
     GameRegistry.addRecipe( new ItemStack( item, 1 ),
         "S  ",

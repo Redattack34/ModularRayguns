@@ -19,7 +19,6 @@ object PreciseBeamLens extends BaseRaygunModule with RaygunLens {
     .setUnlocalizedName("rayguns.PreciseBeamLens")
     .setTextureName("rayguns:lens_beam_precise")
 
-  ModuleRegistry.registerModule(this)
   def registerRecipe() : Unit =
     LensGrinderRecipeRegistry.register( 600, new ItemStack(item),
       "IGI",

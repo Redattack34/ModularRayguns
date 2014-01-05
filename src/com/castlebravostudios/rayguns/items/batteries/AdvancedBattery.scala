@@ -22,8 +22,6 @@ object AdvancedBattery extends BaseRaygunModule with RaygunBattery {
     .setUnlocalizedName("rayguns.AdvancedBattery")
     .setTextureName("rayguns:battery_advanced")
 
-  ModuleRegistry.registerModule(this)
-
   def registerRecipe() : Unit =
     GameRegistry.addRecipe( new ItemStack( item, 1 ),
       "SG ",

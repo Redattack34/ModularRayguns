@@ -27,7 +27,6 @@ object LightningChamber extends BaseChamber {
     .setUnlocalizedName("rayguns.LightningChamber")
     .setTextureName("rayguns:chamber_lightning")
 
-  ModuleRegistry.registerModule(this)
   def registerRecipe() : Unit =
     RecipeRegisterer.registerChamber( Tier1, this, Emitters.lightningEmitter)
 

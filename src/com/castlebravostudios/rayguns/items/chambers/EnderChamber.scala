@@ -18,7 +18,6 @@ object EnderChamber extends BaseChamber {
     .setUnlocalizedName("rayguns.EnderChamber")
     .setTextureName("rayguns:chamber_ender")
 
-  ModuleRegistry.registerModule(this)
   def registerRecipe() : Unit =
     RecipeRegisterer.registerChamber(Tier2, this, Emitters.enderEmitter )
 

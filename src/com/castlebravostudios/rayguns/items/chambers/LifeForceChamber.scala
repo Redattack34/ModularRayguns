@@ -19,7 +19,6 @@ object LifeForceChamber extends BaseChamber {
     .setUnlocalizedName("rayguns.LifeForceChamber")
     .setTextureName("rayguns:chamber_life_force")
 
-  ModuleRegistry.registerModule(this)
   def registerRecipe() : Unit =
     RecipeRegisterer.registerChamber( Tier2, this, Emitters.lifeForceEmitter)
 

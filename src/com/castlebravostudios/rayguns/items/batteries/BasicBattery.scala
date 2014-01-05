@@ -23,8 +23,6 @@ object BasicBattery extends BaseRaygunModule with RaygunBattery {
     .setUnlocalizedName("rayguns.BasicBattery")
     .setTextureName("rayguns:battery_basic")
 
-  ModuleRegistry.registerModule(this)
-
   def registerRecipe() : Unit =
     GameRegistry.addRecipe( new ItemStack( item, 1 ),
       "SG ",

@@ -18,7 +18,6 @@ object DeathRayChamber extends BaseChamber {
     .setUnlocalizedName("rayguns.DeathRayChamber")
     .setTextureName("rayguns:chamber_death_ray")
 
-  ModuleRegistry.registerModule(this)
   def registerRecipe() : Unit =
     RecipeRegisterer.registerChamber(Tier3, this, Emitters.deathRayEmitter)
 

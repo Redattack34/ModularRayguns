@@ -20,7 +20,6 @@ object RefireCapacitor extends BaseRaygunModule with RaygunAccessory {
     .setUnlocalizedName("rayguns.RefireCapacitor")
     .setTextureName("rayguns:refire_capacitor")
 
-  ModuleRegistry.registerModule(this)
   def registerRecipe() : Unit =
     GameRegistry.addRecipe( new ItemStack( item, 1 ),
       "SI ",

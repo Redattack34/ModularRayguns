@@ -18,7 +18,6 @@ object ExplosiveChamber extends BaseChamber {
     .setUnlocalizedName("rayguns.ExplosiveChamber")
     .setTextureName("rayguns:chamber_explosive")
 
-  ModuleRegistry.registerModule(this)
   def registerRecipe() : Unit =
     RecipeRegisterer.registerChamber( Tier3, this, Emitters.explosiveEmitter)
 

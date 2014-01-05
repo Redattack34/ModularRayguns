@@ -18,7 +18,6 @@ object FireflyBody extends BaseRaygunModule with RaygunBody {
     .setUnlocalizedName("rayguns.FireflyBody")
     .setTextureName("rayguns:body_firefly")
 
-  ModuleRegistry.registerModule(this)
   def registerRecipe() : Unit =
     GameRegistry.addRecipe( new ItemStack( item, 1 ),
       "R  ",

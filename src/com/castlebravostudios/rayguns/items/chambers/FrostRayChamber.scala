@@ -19,7 +19,6 @@ object FrostRayChamber extends BaseChamber {
     .setUnlocalizedName("rayguns.FrostRayChamber")
     .setTextureName("rayguns:chamber_frost_ray")
 
-  ModuleRegistry.registerModule(this)
   def registerRecipe() : Unit =
     RecipeRegisterer.registerChamber( Tier2, this, Emitters.frostRayEmitter)
 

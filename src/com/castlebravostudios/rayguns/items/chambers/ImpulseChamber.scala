@@ -18,7 +18,6 @@ object ImpulseChamber extends BaseChamber {
     .setUnlocalizedName("rayguns.ImpulseChamber")
     .setTextureName("rayguns:chamber_impulse")
 
-  ModuleRegistry.registerModule(this)
   def registerRecipe() : Unit =
     RecipeRegisterer.registerChamber( Tier2, this, Emitters.impulseEmitter)
 

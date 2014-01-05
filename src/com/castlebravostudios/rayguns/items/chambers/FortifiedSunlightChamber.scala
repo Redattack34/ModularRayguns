@@ -18,8 +18,7 @@ object FortifiedSunlightChamber extends BaseChamber {
     .setUnlocalizedName("rayguns.FortifiedSunlightChamber")
     .setTextureName("rayguns:chamber_fortified_sunlight")
 
-  ModuleRegistry.registerModule(this)
-  def registerRecipe() : Unit =
+    def registerRecipe() : Unit =
     RecipeRegisterer.registerChamber( Tier2, this, Emitters.fortifiedSunlightEmitter)
 
   registerSingleShotHandlers()
