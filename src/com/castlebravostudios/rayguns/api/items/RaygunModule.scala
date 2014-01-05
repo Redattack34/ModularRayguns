@@ -43,4 +43,11 @@ trait RaygunModule {
    * should do nothing - this module has been disabled in the configuration file.
    */
   def registerItem( id : Int ) : Unit
+
+  /**
+   * Register the recipe to create this item. This will be called after
+   * registerItem, so it should be safe to use the item in the recipes without
+   * it being null.
+   */
+  def registerRecipe() : Unit
 }

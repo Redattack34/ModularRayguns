@@ -20,7 +20,8 @@ object LifeForceChamber extends BaseChamber {
     .setTextureName("rayguns:chamber_life_force")
 
   ModuleRegistry.registerModule(this)
-  RecipeRegisterer.registerChamber( Tier2, this, Emitters.lifeForceEmitter)
+  def registerRecipe() : Unit =
+    RecipeRegisterer.registerChamber( Tier2, this, Emitters.lifeForceEmitter)
 
   registerSingleShotHandlers()
   registerScatterShotHandler()

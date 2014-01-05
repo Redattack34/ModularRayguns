@@ -19,10 +19,11 @@ object FireflyBody extends BaseRaygunModule with RaygunBody {
     .setTextureName("rayguns:body_firefly")
 
   ModuleRegistry.registerModule(this)
-  GameRegistry.addRecipe( new ItemStack( item, 1 ),
-    "R  ",
-    "IRI",
-    " II",
-    'R' : Character, Item.redstone,
-    'I' : Character, Item.ingotIron )
+  def registerRecipe() : Unit =
+    GameRegistry.addRecipe( new ItemStack( item, 1 ),
+      "R  ",
+      "IRI",
+      " II",
+      'R' : Character, Item.redstone,
+      'I' : Character, Item.ingotIron )
 }

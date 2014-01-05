@@ -19,7 +19,8 @@ object EnderChamber extends BaseChamber {
     .setTextureName("rayguns:chamber_ender")
 
   ModuleRegistry.registerModule(this)
-  RecipeRegisterer.registerChamber(Tier2, this, Emitters.enderEmitter )
+  def registerRecipe() : Unit =
+    RecipeRegisterer.registerChamber(Tier2, this, Emitters.enderEmitter )
 
   registerSingleShotHandlers()
   registerScatterShotHandler()

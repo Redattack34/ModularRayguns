@@ -19,7 +19,8 @@ object ImpulseChamber extends BaseChamber {
     .setTextureName("rayguns:chamber_impulse")
 
   ModuleRegistry.registerModule(this)
-  RecipeRegisterer.registerChamber( Tier2, this, Emitters.impulseEmitter)
+  def registerRecipe() : Unit =
+    RecipeRegisterer.registerChamber( Tier2, this, Emitters.impulseEmitter)
 
   registerSingleShotHandlers()
   registerScatterShotHandler()

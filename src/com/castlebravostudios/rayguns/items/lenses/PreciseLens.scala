@@ -20,7 +20,8 @@ object PreciseLens extends BaseRaygunModule with RaygunLens {
     .setTextureName("rayguns:lens_precise")
 
   ModuleRegistry.registerModule(this)
-  LensGrinderRecipeRegistry.register( 600, new ItemStack(item),
+  def registerRecipe() : Unit =
+    LensGrinderRecipeRegistry.register( 600, new ItemStack(item),
       "IGI",
       "GGG",
       "IGI",

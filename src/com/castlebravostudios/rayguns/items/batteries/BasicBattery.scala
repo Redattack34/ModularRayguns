@@ -24,7 +24,9 @@ object BasicBattery extends BaseRaygunModule with RaygunBattery {
     .setTextureName("rayguns:battery_basic")
 
   ModuleRegistry.registerModule(this)
-  GameRegistry.addRecipe( new ItemStack( item, 1 ),
+
+  def registerRecipe() : Unit =
+    GameRegistry.addRecipe( new ItemStack( item, 1 ),
       "SG ",
       "IRI",
       "IRI",

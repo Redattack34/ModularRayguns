@@ -20,7 +20,8 @@ object HeatRayChamber extends BaseChamber {
     .setTextureName("rayguns:chamber_heat_ray")
 
   ModuleRegistry.registerModule(this)
-  RecipeRegisterer.registerChamber( Tier1, this, Emitters.heatRayEmitter)
+  def registerRecipe() : Unit =
+    RecipeRegisterer.registerChamber( Tier1, this, Emitters.heatRayEmitter)
 
   registerSingleShotHandlers()
   registerScatterShotHandler()

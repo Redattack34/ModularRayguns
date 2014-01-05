@@ -19,7 +19,8 @@ object DeathRayChamber extends BaseChamber {
     .setTextureName("rayguns:chamber_death_ray")
 
   ModuleRegistry.registerModule(this)
-  RecipeRegisterer.registerChamber(Tier3, this, Emitters.deathRayEmitter)
+  def registerRecipe() : Unit =
+    RecipeRegisterer.registerChamber(Tier3, this, Emitters.deathRayEmitter)
 
   registerSingleShotHandlers()
   registerScatterShotHandler()

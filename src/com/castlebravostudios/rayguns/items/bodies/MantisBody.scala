@@ -19,10 +19,11 @@ object MantisBody extends BaseRaygunModule with RaygunBody {
     .setTextureName("rayguns:body_mantis")
 
   ModuleRegistry.registerModule(this)
-  GameRegistry.addRecipe( new ItemStack( item, 1 ),
-    "G  ",
-    "IGI",
-    " II",
-    'G' : Character, Item.ingotGold,
-    'I' : Character, Item.ingotIron )
+  def registerRecipe() : Unit =
+    GameRegistry.addRecipe( new ItemStack( item, 1 ),
+      "G  ",
+      "IGI",
+      " II",
+      'G' : Character, Item.ingotGold,
+      'I' : Character, Item.ingotIron )
 }

@@ -20,7 +20,8 @@ object WideLens extends BaseRaygunModule with RaygunLens {
     .setTextureName("rayguns:lens_wide")
 
   ModuleRegistry.registerModule(this)
-  LensGrinderRecipeRegistry.register( 1200, new ItemStack(item),
+  def registerRecipe() : Unit =
+    LensGrinderRecipeRegistry.register( 1200, new ItemStack(item),
       "IGI",
       "GDG",
       "IGI",

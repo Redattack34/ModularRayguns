@@ -21,12 +21,13 @@ object RefireCapacitor extends BaseRaygunModule with RaygunAccessory {
     .setTextureName("rayguns:refire_capacitor")
 
   ModuleRegistry.registerModule(this)
-  GameRegistry.addRecipe( new ItemStack( item, 1 ),
-    "SI ",
-    "IRI",
-    "G G",
-    'S' : Character, Emitters.shrinkRayEmitter,
-    'I' : Character, Item.ingotIron,
-    'R' : Character, Block.blockRedstone,
-    'G' : Character, Item.ingotGold )
+  def registerRecipe() : Unit =
+    GameRegistry.addRecipe( new ItemStack( item, 1 ),
+      "SI ",
+      "IRI",
+      "G G",
+      'S' : Character, Emitters.shrinkRayEmitter,
+      'I' : Character, Item.ingotIron,
+      'R' : Character, Block.blockRedstone,
+      'G' : Character, Item.ingotGold )
 }

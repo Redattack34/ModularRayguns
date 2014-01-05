@@ -21,11 +21,12 @@ object ExtendedBattery extends BaseRaygunModule with RaygunAccessory {
     .setTextureName("rayguns:extended_battery")
 
   ModuleRegistry.registerModule(this)
-  GameRegistry.addRecipe( new ItemStack( item, 1 ),
-    "SI ",
-    "IRI",
-    " I ",
-    'S' : Character, Emitters.shrinkRayEmitter,
-    'I' : Character, Item.ingotIron,
-    'R' : Character, Block.blockRedstone )
+  def registerRecipe() : Unit =
+    GameRegistry.addRecipe( new ItemStack( item, 1 ),
+      "SI ",
+      "IRI",
+      " I ",
+      'S' : Character, Emitters.shrinkRayEmitter,
+      'I' : Character, Item.ingotIron,
+      'R' : Character, Block.blockRedstone )
 }

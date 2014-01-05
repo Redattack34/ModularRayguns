@@ -20,7 +20,8 @@ object FrostRayChamber extends BaseChamber {
     .setTextureName("rayguns:chamber_frost_ray")
 
   ModuleRegistry.registerModule(this)
-  RecipeRegisterer.registerChamber( Tier2, this, Emitters.frostRayEmitter)
+  def registerRecipe() : Unit =
+    RecipeRegisterer.registerChamber( Tier2, this, Emitters.frostRayEmitter)
 
   registerSingleShotHandlers()
   registerScatterShotHandler()

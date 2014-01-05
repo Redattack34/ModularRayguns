@@ -23,5 +23,7 @@ object InfiniteBattery extends BaseRaygunModule with RaygunBattery {
 
   override def drainPower( player : EntityPlayer, item : ItemStack, event : FireEvent ) : Boolean = true
 
+  def registerRecipe() : Unit = ()
+
   ModuleRegistry.registerModule(this)
 }

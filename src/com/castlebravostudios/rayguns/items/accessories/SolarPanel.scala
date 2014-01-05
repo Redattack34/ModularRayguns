@@ -53,12 +53,13 @@ object SolarPanel extends BaseRaygunModule with RaygunAccessory {
   }
 
   ModuleRegistry.registerModule(this)
-  GameRegistry.addRecipe( new ItemStack( item, 1 ),
-    "S  ",
-    "GGG",
-    "RIR",
-    'S' : Character, Emitters.shrinkRayEmitter,
-    'I' : Character, Item.ingotIron,
-    'R' : Character, Block.blockRedstone,
-    'G' : Character, Block.glass )
+  def registerRecipe() : Unit =
+    GameRegistry.addRecipe( new ItemStack( item, 1 ),
+        "S  ",
+        "GGG",
+        "RIR",
+        'S' : Character, Emitters.shrinkRayEmitter,
+        'I' : Character, Item.ingotIron,
+        'R' : Character, Block.blockRedstone,
+        'G' : Character, Block.glass )
 }

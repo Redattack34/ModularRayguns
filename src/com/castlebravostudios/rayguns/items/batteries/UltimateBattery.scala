@@ -22,7 +22,8 @@ object UltimateBattery extends BaseRaygunModule with RaygunBattery {
     .setTextureName("rayguns:battery_ultimate")
 
   ModuleRegistry.registerModule(this)
-  GameRegistry.addRecipe( new ItemStack( item, 1 ),
+  def registerRecipe() : Unit =
+    GameRegistry.addRecipe( new ItemStack( item, 1 ),
       "SG ",
       "IBI",
       "IBI",

@@ -20,6 +20,7 @@ object ChargeBeamLens extends BaseRaygunModule with RaygunLens {
     .setTextureName("rayguns:lens_charge_beam")
 
   ModuleRegistry.registerModule(this)
-  GameRegistry.addShapelessRecipe( new ItemStack( item, 1 ),
-    PreciseBeamLens, BasicBattery )
+  def registerRecipe() : Unit =
+    GameRegistry.addShapelessRecipe( new ItemStack( item, 1 ),
+        PreciseBeamLens, BasicBattery )
 }

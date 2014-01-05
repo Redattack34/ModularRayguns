@@ -19,7 +19,8 @@ object FortifiedSunlightChamber extends BaseChamber {
     .setTextureName("rayguns:chamber_fortified_sunlight")
 
   ModuleRegistry.registerModule(this)
-  RecipeRegisterer.registerChamber( Tier2, this, Emitters.fortifiedSunlightEmitter)
+  def registerRecipe() : Unit =
+    RecipeRegisterer.registerChamber( Tier2, this, Emitters.fortifiedSunlightEmitter)
 
   registerSingleShotHandlers()
   registerScatterShotHandler()

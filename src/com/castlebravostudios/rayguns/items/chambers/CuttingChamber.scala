@@ -19,7 +19,8 @@ object Tier1CuttingChamber extends BaseChamber {
     .setTextureName("rayguns:chamber_cutting_t1")
 
   ModuleRegistry.registerModule(this)
-  RecipeRegisterer.registerChamber( Tier1, this, Emitters.tier1CuttingEmitter)
+  def registerRecipe() : Unit =
+    RecipeRegisterer.registerChamber( Tier1, this, Emitters.tier1CuttingEmitter)
 
   registerSingleShotHandlers()
   registerScatterShotHandler()
@@ -36,7 +37,8 @@ object Tier2CuttingChamber extends BaseChamber {
     .setTextureName("rayguns:chamber_cutting_t2")
 
   ModuleRegistry.registerModule(this)
-  RecipeRegisterer.registerChamber( Tier2, this, Emitters.tier2CuttingEmitter)
+  def registerRecipe() : Unit =
+    RecipeRegisterer.registerChamber( Tier2, this, Emitters.tier2CuttingEmitter)
 
   registerSingleShotHandlers()
   registerScatterShotHandler()
@@ -53,7 +55,8 @@ object Tier3CuttingChamber extends BaseChamber {
     .setTextureName("rayguns:chamber_cutting_t3")
 
   ModuleRegistry.registerModule(this)
-  RecipeRegisterer.registerChamber( Tier3, this, Emitters.tier3CuttingEmitter)
+  def registerRecipe() : Unit =
+    RecipeRegisterer.registerChamber( Tier3, this, Emitters.tier3CuttingEmitter)
 
   registerSingleShotHandlers()
   registerScatterShotHandler()

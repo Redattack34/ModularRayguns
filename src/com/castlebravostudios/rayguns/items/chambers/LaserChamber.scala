@@ -19,7 +19,8 @@ object LaserChamber extends BaseChamber {
     .setTextureName("rayguns:chamber_laser")
 
   ModuleRegistry.registerModule(this)
-  RecipeRegisterer.registerChamber( Tier1, this, Emitters.laserEmitter)
+  def registerRecipe() : Unit =
+    RecipeRegisterer.registerChamber( Tier1, this, Emitters.laserEmitter)
 
   registerSingleShotHandlers()
   registerScatterShotHandler()

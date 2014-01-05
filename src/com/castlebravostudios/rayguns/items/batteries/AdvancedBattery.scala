@@ -23,7 +23,9 @@ object AdvancedBattery extends BaseRaygunModule with RaygunBattery {
     .setTextureName("rayguns:battery_advanced")
 
   ModuleRegistry.registerModule(this)
-  GameRegistry.addRecipe( new ItemStack( item, 1 ),
+
+  def registerRecipe() : Unit =
+    GameRegistry.addRecipe( new ItemStack( item, 1 ),
       "SG ",
       "IBI",
       "IBI",

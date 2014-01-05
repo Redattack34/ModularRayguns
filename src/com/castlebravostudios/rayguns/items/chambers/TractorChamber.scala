@@ -19,7 +19,8 @@ object TractorChamber extends BaseChamber {
     .setTextureName("rayguns:chamber_tractor")
 
   ModuleRegistry.registerModule(this)
-  RecipeRegisterer.registerChamber( Tier2, this, Emitters.tractorEmitter)
+  def registerRecipe() : Unit =
+    RecipeRegisterer.registerChamber( Tier2, this, Emitters.tractorEmitter)
 
   registerSingleShotHandlers()
   registerScatterShotHandler()
