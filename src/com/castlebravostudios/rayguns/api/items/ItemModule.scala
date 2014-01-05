@@ -1,37 +1,19 @@
 package com.castlebravostudios.rayguns.api.items
 
 import net.minecraft.item.Item
-import com.castlebravostudios.rayguns.items.Items
-import com.castlebravostudios.rayguns.api.ModuleRegistry
 import net.minecraft.creativetab.CreativeTabs
-import com.castlebravostudios.rayguns.mod.ModularRayguns
 
-trait ItemModule extends Item {
+class ItemModule( id : Int, val module : RaygunModule ) extends Item( id ) {
 
-  /**
-   * Get the module key for this module. This key will be stored in the NBT data
-   * of the ray gun it's attached to so that the module item can be looked up
-   * later.<br>
-   *
-   * IMPORTANT NOTE: This key must not be changed once your plugin is released!
-   * Modules which cannot be found using the keys stored in NBT will be removed
-   * from the ray gun.
-   */
-  def moduleKey : String
-
-  /**
-   * Get the power modifier for this module. The power modifiers for all four
-   * modules in a gun will be multiplied together with some constant to produce
-   * the power cost to fire the gun.
-   */
-  def powerModifier : Double
-
-  /**
-   * Get a string that will be looked up in the internationalization file
-   * and used to replace an appropriate segment of the raygun name pattern.
-   */
-  def nameSegmentKey : String
-
-  setMaxStackSize(1)
-  setCreativeTab(ModularRayguns.raygunsTab)
+  //Override the setters to return ItemModule for easier chaining in the modules.
+  override def setContainerItem( item : Item ) : ItemModule = { super.setContainerItem(item); this }
+  override def setCreativeTab( tab : CreativeTabs ) : ItemModule = { super.setCreativeTab(tab); this }
+  override def setFull3D() : ItemModule = { super.setFull3D(); this }
+  override def setHasSubtypes( hasSubtypes : Boolean ) : ItemModule = { super.setHasSubtypes(hasSubtypes); this }
+  override def setMaxDamage( maxDamage : Int ) : ItemModule = { super.setMaxDamage(maxDamage); this }
+  override def setMaxStackSize( stackSize : Int ) : ItemModule = { super.setMaxStackSize(stackSize); this }
+  override def setNoRepair() : ItemModule = { super.setNoRepair(); this }
+  override def setPotionEffect( effect : String ) : ItemModule = { super.setPotionEffect(effect); this }
+  override def setTextureName( texture : String ) : ItemModule = { super.setTextureName(texture); this }
+  override def setUnlocalizedName( name : String ) : ItemModule = { super.setUnlocalizedName(name); this }
 }

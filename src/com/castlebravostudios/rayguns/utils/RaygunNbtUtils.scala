@@ -1,16 +1,16 @@
 package com.castlebravostudios.rayguns.utils
 
 import net.minecraft.nbt.NBTTagCompound
-import com.castlebravostudios.rayguns.api.items.ItemModule
+import com.castlebravostudios.rayguns.api.items.RaygunModule
 import net.minecraft.item.ItemStack
 import com.castlebravostudios.rayguns.api.BeamRegistry
 import com.castlebravostudios.rayguns.api.ModuleRegistry
 import com.castlebravostudios.rayguns.blocks.gunbench.GunBenchTileEntity
-import com.castlebravostudios.rayguns.api.items.ItemBody
-import com.castlebravostudios.rayguns.api.items.ItemChamber
-import com.castlebravostudios.rayguns.api.items.ItemLens
-import com.castlebravostudios.rayguns.api.items.ItemAccessory
-import com.castlebravostudios.rayguns.api.items.ItemBattery
+import com.castlebravostudios.rayguns.api.items.RaygunBody
+import com.castlebravostudios.rayguns.api.items.RaygunChamber
+import com.castlebravostudios.rayguns.api.items.RaygunLens
+import com.castlebravostudios.rayguns.api.items.RaygunAccessory
+import com.castlebravostudios.rayguns.api.items.RaygunBattery
 import com.castlebravostudios.rayguns.items.misc.RayGun
 import com.castlebravostudios.rayguns.items.misc.BrokenGun
 import net.minecraft.util.StatCollector
@@ -52,7 +52,7 @@ object RaygunNbtUtils {
       case _ => None
     }.toList
 
-  private def getComponent[T <: ItemModule](item : ItemStack, key: String )(f : String => Option[T]) : Option[T] = {
+  private def getComponent[T <: RaygunModule](item : ItemStack, key: String )(f : String => Option[T]) : Option[T] = {
     for { name <- getModuleName( item, key )
           module <- f( name )
         } yield module
@@ -94,7 +94,7 @@ object RaygunNbtUtils {
     tag
   }
 
-  private def setTag( tag : NBTTagCompound, str : String )( item : ItemModule ) : Unit = {
+  private def setTag( tag : NBTTagCompound, str : String )( item : RaygunModule ) : Unit = {
     tag.setString(str, item.moduleKey)
   }
 
@@ -116,7 +116,7 @@ object RaygunNbtUtils {
    * Note that not all of the replacements are used in the default en_US language file.
    */
   def getRaygunName( components : GunComponents ) : String = {
-    def translate( opt : ItemModule) = I18n.getString( opt.nameSegmentKey )
+    def translate( opt : RaygunModule) = I18n.getString( opt.nameSegmentKey )
 
     I18n.getString("rayguns.RaygunNamePattern")
       .replaceAll("@chamber@", translate( components.chamber ) )
@@ -171,7 +171,7 @@ object RaygunNbtUtils {
   }
 
   def getMaxDamage( item: ItemStack ) : Int = item.getItem() match {
-    case bat: ItemBattery => bat.maxCapacity
+    case bat: RaygunBattery => bat.maxCapacity
     case _ => getComponents( item ).map( _.battery.maxCapacity ).getOrElse(Integer.MAX_VALUE)
   }
 

@@ -8,6 +8,7 @@ import net.minecraft.block.Block
 import com.castlebravostudios.rayguns.items.misc.GlassGainMedium
 import com.castlebravostudios.rayguns.items.misc.GlowstoneGainMedium
 import com.castlebravostudios.rayguns.items.misc.DiamondGainMedium
+import com.castlebravostudios.rayguns.api.items.RaygunChamber
 
 object RecipeRegisterer {
 
@@ -97,7 +98,7 @@ object RecipeRegisterer {
   def registerEmitter( tier : RecipeTier, emitter : Item, top : AnyRef, right : AnyRef, bottom : AnyRef, left : AnyRef ) : Unit =
     tier.registerEmitter(emitter, top, right, bottom, left)
 
-  def registerChamber( tier : RecipeTier, chamber : Item, emitter : Item ) : Unit = {
-    tier.registerChamber(chamber, emitter)
+  def registerChamber( tier : RecipeTier, chamber : RaygunChamber, emitter : Item ) : Unit = {
+    tier.registerChamber(chamber.item, emitter)
   }
 }

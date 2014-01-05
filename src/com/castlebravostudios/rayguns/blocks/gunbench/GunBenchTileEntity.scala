@@ -6,11 +6,11 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.nbt.NBTTagList
-import com.castlebravostudios.rayguns.api.items.ItemBody
-import com.castlebravostudios.rayguns.api.items.ItemLens
-import com.castlebravostudios.rayguns.api.items.ItemChamber
-import com.castlebravostudios.rayguns.api.items.ItemBattery
-import com.castlebravostudios.rayguns.api.items.ItemAccessory
+import com.castlebravostudios.rayguns.api.items.RaygunBody
+import com.castlebravostudios.rayguns.api.items.RaygunLens
+import com.castlebravostudios.rayguns.api.items.RaygunChamber
+import com.castlebravostudios.rayguns.api.items.RaygunBattery
+import com.castlebravostudios.rayguns.api.items.RaygunAccessory
 import net.minecraft.item.Item
 import com.castlebravostudios.rayguns.items.misc.BrokenGun
 import scala.Array.canBuildFrom
@@ -18,6 +18,8 @@ import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
 import com.castlebravostudios.rayguns.items.misc.RayGun
 import com.castlebravostudios.rayguns.blocks.BaseInventoryTileEntity
 import com.castlebravostudios.rayguns.utils.GunComponents
+import com.castlebravostudios.rayguns.api.items.RaygunModule
+import com.castlebravostudios.rayguns.api.items.ItemModule
 
 class GunBenchTileEntity extends BaseInventoryTileEntity {
   private[this] val inv = Array.fill[ItemStack](6)(null)
@@ -35,7 +37,7 @@ class GunBenchTileEntity extends BaseInventoryTileEntity {
   }
 
   def onSlotChanged( slot : Int ) : Unit = {
-      def toStack( item : Item ) = new ItemStack( item, 1 )
+      def toStack( module : RaygunModule ) = new ItemStack( module.item, 1 )
       def setSlot( slot : Int ) ( item : ItemStack ) = setInventorySlotContents( slot, item )
       if ( slot == OUTPUT_SLOT && inv(OUTPUT_SLOT) != null ) {
         val components = getAllValidComponents( inv(OUTPUT_SLOT) )
@@ -66,15 +68,21 @@ class GunBenchTileEntity extends BaseInventoryTileEntity {
     }
   }
 
-  private def body = getItem(BODY_SLOT).asInstanceOf[ItemBody]
-  private def chamber = getItem(CHAMBER_SLOT).asInstanceOf[ItemChamber]
-  private def battery = getItem(BATTERY_SLOT).asInstanceOf[ItemBattery]
-  private def lens = Option( getItem(LENS_SLOT).asInstanceOf[ItemLens] )
-  private def accessory = Option( getItem(ACC_SLOT).asInstanceOf[ItemAccessory] )
+  private def body = getModule(BODY_SLOT).asInstanceOf[RaygunBody]
+  private def chamber = getModule(CHAMBER_SLOT).asInstanceOf[RaygunChamber]
+  private def battery = getModule(BATTERY_SLOT).asInstanceOf[RaygunBattery]
+  private def lens = Option( getModule(LENS_SLOT).asInstanceOf[RaygunLens] )
+  private def accessory = Option( getModule(ACC_SLOT).asInstanceOf[RaygunAccessory] )
 
-  private def getItem( slot : Int ) : Item = {
+  private def getModule( slot : Int ) : RaygunModule = {
     val stack = inv(slot)
-    if ( stack == null ) null else Item.itemsList(stack.itemID)
+    if ( stack == null ) null else {
+      val item = Item.itemsList(stack.itemID)
+      item match {
+        case i : ItemModule => i.module
+        case _ => null
+      }
+    }
   }
 
   override def getInventoryStackLimit() : Int = 1
@@ -83,12 +91,16 @@ class GunBenchTileEntity extends BaseInventoryTileEntity {
   override def isInvNameLocalized : Boolean = false
   override def isItemValidForSlot(slot : Int, stack : ItemStack) : Boolean ={
     val item = stack.getItem
+    val module = item match {
+      case i : ItemModule => i.module
+      case _ => null
+    }
     slot match {
-      case BODY_SLOT => item.isInstanceOf[ItemBody]
-      case LENS_SLOT => item.isInstanceOf[ItemLens]
-      case CHAMBER_SLOT => item.isInstanceOf[ItemChamber]
-      case BATTERY_SLOT => item.isInstanceOf[ItemBattery]
-      case ACC_SLOT => item.isInstanceOf[ItemAccessory]
+      case BODY_SLOT => module.isInstanceOf[RaygunBody]
+      case LENS_SLOT => module.isInstanceOf[RaygunLens]
+      case CHAMBER_SLOT => module.isInstanceOf[RaygunChamber]
+      case BATTERY_SLOT => module.isInstanceOf[RaygunBattery]
+      case ACC_SLOT => module.isInstanceOf[RaygunAccessory]
       case OUTPUT_SLOT => ( item == RayGun || item == BrokenGun ) &&
                           inv.forall( _ == null )
     }

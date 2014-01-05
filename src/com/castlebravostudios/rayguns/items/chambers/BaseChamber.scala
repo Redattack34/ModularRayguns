@@ -1,6 +1,6 @@
 package com.castlebravostudios.rayguns.items.chambers
 
-import com.castlebravostudios.rayguns.api.items.ItemChamber
+import com.castlebravostudios.rayguns.api.items.RaygunChamber
 import com.castlebravostudios.rayguns.mod.ModularRayguns
 import net.minecraft.item.Item
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer
@@ -20,12 +20,11 @@ import com.castlebravostudios.rayguns.entities.BaseBoltEntity
 import com.castlebravostudios.rayguns.entities.Shootable
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.world.World
+import com.castlebravostudios.rayguns.api.items.BaseRaygunModule
 
 
-abstract class BaseChamber( id : Int ) extends Item( id ) with ItemChamber {
+abstract class BaseChamber extends BaseRaygunModule with RaygunChamber {
   import RecipeRegisterer._
-
-  setCreativeTab( ModularRayguns.raygunsTab )
 
   def shotEffect : BaseEffect
 

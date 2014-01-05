@@ -1,29 +1,32 @@
 package com.castlebravostudios.rayguns.items.accessories
 
 import java.util.Random
-
 import scala.collection.mutable.WeakHashMap
-
 import com.castlebravostudios.rayguns.api.ModuleRegistry
-import com.castlebravostudios.rayguns.api.items.ItemAccessory
+import com.castlebravostudios.rayguns.api.items.RaygunAccessory
 import com.castlebravostudios.rayguns.items.emitters.Emitters
 import com.castlebravostudios.rayguns.mod.Config
 import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
-
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.Block
 import net.minecraft.entity.Entity
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.world.World
+import com.castlebravostudios.rayguns.api.items.BaseRaygunModule
+import com.castlebravostudios.rayguns.api.items.ItemModule
+import com.castlebravostudios.rayguns.mod.ModularRayguns
 
-object SolarPanel extends Item( Config.solarPanel ) with ItemAccessory {
+object SolarPanel extends BaseRaygunModule with RaygunAccessory {
   val moduleKey = "SolarPanel"
   val powerModifier = 1.0
   val nameSegmentKey = "rayguns.SolarPanel.segment"
 
-  setUnlocalizedName("rayguns.SolarPanel")
-  setTextureName("rayguns:solar_panel")
+  def createItem( id : Int ) = new ItemModule( id, this )
+    .setUnlocalizedName("rayguns.SolarPanel")
+    .setTextureName("rayguns:solar_panel")
+    .setCreativeTab( ModularRayguns.raygunsTab )
+    .setMaxStackSize(1)
 
   private[this] val entityMap = WeakHashMap[Entity, Boolean]()
   private[this] val random = new Random()
@@ -52,13 +55,13 @@ object SolarPanel extends Item( Config.solarPanel ) with ItemAccessory {
     !isRaining && world.isDaytime() && world.canBlockSeeTheSky(x, y, z)
   }
 
-  ModuleRegistry.registerModule(this)
-  GameRegistry.addRecipe( new ItemStack( this, 1 ),
-    "S  ",
-    "GGG",
-    "RIR",
-    'S' : Character, Emitters.shrinkRayEmitter,
-    'I' : Character, Item.ingotIron,
-    'R' : Character, Block.blockRedstone,
-    'G' : Character, Block.glass )
+  def registerRecipe() : Unit =
+    GameRegistry.addRecipe( new ItemStack( item, 1 ),
+        "S  ",
+        "GGG",
+        "RIR",
+        'S' : Character, Emitters.shrinkRayEmitter,
+        'I' : Character, Item.ingotIron,
+        'R' : Character, Block.blockRedstone,
+        'G' : Character, Block.glass )
 }

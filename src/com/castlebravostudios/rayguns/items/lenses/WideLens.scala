@@ -2,23 +2,28 @@ package com.castlebravostudios.rayguns.items.lenses
 
 import com.castlebravostudios.rayguns.api.LensGrinderRecipeRegistry
 import com.castlebravostudios.rayguns.api.ModuleRegistry
-import com.castlebravostudios.rayguns.api.items.ItemLens
+import com.castlebravostudios.rayguns.api.items.RaygunLens
 import com.castlebravostudios.rayguns.mod.Config
-
 import net.minecraft.block.Block
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
+import com.castlebravostudios.rayguns.api.items.BaseRaygunModule
+import com.castlebravostudios.rayguns.api.items.ItemModule
+import com.castlebravostudios.rayguns.mod.ModularRayguns
 
-object WideLens extends Item( Config.wideLens ) with ItemLens {
+object WideLens extends BaseRaygunModule with RaygunLens {
   val moduleKey = "WideLens"
   val powerModifier = 3.0
   val nameSegmentKey = "rayguns.WideLens.segment"
 
-  setUnlocalizedName("rayguns.WideLens")
-  setTextureName("rayguns:lens_wide")
+  def createItem( id : Int ) = new ItemModule( id, this )
+    .setUnlocalizedName("rayguns.WideLens")
+    .setTextureName("rayguns:lens_wide")
+    .setCreativeTab( ModularRayguns.raygunsTab )
+    .setMaxStackSize(1)
 
-  ModuleRegistry.registerModule(this)
-  LensGrinderRecipeRegistry.register( 1200, new ItemStack(this),
+  def registerRecipe() : Unit =
+    LensGrinderRecipeRegistry.register( 1200, new ItemStack(item),
       "IGI",
       "GDG",
       "IGI",

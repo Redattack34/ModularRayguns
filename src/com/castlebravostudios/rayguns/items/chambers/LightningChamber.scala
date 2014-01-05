@@ -1,7 +1,6 @@
 package com.castlebravostudios.rayguns.items.chambers
 
 import com.castlebravostudios.rayguns.api.ModuleRegistry
-
 import com.castlebravostudios.rayguns.entities.BaseBeamEntity
 import com.castlebravostudios.rayguns.entities.effects.LightningBeamEntity
 import com.castlebravostudios.rayguns.entities.effects.LightningEffect
@@ -14,25 +13,31 @@ import com.castlebravostudios.rayguns.utils.RaytraceUtils
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer._
 import com.castlebravostudios.rayguns.utils.Vector3
-
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.world.World
+import com.castlebravostudios.rayguns.api.items.ItemModule
+import com.castlebravostudios.rayguns.mod.ModularRayguns
 
-object LightningChamber extends BaseChamber( Config.chamberLightning ) {
+object LightningChamber extends BaseChamber {
   val moduleKey = "LightningChamber"
   val powerModifier = 2.0
   val shotEffect = LightningEffect
   val nameSegmentKey = "rayguns.LightningChamber.segment"
 
-  setUnlocalizedName("rayguns.LightningChamber")
-  setTextureName("rayguns:chamber_lightning")
+  def createItem( id : Int ) = new ItemModule( id, this )
+    .setUnlocalizedName("rayguns.LightningChamber")
+    .setTextureName("rayguns:chamber_lightning")
+    .setCreativeTab( ModularRayguns.raygunsTab )
+    .setMaxStackSize(1)
 
-  ModuleRegistry.registerModule(this)
-  RecipeRegisterer.registerChamber( Tier1, this, Emitters.lightningEmitter)
+  def registerRecipe() : Unit =
+    RecipeRegisterer.registerChamber( Tier1, this, Emitters.lightningEmitter)
 
-  registerSingleShotHandlers()
-  registerScatterShotHandler()
-  registerChargedShotHandler()
+  def registerShotHandlers() : Unit = {
+    registerSingleShotHandlers()
+    registerScatterShotHandler()
+    registerChargedShotHandler()
+  }
 
   override def initBeam( world : World, player : EntityPlayer, beam : BaseBeamEntity ) : Unit = {
     if ( world.isOnClient ) {

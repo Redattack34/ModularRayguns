@@ -1,26 +1,32 @@
 package com.castlebravostudios.rayguns.items.chambers
 
 import com.castlebravostudios.rayguns.api.ModuleRegistry
-
 import com.castlebravostudios.rayguns.entities.effects.TractorEffect
 import com.castlebravostudios.rayguns.items.emitters.Emitters
 import com.castlebravostudios.rayguns.mod.Config
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer._
+import com.castlebravostudios.rayguns.api.items.ItemModule
+import com.castlebravostudios.rayguns.mod.ModularRayguns
 
-object TractorChamber extends BaseChamber( Config.chamberTractor ) {
+object TractorChamber extends BaseChamber {
   val moduleKey = "TractorChamber"
   val powerModifier = 1.5
   val shotEffect = TractorEffect
   val nameSegmentKey = "rayguns.TractorChamber.segment"
 
-  setUnlocalizedName("rayguns.TractorChamber")
-  setTextureName("rayguns:chamber_tractor")
+  def createItem( id : Int ) = new ItemModule( id, this )
+    .setUnlocalizedName("rayguns.TractorChamber")
+    .setTextureName("rayguns:chamber_tractor")
+    .setCreativeTab( ModularRayguns.raygunsTab )
+    .setMaxStackSize(1)
 
-  ModuleRegistry.registerModule(this)
-  RecipeRegisterer.registerChamber( Tier2, this, Emitters.tractorEmitter)
+  def registerRecipe() : Unit =
+    RecipeRegisterer.registerChamber( Tier2, this, Emitters.tractorEmitter)
 
-  registerSingleShotHandlers()
-  registerScatterShotHandler()
-  registerChargedShotHandler()
+  def registerShotHandlers() : Unit = {
+    registerSingleShotHandlers()
+    registerScatterShotHandler()
+    registerChargedShotHandler()
+  }
 }

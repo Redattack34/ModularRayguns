@@ -5,7 +5,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.world.World
 import net.minecraft.entity.Entity
 
-trait ItemAccessory extends ItemModule {
+trait RaygunAccessory extends RaygunModule {
 
   def onGunUpdate( world : World, entity : Entity, stack : ItemStack ) : Unit = Unit
 }

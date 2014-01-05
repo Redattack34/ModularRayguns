@@ -49,6 +49,6 @@ object ModularRayguns {
   }
 
   val raygunsTab  = new CreativeTabs("tabRayguns") {
-    override def getIconItemStack : ItemStack = new ItemStack( FireflyBody, 1, 0 )
+    override def getIconItemStack : ItemStack = new ItemStack( FireflyBody.item, 1, 0 )
   }
 }

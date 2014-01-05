@@ -1,28 +1,32 @@
 package com.castlebravostudios.rayguns.items.batteries
 
 import com.castlebravostudios.rayguns.api.ModuleRegistry
-
-import com.castlebravostudios.rayguns.api.items.ItemBattery
+import com.castlebravostudios.rayguns.api.items.BaseRaygunModule
+import com.castlebravostudios.rayguns.api.items.ItemModule
+import com.castlebravostudios.rayguns.api.items.RaygunBattery
 import com.castlebravostudios.rayguns.items.emitters.Emitters
-import com.castlebravostudios.rayguns.mod.Config
-
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.Block
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
+import com.castlebravostudios.rayguns.mod.ModularRayguns
 
-object BasicBattery extends Item( Config.basicBattery ) with ItemBattery {
+object BasicBattery extends BaseRaygunModule with RaygunBattery {
 
   val moduleKey = "BasicBattery"
   val powerModifier = 1.0d;
   val nameSegmentKey = "rayguns.BasicBattery.segment"
+  val maxCapacity = 1000
 
-  setMaxDamage( 1000 )
-  setUnlocalizedName("rayguns.BasicBattery")
-  setTextureName("rayguns:battery_basic")
+  def createItem( id : Int ) = new ItemModule( id, this )
+    .setMaxDamage( maxCapacity )
+    .setUnlocalizedName("rayguns.BasicBattery")
+    .setTextureName("rayguns:battery_basic")
+    .setCreativeTab( ModularRayguns.raygunsTab )
+    .setMaxStackSize(1)
 
-  ModuleRegistry.registerModule(this)
-  GameRegistry.addRecipe( new ItemStack( this, 1 ),
+  def registerRecipe() : Unit =
+    GameRegistry.addRecipe( new ItemStack( item, 1 ),
       "SG ",
       "IRI",
       "IRI",

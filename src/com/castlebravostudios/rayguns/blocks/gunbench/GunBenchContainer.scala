@@ -1,10 +1,10 @@
 package com.castlebravostudios.rayguns.blocks.gunbench
 
-import com.castlebravostudios.rayguns.api.items.ItemAccessory
-import com.castlebravostudios.rayguns.api.items.ItemBattery
-import com.castlebravostudios.rayguns.api.items.ItemBody
-import com.castlebravostudios.rayguns.api.items.ItemChamber
-import com.castlebravostudios.rayguns.api.items.ItemLens
+import com.castlebravostudios.rayguns.api.items.RaygunAccessory
+import com.castlebravostudios.rayguns.api.items.RaygunBattery
+import com.castlebravostudios.rayguns.api.items.RaygunBody
+import com.castlebravostudios.rayguns.api.items.RaygunChamber
+import com.castlebravostudios.rayguns.api.items.RaygunLens
 import com.castlebravostudios.rayguns.blocks.BaseContainer
 import com.castlebravostudios.rayguns.blocks.GuiBlockSlot
 import com.castlebravostudios.rayguns.items.misc.RayGun
@@ -36,11 +36,11 @@ class GunBenchContainer( inventoryPlayer : InventoryPlayer, entity : GunBenchTil
 
   protected override def transferStackToCustomSlots( player : EntityPlayer, slot : Int, stackInSlot: ItemStack ) : Boolean = {
     val targetSlot = Item.itemsList(stackInSlot.itemID) match {
-      case _: ItemBody => BODY_SLOT
-      case _: ItemLens => LENS_SLOT
-      case _: ItemChamber => CHAMBER_SLOT
-      case _: ItemBattery => BATTERY_SLOT
-      case _: ItemAccessory => ACC_SLOT
+      case _: RaygunBody => BODY_SLOT
+      case _: RaygunLens => LENS_SLOT
+      case _: RaygunChamber => CHAMBER_SLOT
+      case _: RaygunBattery => BATTERY_SLOT
+      case _: RaygunAccessory => ACC_SLOT
       case RayGun => OUTPUT_SLOT
       case _ => return false
     }
