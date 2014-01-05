@@ -30,9 +30,11 @@ object LightningChamber extends BaseChamber {
   def registerRecipe() : Unit =
     RecipeRegisterer.registerChamber( Tier1, this, Emitters.lightningEmitter)
 
-  registerSingleShotHandlers()
-  registerScatterShotHandler()
-  registerChargedShotHandler()
+  def registerShotHandlers() : Unit = {
+    registerSingleShotHandlers()
+    registerScatterShotHandler()
+    registerChargedShotHandler()
+  }
 
   override def initBeam( world : World, player : EntityPlayer, beam : BaseBeamEntity ) : Unit = {
     if ( world.isOnClient ) {

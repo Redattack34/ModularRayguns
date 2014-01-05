@@ -21,5 +21,5 @@ object ChargeLens extends BaseRaygunModule with RaygunLens {
 
   def registerRecipe() : Unit =
     GameRegistry.addShapelessRecipe( new ItemStack( item, 1 ),
-      PreciseLens, BasicBattery )
+      PreciseLens.item, BasicBattery.item )
 }

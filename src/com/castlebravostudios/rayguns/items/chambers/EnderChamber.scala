@@ -21,7 +21,9 @@ object EnderChamber extends BaseChamber {
   def registerRecipe() : Unit =
     RecipeRegisterer.registerChamber(Tier2, this, Emitters.enderEmitter )
 
-  registerSingleShotHandlers()
-  registerScatterShotHandler()
-  registerChargedShotHandler()
+  def registerShotHandlers() : Unit = {
+    registerSingleShotHandlers()
+    registerScatterShotHandler()
+    registerChargedShotHandler()
+  }
 }

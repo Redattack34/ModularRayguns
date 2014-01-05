@@ -21,9 +21,11 @@ object Tier1CuttingChamber extends BaseChamber {
   def registerRecipe() : Unit =
     RecipeRegisterer.registerChamber( Tier1, this, Emitters.tier1CuttingEmitter)
 
-  registerSingleShotHandlers()
-  registerScatterShotHandler()
-  registerChargedShotHandler()
+  def registerShotHandlers() : Unit = {
+    registerSingleShotHandlers()
+    registerScatterShotHandler()
+    registerChargedShotHandler()
+  }
 }
 object Tier2CuttingChamber extends BaseChamber {
   val moduleKey = "Tier2CuttingChamber"
@@ -38,9 +40,11 @@ object Tier2CuttingChamber extends BaseChamber {
   def registerRecipe() : Unit =
     RecipeRegisterer.registerChamber( Tier2, this, Emitters.tier2CuttingEmitter)
 
-  registerSingleShotHandlers()
-  registerScatterShotHandler()
-  registerChargedShotHandler()
+  def registerShotHandlers() : Unit = {
+    registerSingleShotHandlers()
+    registerScatterShotHandler()
+    registerChargedShotHandler()
+  }
 }
 object Tier3CuttingChamber extends BaseChamber {
   val moduleKey = "Tier3CuttingChamber"
@@ -55,7 +59,9 @@ object Tier3CuttingChamber extends BaseChamber {
   def registerRecipe() : Unit =
     RecipeRegisterer.registerChamber( Tier3, this, Emitters.tier3CuttingEmitter)
 
-  registerSingleShotHandlers()
-  registerScatterShotHandler()
-  registerChargedShotHandler()
+  def registerShotHandlers() : Unit = {
+    registerSingleShotHandlers()
+    registerScatterShotHandler()
+    registerChargedShotHandler()
+  }
 }

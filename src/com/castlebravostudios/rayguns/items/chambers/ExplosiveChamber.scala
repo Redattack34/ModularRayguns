@@ -21,5 +21,5 @@ object ExplosiveChamber extends BaseChamber {
   def registerRecipe() : Unit =
     RecipeRegisterer.registerChamber( Tier3, this, Emitters.explosiveEmitter)
 
-  registerSingleShotHandlers()
+  def registerShotHandlers() : Unit = registerSingleShotHandlers()
 }

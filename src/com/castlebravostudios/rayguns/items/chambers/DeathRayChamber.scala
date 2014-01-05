@@ -21,6 +21,8 @@ object DeathRayChamber extends BaseChamber {
   def registerRecipe() : Unit =
     RecipeRegisterer.registerChamber(Tier3, this, Emitters.deathRayEmitter)
 
-  registerSingleShotHandlers()
-  registerScatterShotHandler()
+  def registerShotHandlers() : Unit = {
+    registerSingleShotHandlers()
+    registerScatterShotHandler()
+  }
 }

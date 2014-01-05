@@ -21,7 +21,9 @@ object ImpulseChamber extends BaseChamber {
   def registerRecipe() : Unit =
     RecipeRegisterer.registerChamber( Tier2, this, Emitters.impulseEmitter)
 
-  registerSingleShotHandlers()
-  registerScatterShotHandler()
-  registerChargedShotHandler()
+  def registerShotHandlers() : Unit = {
+    registerSingleShotHandlers()
+    registerScatterShotHandler()
+    registerChargedShotHandler()
+  }
 }

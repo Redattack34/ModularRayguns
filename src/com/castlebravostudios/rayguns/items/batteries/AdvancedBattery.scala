@@ -30,5 +30,5 @@ object AdvancedBattery extends BaseRaygunModule with RaygunBattery {
       'S' : Character, Emitters.shrinkRayEmitter,
       'G' : Character, Item.ingotGold,
       'I' : Character, Item.ingotIron,
-      'B' : Character, BasicBattery )
+      'B' : Character, BasicBattery.item )
 }

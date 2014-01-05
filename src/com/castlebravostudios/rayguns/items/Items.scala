@@ -9,8 +9,12 @@ import com.castlebravostudios.rayguns.items.lenses._
 import com.castlebravostudios.rayguns.items.misc._
 import net.minecraft.item.Item
 import com.castlebravostudios.rayguns.items.chambers.LaserChamber
+import com.castlebravostudios.rayguns.api.ModuleRegistrationHelper
+import com.castlebravostudios.rayguns.mod.Config
 
 object Items {
+
+  import ModuleRegistrationHelper._
 
   def registerItems : Unit = {
     registerItem( RayGun )
@@ -19,24 +23,6 @@ object Items {
     registerItem( GlassGainMedium )
     registerItem( GlowstoneGainMedium )
     registerItem( DiamondGainMedium )
-
-    registerItem( BasicBattery )
-    registerItem( AdvancedBattery )
-    registerItem( UltimateBattery )
-    registerItem( InfiniteBattery )
-
-    registerItem( PreciseLens )
-    registerItem( WideLens )
-    registerItem( PreciseBeamLens )
-    registerItem( ChargeLens )
-    registerItem( ChargeBeamLens )
-
-    registerItem( ExtendedBattery )
-    registerItem( RefireCapacitor )
-    registerItem( SolarPanel )
-
-    registerItem( MantisBody )
-    registerItem( FireflyBody )
 
     registerItem( Emitters.shrinkRayEmitter )
     registerItem( Emitters.laserEmitter )
@@ -54,20 +40,38 @@ object Items {
     registerItem( Emitters.tier2CuttingEmitter )
     registerItem( Emitters.tier3CuttingEmitter )
 
-    registerItem( LaserChamber )
-    registerItem( HeatRayChamber )
-    registerItem( LifeForceChamber )
-    registerItem( FrostRayChamber )
-    registerItem( FortifiedSunlightChamber )
-    registerItem( ExplosiveChamber )
-    registerItem( DeathRayChamber )
-    registerItem( EnderChamber )
-    registerItem( LightningChamber )
-    registerItem( ImpulseChamber )
-    registerItem( TractorChamber )
-    registerItem( Tier1CuttingChamber )
-    registerItem( Tier2CuttingChamber )
-    registerItem( Tier3CuttingChamber )
+    registerModule( BasicBattery, Config.basicBattery )
+    registerModule( AdvancedBattery, Config.advancedBattery )
+    registerModule( UltimateBattery, Config.ultimateBattery )
+    registerModule( InfiniteBattery, Config.infiniteBattery )
+
+    registerModule( PreciseLens, Config.preciseLens )
+    registerModule( WideLens, Config.wideLens )
+    registerModule( PreciseBeamLens, Config.preciseBeamLens )
+    registerModule( ChargeLens, Config.chargeLens )
+    registerModule( ChargeBeamLens, Config.chargeBeamLens )
+
+    registerModule( ExtendedBattery, Config.extendedBattery )
+    registerModule( RefireCapacitor, Config.refireCapacitor )
+    registerModule( SolarPanel, Config.solarPanel )
+
+    registerModule( MantisBody, Config.mantisBody )
+    registerModule( FireflyBody, Config.fireflyBody )
+
+    registerModule( LaserChamber, Config.chamberLaser )
+    registerModule( HeatRayChamber, Config.chamberHeatRay )
+    registerModule( LifeForceChamber, Config.chamberLifeForce )
+    registerModule( FrostRayChamber, Config.chamberFrostRay )
+    registerModule( FortifiedSunlightChamber, Config.chamberFortifiedSunlight )
+    registerModule( ExplosiveChamber, Config.chamberExplosive )
+    registerModule( DeathRayChamber, Config.chamberDeathRay )
+    registerModule( EnderChamber, Config.chamberEnder )
+    registerModule( LightningChamber, Config.chamberLightning )
+    registerModule( ImpulseChamber, Config.chamberImpulse )
+    registerModule( TractorChamber, Config.chamberTractor )
+    registerModule( Tier1CuttingChamber, Config.chamberCuttingTier1 )
+    registerModule( Tier2CuttingChamber, Config.chamberCuttingTier2 )
+    registerModule( Tier3CuttingChamber, Config.chamberCuttingTier3 )
   }
 
   /**

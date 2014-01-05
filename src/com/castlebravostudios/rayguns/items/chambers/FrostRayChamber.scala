@@ -22,7 +22,9 @@ object FrostRayChamber extends BaseChamber {
   def registerRecipe() : Unit =
     RecipeRegisterer.registerChamber( Tier2, this, Emitters.frostRayEmitter)
 
-  registerSingleShotHandlers()
-  registerScatterShotHandler()
-  registerChargedShotHandler()
+  def registerShotHandlers() : Unit = {
+    registerSingleShotHandlers()
+    registerScatterShotHandler()
+    registerChargedShotHandler()
+  }
 }

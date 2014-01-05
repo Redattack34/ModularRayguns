@@ -8,14 +8,11 @@ abstract class BaseRaygunModule extends RaygunModule {
   def item : ItemModule = this._item
 
   def registerItem( id : Int ) : Unit = {
-    if ( id <= 0 ) {
-      this._item = createItem( id )
-    }
+    this._item = createItem( id )
   }
 
   /**
-   * Create an ItemModule with the given ID and configure it as necessary. ID
-   * will always be greater than zero.
+   * Create an ItemModule with the given ID and configure it as necessary.
    */
   protected def createItem( id : Int ) : ItemModule
 }
