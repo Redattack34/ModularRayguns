@@ -2,7 +2,7 @@ package com.castlebravostudios.rayguns.items.batteries
 
 import com.castlebravostudios.rayguns.api.ModuleRegistry
 
-import com.castlebravostudios.rayguns.api.items.ItemBattery
+import com.castlebravostudios.rayguns.api.items.RaygunBattery
 import com.castlebravostudios.rayguns.mod.Config
 import com.castlebravostudios.rayguns.utils.FireEvent
 
@@ -10,7 +10,7 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 
-object InfiniteBattery extends Item( Config.infiniteBattery ) with ItemBattery {
+object InfiniteBattery extends Item( Config.infiniteBattery ) with RaygunBattery {
   val moduleKey = "InfiniteBattery"
   val powerModifier = 1.0d;
   val nameSegmentKey = "rayguns.InfiniteBattery.segment"

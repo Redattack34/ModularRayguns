@@ -6,7 +6,7 @@ import com.castlebravostudios.rayguns.api.ModuleRegistry
 import net.minecraft.creativetab.CreativeTabs
 import com.castlebravostudios.rayguns.mod.ModularRayguns
 
-trait ItemModule extends Item {
+trait RaygunModule extends Item {
 
   /**
    * Get the module key for this module. This key will be stored in the NBT data

@@ -6,11 +6,11 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.nbt.NBTTagList
-import com.castlebravostudios.rayguns.api.items.ItemBody
-import com.castlebravostudios.rayguns.api.items.ItemLens
-import com.castlebravostudios.rayguns.api.items.ItemChamber
-import com.castlebravostudios.rayguns.api.items.ItemBattery
-import com.castlebravostudios.rayguns.api.items.ItemAccessory
+import com.castlebravostudios.rayguns.api.items.RaygunBody
+import com.castlebravostudios.rayguns.api.items.RaygunLens
+import com.castlebravostudios.rayguns.api.items.RaygunChamber
+import com.castlebravostudios.rayguns.api.items.RaygunBattery
+import com.castlebravostudios.rayguns.api.items.RaygunAccessory
 import net.minecraft.item.Item
 import com.castlebravostudios.rayguns.items.misc.BrokenGun
 import scala.Array.canBuildFrom
@@ -66,11 +66,11 @@ class GunBenchTileEntity extends BaseInventoryTileEntity {
     }
   }
 
-  private def body = getItem(BODY_SLOT).asInstanceOf[ItemBody]
-  private def chamber = getItem(CHAMBER_SLOT).asInstanceOf[ItemChamber]
-  private def battery = getItem(BATTERY_SLOT).asInstanceOf[ItemBattery]
-  private def lens = Option( getItem(LENS_SLOT).asInstanceOf[ItemLens] )
-  private def accessory = Option( getItem(ACC_SLOT).asInstanceOf[ItemAccessory] )
+  private def body = getItem(BODY_SLOT).asInstanceOf[RaygunBody]
+  private def chamber = getItem(CHAMBER_SLOT).asInstanceOf[RaygunChamber]
+  private def battery = getItem(BATTERY_SLOT).asInstanceOf[RaygunBattery]
+  private def lens = Option( getItem(LENS_SLOT).asInstanceOf[RaygunLens] )
+  private def accessory = Option( getItem(ACC_SLOT).asInstanceOf[RaygunAccessory] )
 
   private def getItem( slot : Int ) : Item = {
     val stack = inv(slot)
@@ -84,11 +84,11 @@ class GunBenchTileEntity extends BaseInventoryTileEntity {
   override def isItemValidForSlot(slot : Int, stack : ItemStack) : Boolean ={
     val item = stack.getItem
     slot match {
-      case BODY_SLOT => item.isInstanceOf[ItemBody]
-      case LENS_SLOT => item.isInstanceOf[ItemLens]
-      case CHAMBER_SLOT => item.isInstanceOf[ItemChamber]
-      case BATTERY_SLOT => item.isInstanceOf[ItemBattery]
-      case ACC_SLOT => item.isInstanceOf[ItemAccessory]
+      case BODY_SLOT => item.isInstanceOf[RaygunBody]
+      case LENS_SLOT => item.isInstanceOf[RaygunLens]
+      case CHAMBER_SLOT => item.isInstanceOf[RaygunChamber]
+      case BATTERY_SLOT => item.isInstanceOf[RaygunBattery]
+      case ACC_SLOT => item.isInstanceOf[RaygunAccessory]
       case OUTPUT_SLOT => ( item == RayGun || item == BrokenGun ) &&
                           inv.forall( _ == null )
     }

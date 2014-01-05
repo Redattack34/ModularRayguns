@@ -5,10 +5,10 @@ import net.minecraft.block.Block
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import com.castlebravostudios.rayguns.mod.Config
-import com.castlebravostudios.rayguns.api.items.ItemLens
+import com.castlebravostudios.rayguns.api.items.RaygunLens
 import com.castlebravostudios.rayguns.api.ModuleRegistry
 
-object PreciseLens extends Item( Config.preciseLens ) with ItemLens {
+object PreciseLens extends Item( Config.preciseLens ) with RaygunLens {
   val moduleKey = "PreciseLens"
   val powerModifier = 1.5
   val nameSegmentKey = "rayguns.PreciseLens.segment"

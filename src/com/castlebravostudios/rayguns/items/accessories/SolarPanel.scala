@@ -5,7 +5,7 @@ import java.util.Random
 import scala.collection.mutable.WeakHashMap
 
 import com.castlebravostudios.rayguns.api.ModuleRegistry
-import com.castlebravostudios.rayguns.api.items.ItemAccessory
+import com.castlebravostudios.rayguns.api.items.RaygunAccessory
 import com.castlebravostudios.rayguns.items.emitters.Emitters
 import com.castlebravostudios.rayguns.mod.Config
 import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
@@ -17,7 +17,7 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.world.World
 
-object SolarPanel extends Item( Config.solarPanel ) with ItemAccessory {
+object SolarPanel extends Item( Config.solarPanel ) with RaygunAccessory {
   val moduleKey = "SolarPanel"
   val powerModifier = 1.0
   val nameSegmentKey = "rayguns.SolarPanel.segment"

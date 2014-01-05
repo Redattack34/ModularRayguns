@@ -6,9 +6,9 @@ import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 
-trait ItemBattery extends ItemModule {
+trait RaygunBattery extends RaygunModule {
 
-  import ItemBattery._
+  import RaygunBattery._
   import RaygunNbtUtils._
 
   def maxCapacity = getMaxDamage
@@ -27,6 +27,6 @@ trait ItemBattery extends ItemModule {
     else false
   }
 }
-object ItemBattery {
+object RaygunBattery {
   val powerBase = 10
 }

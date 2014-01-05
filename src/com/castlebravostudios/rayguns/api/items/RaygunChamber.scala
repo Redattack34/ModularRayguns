@@ -1,5 +1,5 @@
 package com.castlebravostudios.rayguns.api.items
 
-trait ItemChamber extends ItemModule {
+trait RaygunChamber extends RaygunModule {
 
 }

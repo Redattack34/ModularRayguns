@@ -3,14 +3,14 @@ package com.castlebravostudios.rayguns.items.lenses
 import com.castlebravostudios.rayguns.api.LensGrinderRecipeRegistry
 import com.castlebravostudios.rayguns.api.ModuleRegistry
 
-import com.castlebravostudios.rayguns.api.items.ItemLens
+import com.castlebravostudios.rayguns.api.items.RaygunLens
 import com.castlebravostudios.rayguns.mod.Config
 
 import net.minecraft.block.Block
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 
-object PreciseBeamLens extends Item( Config.preciseBeamLens ) with ItemLens {
+object PreciseBeamLens extends Item( Config.preciseBeamLens ) with RaygunLens {
   val moduleKey = "PreciseBeamLens"
   val powerModifier = 1.2
   val nameSegmentKey = "rayguns.PreciseBeamLens.segment"

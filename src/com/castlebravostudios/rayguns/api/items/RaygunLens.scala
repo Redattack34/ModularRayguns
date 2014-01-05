@@ -1,6 +1,6 @@
 package com.castlebravostudios.rayguns.api.items
 
-trait ItemLens extends ItemModule {
+trait RaygunLens extends RaygunModule {
 
 
 }

@@ -2,7 +2,7 @@ package com.castlebravostudios.rayguns.items.accessories
 
 import com.castlebravostudios.rayguns.api.ModuleRegistry
 
-import com.castlebravostudios.rayguns.api.items.ItemAccessory
+import com.castlebravostudios.rayguns.api.items.RaygunAccessory
 import com.castlebravostudios.rayguns.items.emitters.Emitters
 import com.castlebravostudios.rayguns.mod.Config
 
@@ -11,7 +11,7 @@ import net.minecraft.block.Block
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 
-object ExtendedBattery extends Item( Config.extendedBattery ) with ItemAccessory {
+object ExtendedBattery extends Item( Config.extendedBattery ) with RaygunAccessory {
   val moduleKey = "ExtendedBattery"
   val powerModifier = 2.0 / 3.0
   val nameSegmentKey = "rayguns.ExtendedBattery.segment"

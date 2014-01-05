@@ -1,6 +1,6 @@
 package com.castlebravostudios.rayguns.items.chambers
 
-import com.castlebravostudios.rayguns.api.items.ItemChamber
+import com.castlebravostudios.rayguns.api.items.RaygunChamber
 import com.castlebravostudios.rayguns.mod.ModularRayguns
 import net.minecraft.item.Item
 import com.castlebravostudios.rayguns.utils.RecipeRegisterer
@@ -22,7 +22,7 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.world.World
 
 
-abstract class BaseChamber( id : Int ) extends Item( id ) with ItemChamber {
+abstract class BaseChamber( id : Int ) extends Item( id ) with RaygunChamber {
   import RecipeRegisterer._
 
   setCreativeTab( ModularRayguns.raygunsTab )

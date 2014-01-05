@@ -2,7 +2,7 @@ package com.castlebravostudios.rayguns.items.batteries
 
 import com.castlebravostudios.rayguns.api.ModuleRegistry
 
-import com.castlebravostudios.rayguns.api.items.ItemBattery
+import com.castlebravostudios.rayguns.api.items.RaygunBattery
 import com.castlebravostudios.rayguns.items.emitters.Emitters
 import com.castlebravostudios.rayguns.mod.Config
 
@@ -10,7 +10,7 @@ import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 
-object AdvancedBattery extends Item( Config.advancedBattery ) with ItemBattery {
+object AdvancedBattery extends Item( Config.advancedBattery ) with RaygunBattery {
 
   val moduleKey = "AdvancedBattery"
   val powerModifier = 1.0d;
