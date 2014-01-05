@@ -19,6 +19,7 @@ import com.castlebravostudios.rayguns.items.misc.RayGun
 import com.castlebravostudios.rayguns.blocks.BaseInventoryTileEntity
 import com.castlebravostudios.rayguns.utils.GunComponents
 import com.castlebravostudios.rayguns.api.items.RaygunModule
+import com.castlebravostudios.rayguns.api.items.ItemModule
 
 class GunBenchTileEntity extends BaseInventoryTileEntity {
   private[this] val inv = Array.fill[ItemStack](6)(null)
@@ -67,15 +68,21 @@ class GunBenchTileEntity extends BaseInventoryTileEntity {
     }
   }
 
-  private def body = getItem(BODY_SLOT).asInstanceOf[RaygunBody]
-  private def chamber = getItem(CHAMBER_SLOT).asInstanceOf[RaygunChamber]
-  private def battery = getItem(BATTERY_SLOT).asInstanceOf[RaygunBattery]
-  private def lens = Option( getItem(LENS_SLOT).asInstanceOf[RaygunLens] )
-  private def accessory = Option( getItem(ACC_SLOT).asInstanceOf[RaygunAccessory] )
+  private def body = getModule(BODY_SLOT).asInstanceOf[RaygunBody]
+  private def chamber = getModule(CHAMBER_SLOT).asInstanceOf[RaygunChamber]
+  private def battery = getModule(BATTERY_SLOT).asInstanceOf[RaygunBattery]
+  private def lens = Option( getModule(LENS_SLOT).asInstanceOf[RaygunLens] )
+  private def accessory = Option( getModule(ACC_SLOT).asInstanceOf[RaygunAccessory] )
 
-  private def getItem( slot : Int ) : Item = {
+  private def getModule( slot : Int ) : RaygunModule = {
     val stack = inv(slot)
-    if ( stack == null ) null else Item.itemsList(stack.itemID)
+    if ( stack == null ) null else {
+      val item = Item.itemsList(stack.itemID)
+      item match {
+        case i : ItemModule => i.module
+        case _ => null
+      }
+    }
   }
 
   override def getInventoryStackLimit() : Int = 1
@@ -84,12 +91,16 @@ class GunBenchTileEntity extends BaseInventoryTileEntity {
   override def isInvNameLocalized : Boolean = false
   override def isItemValidForSlot(slot : Int, stack : ItemStack) : Boolean ={
     val item = stack.getItem
+    val module = item match {
+      case i : ItemModule => i.module
+      case _ => null
+    }
     slot match {
-      case BODY_SLOT => item.isInstanceOf[RaygunBody]
-      case LENS_SLOT => item.isInstanceOf[RaygunLens]
-      case CHAMBER_SLOT => item.isInstanceOf[RaygunChamber]
-      case BATTERY_SLOT => item.isInstanceOf[RaygunBattery]
-      case ACC_SLOT => item.isInstanceOf[RaygunAccessory]
+      case BODY_SLOT => module.isInstanceOf[RaygunBody]
+      case LENS_SLOT => module.isInstanceOf[RaygunLens]
+      case CHAMBER_SLOT => module.isInstanceOf[RaygunChamber]
+      case BATTERY_SLOT => module.isInstanceOf[RaygunBattery]
+      case ACC_SLOT => module.isInstanceOf[RaygunAccessory]
       case OUTPUT_SLOT => ( item == RayGun || item == BrokenGun ) &&
                           inv.forall( _ == null )
     }
