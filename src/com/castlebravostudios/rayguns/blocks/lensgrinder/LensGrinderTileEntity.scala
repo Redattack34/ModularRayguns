@@ -12,6 +12,7 @@ import com.castlebravostudios.rayguns.api.LensGrinderRecipe
 import net.minecraft.item.crafting.ShapedRecipes
 import com.castlebravostudios.rayguns.api.LensGrinderRecipe
 import net.minecraft.nbt.NBTTagCompound
+import com.castlebravostudios.rayguns.api.LensGrinderRecipe
 
 class LensGrinderTileEntity extends BaseInventoryTileEntity {
 
@@ -21,6 +22,8 @@ class LensGrinderTileEntity extends BaseInventoryTileEntity {
   private[this] var output : ItemStack = null
 
   private[this] var remainingTime = 0
+
+  private[this] var recipe : Option[LensGrinderRecipe] = None
 
   override def getSizeInventory : Int = 10
   override def getStackInSlot( slot : Int ) : ItemStack =
@@ -38,12 +41,18 @@ class LensGrinderTileEntity extends BaseInventoryTileEntity {
   def onPickedUpFrom( slot : Int ) : Unit = Unit
   def onSlotChanged( slot : Int ) : Unit = Unit
 
-  private def resetRecipe() : Unit = {
-    val recipeOpt = getRecipe()
+  private def updateRecipe() : Unit = {
+    val recipeOpt = LensGrinderRecipeRegistry.getRecipe( input )
+
+    if ( recipeOpt == this.recipe ) {
+      return;
+    }
     if ( canGrind( recipeOpt ) ) {
+      this.recipe = recipeOpt
       remainingTime = recipeOpt.get.ticks
     }
     else {
+      this.recipe = None
       remainingTime = 0
     }
   }
@@ -63,19 +72,20 @@ class LensGrinderTileEntity extends BaseInventoryTileEntity {
       }
     }
     else {
-      resetRecipe()
+      updateRecipe()
     }
 
     super.updateEntity()
   }
 
   private def completeGrinding() : Unit = {
-    val recipe = getRecipe().get.recipe
+    val recipe = this.recipe.get.recipe
 
     subtractInput( recipe )
     addOutput( recipe )
 
-    resetRecipe()
+    this.recipe = None
+    updateRecipe()
   }
 
   private def subtractInput( recipe : ShapedRecipes ) : Unit = {
@@ -91,7 +101,7 @@ class LensGrinderTileEntity extends BaseInventoryTileEntity {
   }
 
   private def canGrind( ) : Boolean =
-    canGrind( getRecipe() )
+    canGrind( this.recipe )
   private def canGrind( recipe : Option[LensGrinderRecipe] ) : Boolean = {
     recipe match {
       case Some( r ) =>
@@ -108,7 +118,7 @@ class LensGrinderTileEntity extends BaseInventoryTileEntity {
 
   def isGrinding = remainingTime > 0
   def getTimeRemainingScaled( scale : Int ) : Int = {
-    def totalTime : Int = getRecipe().get.ticks
+    def totalTime : Int = this.recipe.get.ticks
     val factor = (totalTime - remainingTime).toDouble / totalTime.toDouble
     (factor * scale).toInt
   }
@@ -123,9 +133,6 @@ class LensGrinderTileEntity extends BaseInventoryTileEntity {
     tag.setShort( "RemainingTime", remainingTime.shortValue )
   }
 
-  private def getRecipe() : Option[LensGrinderRecipe] =
-    LensGrinderRecipeRegistry.getRecipe( input )
-
   val getInventoryStackLimit = 64
 
   override def getInvName : String = "rayguns.lensGrinderEntity"
@@ -138,7 +145,7 @@ class LensGrinderTileEntity extends BaseInventoryTileEntity {
     def canInteractWith( player : EntityPlayer ) = false
     override def onCraftMatrixChanged( inv : IInventory ) : Unit = {
       super.onCraftMatrixChanged(inv)
-      resetRecipe
+      updateRecipe
     }
   }
 }
