@@ -25,6 +25,4 @@ object InfiniteBattery extends BaseRaygunModule with RaygunBattery {
     .setMaxStackSize(1)
 
   override def drainPower( player : EntityPlayer, item : ItemStack, event : FireEvent ) : Boolean = true
-
-  def registerRecipe() : Unit = ()
 }

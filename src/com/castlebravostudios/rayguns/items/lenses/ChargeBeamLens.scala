@@ -21,8 +21,4 @@ object ChargeBeamLens extends BaseRaygunModule with RaygunLens {
     .setTextureName("rayguns:lens_charge_beam")
     .setCreativeTab( ModularRayguns.raygunsTab )
     .setMaxStackSize(1)
-
-  def registerRecipe() : Unit =
-    GameRegistry.addShapelessRecipe( new ItemStack( item, 1 ),
-        PreciseBeamLens.item, BasicBattery.item )
 }

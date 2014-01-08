@@ -3,7 +3,6 @@ package com.castlebravostudios.rayguns.items.chambers
 import com.castlebravostudios.rayguns.api.items.RaygunChamber
 import com.castlebravostudios.rayguns.mod.ModularRayguns
 import net.minecraft.item.Item
-import com.castlebravostudios.rayguns.utils.RecipeRegisterer
 import com.castlebravostudios.rayguns.api.BeamRegistry
 import com.castlebravostudios.rayguns.utils.DefaultFireEvent
 import com.castlebravostudios.rayguns.entities.effects.BaseEffect
@@ -24,7 +23,6 @@ import com.castlebravostudios.rayguns.api.items.BaseRaygunModule
 
 
 abstract class BaseChamber extends BaseRaygunModule with RaygunChamber {
-  import RecipeRegisterer._
 
   def shotEffect : BaseEffect
 

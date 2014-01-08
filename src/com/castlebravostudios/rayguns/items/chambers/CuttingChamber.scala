@@ -1,12 +1,7 @@
 package com.castlebravostudios.rayguns.items.chambers
 
-import com.castlebravostudios.rayguns.api.ModuleRegistry
-import com.castlebravostudios.rayguns.entities.effects.CuttingEffect
-import com.castlebravostudios.rayguns.items.emitters.Emitters
-import com.castlebravostudios.rayguns.mod.Config
-import com.castlebravostudios.rayguns.utils.RecipeRegisterer
-import com.castlebravostudios.rayguns.utils.RecipeRegisterer._
 import com.castlebravostudios.rayguns.api.items.ItemModule
+import com.castlebravostudios.rayguns.entities.effects.CuttingEffect
 import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 object Tier1CuttingChamber extends BaseChamber {
@@ -20,9 +15,6 @@ object Tier1CuttingChamber extends BaseChamber {
     .setTextureName("rayguns:chamber_cutting_t1")
     .setCreativeTab( ModularRayguns.raygunsTab )
     .setMaxStackSize(1)
-
-  def registerRecipe() : Unit =
-    RecipeRegisterer.registerChamber( Tier1, this, Emitters.tier1CuttingEmitter)
 
   def registerShotHandlers() : Unit = {
     registerSingleShotHandlers()
@@ -42,9 +34,6 @@ object Tier2CuttingChamber extends BaseChamber {
     .setCreativeTab( ModularRayguns.raygunsTab )
     .setMaxStackSize(1)
 
-  def registerRecipe() : Unit =
-    RecipeRegisterer.registerChamber( Tier2, this, Emitters.tier2CuttingEmitter)
-
   def registerShotHandlers() : Unit = {
     registerSingleShotHandlers()
     registerScatterShotHandler()
@@ -62,9 +51,6 @@ object Tier3CuttingChamber extends BaseChamber {
     .setTextureName("rayguns:chamber_cutting_t3")
     .setCreativeTab( ModularRayguns.raygunsTab )
     .setMaxStackSize(1)
-
-  def registerRecipe() : Unit =
-    RecipeRegisterer.registerChamber( Tier3, this, Emitters.tier3CuttingEmitter)
 
   def registerShotHandlers() : Unit = {
     registerSingleShotHandlers()

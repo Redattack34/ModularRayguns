@@ -1,14 +1,8 @@
 package com.castlebravostudios.rayguns.items.lenses
 
-import com.castlebravostudios.rayguns.api.LensGrinderRecipeRegistry
-import com.castlebravostudios.rayguns.api.ModuleRegistry
-import com.castlebravostudios.rayguns.api.items.RaygunLens
-import com.castlebravostudios.rayguns.mod.Config
-import net.minecraft.block.Block
-import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
 import com.castlebravostudios.rayguns.api.items.BaseRaygunModule
 import com.castlebravostudios.rayguns.api.items.ItemModule
+import com.castlebravostudios.rayguns.api.items.RaygunLens
 import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 object WideLens extends BaseRaygunModule with RaygunLens {
@@ -21,14 +15,4 @@ object WideLens extends BaseRaygunModule with RaygunLens {
     .setTextureName("rayguns:lens_wide")
     .setCreativeTab( ModularRayguns.raygunsTab )
     .setMaxStackSize(1)
-
-  def registerRecipe() : Unit =
-    LensGrinderRecipeRegistry.register( 1200, new ItemStack(item),
-      "IGI",
-      "GDG",
-      "IGI",
-      ( 'G' -> Block.glass ),
-      ( 'I' -> Item.ingotIron ),
-      ( 'D' -> Item.diamond )
-  )
 }

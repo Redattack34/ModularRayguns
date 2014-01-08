@@ -23,14 +23,4 @@ object UltimateBattery extends BaseRaygunModule with RaygunBattery {
     .setTextureName("rayguns:battery_ultimate")
     .setCreativeTab( ModularRayguns.raygunsTab )
     .setMaxStackSize(1)
-
-  def registerRecipe() : Unit =
-    GameRegistry.addRecipe( new ItemStack( item, 1 ),
-      "SG ",
-      "IBI",
-      "IBI",
-      'S' : Character, Emitters.shrinkRayEmitter,
-      'G' : Character, Item.ingotGold,
-      'I' : Character, Item.ingotIron,
-      'B' : Character, AdvancedBattery.item )
 }
