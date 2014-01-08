@@ -1,12 +1,7 @@
 package com.castlebravostudios.rayguns.items.chambers
 
-import com.castlebravostudios.rayguns.api.ModuleRegistry
-import com.castlebravostudios.rayguns.entities.effects.ExplosiveEffect
-import com.castlebravostudios.rayguns.items.emitters.Emitters
-import com.castlebravostudios.rayguns.mod.Config
-import com.castlebravostudios.rayguns.utils.RecipeRegisterer
-import com.castlebravostudios.rayguns.utils.RecipeRegisterer._
 import com.castlebravostudios.rayguns.api.items.ItemModule
+import com.castlebravostudios.rayguns.entities.effects.ExplosiveEffect
 import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 object ExplosiveChamber extends BaseChamber {
@@ -20,9 +15,6 @@ object ExplosiveChamber extends BaseChamber {
     .setTextureName("rayguns:chamber_explosive")
     .setCreativeTab( ModularRayguns.raygunsTab )
     .setMaxStackSize(1)
-
-  def registerRecipe() : Unit =
-    RecipeRegisterer.registerChamber( Tier3, this, Emitters.explosiveEmitter)
 
   def registerShotHandlers() : Unit = registerSingleShotHandlers()
 }

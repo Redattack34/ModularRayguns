@@ -1,0 +1,246 @@
+package com.castlebravostudios.rayguns.items.recipes
+
+import com.castlebravostudios.rayguns.api.items._
+import com.castlebravostudios.rayguns.items.accessories._
+import com.castlebravostudios.rayguns.items.batteries._
+import com.castlebravostudios.rayguns.items.bodies._
+import com.castlebravostudios.rayguns.items.emitters.Emitters
+import cpw.mods.fml.common.registry.GameRegistry
+import net.minecraft.block.Block
+import net.minecraft.item.Item
+import net.minecraft.item.ItemStack
+import com.castlebravostudios.rayguns.items.misc._
+import com.castlebravostudios.rayguns.items.chambers._
+import com.castlebravostudios.rayguns.items.lenses._
+import com.castlebravostudios.rayguns.api.LensGrinderRecipeRegistry
+import com.castlebravostudios.rayguns.utils.ScalaShapedRecipeFactory
+
+object VanillaRecipeLibrary extends RecipeLibrary {
+
+  def registerRecipes() : Unit = {
+    registerAccessories()
+    registerBatteries()
+    registerBodies()
+    registerChambers()
+    registerEmitters()
+    registerLenses()
+    registerMisc()
+  }
+
+  private def registerAccessories() = {
+    addModuleRecipe( ExtendedBattery,
+      "SI ",
+      "IRI",
+      " I ",
+      ( 'S' -> Emitters.shrinkRayEmitter ),
+      ( 'I' -> Item.ingotIron ),
+      ( 'R' -> Block.blockRedstone ) )
+    addModuleRecipe( RefireCapacitor,
+      "SI ",
+      "IRI",
+      "G G",
+      ( 'S' -> Emitters.shrinkRayEmitter ),
+      ( 'I' -> Item.ingotIron ),
+      ( 'R' -> Block.blockRedstone ),
+      ( 'G' -> Item.ingotGold ) )
+    addModuleRecipe( SolarPanel,
+      "S  ",
+      "GGG",
+      "RIR",
+      ( 'S' -> Emitters.shrinkRayEmitter ),
+      ( 'I' -> Item.ingotIron ),
+      ( 'R' -> Block.blockRedstone ),
+      ( 'G' -> Block.glass ) )
+  }
+
+  private def registerBatteries() = {
+    def addBatteryRecipe( battery : RaygunBattery, core : Any ) : Unit = {
+      addModuleRecipe( battery,
+        "SG ",
+        "IRI",
+        "IRI",
+        ( 'S' -> Emitters.shrinkRayEmitter ),
+        ( 'G' -> Item.ingotGold ),
+        ( 'I' -> Item.ingotIron ),
+        ( 'R' -> core ) )
+    }
+
+    addBatteryRecipe( BasicBattery, Block.blockRedstone )
+    addBatteryRecipe( AdvancedBattery, BasicBattery )
+    addBatteryRecipe( UltimateBattery, AdvancedBattery )
+  }
+
+  private def registerBodies() = {
+    def addBodyRecipe( body : RaygunBody, core : Any ) : Unit = {
+      addModuleRecipe( body,
+        "R  ",
+        "IRI",
+        " II",
+        ( 'R' -> core ),
+        ( 'I' -> Item.ingotIron ) )
+    }
+    addBodyRecipe( FireflyBody, Item.redstone )
+    addBodyRecipe( MantisBody, Item.ingotGold )
+  }
+
+  private def registerChambers() = {
+    def registerChamber( chamber : RaygunChamber, emitter : Item, medium : Item, casing : Item ) : Unit = {
+      addModuleRecipe( chamber,
+        "CCC",
+        "MME",
+        "CCC",
+        ( 'C' -> casing ),
+        ( 'M' -> medium ),
+        ( 'E' -> emitter ) )
+    }
+    def registerT1Chamber( chamber : RaygunChamber, emitter : Item ) : Unit =
+      registerChamber( chamber, emitter, GlassGainMedium, Item.ingotIron )
+    def registerT2Chamber( chamber : RaygunChamber, emitter : Item ) : Unit =
+      registerChamber( chamber, emitter, GlowstoneGainMedium, Item.ingotGold )
+    def registerT3Chamber( chamber : RaygunChamber, emitter : Item ) : Unit =
+      registerChamber( chamber, emitter, DiamondGainMedium, Item.diamond )
+
+    registerT1Chamber( Tier1CuttingChamber, Emitters.tier1CuttingEmitter)
+    registerT2Chamber( Tier2CuttingChamber, Emitters.tier2CuttingEmitter)
+    registerT3Chamber( Tier3CuttingChamber, Emitters.tier3CuttingEmitter)
+    registerT3Chamber( DeathRayChamber, Emitters.deathRayEmitter)
+    registerT2Chamber( EnderChamber, Emitters.enderEmitter )
+    registerT3Chamber( ExplosiveChamber, Emitters.explosiveEmitter)
+    registerT2Chamber( FortifiedSunlightChamber, Emitters.fortifiedSunlightEmitter)
+    registerT2Chamber( FrostRayChamber, Emitters.frostRayEmitter)
+    registerT1Chamber( HeatRayChamber, Emitters.heatRayEmitter)
+    registerT2Chamber( ImpulseChamber, Emitters.impulseEmitter)
+    registerT1Chamber( LaserChamber, Emitters.laserEmitter)
+    registerT2Chamber( LifeForceChamber, Emitters.lifeForceEmitter)
+    registerT1Chamber( LightningChamber, Emitters.lightningEmitter)
+    registerT2Chamber( TractorChamber, Emitters.tractorEmitter)
+  }
+
+  private def registerEmitters() = {
+    def registerEmitter( emitter : Item, core : AnyRef, top : AnyRef, right : AnyRef, bottom : AnyRef, left : AnyRef ) : Unit = {
+      GameRegistry.addRecipe( new ItemStack( emitter, 1 ),
+        "ITI",
+        "LDR",
+        "IBI",
+        'I' : Character, Item.ingotIron,
+        'D' : Character, core,
+        'T' : Character, top,
+        'R' : Character, right,
+        'B' : Character, bottom,
+        'L' : Character, left )
+    }
+    def registerT1Emitter( emitter : Item, top : AnyRef, right : AnyRef, bottom : AnyRef, left : AnyRef ) : Unit =
+      registerEmitter( emitter, Item.diamond, top, right, bottom, left )
+    def registerT2Emitter( emitter : Item, top : AnyRef, right : AnyRef, bottom : AnyRef, left : AnyRef ) : Unit =
+      registerEmitter( emitter, EnergizedDiamond, top, right, bottom, left )
+    def registerT3Emitter( emitter : Item, top : AnyRef, right : AnyRef, bottom : AnyRef, left : AnyRef ) : Unit =
+      registerEmitter( emitter, Item.netherStar, top, right, bottom, left )
+
+    registerT1Emitter( Emitters.laserEmitter, Item.redstone, Item.redstone, Item.redstone, Item.redstone )
+    registerT1Emitter( Emitters.heatRayEmitter, Item.coal, Item.bucketLava, Item.coal, Item.bucketLava )
+    registerT2Emitter( Emitters.frostRayEmitter, Block.ice, Block.snow, Block.ice, Block.snow )
+    registerT2Emitter( Emitters.lifeForceEmitter, Item.speckledMelon, Item.ghastTear, Item.speckledMelon, Item.ghastTear )
+    registerT2Emitter( Emitters.fortifiedSunlightEmitter, Block.wood, Block.wood, Block.wood, Block.wood )
+    registerT3Emitter( Emitters.explosiveEmitter, Block.tnt, Block.tnt, Block.tnt, Block.tnt )
+
+    val witherSkull = new ItemStack( Item.skull, 1, 1 )
+    registerT3Emitter( Emitters.deathRayEmitter, witherSkull, witherSkull, witherSkull, witherSkull )
+    registerT2Emitter( Emitters.enderEmitter, Item.enderPearl, Item.enderPearl, Item.enderPearl, Item.enderPearl )
+    registerT2Emitter( Emitters.lightningEmitter, Block.blockIron, Block.blockRedstone, Block.blockIron, Block.blockRedstone )
+    registerT2Emitter( Emitters.impulseEmitter, Block.pistonBase, Block.pistonBase, Block.pistonBase, Block.pistonBase )
+    registerT2Emitter( Emitters.tractorEmitter, Block.pistonStickyBase, Block.pistonStickyBase, Block.pistonStickyBase, Block.pistonStickyBase )
+    registerT1Emitter( Emitters.tier1CuttingEmitter, Item.pickaxeStone, Item.shovelStone, Item.pickaxeStone, Item.shovelStone )
+    registerT1Emitter( Emitters.tier2CuttingEmitter, Item.pickaxeIron, Item.shovelIron, Item.pickaxeIron, Item.shovelIron )
+    registerT3Emitter( Emitters.tier3CuttingEmitter, Item.pickaxeDiamond, Item.shovelDiamond, Item.pickaxeDiamond, Item.shovelDiamond )
+    registerT1Emitter( Emitters.shrinkRayEmitter, Block.pistonBase, Block.pistonBase, Block.pistonBase, Block.pistonBase )
+  }
+
+  private def registerLenses() = {
+    def addChargeLensRecipe( chargeLens : RaygunLens, baseLens : RaygunLens ) : Unit =
+    {
+      if ( chargeLens.item == null || baseLens.item == null || BasicBattery.item == null ) {
+        return;
+      }
+
+      GameRegistry.addShapelessRecipe( new ItemStack( chargeLens.item, 1 ),
+          baseLens.item, BasicBattery.item )
+    }
+    addChargeLensRecipe(ChargeBeamLens, PreciseBeamLens)
+    addChargeLensRecipe(ChargeLens, PreciseLens)
+
+    if ( PreciseBeamLens.item != null ) {
+      LensGrinderRecipeRegistry.register( 600, new ItemStack(PreciseBeamLens.item),
+        "IGI",
+        "GGG",
+        "IGI",
+        ( 'G' -> Block.glowStone ),
+        ( 'I' -> Item.ingotIron ) )
+    }
+    if ( PreciseLens.item != null ) {
+      LensGrinderRecipeRegistry.register( 600, new ItemStack( PreciseLens.item ),
+        "IGI",
+        "GGG",
+        "IGI",
+        ( 'G' -> Block.glass ),
+        ( 'I' -> Item.ingotIron ) )
+    }
+    if ( WideLens.item != null ) {
+      LensGrinderRecipeRegistry.register( 1200, new ItemStack( WideLens.item ),
+        "IGI",
+        "GDG",
+        "IGI",
+        ( 'G' -> Block.glass ),
+        ( 'I' -> Item.ingotIron ),
+        ( 'D' -> Item.diamond ) )
+    }
+  }
+
+  private def registerMisc() = {
+    def addGainMediumRecipe( medium : Item, ticks : Short, material : AnyRef ) : Unit = {
+        LensGrinderRecipeRegistry.register( ticks, new ItemStack( medium, 1 ),
+          " M ",
+          "MMM",
+          " M ",
+          ('M' -> material ) )
+    }
+    addGainMediumRecipe( DiamondGainMedium, 1200, Item.diamond )
+    addGainMediumRecipe( GlassGainMedium, 600, Block.glass )
+    addGainMediumRecipe( GlowstoneGainMedium, 600, Block.glowStone )
+
+    GameRegistry.addRecipe( new ItemStack( EnergizedDiamond, 1 ),
+      "GRG",
+      "RDR",
+      "GRG",
+      'G' : Character, Block.glowStone,
+      'R' : Character, Block.blockRedstone,
+      'D' : Character, Item.diamond )
+
+    GameRegistry.addRecipe( new ItemStack( EnergizedDiamond, 1 ),
+      "RGR",
+      "GFG",
+      "RGR",
+      'G' : Character, Block.glowStone,
+      'R' : Character, Block.blockRedstone,
+      'D' : Character, Item.diamond )
+  }
+
+  private def addModuleRecipe( module : RaygunModule, params : Any* ) : Unit = {
+    val modules = module +: params.flatMap{
+      case mod : RaygunModule => Some( mod )
+      case _ => None
+    }
+
+    //Skip modules where the module or a recipe ingredient has been disabled.
+    if ( modules.exists( _.item == null ) ) {
+      return
+    }
+
+    val modifiedParams = params.map{
+      case mod : RaygunModule => mod.item
+      case a => a
+    }
+
+    GameRegistry.addRecipe( ScalaShapedRecipeFactory(
+        new ItemStack( module.item, 1 ), modifiedParams:_* ) );
+  }
+}

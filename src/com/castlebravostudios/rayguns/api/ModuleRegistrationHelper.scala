@@ -11,16 +11,15 @@ object ModuleRegistrationHelper {
 
   /**
    * Register the given module with the ModuleRegistry, register the ItemModule,
-   * register recipes. If the module is a chamber, registers the beam handlers.
+   * If the module is a chamber, registers the beam handlers.
    * If ID is less than or equal to zero, does nothing (to allow modules to be disabled).
    */
   def registerModule( module : RaygunModule, id : Int ) : Unit = {
     if ( id <= 0 ) { return; }
 
     module.registerItem(id)
-    module.registerRecipe()
-
     ModuleRegistry.registerModule(module)
+
     module match {
       case chamber : RaygunChamber => chamber.registerShotHandlers()
       case _ => ()

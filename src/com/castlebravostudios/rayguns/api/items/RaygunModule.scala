@@ -45,11 +45,4 @@ trait RaygunModule {
    * After this method is called, item should not return null.
    */
   def registerItem( id : Int ) : Unit
-
-  /**
-   * Register the recipe to create this item. This will be called after
-   * registerItem, so it should be safe to use the item in the recipes without
-   * it being null.
-   */
-  def registerRecipe() : Unit
 }

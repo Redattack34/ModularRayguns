@@ -1,13 +1,8 @@
 package com.castlebravostudios.rayguns.items.bodies
 
-import com.castlebravostudios.rayguns.api.ModuleRegistry
-import com.castlebravostudios.rayguns.api.items.RaygunBody
-import com.castlebravostudios.rayguns.mod.Config
-import cpw.mods.fml.common.registry.GameRegistry
-import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
 import com.castlebravostudios.rayguns.api.items.BaseRaygunModule
 import com.castlebravostudios.rayguns.api.items.ItemModule
+import com.castlebravostudios.rayguns.api.items.RaygunBody
 import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 object FireflyBody extends BaseRaygunModule with RaygunBody {
@@ -20,12 +15,4 @@ object FireflyBody extends BaseRaygunModule with RaygunBody {
     .setTextureName("rayguns:body_firefly")
     .setCreativeTab( ModularRayguns.raygunsTab )
     .setMaxStackSize(1)
-
-  def registerRecipe() : Unit =
-    GameRegistry.addRecipe( new ItemStack( item, 1 ),
-      "R  ",
-      "IRI",
-      " II",
-      'R' : Character, Item.redstone,
-      'I' : Character, Item.ingotIron )
 }

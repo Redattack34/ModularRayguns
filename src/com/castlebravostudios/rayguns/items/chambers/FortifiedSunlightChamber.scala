@@ -1,12 +1,7 @@
 package com.castlebravostudios.rayguns.items.chambers
 
-import com.castlebravostudios.rayguns.api.ModuleRegistry
-import com.castlebravostudios.rayguns.entities.effects.FortifiedSunlightEffect
-import com.castlebravostudios.rayguns.items.emitters.Emitters
-import com.castlebravostudios.rayguns.mod.Config
-import com.castlebravostudios.rayguns.utils.RecipeRegisterer
-import com.castlebravostudios.rayguns.utils.RecipeRegisterer._
 import com.castlebravostudios.rayguns.api.items.ItemModule
+import com.castlebravostudios.rayguns.entities.effects.FortifiedSunlightEffect
 import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 object FortifiedSunlightChamber extends BaseChamber {
@@ -20,9 +15,6 @@ object FortifiedSunlightChamber extends BaseChamber {
     .setTextureName("rayguns:chamber_fortified_sunlight")
     .setCreativeTab( ModularRayguns.raygunsTab )
     .setMaxStackSize(1)
-
-    def registerRecipe() : Unit =
-    RecipeRegisterer.registerChamber( Tier2, this, Emitters.fortifiedSunlightEmitter)
 
   def registerShotHandlers() : Unit = {
     registerSingleShotHandlers()
