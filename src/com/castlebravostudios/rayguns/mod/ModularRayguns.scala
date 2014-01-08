@@ -44,6 +44,8 @@ object ModularRayguns {
     TileEntities.registerTileEntities
     Effects.registerEffects
 
+    Config.recipeLibrary.registerRecipes()
+
     proxy.registerRenderers()
     proxy.loadTextures()
   }

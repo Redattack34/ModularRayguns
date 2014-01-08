@@ -3,6 +3,8 @@ package com.castlebravostudios.rayguns.mod
 import java.io.File
 import net.minecraftforge.common.Configuration
 import net.minecraftforge.common.Property
+import com.castlebravostudios.rayguns.items.recipes.RecipeLibrary
+import com.castlebravostudios.rayguns.items.recipes.VanillaRecipeLibrary
 
 object Config {
 
@@ -69,6 +71,8 @@ object Config {
   var minLightningDetail : Double = _
   var lightningFlash : Boolean = _
 
+  var recipeLibrary : RecipeLibrary = _
+
   def load( file : File ) : Unit = {
     println( file.getAbsolutePath() );
     val config = new Configuration( file )
@@ -83,6 +87,7 @@ object Config {
     loadChamberItemIds(config)
     loadBlockIds( config )
     loadMisc( config )
+    loadRecipes( config )
 
     if ( config.hasChanged() ) {
       config.save()
@@ -168,5 +173,10 @@ object Config {
     gunBench = config.getBlock( "gunBench", 1337 ).getInt()
     lensGrinder = config.getBlock( "lensGrinder", 1338 ).getInt()
     invisibleRedstone = config.getBlock( "invisibleRedstone", 1339 ).getInt()
+  }
+
+  def loadRecipes(config: Configuration) = {
+    val str = config.get( "Recipes", "recipeLibrary", "vanilla", "Current allowed values are: vanilla" );
+    recipeLibrary = VanillaRecipeLibrary
   }
 }
