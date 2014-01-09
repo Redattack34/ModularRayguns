@@ -42,10 +42,8 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation {
     ( (maxCharge - depleted) + "/" + maxCharge ) :: components
   }
 
-  override def onPlayerStoppedUsing(item : ItemStack, world : World, player : EntityPlayer, itemUseCount : Int ) : Unit = {
-    val ticksCharged = Math.min( maxChargeTicks, getMaxItemUseDuration(item) - itemUseCount )
-    val secondsCharged = ticksCharged.toFloat / ticksPerSecond
-    val chargePower = Math.pow( secondsCharged, 2 ) / maxChargeTime
+  override def onPlayerStoppedUsing(item : ItemStack, world : World, player : EntityPlayer, itemUseCount : Int ): Unit = {
+    val chargePower = getChargePower(item, itemUseCount)
 
     val components = getComponents( item )
     val lens = components.flatMap( _.lens )
@@ -56,6 +54,12 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation {
     val event = components.get.getFireEvent( chargePower )
     val creator = BeamRegistry.getFunction( event )
     creator.foreach { fire(item, components.get, event, world, player, _) }
+  }
+
+  def getChargePower(item: ItemStack, itemUseCount: Int): Double = {
+    val ticksCharged = Math.min( maxChargeTicks, getMaxItemUseDuration(item) - itemUseCount )
+    val secondsCharged = ticksCharged.toFloat / ticksPerSecond
+    Math.pow( secondsCharged, 2 ) / maxChargeTime
   }
 
   override def onItemRightClick(item : ItemStack, world : World, player : EntityPlayer ) : ItemStack = {

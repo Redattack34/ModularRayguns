@@ -14,6 +14,7 @@ import net.minecraftforge.client.IItemRenderer.ItemRenderType
 import net.minecraftforge.client.IItemRenderer.ItemRendererHelper
 import java.util.EnumSet
 import cpw.mods.fml.common.TickType
+import net.minecraft.entity.player.EntityPlayer
 
 object RaygunRender extends IItemRenderer with ITickHandler {
 
@@ -29,22 +30,35 @@ object RaygunRender extends IItemRenderer with ITickHandler {
     false
   }
 
-  def renderItem( renderType : ItemRenderType, item : ItemStack, data : Object* ) : Unit = {
+  def renderItem( renderType : ItemRenderType, item : ItemStack, data : Object* ): Unit = {
     val renderBlocks : RenderBlocks = data(0).asInstanceOf[RenderBlocks]
     val entity : EntityLivingBase = data(1).asInstanceOf[EntityLivingBase]
 
+    offsetForRecoil(item)
+
+    val chargePower = getChargePower( item, entity )
+    offsetForChargeJitter( chargePower )
+
+    renderItem( item, entity )
+  }
+
+  private def offsetForRecoil(item: net.minecraft.item.ItemStack) : Unit = {
     val maxCooldown = Math.max( RayGun.getBaseCooldownTime( item ), 1 )
     val curCooldown = Math.min( RayGun.getCooldownTime( item ), maxCooldown )
 
     val coolPercent = Math.max( 0.0f, ( curCooldown.toFloat - partialTickTime ) / maxCooldown )
 
     GL11.glTranslatef( coolPercent * -0.3f, coolPercent * -0.2f, 0.0f)
+  }
 
-    if ( coolPercent > 0.0f ) {
-      //println( coolPercent );
-    }
+  private def offsetForChargeJitter( chargePercent: Double ) = {
+    def randomJitter : Double = 0.02f * chargePercent * ( rand.nextDouble() - 0.5d )
+    GL11.glTranslated( randomJitter, randomJitter, randomJitter )
+  }
 
-    renderItem( item, entity )
+  private def getChargePower( item: ItemStack, entity: EntityLivingBase ) : Double = entity match {
+    case pl : EntityPlayer => if ( pl.isUsingItem() ) RayGun.getChargePower( item, pl.getItemInUseCount() ) else 0.0d
+    case _ => 0.0d
   }
 
   private def renderItem( item : ItemStack, entity : EntityLivingBase ) : Unit = {
