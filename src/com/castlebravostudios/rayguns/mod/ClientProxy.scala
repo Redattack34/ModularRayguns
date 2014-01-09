@@ -13,6 +13,11 @@ import com.castlebravostudios.rayguns.api.EffectRegistry
 import net.minecraft.util.ResourceLocation
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.texture.SimpleTexture
+import net.minecraftforge.client.MinecraftForgeClient
+import com.castlebravostudios.rayguns.render.RaygunRender
+import com.castlebravostudios.rayguns.items.misc.RayGun
+import cpw.mods.fml.common.registry.TickRegistry
+import cpw.mods.fml.relauncher.Side
 
 class ClientProxy extends CommonProxy {
 
@@ -21,6 +26,9 @@ class ClientProxy extends CommonProxy {
     RenderingRegistry.registerEntityRenderingHandler(classOf[BaseBeamEntity], new BeamRenderer)
     RenderingRegistry.registerEntityRenderingHandler(classOf[LightningBoltEntity], new LightningBoltRenderer)
     RenderingRegistry.registerEntityRenderingHandler(classOf[LightningBeamEntity], new LightningBeamRenderer)
+
+    MinecraftForgeClient.registerItemRenderer(RayGun.itemID, RaygunRender)
+    TickRegistry.registerTickHandler(RaygunRender, Side.CLIENT)
   }
 
   override def loadTextures() : Unit = {
