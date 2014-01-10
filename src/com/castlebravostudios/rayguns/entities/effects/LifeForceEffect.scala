@@ -37,4 +37,5 @@ object LifeForceEffect extends BaseEffect {
   }
   val boltTexture = new ResourceLocation( "rayguns", "textures/bolts/life_bolt.png" )
   val beamTexture = new ResourceLocation( "rayguns", "textures/beams/life_beam.png" )
+  val chargeTexture = new ResourceLocation( "rayguns", "textures/effects/charge/life_charge.png" )
 }

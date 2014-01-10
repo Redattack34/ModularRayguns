@@ -53,4 +53,5 @@ object HeatRayEffect extends BaseEffect {
 
   val boltTexture = new ResourceLocation( "rayguns", "textures/bolts/heat_bolt.png" )
   val beamTexture = new ResourceLocation( "rayguns", "textures/beams/heat_beam.png" )
+  val chargeTexture = new ResourceLocation( "rayguns", "textures/effects/charge/heat_charge.png" )
 }

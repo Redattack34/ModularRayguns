@@ -62,6 +62,7 @@ object LightningEffect extends BaseEffect {
 
   val beamTexture = new ResourceLocation( "rayguns", "textures/beams/lightning_beam.png" )
   val boltTexture = beamTexture
+  val chargeTexture = new ResourceLocation( "rayguns", "textures/effects/charge/lightning_charge.png" )
 }
 
 trait LightningShootable {

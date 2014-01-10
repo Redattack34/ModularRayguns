@@ -78,4 +78,5 @@ object FrostRayEffect extends BaseEffect {
 
   val boltTexture = new ResourceLocation( "rayguns", "textures/bolts/frost_bolt.png" )
   val beamTexture = new ResourceLocation( "rayguns", "textures/beams/frost_beam.png" )
+  val chargeTexture = new ResourceLocation( "rayguns", "textures/effects/charge/frost_charge.png" )
 }

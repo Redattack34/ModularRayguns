@@ -73,6 +73,7 @@ class CuttingEffect( val key : String, val harvestLevel : Int, val powerMultipli
 
   def effectKey : String = key
 
-  def boltTexture = new ResourceLocation( "rayguns", s"textures/bolts/cutting_bolt_t${harvestLevel}.png" )
-  def beamTexture = new ResourceLocation( "rayguns", s"textures/beams/cutting_beam_t${harvestLevel}.png" )
+  val boltTexture = new ResourceLocation( "rayguns", s"textures/bolts/cutting_bolt_t${harvestLevel}.png" )
+  val beamTexture = new ResourceLocation( "rayguns", s"textures/beams/cutting_beam_t${harvestLevel}.png" )
+  val chargeTexture = new ResourceLocation( "rayguns", s"textures/effects/charge/cutting_charge_t${harvestLevel}.png" )
 }

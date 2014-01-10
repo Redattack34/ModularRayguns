@@ -77,4 +77,5 @@ object ImpulseEffect extends BaseEffect {
 
   val boltTexture = new ResourceLocation( "rayguns", "textures/bolts/impulse_bolt.png" )
   val beamTexture = new ResourceLocation( "rayguns", "textures/beams/impulse_beam.png" )
+  val chargeTexture = new ResourceLocation( "rayguns", "textures/effects/charge/impulse_charge.png" )
 }

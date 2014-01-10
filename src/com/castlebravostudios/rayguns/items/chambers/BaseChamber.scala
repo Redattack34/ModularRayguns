@@ -80,4 +80,6 @@ abstract class BaseChamber extends BaseRaygunModule with RaygunChamber {
       }
     })
   }
+
+  def chargeTexture = shotEffect.chargeTexture
 }

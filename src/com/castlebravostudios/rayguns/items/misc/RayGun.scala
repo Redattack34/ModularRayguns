@@ -11,6 +11,7 @@ import com.castlebravostudios.rayguns.mod.ModularRayguns
 import com.castlebravostudios.rayguns.utils.FireEvent
 import com.castlebravostudios.rayguns.utils.GunComponents
 import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
+import com.castlebravostudios.rayguns.utils.Extensions.WorldExtension
 
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.Entity
@@ -41,10 +42,8 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation {
     ( (maxCharge - depleted) + "/" + maxCharge ) :: components
   }
 
-  override def onPlayerStoppedUsing(item : ItemStack, world : World, player : EntityPlayer, itemUseCount : Int ) : Unit = {
-    val ticksCharged = Math.min( maxChargeTicks, getMaxItemUseDuration(item) - itemUseCount )
-    val secondsCharged = ticksCharged.toFloat / ticksPerSecond
-    val chargePower = Math.pow( secondsCharged, 2 ) / maxChargeTime
+  override def onPlayerStoppedUsing(item : ItemStack, world : World, player : EntityPlayer, itemUseCount : Int ): Unit = {
+    val chargePower = getChargePower(item, itemUseCount)
 
     val components = getComponents( item )
     val lens = components.flatMap( _.lens )
@@ -55,6 +54,12 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation {
     val event = components.get.getFireEvent( chargePower )
     val creator = BeamRegistry.getFunction( event )
     creator.foreach { fire(item, components.get, event, world, player, _) }
+  }
+
+  def getChargePower(item: ItemStack, itemUseCount: Int): Double = {
+    val ticksCharged = Math.min( maxChargeTicks, getMaxItemUseDuration(item) - itemUseCount )
+    val secondsCharged = ticksCharged.toFloat / ticksPerSecond
+    Math.pow( secondsCharged, 2 ) / maxChargeTime
   }
 
   override def onItemRightClick(item : ItemStack, world : World, player : EntityPlayer ) : ItemStack = {
@@ -94,13 +99,21 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation {
   override def onUpdate( item: ItemStack, world : World, entity: Entity, par4 : Int, par5 : Boolean) : Unit = {
     val currentTime = getCooldownTime(item)
     val newTime = if ( currentTime > 0 ) currentTime - 1 else 0
-    setCooldownTime( item, newTime );
+
+    if ( world.isOnServer ) {
+      setCooldownTime( item, newTime );
+    }
 
     getComponents(item).flatMap( _.accessory )
       .foreach( _.onGunUpdate(world, entity, item ) )
   }
 
-  private def getBaseCooldownTime( components : GunComponents ) = {
+  def getBaseCooldownTime( item : ItemStack ) : Short = getComponents(item) match {
+    case Some( comp ) => getBaseCooldownTime(comp)
+    case None => 0
+  }
+
+  private def getBaseCooldownTime( components : GunComponents ) : Short = {
     components.accessory match {
       case Some(RefireCapacitor) => 5
       case _ => 10
@@ -110,7 +123,7 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation {
   private def setCooldownTime( item : ItemStack, ticks : Int ) =
     getTagCompound(item).setShort( cooldownTime, ticks.shortValue )
 
-  private def getCooldownTime( item : ItemStack ) =
+  def getCooldownTime( item : ItemStack ) =
     getTagCompound(item).getShort( cooldownTime )
 
   override def getDamage( item : ItemStack ) : Int = 1

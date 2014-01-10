@@ -82,6 +82,7 @@ trait BaseEffect {
   def boltTexture : ResourceLocation
   def beamTexture : ResourceLocation
   def lineTexture : ResourceLocation = BoltRenderer.lineBlackTexture
+  def chargeTexture : ResourceLocation
 
   def createBeamEntity( world : World ) : BaseBeamEntity = {
     val beam = new BaseBeamEntity( world )

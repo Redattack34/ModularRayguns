@@ -49,4 +49,5 @@ object FortifiedSunlightEffect extends BaseEffect {
 
   val boltTexture = new ResourceLocation( "rayguns", "textures/bolts/sunlight_bolt.png" )
   val beamTexture = new ResourceLocation( "rayguns", "textures/beams/sunlight_beam.png" )
+  val chargeTexture = new ResourceLocation( "rayguns", "textures/effects/charge/sunlight_charge.png" )
 }

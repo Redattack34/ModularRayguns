@@ -38,4 +38,5 @@ object ExplosiveEffect extends BaseEffect with TriggerOnDeath {
 
   val boltTexture = new ResourceLocation( "rayguns", "textures/bolts/explosive_bolt.png" )
   val beamTexture = new ResourceLocation( "rayguns", "textures/beams/explosive_beam.png" )
+  val chargeTexture = new ResourceLocation( "rayguns", "textures/effects/charge/explosive_charge.png" )
 }

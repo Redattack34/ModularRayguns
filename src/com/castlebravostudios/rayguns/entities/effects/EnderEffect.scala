@@ -86,4 +86,5 @@ object EnderEffect extends BaseEffect {
 
   val boltTexture = new ResourceLocation( "rayguns", "textures/bolts/ender_bolt.png" )
   val beamTexture = new ResourceLocation( "rayguns", "textures/beams/ender_beam.png" )
+  val chargeTexture = new ResourceLocation( "rayguns", "textures/effects/charge/ender_charge.png" )
 }
