@@ -54,8 +54,8 @@ item.rayguns.GlassGainMedium.name=Glass Gain Medium
 item.rayguns.GlowstoneGainMedium.name=Glowstone Gain Medium
 item.rayguns.Raygun.name=Raygun
 
-tile.GunBench.name=Raygun Workbench
-tile.LensGrinder.name=Lens Grinder
+tile.rayguns.GunBench.name=Raygun Workbench
+tile.rayguns.LensGrinder.name=Lens Grinder
 
 rayguns.container.grinder=Lens Grinder
 rayguns.container.gunbench=Raygun Workbench
