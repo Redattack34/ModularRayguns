@@ -14,6 +14,12 @@ import com.castlebravostudios.rayguns.items.chambers._
 import com.castlebravostudios.rayguns.items.lenses._
 import com.castlebravostudios.rayguns.api.LensGrinderRecipeRegistry
 import com.castlebravostudios.rayguns.utils.ScalaShapedRecipeFactory
+import com.castlebravostudios.rayguns.blocks.gunbench.GunBench
+import com.castlebravostudios.rayguns.blocks.gunbench.GunBench
+import com.castlebravostudios.rayguns.blocks.lensgrinder.LensGrinder
+import com.castlebravostudios.rayguns.blocks.gunbench.GunBench
+import com.castlebravostudios.rayguns.blocks.lensgrinder.LensGrinder
+import com.castlebravostudios.rayguns.items.Blocks
 
 object VanillaRecipeLibrary extends RecipeLibrary {
 
@@ -222,6 +228,19 @@ object VanillaRecipeLibrary extends RecipeLibrary {
       'G' : Character, Block.glowStone,
       'R' : Character, Block.blockRedstone,
       'D' : Character, Item.diamond )
+
+    GameRegistry.addRecipe( new ItemStack( Blocks.gunBench, 1 ),
+      "II",
+      "II",
+      'I' : Character, Item.ingotIron )
+
+    GameRegistry.addRecipe( new ItemStack( Blocks.lensGrinder, 1 ),
+      "III",
+      "SGS",
+      "III",
+      'I' : Character, Item.ingotIron,
+      'S' : Character, Block.sand,
+      'G' : Character, Block.glass )
   }
 
   private def addModuleRecipe( module : RaygunModule, params : Any* ) : Unit = {
