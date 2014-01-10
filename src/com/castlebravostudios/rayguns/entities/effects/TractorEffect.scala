@@ -77,4 +77,5 @@ object TractorEffect extends BaseEffect {
 
   val boltTexture = new ResourceLocation( "rayguns", "textures/bolts/tractor_bolt.png" )
   val beamTexture = new ResourceLocation( "rayguns", "textures/beams/tractor_beam.png" )
+  val chargeTexture = new ResourceLocation( "rayguns", "textures/effects/charge/tractor_charge.png" )
 }

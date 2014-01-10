@@ -27,4 +27,5 @@ object LaserEffect extends BaseEffect {
 
   val boltTexture = new ResourceLocation( "rayguns", "textures/bolts/laser_bolt.png" )
   val beamTexture = new ResourceLocation( "rayguns", "textures/beams/laser_beam.png" )
+  val chargeTexture = new ResourceLocation( "rayguns", "textures/effects/charge/laser_charge.png" )
 }

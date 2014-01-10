@@ -18,14 +18,13 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.client.Minecraft
 import net.minecraft.util.ResourceLocation
 import net.minecraft.client.renderer.OpenGlHelper
+import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
 
 object RaygunRender extends IItemRenderer with ITickHandler {
 
   private var partialTickTime : Float = 0.0f
 
   private val rand = new Random()
-
-  val chargeTexture = new ResourceLocation( "rayguns", "textures/effects/charge/laser_charge.png" )
 
   def handleRenderType( item : ItemStack, renderType : ItemRenderType ) : Boolean = {
     renderType == ItemRenderType.EQUIPPED || renderType == ItemRenderType.EQUIPPED_FIRST_PERSON
@@ -45,7 +44,7 @@ object RaygunRender extends IItemRenderer with ITickHandler {
     offsetForChargeJitter( chargePower )
 
     renderItem( item, entity )
-    renderCharge( chargePower )
+    renderCharge( item, chargePower )
   }
 
   private def offsetForRecoil(item: net.minecraft.item.ItemStack) : Unit = {
@@ -79,8 +78,11 @@ object RaygunRender extends IItemRenderer with ITickHandler {
         icon.getIconWidth(), icon.getIconHeight(), width );
   }
 
-  private def renderCharge(chargePower: Double) = {
-    Minecraft.getMinecraft().getTextureManager().bindTexture( chargeTexture )
+  private def renderCharge( item : ItemStack, chargePower: Double ) : Unit= {
+    val chamber = RaygunNbtUtils.getComponents(item).map( _.chamber )
+    if ( chamber.isEmpty ) return
+
+    Minecraft.getMinecraft().getTextureManager().bindTexture( chamber.get.chargeTexture )
 
     val tes = Tessellator.instance
     GL11.glTranslated( 1, 1, 0 )
