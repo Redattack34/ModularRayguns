@@ -15,12 +15,17 @@ import net.minecraftforge.client.IItemRenderer.ItemRendererHelper
 import java.util.EnumSet
 import cpw.mods.fml.common.TickType
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.client.Minecraft
+import net.minecraft.util.ResourceLocation
+import net.minecraft.client.renderer.OpenGlHelper
 
 object RaygunRender extends IItemRenderer with ITickHandler {
 
   private var partialTickTime : Float = 0.0f
 
   private val rand = new Random()
+
+  val chargeTexture = new ResourceLocation( "rayguns", "textures/effects/charge/laser_charge.png" )
 
   def handleRenderType( item : ItemStack, renderType : ItemRenderType ) : Boolean = {
     renderType == ItemRenderType.EQUIPPED || renderType == ItemRenderType.EQUIPPED_FIRST_PERSON
@@ -40,6 +45,7 @@ object RaygunRender extends IItemRenderer with ITickHandler {
     offsetForChargeJitter( chargePower )
 
     renderItem( item, entity )
+    renderCharge( chargePower )
   }
 
   private def offsetForRecoil(item: net.minecraft.item.ItemStack) : Unit = {
@@ -73,6 +79,30 @@ object RaygunRender extends IItemRenderer with ITickHandler {
         icon.getIconWidth(), icon.getIconHeight(), width );
   }
 
+  private def renderCharge(chargePower: Double) = {
+    Minecraft.getMinecraft().getTextureManager().bindTexture( chargeTexture )
+
+    val tes = Tessellator.instance
+    GL11.glTranslated( 1, 1, 0 )
+    GL11.glScaled( 0.15 * chargePower, 0.15 * chargePower, 0.15 * chargePower )
+    GL11.glRotated(25, 0, 0, 1)
+
+    GL11.glDisable(GL11.GL_LIGHTING)
+    OpenGlHelper.setActiveTexture(OpenGlHelper.lightmapTexUnit)
+    GL11.glDisable(GL11.GL_TEXTURE_2D)
+    OpenGlHelper.setActiveTexture(OpenGlHelper.defaultTexUnit)
+
+    tes.startDrawingQuads()
+    chargeVertices.foreach( ( tes.addVertexWithUV _ ).tupled )
+    tes.draw()
+
+    OpenGlHelper.setActiveTexture(OpenGlHelper.lightmapTexUnit)
+    GL11.glEnable(GL11.GL_TEXTURE_2D)
+    OpenGlHelper.setActiveTexture(OpenGlHelper.defaultTexUnit)
+    GL11.glEnable(GL11.GL_LIGHTING)
+
+  }
+
   def tickStart( tickType : EnumSet[TickType], tickData : Object* ) : Unit = {
     partialTickTime = tickData(0).asInstanceOf[Float]
   }
@@ -82,4 +112,22 @@ object RaygunRender extends IItemRenderer with ITickHandler {
   def ticks() = EnumSet.of( TickType.RENDER )
 
   def getLabel() = "RaygunRenderer"
+
+  type Vertex = (Double, Double, Double, Double, Double)
+  private def chargeVertices = Array[Vertex](
+    (0.0D, -1.0D, 0.0D, 0, 0),
+    (0.0D, 0.0D, 1.0D, 0, 1),
+    (0.0D, 1.0D, 0.0D, 1, 1),
+    (0.0D, 0.0D, -1.0D, 1, 0),
+
+    (1.0D, 0.0D, 0.0D, 1, 0),
+    (0.0D, 0.0D, -1.0D, 1, 1),
+    (-0.25D, 0.0D, 0.0D, 0, 1),
+    (0.0D, 0.0D, 1.0D, 0, 0),
+
+    (1.0D, 0.0D, 0.0D, 0, 0),
+    (0.0D, 1.0D, 0.0D, 0, 1),
+    (-0.25D, 0.0D, 0.0D, 1, 1),
+    (0.0D, -1.0D, 0.0D, 1, 0)
+  )
 }
