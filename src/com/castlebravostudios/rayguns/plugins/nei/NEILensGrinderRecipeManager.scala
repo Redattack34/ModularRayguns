@@ -39,7 +39,8 @@ class NEILensGrinderRecipeManager extends ShapedRecipeHandler {
   }
 
   override def loadTransferRects() : Unit = {
-    transferRects.add(new RecipeTransferRect(new Rectangle(84, 23, 24, 18), "LensGrinder"));
+    transferRects.add(new RecipeTransferRect(new Rectangle(84, 23, 24, 18),
+        NEIModularRaygunsConfig.recipeKey));
   }
 
   override def drawExtras( recipeIndex: Int ) : Unit = {
@@ -49,9 +50,9 @@ class NEILensGrinderRecipeManager extends ShapedRecipeHandler {
   override def getGuiClass() = classOf[LensGrinderGui]
   override def getGuiTexture() = "rayguns:textures/gui/container/lens_grinder.png"
   override def getRecipeName = "Lens Grinder"
-  override def getOverlayIdentifier() = "LensGrinder"
+  override def getOverlayIdentifier() = NEIModularRaygunsConfig.recipeKey
 
-  def getShape(recipe: LensGrinderRecipe) : CachedShapedRecipe = {
+  private def getShape(recipe: LensGrinderRecipe) : CachedShapedRecipe = {
     new CachedShapedRecipe( recipe.recipe )
   }
 }

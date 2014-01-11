@@ -10,13 +10,15 @@ import com.castlebravostudios.rayguns.items.emitters.Emitters
 import com.castlebravostudios.rayguns.items.lenses._
 import com.castlebravostudios.rayguns.items.misc._
 import com.castlebravostudios.rayguns.mod.ModularRayguns
-
 import codechicken.nei.MultiItemRange
 import codechicken.nei.api.API
 import codechicken.nei.api.IConfigureNEI
 import cpw.mods.fml.common.Mod
+import com.castlebravostudios.rayguns.blocks.lensgrinder.LensGrinderGui
+import codechicken.nei.recipe.DefaultOverlayHandler
 
 class NEIModularRaygunsConfig extends IConfigureNEI {
+  import NEIModularRaygunsConfig.recipeKey
 
   def loadConfig() : Unit = {
     API.hideItem( Blocks.invisibleRedstone.blockID )
@@ -33,6 +35,8 @@ class NEIModularRaygunsConfig extends IConfigureNEI {
 
     API.registerRecipeHandler( new NEILensGrinderRecipeManager )
     API.registerUsageHandler( new NEILensGrinderRecipeManager )
+    API.registerGuiOverlay( classOf[LensGrinderGui], recipeKey )
+    API.registerGuiOverlayHandler( classOf[LensGrinderGui], new DefaultOverlayHandler, recipeKey )
   }
 
   def getName = ModularRayguns.getClass().getAnnotation(classOf[Mod]).name()
@@ -126,4 +130,7 @@ class NEIModularRaygunsConfig extends IConfigureNEI {
       range.add(module.item)
     }
   }
+}
+object NEIModularRaygunsConfig {
+  val recipeKey = "LensGrinder"
 }
