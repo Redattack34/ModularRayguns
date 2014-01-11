@@ -10,8 +10,9 @@ import net.minecraft.entity.item.EntityItem
 import net.minecraft.block.material.Material
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.item.ItemStack
+import net.minecraft.block.material.MapColor
 
-abstract class BaseContainerBlock(id : Int) extends BlockContainer(id, Material.wood) {
+abstract class BaseContainerBlock(id : Int) extends BlockContainer(id, new Material(MapColor.ironColor)) {
 
   override def onBlockActivated(world : World, x : Int, y : Int, z : Int, player : EntityPlayer,
     metadata : Int, par7 : Float, par8 : Float, par9 : Float ) : Boolean = {
