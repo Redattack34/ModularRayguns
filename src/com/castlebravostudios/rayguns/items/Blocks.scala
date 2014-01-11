@@ -19,6 +19,7 @@ object Blocks {
 
   var gunBench : Block = _
   var lensGrinder : Block = _
+  var invisibleRedstone : Block = _
 
   def registerBlocks : Unit = {
     gunBench = new GunBench( Config.gunBench )
@@ -29,8 +30,8 @@ object Blocks {
     GameRegistry.registerBlock(lensGrinder, classOf[ItemBlock], "lensGrinder")
     GameRegistry.registerTileEntity(classOf[LensGrinderTileEntity], "lensGrinderEntity")
 
-    val invred = new InvisibleRedstone( Config.invisibleRedstone )
-    GameRegistry.registerBlock( invred, classOf[ItemBlock], "invisibleRedstone" );
+    invisibleRedstone = new InvisibleRedstone( Config.invisibleRedstone )
+    GameRegistry.registerBlock( invisibleRedstone, classOf[ItemBlock], "invisibleRedstone" );
     GameRegistry.registerTileEntity(classOf[InvisibleRedstoneTileEntity], "invisibleRedstoneEntity" )
 
     NetworkRegistry.instance().registerGuiHandler(ModularRayguns, new ModularRaygunsGuiHandler)
