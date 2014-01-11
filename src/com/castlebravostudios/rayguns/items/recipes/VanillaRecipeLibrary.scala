@@ -221,14 +221,6 @@ object VanillaRecipeLibrary extends RecipeLibrary {
       'R' : Character, Block.blockRedstone,
       'D' : Character, Item.diamond )
 
-    GameRegistry.addRecipe( new ItemStack( EnergizedDiamond, 1 ),
-      "RGR",
-      "GFG",
-      "RGR",
-      'G' : Character, Block.glowStone,
-      'R' : Character, Block.blockRedstone,
-      'D' : Character, Item.diamond )
-
     GameRegistry.addRecipe( new ItemStack( Blocks.gunBench, 1 ),
       "II",
       "II",
@@ -246,6 +238,7 @@ object VanillaRecipeLibrary extends RecipeLibrary {
   private def addModuleRecipe( module : RaygunModule, params : Any* ) : Unit = {
     val modules = module +: params.flatMap{
       case mod : RaygunModule => Some( mod )
+      case (c, mod : RaygunModule) => Some( mod )
       case _ => None
     }
 
@@ -254,12 +247,7 @@ object VanillaRecipeLibrary extends RecipeLibrary {
       return
     }
 
-    val modifiedParams = params.map{
-      case mod : RaygunModule => mod.item
-      case a => a
-    }
-
     GameRegistry.addRecipe( ScalaShapedRecipeFactory(
-        new ItemStack( module.item, 1 ), modifiedParams:_* ) );
+        new ItemStack( module.item, 1 ), params:_* ) );
   }
 }
