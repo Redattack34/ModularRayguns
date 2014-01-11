@@ -8,17 +8,18 @@ import net.minecraft.inventory.InventoryCrafting
 import com.castlebravostudios.rayguns.utils.ScalaShapedRecipeFactory
 
 
-case class LensGrinderRecipe( recipe : ShapedRecipes, ticks : Short)
+case class LensGrinderRecipe( recipe : ShapedRecipes, ticks : Short )
 object LensGrinderRecipeRegistry {
 
-  private var recipes = Seq[LensGrinderRecipe]()
+  private var _recipes = Seq[LensGrinderRecipe]()
 
+  def recipes = _recipes
   def getRecipe( i : InventoryCrafting ) : Option[LensGrinderRecipe] =
-    recipes.find( recipe => recipe.recipe.matches( i, null ) )
+    _recipes.find( recipe => recipe.recipe.matches( i, null ) )
 
   def register( ticks : Short, result : ItemStack, recipe : Any* ) : Unit =
     register( ScalaShapedRecipeFactory( result, recipe:_* ), ticks )
   def register( recipe : ShapedRecipes, ticks: Short ) : Unit =
     register( LensGrinderRecipe( recipe, ticks ) )
-  def register( recipe : LensGrinderRecipe ) : Unit = recipes = recipe +: recipes
+  def register( recipe : LensGrinderRecipe ) : Unit = _recipes = recipe +: _recipes
 }
