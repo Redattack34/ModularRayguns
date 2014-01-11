@@ -1,12 +1,16 @@
 package com.castlebravostudios.rayguns.plugins.nei
 
-import codechicken.nei.recipe.ShapedRecipeHandler
-import net.minecraft.item.ItemStack
-import com.castlebravostudios.rayguns.blocks.lensgrinder.LensGrinderGui
-import com.castlebravostudios.rayguns.api.LensGrinderRecipeRegistry
-import codechicken.nei.NEIClientUtils
-import codechicken.nei.NEIServerUtils
+import java.awt.Rectangle
+
 import com.castlebravostudios.rayguns.api.LensGrinderRecipe
+import com.castlebravostudios.rayguns.api.LensGrinderRecipeRegistry
+import com.castlebravostudios.rayguns.blocks.lensgrinder.LensGrinderGui
+
+import codechicken.nei.NEIServerUtils
+
+import codechicken.nei.recipe.ShapedRecipeHandler
+import codechicken.nei.recipe.TemplateRecipeHandler.RecipeTransferRect
+import net.minecraft.item.ItemStack
 
 class NEILensGrinderRecipeManager extends ShapedRecipeHandler {
 
@@ -18,7 +22,7 @@ class NEILensGrinderRecipeManager extends ShapedRecipeHandler {
   }
 
   override def loadCraftingRecipes( outputId : String, results : Object* ) : Unit = {
-    if ( outputId == "crafting" ) {
+    if ( outputId == "LensGrinder" ) {
       for {
         recipe <- LensGrinderRecipeRegistry.recipes
       } this.arecipes.add( getShape( recipe ))
@@ -34,9 +38,14 @@ class NEILensGrinderRecipeManager extends ShapedRecipeHandler {
     } this.arecipes.add( getShape( recipe ) )
   }
 
+  override def loadTransferRects() : Unit = {
+    transferRects.add(new RecipeTransferRect(new Rectangle(84, 23, 24, 18), "LensGrinder"));
+  }
+
   override def getGuiClass() = classOf[LensGrinderGui]
   override def getGuiTexture() = "rayguns:textures/gui/container/lens_grinder.png"
   override def getRecipeName = "Lens Grinder"
+  override def getOverlayIdentifier() = "LensGrinder"
 
   def getShape(recipe: LensGrinderRecipe) : CachedShapedRecipe = {
     new CachedShapedRecipe( recipe.recipe )
