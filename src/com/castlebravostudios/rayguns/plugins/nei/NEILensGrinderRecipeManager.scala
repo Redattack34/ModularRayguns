@@ -42,6 +42,10 @@ class NEILensGrinderRecipeManager extends ShapedRecipeHandler {
     transferRects.add(new RecipeTransferRect(new Rectangle(84, 23, 24, 18), "LensGrinder"));
   }
 
+  override def drawExtras( recipeIndex: Int ) : Unit = {
+    drawProgressBar(84, 24, 176, 0, 24, 16, 48, 0);
+  }
+
   override def getGuiClass() = classOf[LensGrinderGui]
   override def getGuiTexture() = "rayguns:textures/gui/container/lens_grinder.png"
   override def getRecipeName = "Lens Grinder"
