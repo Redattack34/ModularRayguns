@@ -26,5 +26,5 @@ object BrokenGun extends ScalaItem( Config.brokenGun ) with MoreInformation {
   override def getDamage( item : ItemStack ) : Int = 1
   override def getDisplayDamage( item : ItemStack ) : Int = getChargeDepleted(item)
   override def isDamaged( item : ItemStack ) = getDisplayDamage( item ) > 0
-  override def getMaxDamage( item: ItemStack ) : Int = RaygunNbtUtils.getMaxDamage( item )
+  override def getMaxDamage( item: ItemStack ) : Int = RaygunNbtUtils.getMaxCharge( item )
 }

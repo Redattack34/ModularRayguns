@@ -8,24 +8,28 @@ import com.castlebravostudios.rayguns.items.lenses.ChargeBeamLens
 import com.castlebravostudios.rayguns.items.lenses.ChargeLens
 import com.castlebravostudios.rayguns.mod.Config
 import com.castlebravostudios.rayguns.mod.ModularRayguns
+import com.castlebravostudios.rayguns.utils.Extensions.WorldExtension
 import com.castlebravostudios.rayguns.utils.FireEvent
 import com.castlebravostudios.rayguns.utils.GunComponents
 import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
-import com.castlebravostudios.rayguns.utils.Extensions.WorldExtension
 
-import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.util.Icon
 import net.minecraft.world.World
 
-object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation {
+import cofh.api.energy.IEnergyContainerItem
+import cpw.mods.fml.common.Optional
+
+@Optional.Interface(iface="cofh.api.energy.IEnergyContainerItem", modid="Mekanism", striprefs=true)
+object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation with IEnergyContainerItem {
 
   private val maxChargeTime : Double = 3.0d
   private val ticksPerSecond : Int = 20
   private val maxChargeTicks : Int = ( maxChargeTime * ticksPerSecond ).toInt
+
+  private val rfPowerMultiplier : Double = Config.rfPowerMultiplier
 
   import RaygunNbtUtils._
 
@@ -37,7 +41,7 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation {
 
   override def getAdditionalInfo(item : ItemStack, player : EntityPlayer) : Iterable[String] = {
     val components = RaygunNbtUtils.getComponentInfo( item )
-    val maxCharge = RaygunNbtUtils.getMaxDamage( item )
+    val maxCharge = RaygunNbtUtils.getMaxCharge( item )
     val depleted = RaygunNbtUtils.getChargeDepleted( item )
     ( (maxCharge - depleted) + "/" + maxCharge ) :: components
   }
@@ -130,7 +134,7 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation {
   override def getDisplayDamage( item : ItemStack ) : Int = getChargeDepleted(item)
   override def isDamaged( item : ItemStack ) = getDisplayDamage( item ) > 0
 
-  override def getMaxDamage( item: ItemStack ) : Int = RaygunNbtUtils.getMaxDamage( item )
+  override def getMaxDamage( item: ItemStack ) : Int = RaygunNbtUtils.getMaxCharge( item )
 
   override def requiresMultipleRenderPasses() = true
   override def getRenderPasses(metadata : Int) = 1
@@ -152,4 +156,20 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation {
       case _ => 0
     }
   }
+
+  @Optional.Method( modid = "Mekanism" )
+  def receiveEnergy(container : ItemStack, maxReceive : Int, simulate : Boolean ) : Int = {
+    maxReceive
+  }
+
+  @Optional.Method( modid = "Mekanism" )
+  def extractEnergy(container : ItemStack, maxExtract : Int, simulate : Boolean ) : Int = {
+    0
+  }
+
+  @Optional.Method( modid = "Mekanism" )
+  def getEnergyStored(container : ItemStack) : Int = 0
+
+  @Optional.Method( modid = "Mekanism" )
+  def getMaxEnergyStored(container : ItemStack) : Int = 0
 }

@@ -17,6 +17,6 @@ stats
 ForgeModLoader-*
 gradlew
 gradlew.bat
-output-client.log
-output-server.log
+output-client*
+output-server*
 options.txt
