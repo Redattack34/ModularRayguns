@@ -7,7 +7,7 @@ import cpw.mods.fml.common.Optional
 import com.castlebravostudios.rayguns.mod.Config
 
 @Optional.Interface(iface="cofh.api.energy.IEnergyContainerItem", modid="Mekanism", striprefs=true)
-trait RFPowerConnector extends IEnergyContainerItem {
+trait RFItemPowerConnector extends IEnergyContainerItem {
   import RaygunNbtUtils._
 
   private val maxPowerTransferPerTick = 2

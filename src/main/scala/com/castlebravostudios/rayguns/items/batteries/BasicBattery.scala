@@ -4,6 +4,8 @@ import com.castlebravostudios.rayguns.api.items.BaseRaygunModule
 import com.castlebravostudios.rayguns.api.items.ItemModule
 import com.castlebravostudios.rayguns.api.items.RaygunBattery
 import com.castlebravostudios.rayguns.mod.ModularRayguns
+import com.castlebravostudios.rayguns.plugins.te.RFItemPowerConnector
+import com.castlebravostudios.rayguns.plugins.te.RFItemPowerConnector
 
 object BasicBattery extends BaseRaygunModule with RaygunBattery {
 
@@ -12,7 +14,7 @@ object BasicBattery extends BaseRaygunModule with RaygunBattery {
   val nameSegmentKey = "rayguns.BasicBattery.segment"
   val maxCapacity = 1000
 
-  def createItem( id : Int ) = new ItemModule( id, this )
+  def createItem( id : Int ) = (new ItemModule( id, this ) with RFItemPowerConnector )
     .setMaxDamage( maxCapacity )
     .setUnlocalizedName("rayguns.BasicBattery")
     .setTextureName("rayguns:battery_basic")
