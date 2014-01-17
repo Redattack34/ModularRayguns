@@ -1,20 +1,20 @@
 package com.castlebravostudios.rayguns.blocks.lensgrinder
 
-import com.castlebravostudios.rayguns.blocks.BaseInventoryTileEntity
-import net.minecraft.item.ItemStack
-import scala.collection.mutable.ListBuffer
-import net.minecraft.inventory.InventoryCrafting
-import net.minecraft.inventory.Container
-import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.inventory.IInventory
+import com.castlebravostudios.rayguns.api.LensGrinderRecipe
 import com.castlebravostudios.rayguns.api.LensGrinderRecipeRegistry
-import com.castlebravostudios.rayguns.api.LensGrinderRecipe
+import com.castlebravostudios.rayguns.blocks.BaseInventoryTileEntity
+import com.castlebravostudios.rayguns.blocks.PoweredBlock
+import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.inventory.Container
+import net.minecraft.inventory.IInventory
+import net.minecraft.inventory.InventoryCrafting
+import net.minecraft.item.ItemStack
 import net.minecraft.item.crafting.ShapedRecipes
-import com.castlebravostudios.rayguns.api.LensGrinderRecipe
 import net.minecraft.nbt.NBTTagCompound
-import com.castlebravostudios.rayguns.api.LensGrinderRecipe
+import com.castlebravostudios.rayguns.plugins.te.RFBlockPowerConnector
 
-class LensGrinderTileEntity extends BaseInventoryTileEntity {
+class LensGrinderTileEntity extends BaseInventoryTileEntity with PoweredBlock
+  with RFBlockPowerConnector {
 
   import LensGrinderTileEntity._
 
@@ -24,6 +24,11 @@ class LensGrinderTileEntity extends BaseInventoryTileEntity {
   private[this] var remainingTime = 0
 
   private[this] var recipe : Option[LensGrinderRecipe] = None
+
+  var chargeStored : Int = 0
+  val chargeCapacity : Int = 10
+  val maxChargeInput : Int = 4
+  private[this] val chargeUsagePerTick : Int = 2
 
   override def getSizeInventory : Int = 10
   override def getStackInSlot( slot : Int ) : ItemStack =
@@ -58,9 +63,10 @@ class LensGrinderTileEntity extends BaseInventoryTileEntity {
   }
 
   override def updateEntity() : Unit = {
-    if (this.remainingTime > 0) {
+    if ( this.remainingTime > 0 && chargeStored >= chargeUsagePerTick ) {
 
       remainingTime -= 1
+      chargeStored -= chargeUsagePerTick
 
       if (this.remainingTime == 0) {
         this.completeGrinding()
@@ -126,11 +132,13 @@ class LensGrinderTileEntity extends BaseInventoryTileEntity {
   override def readFromNBT( tag : NBTTagCompound ) : Unit = {
     super.readFromNBT(tag)
     remainingTime = tag.getShort("RemainingTime")
+    chargeStored = tag.getShort("ChargeStored");
   }
 
   override def writeToNBT( tag : NBTTagCompound ) : Unit = {
     super.writeToNBT(tag)
     tag.setShort( "RemainingTime", remainingTime.shortValue )
+    tag.setShort( "ChargeStored", chargeStored.shortValue )
   }
 
   val getInventoryStackLimit = 64
@@ -148,6 +156,8 @@ class LensGrinderTileEntity extends BaseInventoryTileEntity {
       updateRecipe
     }
   }
+
+  def addCharge( charge : Int ) : Unit = chargeStored += charge;
 }
 object LensGrinderTileEntity {
 

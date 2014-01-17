@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack
 import cpw.mods.fml.common.Optional
 import com.castlebravostudios.rayguns.mod.Config
 
-@Optional.Interface(iface="cofh.api.energy.IEnergyContainerItem", modid="Mekanism", striprefs=true)
+@Optional.Interface(iface="cofh.api.energy.IEnergyContainerItem", modid="CoFHCore", striprefs=true)
 trait RFItemPowerConnector extends IEnergyContainerItem {
   import RaygunNbtUtils._
 
@@ -14,7 +14,7 @@ trait RFItemPowerConnector extends IEnergyContainerItem {
 
   private val rfPowerMultiplier : Double = Config.rfPowerMultiplier
 
-  @Optional.Method( modid = "Mekanism" )
+  @Optional.Method( modid = "CoFHCore" )
   def receiveEnergy(container : ItemStack, maxReceive : Int, simulate : Boolean ) : Int = {
 
     val maxReceivable = (maxReceive / rfPowerMultiplier).toInt
@@ -28,7 +28,7 @@ trait RFItemPowerConnector extends IEnergyContainerItem {
     if ( maxReceive == 1 && simulate ) 1 else (energyExtracted * rfPowerMultiplier).toInt
   }
 
-  @Optional.Method( modid = "Mekanism" )
+  @Optional.Method( modid = "CoFHCore" )
   def extractEnergy(container : ItemStack, maxExtract : Int, simulate : Boolean ) : Int = {
     val maxExtractable = (maxExtract / rfPowerMultiplier).toInt
     val stored = getMaxCharge(container) - getChargeDepleted(container)
@@ -41,13 +41,13 @@ trait RFItemPowerConnector extends IEnergyContainerItem {
     if ( maxExtract == 1 && simulate ) 1 else (energyExtracted * rfPowerMultiplier).toInt
   }
 
-  @Optional.Method( modid = "Mekanism" )
+  @Optional.Method( modid = "CoFHCore" )
   def getEnergyStored(container : ItemStack) : Int = {
     val charge = getMaxCharge(container) - getChargeDepleted(container)
     (charge * rfPowerMultiplier).toInt
   }
 
-  @Optional.Method( modid = "Mekanism" )
+  @Optional.Method( modid = "CoFHCore" )
   def getMaxEnergyStored(container : ItemStack) : Int =
     (RaygunNbtUtils.getMaxCharge(container) * rfPowerMultiplier).toInt
 }
