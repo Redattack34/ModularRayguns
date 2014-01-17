@@ -20,3 +20,4 @@ gradlew.bat
 output-client*
 output-server*
 options.txt
+src/api
