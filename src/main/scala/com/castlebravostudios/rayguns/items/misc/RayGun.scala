@@ -8,20 +8,19 @@ import com.castlebravostudios.rayguns.items.lenses.ChargeBeamLens
 import com.castlebravostudios.rayguns.items.lenses.ChargeLens
 import com.castlebravostudios.rayguns.mod.Config
 import com.castlebravostudios.rayguns.mod.ModularRayguns
+import com.castlebravostudios.rayguns.plugins.te.RFItemPowerConnector
+import com.castlebravostudios.rayguns.utils.Extensions.WorldExtension
 import com.castlebravostudios.rayguns.utils.FireEvent
 import com.castlebravostudios.rayguns.utils.GunComponents
 import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
-import com.castlebravostudios.rayguns.utils.Extensions.WorldExtension
 
-import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.util.Icon
 import net.minecraft.world.World
 
-object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation {
+object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation with RFItemPowerConnector {
 
   private val maxChargeTime : Double = 3.0d
   private val ticksPerSecond : Int = 20
@@ -37,7 +36,7 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation {
 
   override def getAdditionalInfo(item : ItemStack, player : EntityPlayer) : Iterable[String] = {
     val components = RaygunNbtUtils.getComponentInfo( item )
-    val maxCharge = RaygunNbtUtils.getMaxDamage( item )
+    val maxCharge = RaygunNbtUtils.getMaxCharge( item )
     val depleted = RaygunNbtUtils.getChargeDepleted( item )
     ( (maxCharge - depleted) + "/" + maxCharge ) :: components
   }
@@ -130,7 +129,7 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation {
   override def getDisplayDamage( item : ItemStack ) : Int = getChargeDepleted(item)
   override def isDamaged( item : ItemStack ) = getDisplayDamage( item ) > 0
 
-  override def getMaxDamage( item: ItemStack ) : Int = RaygunNbtUtils.getMaxDamage( item )
+  override def getMaxDamage( item: ItemStack ) : Int = RaygunNbtUtils.getMaxCharge( item )
 
   override def requiresMultipleRenderPasses() = true
   override def getRenderPasses(metadata : Int) = 1

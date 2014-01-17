@@ -157,7 +157,7 @@ object RaygunNbtUtils {
       else if ( cur > max ) max
       else cur
 
-    val actualCharge = clamp( 0, charge, getMaxDamage( stack ) )
+    val actualCharge = clamp( 0, charge, getMaxCharge( stack ) )
 
     getTagCompound(stack).setInteger( chargeDepleted, actualCharge )
   }
@@ -170,7 +170,7 @@ object RaygunNbtUtils {
     tag.getInteger(chargeDepleted)
   }
 
-  def getMaxDamage( item: ItemStack ) : Int = item.getItem() match {
+  def getMaxCharge( item: ItemStack ) : Int = item.getItem() match {
     case bat: RaygunBattery => bat.maxCapacity
     case _ => getComponents( item ).map( _.battery.maxCapacity ).getOrElse(Integer.MAX_VALUE)
   }
