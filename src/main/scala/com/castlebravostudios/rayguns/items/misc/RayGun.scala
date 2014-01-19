@@ -8,6 +8,7 @@ import com.castlebravostudios.rayguns.items.lenses.ChargeBeamLens
 import com.castlebravostudios.rayguns.items.lenses.ChargeLens
 import com.castlebravostudios.rayguns.mod.Config
 import com.castlebravostudios.rayguns.mod.ModularRayguns
+import com.castlebravostudios.rayguns.plugins.ic2.IC2ItemPowerConnector
 import com.castlebravostudios.rayguns.plugins.te.RFItemPowerConnector
 import com.castlebravostudios.rayguns.utils.Extensions.WorldExtension
 import com.castlebravostudios.rayguns.utils.FireEvent
@@ -20,7 +21,8 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.Icon
 import net.minecraft.world.World
 
-object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation with RFItemPowerConnector {
+object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
+  with RFItemPowerConnector with IC2ItemPowerConnector {
 
   private val maxChargeTime : Double = 3.0d
   private val ticksPerSecond : Int = 20

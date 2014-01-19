@@ -9,6 +9,7 @@ import com.castlebravostudios.rayguns.utils.FireEvent
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import com.castlebravostudios.rayguns.plugins.te.RFItemPowerConnector
+import com.castlebravostudios.rayguns.plugins.ic2.IC2ItemPowerConnector
 
 object InfiniteBattery extends BaseRaygunModule with RaygunBattery {
   val moduleKey = "InfiniteBattery"
@@ -16,7 +17,7 @@ object InfiniteBattery extends BaseRaygunModule with RaygunBattery {
   val nameSegmentKey = "rayguns.InfiniteBattery.segment"
   val maxCapacity = Integer.MAX_VALUE
 
-  def createItem( id : Int ) = ( new ItemModule( id, this ) with RFItemPowerConnector )
+  def createItem( id : Int ) = ( new ItemModule( id, this ) with RFItemPowerConnector with IC2ItemPowerConnector )
     .setMaxDamage( Integer.MAX_VALUE )
     .setUnlocalizedName("rayguns.InfiniteBattery")
     .setTextureName("rayguns:battery_infinite")

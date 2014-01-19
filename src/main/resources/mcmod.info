@@ -11,5 +11,5 @@
   "authors": [ "Redattack34" ],
   "parent":"",
   "screenshots": [],
-  "dependencies": ["mod_MinecraftForge", "after:NotEnoughItems", "after:Mekanism"]
+  "dependencies": ["mod_MinecraftForge", "after:NotEnoughItems", "after:CoFHCore", "after:IC2" ]
 }]

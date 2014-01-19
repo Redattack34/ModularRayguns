@@ -71,6 +71,7 @@ object Config {
   var minLightningDetail : Double = _
   var lightningFlash : Boolean = _
   var rfPowerMultiplier : Double = _
+  var ic2PowerMultiplier : Double = _
 
   var recipeLibrary : RecipeLibrary = _
 
@@ -169,6 +170,7 @@ object Config {
     minLightningDetail = config.get( "misc", "minLightningDetailSize", 0.01d ).getDouble( 0.01d )
     lightningFlash = config.get( "misc", "lightningFlashEnabled", true ).getBoolean( true )
     rfPowerMultiplier = config.get( "misc", "rfPowerMultiplier", 20.0d ).getDouble( 20.0d )
+    ic2PowerMultiplier = config.get( "misc", "ic2PowerMultiplier", 4.0d ).getDouble( 4.0d )
   }
 
   private def loadBlockIds( config : Configuration ) : Unit = {

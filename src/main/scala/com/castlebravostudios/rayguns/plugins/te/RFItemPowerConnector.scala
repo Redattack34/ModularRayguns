@@ -32,7 +32,7 @@ trait RFItemPowerConnector extends IEnergyContainerItem {
   def extractEnergy(container : ItemStack, maxExtract : Int, simulate : Boolean ) : Int = {
     val maxExtractable = (maxExtract / rfPowerMultiplier).toInt
     val stored = getMaxCharge(container) - getChargeDepleted(container)
-    val energyExtracted = Math.min( stored, Math.min( maxExtract, maxPowerTransferPerTick ))
+    val energyExtracted = Math.min( stored, Math.min( maxExtractable, maxPowerTransferPerTick ))
 
     if ( !simulate ) {
       addCharge(-energyExtracted, container)

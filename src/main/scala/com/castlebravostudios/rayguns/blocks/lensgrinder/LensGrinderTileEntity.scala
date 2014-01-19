@@ -12,9 +12,10 @@ import net.minecraft.item.ItemStack
 import net.minecraft.item.crafting.ShapedRecipes
 import net.minecraft.nbt.NBTTagCompound
 import com.castlebravostudios.rayguns.plugins.te.RFBlockPowerConnector
+import com.castlebravostudios.rayguns.plugins.ic2.IC2BlockPowerConnector
 
 class LensGrinderTileEntity extends BaseInventoryTileEntity with PoweredBlock
-  with RFBlockPowerConnector {
+  with RFBlockPowerConnector with IC2BlockPowerConnector {
 
   import LensGrinderTileEntity._
 
