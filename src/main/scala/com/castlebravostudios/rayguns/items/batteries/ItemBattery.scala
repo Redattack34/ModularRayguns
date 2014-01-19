@@ -16,4 +16,10 @@ class ItemBattery( id : Int, battery : RaygunBattery ) extends ItemModule( id, b
     val depleted = RaygunNbtUtils.getChargeDepleted( item )
     List( (maxCharge - depleted) + "/" + maxCharge )
   }
+
+  override def getDamage( item : ItemStack ) : Int = 1
+  override def getDisplayDamage( item : ItemStack ) : Int = RaygunNbtUtils.getChargeDepleted(item)
+  override def isDamaged( item : ItemStack ) = getDisplayDamage( item ) > 0
+
+  override def getMaxDamage( item: ItemStack ) : Int = RaygunNbtUtils.getMaxCharge( item )
 }
