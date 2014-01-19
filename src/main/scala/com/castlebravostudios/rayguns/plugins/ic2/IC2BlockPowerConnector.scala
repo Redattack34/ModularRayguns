@@ -10,13 +10,15 @@ import ic2.api.energy.event.EnergyTileLoadEvent
 import ic2.api.energy.event.EnergyTileUnloadEvent
 import ic2.api.energy.tile.IEnergySink
 import com.castlebravostudios.rayguns.mod.Config
+import net.minecraft.nbt.NBTTagCompound
 
 @Optional.Interface(iface="ic2.api.energy.tile.IEnergySink", modid="IC2", striprefs=true)
 trait IC2BlockPowerConnector extends TileEntity with IEnergySink {
   self : PoweredBlock =>
 
-  private[this] var postedOnLoad = false
-  private[this] def ic2PowerMultiplier = Config.ic2PowerMultiplier
+  var euBuffer : Double = 0
+  var postedOnLoad = false
+  def ic2PowerMultiplier = Config.ic2PowerMultiplier
 
   override def updateEntity() : Unit = {
     if ( !postedOnLoad && worldObj.isOnServer ) {
@@ -42,19 +44,35 @@ trait IC2BlockPowerConnector extends TileEntity with IEnergySink {
 
   def demandedEnergyUnits() : Double = {
     val chargeRequested = Math.min( chargeCapacity - chargeStored, maxChargeInput )
-    chargeRequested * ic2PowerMultiplier
+    val buffer = euBuffer / ic2PowerMultiplier
+
+    if ( buffer >= chargeRequested ) {
+      val chargeFromBuffer = Math.min( buffer, chargeRequested ).toInt
+      addCharge( chargeFromBuffer )
+      euBuffer -= chargeFromBuffer * ic2PowerMultiplier
+      0
+    }
+    else {
+      32
+    }
   }
 
   def injectEnergyUnits( directionFrom : ForgeDirection, amount : Double ) : Double = {
-    val maxChargeReceivable = amount / ic2PowerMultiplier
-    val remainingChargeCapacity = Math.min( chargeCapacity - chargeStored, maxChargeInput )
-    val chargeExtracted = Math.min( remainingChargeCapacity, Math.min( maxChargeReceivable, amount ) ).toInt
-
-    addCharge(chargeExtracted)
-
-    amount - ( chargeExtracted * ic2PowerMultiplier )
+    println(s"Injecting... (current : $euBuffer " + worldObj.getWorldTime());
+    val maxAccepted = Math.min( amount, 32 - euBuffer )
+    euBuffer += maxAccepted
+    amount - maxAccepted
   }
 
-  def getMaxSafeInput() : Int = Integer.MAX_VALUE
+  override def readFromNBT( tag : NBTTagCompound ) : Unit = {
+    euBuffer = tag.getDouble("EUBuffer")
+    super.readFromNBT(tag)
+  }
+
+  override def writeToNBT( tag : NBTTagCompound ) : Unit = {
+    tag.setDouble( "EUBuffer", euBuffer)
+    super.writeToNBT(tag)
+  }
+  def getMaxSafeInput() : Int = 32
   def acceptsEnergyFrom( emitter : TileEntity, direction : ForgeDirection ) : Boolean = true
 }
