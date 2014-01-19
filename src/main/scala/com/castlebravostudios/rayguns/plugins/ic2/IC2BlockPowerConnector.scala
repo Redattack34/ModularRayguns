@@ -11,17 +11,20 @@ import ic2.api.energy.event.EnergyTileUnloadEvent
 import ic2.api.energy.tile.IEnergySink
 import com.castlebravostudios.rayguns.mod.Config
 import net.minecraft.nbt.NBTTagCompound
+import cpw.mods.fml.common.Loader
 
 @Optional.Interface(iface="ic2.api.energy.tile.IEnergySink", modid="IC2", striprefs=true)
 trait IC2BlockPowerConnector extends TileEntity with IEnergySink {
   self : PoweredBlock =>
+
+  import IC2BlockPowerConnector._
 
   var euBuffer : Double = 0
   var postedOnLoad = false
   def ic2PowerMultiplier = Config.ic2PowerMultiplier
 
   override def updateEntity() : Unit = {
-    if ( !postedOnLoad && worldObj.isOnServer ) {
+    if ( ic2Loaded && !postedOnLoad && worldObj.isOnServer ) {
       MinecraftForge.EVENT_BUS.post(new EnergyTileLoadEvent(this))
       postedOnLoad = true
     }
@@ -29,19 +32,20 @@ trait IC2BlockPowerConnector extends TileEntity with IEnergySink {
   }
 
   override def invalidate() : Unit = {
-    if ( worldObj.isOnServer ) {
+    if ( ic2Loaded && worldObj.isOnServer ) {
       MinecraftForge.EVENT_BUS.post(new EnergyTileUnloadEvent(this))
     }
     super.invalidate()
   }
 
   override def onChunkUnload() : Unit = {
-    if ( worldObj.isOnServer ) {
+    if ( ic2Loaded && worldObj.isOnServer ) {
       MinecraftForge.EVENT_BUS.post(new EnergyTileUnloadEvent(this))
     }
     super.onChunkUnload()
   }
 
+  @Optional.Method( modid = "IC2" )
   def demandedEnergyUnits() : Double = {
     val chargeRequested = Math.min( chargeCapacity - chargeStored, maxChargeInput )
     val buffer = euBuffer / ic2PowerMultiplier
@@ -57,6 +61,7 @@ trait IC2BlockPowerConnector extends TileEntity with IEnergySink {
     }
   }
 
+  @Optional.Method( modid = "IC2" )
   def injectEnergyUnits( directionFrom : ForgeDirection, amount : Double ) : Double = {
     val maxAccepted = Math.min( amount, 32 - euBuffer )
     euBuffer += maxAccepted
@@ -72,6 +77,13 @@ trait IC2BlockPowerConnector extends TileEntity with IEnergySink {
     tag.setDouble( "EUBuffer", euBuffer)
     super.writeToNBT(tag)
   }
+
+  @Optional.Method( modid = "IC2" )
   def getMaxSafeInput() : Int = 32
+
+  @Optional.Method( modid = "IC2" )
   def acceptsEnergyFrom( emitter : TileEntity, direction : ForgeDirection ) : Boolean = true
+}
+object IC2BlockPowerConnector {
+  val ic2Loaded = Loader.isModLoaded("IC2")
 }

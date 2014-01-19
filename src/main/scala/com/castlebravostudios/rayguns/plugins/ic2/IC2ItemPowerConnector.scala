@@ -15,11 +15,24 @@ trait IC2ItemPowerConnector extends Item with ISpecialElectricItem {
 
   val ic2PowerMultiplier = Config.ic2PowerMultiplier
 
+  @Optional.Method( modid = "IC2" )
   def canProvideEnergy( item : ItemStack ) : Boolean = true
+
+  @Optional.Method( modid = "IC2" )
   def getChargedItemId( item : ItemStack ) : Int = this.itemID
+
+  @Optional.Method( modid = "IC2" )
   def getEmptyItemId( item : ItemStack ) : Int = this.itemID
+
+  @Optional.Method( modid = "IC2" )
   def getMaxCharge( item : ItemStack ) = ( getMaxCharge( item ) * ic2PowerMultiplier ).toInt
+
+  @Optional.Method( modid = "IC2" )
   def getTier( item : ItemStack ) = 1
+
+  @Optional.Method( modid = "IC2" )
   def getTransferLimit( item : ItemStack ) = (2 * ic2PowerMultiplier).toInt
+
+  @Optional.Method( modid = "IC2" )
   def getManager( item : ItemStack ) : IElectricItemManager = RaygunElectricItemHandler
 }
