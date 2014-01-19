@@ -8,8 +8,11 @@ import net.minecraft.entity.player.EntityPlayer
 import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
 import com.castlebravostudios.rayguns.api.items.RaygunBattery
 import com.castlebravostudios.rayguns.api.items.ItemModule
+import com.castlebravostudios.rayguns.plugins.te.RFItemPowerConnector
+import com.castlebravostudios.rayguns.plugins.ic2.IC2ItemPowerConnector
 
-class ItemBattery( id : Int, battery : RaygunBattery ) extends ItemModule( id, battery ) with MoreInformation {
+class ItemBattery( id : Int, val battery : RaygunBattery ) extends ItemModule( id, battery ) with MoreInformation
+  with RFItemPowerConnector with IC2ItemPowerConnector {
 
   override def getAdditionalInfo(item : ItemStack, player : EntityPlayer) : Iterable[String] = {
     val maxCharge = RaygunNbtUtils.getMaxCharge( item )
