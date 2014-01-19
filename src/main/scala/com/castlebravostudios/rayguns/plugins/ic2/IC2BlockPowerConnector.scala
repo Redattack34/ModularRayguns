@@ -58,7 +58,6 @@ trait IC2BlockPowerConnector extends TileEntity with IEnergySink {
   }
 
   def injectEnergyUnits( directionFrom : ForgeDirection, amount : Double ) : Double = {
-    println(s"Injecting... (current : $euBuffer " + worldObj.getWorldTime());
     val maxAccepted = Math.min( amount, 32 - euBuffer )
     euBuffer += maxAccepted
     amount - maxAccepted
