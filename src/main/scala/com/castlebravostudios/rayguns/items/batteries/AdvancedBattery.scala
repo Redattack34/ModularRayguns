@@ -16,7 +16,6 @@ object AdvancedBattery extends BaseRaygunModule with RaygunBattery {
   val maxCapacity = 3000
 
   def createItem( id : Int ) = new ItemBattery( id, this )
-    .setMaxDamage( maxCapacity )
     .setUnlocalizedName("rayguns.AdvancedBattery")
     .setTextureName("rayguns:battery_advanced")
     .setCreativeTab( ModularRayguns.raygunsTab )

@@ -22,6 +22,8 @@ trait RaygunBattery extends RaygunModule {
     }
     else false
   }
+
+
 }
 object RaygunBattery {
   val powerBase = 10

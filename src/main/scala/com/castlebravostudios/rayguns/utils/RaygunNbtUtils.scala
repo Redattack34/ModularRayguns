@@ -16,6 +16,8 @@ import com.castlebravostudios.rayguns.items.misc.BrokenGun
 import net.minecraft.util.StatCollector
 import net.minecraft.item.Item
 import net.minecraft.client.resources.I18n
+import com.castlebravostudios.rayguns.api.items.ItemModule
+import com.castlebravostudios.rayguns.items.batteries.ItemBattery
 
 object RaygunNbtUtils {
 
@@ -171,7 +173,7 @@ object RaygunNbtUtils {
   }
 
   def getMaxCharge( item: ItemStack ) : Int = item.getItem() match {
-    case bat: RaygunBattery => bat.maxCapacity
+    case bat : ItemBattery => bat.battery.maxCapacity
     case _ => getComponents( item ).map( _.battery.maxCapacity ).getOrElse(Integer.MAX_VALUE)
   }
 

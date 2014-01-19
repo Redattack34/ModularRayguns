@@ -18,7 +18,6 @@ object InfiniteBattery extends BaseRaygunModule with RaygunBattery {
   val maxCapacity = Integer.MAX_VALUE
 
   def createItem( id : Int ) = new ItemBattery( id, this )
-    .setMaxDamage( Integer.MAX_VALUE )
     .setUnlocalizedName("rayguns.InfiniteBattery")
     .setTextureName("rayguns:battery_infinite")
     .setCreativeTab( ModularRayguns.raygunsTab )
