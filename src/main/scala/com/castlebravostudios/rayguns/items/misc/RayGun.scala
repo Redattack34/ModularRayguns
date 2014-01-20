@@ -14,15 +14,16 @@ import com.castlebravostudios.rayguns.utils.Extensions.WorldExtension
 import com.castlebravostudios.rayguns.utils.FireEvent
 import com.castlebravostudios.rayguns.utils.GunComponents
 import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
-
+import com.castlebravostudios.rayguns.utils.Extensions.ItemStackExtension
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.util.Icon
 import net.minecraft.world.World
+import com.castlebravostudios.rayguns.items.ChargableItem
 
 object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
-  with RFItemPowerConnector with IC2ItemPowerConnector {
+  with ChargableItem with RFItemPowerConnector with IC2ItemPowerConnector {
 
   private val maxChargeTime : Double = 3.0d
   private val ticksPerSecond : Int = 20
@@ -38,9 +39,7 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
 
   override def getAdditionalInfo(item : ItemStack, player : EntityPlayer) : Iterable[String] = {
     val components = RaygunNbtUtils.getComponentInfo( item )
-    val maxCharge = RaygunNbtUtils.getMaxCharge( item )
-    val depleted = RaygunNbtUtils.getChargeDepleted( item )
-    ( (maxCharge - depleted) + "/" + maxCharge ) :: components
+    getBattery( item ).map( _.getChargeString( item ) ) ++ components
   }
 
   override def onPlayerStoppedUsing(item : ItemStack, world : World, player : EntityPlayer, itemUseCount : Int ): Unit = {
@@ -122,16 +121,16 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
   }
 
   private def setCooldownTime( item : ItemStack, ticks : Int ) =
-    getTagCompound(item).setShort( cooldownTime, ticks.shortValue )
+    item.getTagCompoundSafe.setShort( cooldownTime, ticks.shortValue )
 
   def getCooldownTime( item : ItemStack ) =
-    getTagCompound(item).getShort( cooldownTime )
+    item.getTagCompoundSafe.getShort( cooldownTime )
 
   override def getDamage( item : ItemStack ) : Int = 1
-  override def getDisplayDamage( item : ItemStack ) : Int = getChargeDepleted(item)
+  override def getDisplayDamage( item : ItemStack ) : Int = getChargeDepleted( item )
   override def isDamaged( item : ItemStack ) = getDisplayDamage( item ) > 0
 
-  override def getMaxDamage( item: ItemStack ) : Int = RaygunNbtUtils.getMaxCharge( item )
+  override def getMaxDamage( item: ItemStack ) : Int = getChargeCapacity( item )
 
   override def requiresMultipleRenderPasses() = true
   override def getRenderPasses(metadata : Int) = 1
@@ -153,4 +152,17 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
       case _ => 0
     }
   }
+
+  def getChargeCapacity( item : ItemStack ) : Int =
+    getBattery( item ).map( _.maxCapacity ).getOrElse(1)
+  def getChargeDepleted( item : ItemStack ) : Int =
+    getBattery( item ).map( _.getChargeDepleted( item ) ).getOrElse( 0 )
+  def setChargeDepleted( item : ItemStack, depleted : Int ) : Unit =
+    getBattery( item ).foreach( _.setChargeDepleted( item, depleted ) )
+  def addCharge( item : ItemStack, delta : Int ) : Unit =
+    getBattery( item ).foreach( _.addCharge( item, delta ) )
+  def getMaxChargePerTick( item : ItemStack ) : Int =
+    getBattery( item ).map( _.maxChargePerTick ).getOrElse( 0 )
+  def getIC2Tier( item : ItemStack ) : Int =
+    getBattery( item ).map( _.ic2Tier ).getOrElse( Integer.MAX_VALUE )
 }

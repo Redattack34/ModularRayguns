@@ -14,9 +14,10 @@ object BasicBattery extends BaseRaygunModule with RaygunBattery {
   val powerModifier = 1.0d;
   val nameSegmentKey = "rayguns.BasicBattery.segment"
   val maxCapacity = 1000
+  val maxChargePerTick = 2
+  val ic2Tier = 1
 
-  def createItem( id : Int ) = (new ItemModule( id, this ) with RFItemPowerConnector with IC2ItemPowerConnector )
-    .setMaxDamage( maxCapacity )
+  def createItem( id : Int ) = new ItemBattery( id, this )
     .setUnlocalizedName("rayguns.BasicBattery")
     .setTextureName("rayguns:battery_basic")
     .setCreativeTab( ModularRayguns.raygunsTab )

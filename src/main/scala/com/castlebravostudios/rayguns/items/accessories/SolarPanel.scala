@@ -30,7 +30,9 @@ object SolarPanel extends BaseRaygunModule with RaygunAccessory {
 
   override def onGunUpdate(world : World, entity : Entity, stack : ItemStack ) : Unit = {
     if ( canSeeTheSun( world, entity ) && random.nextInt( 2 ) == 0 ) {
-      RaygunNbtUtils.addCharge(1, stack)
+      RaygunNbtUtils.getBattery( stack ).foreach { batt =>
+        batt.addCharge(stack, 1)
+      }
     }
   }
 

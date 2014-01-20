@@ -58,7 +58,19 @@ class GunBenchTileEntity extends BaseInventoryTileEntity {
 
   private def copyCharge( from : ItemStack, to : ItemStack ) : Unit = {
     if ( from != null && to != null ) {
-      setChargeDepleted( getChargeDepleted( from ), to )
+      val battery = getBattery( from ).orElse( getBattery( to ) )
+      battery.foreach { batt =>
+        batt.setChargeDepleted( to, batt.getChargeDepleted( from ) )
+      }
+    }
+  }
+
+  private def getBattery( item : ItemStack ) : Option[RaygunBattery] = {
+    item.getItem() match {
+      case RayGun => RaygunNbtUtils.getBattery( item )
+      case itemModule : ItemModule if itemModule.module.isInstanceOf[RaygunBattery] =>
+        Some( itemModule.module.asInstanceOf[RaygunBattery])
+      case _ => None
     }
   }
 
