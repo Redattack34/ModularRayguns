@@ -16,6 +16,8 @@ object RaygunElectricItemHandler extends IElectricItemManager {
 
   def charge( item : ItemStack, amount : Int, tier : Int, ignoreTransferLimit : Boolean, simulate : Boolean ) : Int = {
     val chargableItem = chargable( item )
+    if ( tier < chargableItem.getIC2Tier( item ) ) { return 0 }
+
     val maxReceivable = (amount / ic2PowerMultiplier).toInt
     val capacity = chargableItem.getChargeCapacity( item )
     val energyExtracted = Math.min( capacity, Math.min( maxReceivable, chargableItem.getMaxChargePerTick( item ) ) )
@@ -29,6 +31,8 @@ object RaygunElectricItemHandler extends IElectricItemManager {
 
   def discharge( item : ItemStack, amount : Int, tier : Int, ignoreTransferLimit : Boolean, simulate : Boolean ) : Int = {
     val chargableItem = chargable( item )
+    if ( tier < chargableItem.getIC2Tier( item ) ) { return 0 }
+
     val maxExtractable = (amount / ic2PowerMultiplier).toInt
     val stored = chargableItem.getChargeCapacity(item) - chargableItem.getChargeDepleted(item)
     val energyExtracted = Math.min( stored, Math.min( maxExtractable, chargableItem.getMaxChargePerTick( item ) ) )

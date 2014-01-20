@@ -28,7 +28,7 @@ trait IC2ItemPowerConnector extends Item with ISpecialElectricItem {
   def getMaxCharge( item : ItemStack ) = ( getMaxCharge( item ) * ic2PowerMultiplier ).toInt
 
   @Optional.Method( modid = "IC2" )
-  def getTier( item : ItemStack ) = 1
+  def getTier( item : ItemStack ) = getIC2Tier( item )
 
   @Optional.Method( modid = "IC2" )
   def getTransferLimit( item : ItemStack ) = ( getMaxChargePerTick( item ) * ic2PowerMultiplier).toInt

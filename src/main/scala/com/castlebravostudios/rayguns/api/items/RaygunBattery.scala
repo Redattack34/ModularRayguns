@@ -15,6 +15,7 @@ trait RaygunBattery extends RaygunModule {
 
   def maxCapacity : Int
   def maxChargePerTick : Int
+  def ic2Tier : Int
 
   def drainPower( player : EntityPlayer, item : ItemStack, event : FireEvent ) : Boolean = {
     val powerMult = event.powerMultiplier

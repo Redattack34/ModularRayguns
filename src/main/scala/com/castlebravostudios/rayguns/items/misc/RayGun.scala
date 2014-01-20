@@ -163,4 +163,6 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
     getBattery( item ).foreach( _.addCharge( item, delta ) )
   def getMaxChargePerTick( item : ItemStack ) : Int =
     getBattery( item ).map( _.maxChargePerTick ).getOrElse( 0 )
+  def getIC2Tier( item : ItemStack ) : Int =
+    getBattery( item ).map( _.ic2Tier ).getOrElse( Integer.MAX_VALUE )
 }
