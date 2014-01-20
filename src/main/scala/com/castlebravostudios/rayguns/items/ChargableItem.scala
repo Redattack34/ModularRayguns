@@ -8,4 +8,5 @@ trait ChargableItem {
   def getChargeDepleted( item : ItemStack ) : Int
   def setChargeDepleted( item : ItemStack, depleted : Int ) : Unit
   def addCharge( item : ItemStack, delta : Int ) : Unit
+  def getMaxChargePerTick( item : ItemStack ) : Int
 }

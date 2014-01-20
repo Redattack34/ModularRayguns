@@ -28,4 +28,5 @@ class ItemBattery( id : Int, val battery : RaygunBattery ) extends ItemModule( i
   def getChargeDepleted( item : ItemStack ) : Int = battery.getChargeDepleted( item )
   def setChargeDepleted( item : ItemStack, depleted : Int ) : Unit = battery.setChargeDepleted( item, depleted )
   def addCharge( item : ItemStack, delta : Int ) : Unit = battery.setChargeDepleted( item, delta )
+  def getMaxChargePerTick( item : ItemStack ) : Int = battery.maxChargePerTick
 }

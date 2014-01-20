@@ -161,4 +161,6 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
     getBattery( item ).foreach( _.setChargeDepleted( item, depleted ) )
   def addCharge( item : ItemStack, delta : Int ) : Unit =
     getBattery( item ).foreach( _.addCharge( item, delta ) )
+  def getMaxChargePerTick( item : ItemStack ) : Int =
+    getBattery( item ).map( _.maxChargePerTick ).getOrElse( 0 )
 }

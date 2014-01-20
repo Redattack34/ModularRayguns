@@ -13,13 +13,12 @@ import com.castlebravostudios.rayguns.items.ChargableItem
 object RaygunElectricItemHandler extends IElectricItemManager {
 
   val ic2PowerMultiplier = Config.ic2PowerMultiplier
-  val maxPowerTransferPerTick = 2
 
   def charge( item : ItemStack, amount : Int, tier : Int, ignoreTransferLimit : Boolean, simulate : Boolean ) : Int = {
     val chargableItem = chargable( item )
     val maxReceivable = (amount / ic2PowerMultiplier).toInt
     val capacity = chargableItem.getChargeCapacity( item )
-    val energyExtracted = Math.min( capacity, Math.min( maxReceivable, maxPowerTransferPerTick ))
+    val energyExtracted = Math.min( capacity, Math.min( maxReceivable, chargableItem.getMaxChargePerTick( item ) ) )
 
     if ( !simulate ) {
       chargableItem.addCharge( item, energyExtracted )
@@ -32,7 +31,7 @@ object RaygunElectricItemHandler extends IElectricItemManager {
     val chargableItem = chargable( item )
     val maxExtractable = (amount / ic2PowerMultiplier).toInt
     val stored = chargableItem.getChargeCapacity(item) - chargableItem.getChargeDepleted(item)
-    val energyExtracted = Math.min( stored, Math.min( maxExtractable, maxPowerTransferPerTick ))
+    val energyExtracted = Math.min( stored, Math.min( maxExtractable, chargableItem.getMaxChargePerTick( item ) ) )
 
     if ( !simulate ) {
       chargableItem.addCharge( item, -energyExtracted )

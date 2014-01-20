@@ -14,6 +14,7 @@ object UltimateBattery extends BaseRaygunModule with RaygunBattery {
   val powerModifier = 1.0d;
   val nameSegmentKey = "rayguns.UltimateBattery.segment"
   val maxCapacity = 5000
+  val maxChargePerTick = 8
 
   def createItem( id : Int ) = new ItemBattery( id, this )
     .setUnlocalizedName("rayguns.UltimateBattery")

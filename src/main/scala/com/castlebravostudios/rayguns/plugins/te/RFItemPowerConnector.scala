@@ -11,8 +11,6 @@ import com.castlebravostudios.rayguns.items.ChargableItem
 trait RFItemPowerConnector extends IEnergyContainerItem {
   self : ChargableItem =>
 
-  private val maxPowerTransferPerTick = 2
-
   private val rfPowerMultiplier : Double = Config.rfPowerMultiplier
 
   @Optional.Method( modid = "CoFHCore" )
@@ -20,7 +18,7 @@ trait RFItemPowerConnector extends IEnergyContainerItem {
 
     val maxReceivable = (maxReceive / rfPowerMultiplier).toInt
     val capacity = getChargeDepleted(container)
-    val energyExtracted = Math.min( capacity, Math.min( maxReceivable, maxPowerTransferPerTick ))
+    val energyExtracted = Math.min( capacity, Math.min( maxReceivable, getMaxChargePerTick( container ) ) )
 
     if ( !simulate ) {
       addCharge( container, energyExtracted )
@@ -33,7 +31,7 @@ trait RFItemPowerConnector extends IEnergyContainerItem {
   def extractEnergy(container : ItemStack, maxExtract : Int, simulate : Boolean ) : Int = {
     val maxExtractable = (maxExtract / rfPowerMultiplier).toInt
     val stored = getChargeCapacity(container) - getChargeDepleted(container)
-    val energyExtracted = Math.min( stored, Math.min( maxExtractable, maxPowerTransferPerTick ))
+    val energyExtracted = Math.min( stored, Math.min( maxExtractable, getMaxChargePerTick( container ) ) )
 
     if ( !simulate ) {
       addCharge( container, -energyExtracted )

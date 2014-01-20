@@ -31,7 +31,7 @@ trait IC2ItemPowerConnector extends Item with ISpecialElectricItem {
   def getTier( item : ItemStack ) = 1
 
   @Optional.Method( modid = "IC2" )
-  def getTransferLimit( item : ItemStack ) = (2 * ic2PowerMultiplier).toInt
+  def getTransferLimit( item : ItemStack ) = ( getMaxChargePerTick( item ) * ic2PowerMultiplier).toInt
 
   @Optional.Method( modid = "IC2" )
   def getManager( item : ItemStack ) : IElectricItemManager = RaygunElectricItemHandler
