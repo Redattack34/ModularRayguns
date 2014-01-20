@@ -23,5 +23,5 @@ object InfiniteBattery extends BaseRaygunModule with RaygunBattery {
     .setCreativeTab( ModularRayguns.raygunsTab )
     .setMaxStackSize(1)
 
-  override def drainPower( player : EntityPlayer, item : ItemStack, event : FireEvent ) : Boolean = true
+  override def addCharge( item : ItemStack, delta : Int ) : Unit = ()
 }

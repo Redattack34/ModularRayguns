@@ -42,11 +42,14 @@ object RaygunNbtUtils {
   def getComponents( item : ItemStack ) : Option[GunComponents] = {
     for { body <- getComponent(item, BODY_STR)(ModuleRegistry.getBody)
           chamber <- getComponent(item, CHAMBER_STR)(getChamber)
-          battery <- getComponent(item, BATTERY_STR)(getBattery)
+          battery <- getComponent(item, BATTERY_STR)(ModuleRegistry.getBattery)
           lens = getComponent(item, LENS_STR)(getLens)
           accessory = getComponent(item, ACC_STR)(getAccessory) }
       yield GunComponents( body, chamber, battery, lens, accessory )
     }
+
+  def getBattery( item : ItemStack ) : Option[RaygunBattery] =
+    getComponent(item, BATTERY_STR)(ModuleRegistry.getBattery)
 
   def getComponentInfo( item : ItemStack ): List[String] =
     getAllValidComponents( item ).productIterator.flatMap {
@@ -144,7 +147,7 @@ object RaygunNbtUtils {
   def getAllValidComponents( item : ItemStack ) : OptionalGunComponents = {
     val body = getComponent(item, BODY_STR)(getBody)
     val chamber = getComponent(item, CHAMBER_STR)(getChamber)
-    val battery = getComponent(item, BATTERY_STR)(getBattery)
+    val battery = getComponent(item, BATTERY_STR)(ModuleRegistry.getBattery)
     val lens = getComponent(item, LENS_STR)(getLens)
     val accessory = getComponent(item, ACC_STR)(getAccessory)
     OptionalGunComponents( body, chamber, battery, lens, accessory )

@@ -38,8 +38,8 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
 
   override def getAdditionalInfo(item : ItemStack, player : EntityPlayer) : Iterable[String] = {
     val components = RaygunNbtUtils.getComponentInfo( item )
-    val maxCharge = RaygunNbtUtils.getMaxCharge( item )
-    val depleted = RaygunNbtUtils.getChargeDepleted( item )
+    val maxCharge = getMaxDamage( item )
+    val depleted = getDisplayDamage( item )
     ( (maxCharge - depleted) + "/" + maxCharge ) :: components
   }
 
@@ -128,10 +128,12 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
     getTagCompound(item).getShort( cooldownTime )
 
   override def getDamage( item : ItemStack ) : Int = 1
-  override def getDisplayDamage( item : ItemStack ) : Int = getChargeDepleted(item)
+  override def getDisplayDamage( item : ItemStack ) : Int =
+    getBattery(item).map( _.getChargeDepleted( item ) ).getOrElse( 0 )
   override def isDamaged( item : ItemStack ) = getDisplayDamage( item ) > 0
 
-  override def getMaxDamage( item: ItemStack ) : Int = RaygunNbtUtils.getMaxCharge( item )
+  override def getMaxDamage( item: ItemStack ) : Int =
+    getBattery(item).map( _.maxCapacity ).getOrElse(1)
 
   override def requiresMultipleRenderPasses() = true
   override def getRenderPasses(metadata : Int) = 1

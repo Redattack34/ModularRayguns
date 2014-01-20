@@ -15,14 +15,14 @@ class ItemBattery( id : Int, val battery : RaygunBattery ) extends ItemModule( i
   with RFItemPowerConnector with IC2ItemPowerConnector {
 
   override def getAdditionalInfo(item : ItemStack, player : EntityPlayer) : Iterable[String] = {
-    val maxCharge = RaygunNbtUtils.getMaxCharge( item )
-    val depleted = RaygunNbtUtils.getChargeDepleted( item )
+    val maxCharge = battery.maxCapacity
+    val depleted = battery.getChargeDepleted( item )
     List( (maxCharge - depleted) + "/" + maxCharge )
   }
 
   override def getDamage( item : ItemStack ) : Int = 1
-  override def getDisplayDamage( item : ItemStack ) : Int = RaygunNbtUtils.getChargeDepleted(item)
+  override def getDisplayDamage( item : ItemStack ) : Int = battery.getChargeDepleted(item)
   override def isDamaged( item : ItemStack ) = getDisplayDamage( item ) > 0
 
-  override def getMaxDamage( item: ItemStack ) : Int = RaygunNbtUtils.getMaxCharge( item )
+  override def getMaxDamage( item: ItemStack ) : Int = battery.maxCapacity
 }

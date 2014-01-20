@@ -9,7 +9,6 @@ import net.minecraft.item.ItemStack
 trait RaygunBattery extends RaygunModule {
 
   import RaygunBattery._
-  import RaygunNbtUtils._
 
   def maxCapacity : Int
 
@@ -17,13 +16,15 @@ trait RaygunBattery extends RaygunModule {
     val powerMult = event.powerMultiplier
     val powerDrain = powerMult * powerBase
     if ( getChargeDepleted( item ) + powerDrain <= maxCapacity ) {
-      addCharge( -powerDrain.intValue(), item )
+      addCharge( item, -powerDrain.intValue() )
       true
     }
     else false
   }
 
-
+  def getChargeDepleted( item : ItemStack ) : Int = RaygunNbtUtils.getChargeDepleted( item )
+  def setChargeDepleted( item : ItemStack, depleted : Int ) : Unit = RaygunNbtUtils.setChargeDepleted(depleted, item)
+  def addCharge( item : ItemStack, delta : Int ) : Unit = RaygunNbtUtils.addCharge(delta, item)
 }
 object RaygunBattery {
   val powerBase = 10
