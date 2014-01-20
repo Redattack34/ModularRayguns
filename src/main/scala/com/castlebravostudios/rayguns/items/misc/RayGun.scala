@@ -14,15 +14,15 @@ import com.castlebravostudios.rayguns.utils.Extensions.WorldExtension
 import com.castlebravostudios.rayguns.utils.FireEvent
 import com.castlebravostudios.rayguns.utils.GunComponents
 import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
-
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.util.Icon
 import net.minecraft.world.World
+import com.castlebravostudios.rayguns.items.ChargableItem
 
 object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
-  with RFItemPowerConnector with IC2ItemPowerConnector {
+  with ChargableItem with RFItemPowerConnector with IC2ItemPowerConnector {
 
   private val maxChargeTime : Double = 3.0d
   private val ticksPerSecond : Int = 20
@@ -128,12 +128,10 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
     getTagCompound(item).getShort( cooldownTime )
 
   override def getDamage( item : ItemStack ) : Int = 1
-  override def getDisplayDamage( item : ItemStack ) : Int =
-    getBattery(item).map( _.getChargeDepleted( item ) ).getOrElse( 0 )
+  override def getDisplayDamage( item : ItemStack ) : Int = getChargeDepleted( item )
   override def isDamaged( item : ItemStack ) = getDisplayDamage( item ) > 0
 
-  override def getMaxDamage( item: ItemStack ) : Int =
-    getBattery(item).map( _.maxCapacity ).getOrElse(1)
+  override def getMaxDamage( item: ItemStack ) : Int = getChargeCapacity( item )
 
   override def requiresMultipleRenderPasses() = true
   override def getRenderPasses(metadata : Int) = 1
@@ -155,4 +153,13 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
       case _ => 0
     }
   }
+
+  def getChargeCapacity( item : ItemStack ) : Int =
+    getBattery( item ).map( _.maxCapacity ).getOrElse(1)
+  def getChargeDepleted( item : ItemStack ) : Int =
+    getBattery( item ).map( _.getChargeDepleted( item ) ).getOrElse( 0 )
+  def setChargeDepleted( item : ItemStack, depleted : Int ) : Unit =
+    getBattery( item ).foreach( _.setChargeDepleted( item, depleted ) )
+  def addCharge( item : ItemStack, delta : Int ) : Unit =
+    getBattery( item ).foreach( _.addCharge( item, delta ) )
 }

@@ -10,9 +10,10 @@ import com.castlebravostudios.rayguns.api.items.RaygunBattery
 import com.castlebravostudios.rayguns.api.items.ItemModule
 import com.castlebravostudios.rayguns.plugins.te.RFItemPowerConnector
 import com.castlebravostudios.rayguns.plugins.ic2.IC2ItemPowerConnector
+import com.castlebravostudios.rayguns.items.ChargableItem
 
 class ItemBattery( id : Int, val battery : RaygunBattery ) extends ItemModule( id, battery ) with MoreInformation
-  with RFItemPowerConnector with IC2ItemPowerConnector {
+  with ChargableItem with RFItemPowerConnector with IC2ItemPowerConnector {
 
   override def getAdditionalInfo(item : ItemStack, player : EntityPlayer) : Iterable[String] = {
     val maxCharge = battery.maxCapacity
@@ -25,4 +26,9 @@ class ItemBattery( id : Int, val battery : RaygunBattery ) extends ItemModule( i
   override def isDamaged( item : ItemStack ) = getDisplayDamage( item ) > 0
 
   override def getMaxDamage( item: ItemStack ) : Int = battery.maxCapacity
+
+  def getChargeCapacity( item : ItemStack ) : Int = battery.maxCapacity
+  def getChargeDepleted( item : ItemStack ) : Int = battery.getChargeDepleted( item )
+  def setChargeDepleted( item : ItemStack, depleted : Int ) : Unit = battery.setChargeDepleted( item, depleted )
+  def addCharge( item : ItemStack, delta : Int ) : Unit = battery.setChargeDepleted( item, delta )
 }
