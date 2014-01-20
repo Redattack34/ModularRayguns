@@ -39,9 +39,7 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
 
   override def getAdditionalInfo(item : ItemStack, player : EntityPlayer) : Iterable[String] = {
     val components = RaygunNbtUtils.getComponentInfo( item )
-    val maxCharge = getMaxDamage( item )
-    val depleted = getDisplayDamage( item )
-    ( (maxCharge - depleted) + "/" + maxCharge ) :: components
+    getBattery( item ).map( _.getChargeString( item ) ) ++ components
   }
 
   override def onPlayerStoppedUsing(item : ItemStack, world : World, player : EntityPlayer, itemUseCount : Int ): Unit = {

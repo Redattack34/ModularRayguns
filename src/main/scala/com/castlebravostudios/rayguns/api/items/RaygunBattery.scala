@@ -47,6 +47,10 @@ trait RaygunBattery extends RaygunModule {
 
   def addCharge( item : ItemStack, delta : Int ) : Unit =
     setChargeDepleted( item, getChargeDepleted( item ) - delta )
+
+  def getChargeString( item : ItemStack ) : String = {
+    ( (maxCapacity - getChargeDepleted( item ) ) + "/" + maxCapacity )
+  }
 }
 object RaygunBattery {
   val powerBase = 10
