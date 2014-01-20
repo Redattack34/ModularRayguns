@@ -50,11 +50,12 @@ object RaygunNbtUtils {
   def getBattery( item : ItemStack ) : Option[RaygunBattery] =
     getComponent(item, BATTERY_STR)(ModuleRegistry.getBattery)
 
-  def getComponentInfo( item : ItemStack ): List[String] =
-    getAllValidComponents( item ).productIterator.flatMap {
-      case Some( comp : Item ) => Some( StatCollector.translateToLocal( comp.getUnlocalizedName() + ".name" ) )
-      case _ => None
-    }.toList
+  def getComponentInfo( item : ItemStack ): Seq[String] =
+    for {
+      comp <- getAllValidComponents( item ).productIterator.toSeq
+      module <- comp
+      item <- Option( module.item )
+    } yield I18n.getString( item.getUnlocalizedName() + ".name" )
 
   private def getComponent[T <: RaygunModule](item : ItemStack, key: String )(f : String => Option[T]) : Option[T] = {
     for { name <- getModuleName( item, key )

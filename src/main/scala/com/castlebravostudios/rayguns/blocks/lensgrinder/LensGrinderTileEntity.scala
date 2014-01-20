@@ -13,6 +13,9 @@ import net.minecraft.item.crafting.ShapedRecipes
 import net.minecraft.nbt.NBTTagCompound
 import com.castlebravostudios.rayguns.plugins.te.RFBlockPowerConnector
 import com.castlebravostudios.rayguns.plugins.ic2.IC2BlockPowerConnector
+import net.minecraft.network.packet.Packet132TileEntityData
+import net.minecraft.network.INetworkManager
+import net.minecraft.network.packet.Packet
 
 class LensGrinderTileEntity extends BaseInventoryTileEntity with PoweredBlock
   with RFBlockPowerConnector with IC2BlockPowerConnector {
@@ -77,6 +80,10 @@ class LensGrinderTileEntity extends BaseInventoryTileEntity with PoweredBlock
         this.remainingTime = 0
         this.onInventoryChanged()
       }
+
+      if ( remainingTime % 20 == 0 ) {
+        worldObj.markBlockForUpdate( xCoord, yCoord, zCoord )
+      }
     }
     else {
       updateRecipe()
@@ -125,7 +132,7 @@ class LensGrinderTileEntity extends BaseInventoryTileEntity with PoweredBlock
 
   def isGrinding = remainingTime > 0
   def getTimeRemainingScaled( scale : Int ) : Int = {
-    def totalTime : Int = this.recipe.get.ticks
+    val totalTime : Int = this.recipe.get.ticks
     val factor = (totalTime - remainingTime).toDouble / totalTime.toDouble
     (factor * scale).toInt
   }
@@ -140,6 +147,16 @@ class LensGrinderTileEntity extends BaseInventoryTileEntity with PoweredBlock
     super.writeToNBT(tag)
     tag.setShort( "RemainingTime", remainingTime.shortValue )
     tag.setShort( "ChargeStored", chargeStored.shortValue )
+  }
+
+  override def getDescriptionPacket() : Packet = {
+    val tag = new NBTTagCompound
+    writeToNBT(tag)
+    new Packet132TileEntityData( xCoord, yCoord, zCoord, 0, tag )
+  }
+
+  override def onDataPacket( net : INetworkManager, packet : Packet132TileEntityData ) : Unit = {
+    readFromNBT( packet.data )
   }
 
   val getInventoryStackLimit = 64
