@@ -14,6 +14,7 @@ import com.castlebravostudios.rayguns.utils.Extensions.WorldExtension
 import com.castlebravostudios.rayguns.utils.FireEvent
 import com.castlebravostudios.rayguns.utils.GunComponents
 import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
+import com.castlebravostudios.rayguns.utils.Extensions.ItemStackExtension
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
@@ -122,10 +123,10 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
   }
 
   private def setCooldownTime( item : ItemStack, ticks : Int ) =
-    getTagCompound(item).setShort( cooldownTime, ticks.shortValue )
+    item.getTagCompoundSafe.setShort( cooldownTime, ticks.shortValue )
 
   def getCooldownTime( item : ItemStack ) =
-    getTagCompound(item).getShort( cooldownTime )
+    item.getTagCompoundSafe.getShort( cooldownTime )
 
   override def getDamage( item : ItemStack ) : Int = 1
   override def getDisplayDamage( item : ItemStack ) : Int = getChargeDepleted( item )

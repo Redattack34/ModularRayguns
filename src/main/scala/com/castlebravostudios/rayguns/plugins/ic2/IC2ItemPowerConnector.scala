@@ -7,11 +7,11 @@ import net.minecraft.item.Item
 import com.castlebravostudios.rayguns.mod.Config
 import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
 import ic2.api.item.IElectricItemManager
+import com.castlebravostudios.rayguns.items.ChargableItem
 
 @Optional.Interface(iface="ic2.api.item.ISpecialElectricItem", modid="IC2", striprefs=true)
 trait IC2ItemPowerConnector extends Item with ISpecialElectricItem {
-
-  import RaygunNbtUtils._
+  self : ChargableItem =>
 
   val ic2PowerMultiplier = Config.ic2PowerMultiplier
 

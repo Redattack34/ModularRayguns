@@ -18,6 +18,7 @@ import net.minecraft.item.Item
 import net.minecraft.client.resources.I18n
 import com.castlebravostudios.rayguns.api.items.ItemModule
 import com.castlebravostudios.rayguns.items.batteries.ItemBattery
+import com.castlebravostudios.rayguns.utils.Extensions.ItemStackExtension
 
 object RaygunNbtUtils {
 
@@ -30,8 +31,6 @@ object RaygunNbtUtils {
   val ACC_STR = "accessory"
 
   val MODULES_TAG = "raygunModules"
-
-  val chargeDepleted = "ChargeDepleted"
 
   /**
    * Get the components from a stack that contains a RayGun. Returns Some if
@@ -71,7 +70,7 @@ object RaygunNbtUtils {
 
   private def getModuleTag( item : ItemStack ) : Option[NBTTagCompound] = {
     for {
-      moduleTag <- Option( getTagCompound(item).getCompoundTag( MODULES_TAG ) )
+      moduleTag <- Option( item.getTagCompoundSafe.getCompoundTag( MODULES_TAG ) )
     } yield moduleTag
   }
 
@@ -135,7 +134,6 @@ object RaygunNbtUtils {
     val stack = new ItemStack( BrokenGun )
     stack.stackSize = 1
     stack.setTagInfo( MODULES_TAG, buildModuleTag( getAllValidComponents( item ) ) )
-    setChargeDepleted( getChargeDepleted( item ), stack );
     stack
   }
 
@@ -151,39 +149,5 @@ object RaygunNbtUtils {
     val lens = getComponent(item, LENS_STR)(getLens)
     val accessory = getComponent(item, ACC_STR)(getAccessory)
     OptionalGunComponents( body, chamber, battery, lens, accessory )
-  }
-
-  def addCharge( delta : Int, stack : ItemStack ) : Unit =
-    setChargeDepleted( getChargeDepleted(stack) - delta , stack)
-
-  def setChargeDepleted( charge : Int, stack : ItemStack ) : Unit = {
-    def clamp( min : Int, cur : Int, max : Int ) : Int =
-      if ( cur < min ) min
-      else if ( cur > max ) max
-      else cur
-
-    val actualCharge = clamp( 0, charge, getMaxCharge( stack ) )
-
-    getTagCompound(stack).setInteger( chargeDepleted, actualCharge )
-  }
-
-  def getChargeDepleted( stack : ItemStack ) : Int = {
-    val tag = getTagCompound(stack)
-    if ( tag == null || !tag.hasKey( chargeDepleted ) ) {
-      setChargeDepleted( 0, stack )
-    }
-    tag.getInteger(chargeDepleted)
-  }
-
-  def getMaxCharge( item: ItemStack ) : Int = item.getItem() match {
-    case bat : ItemBattery => bat.battery.maxCapacity
-    case _ => getComponents( item ).map( _.battery.maxCapacity ).getOrElse(Integer.MAX_VALUE)
-  }
-
-  def getTagCompound( item : ItemStack ) : NBTTagCompound = {
-    if ( item.getTagCompound() == null ) {
-      item.setTagCompound( new NBTTagCompound() );
-    }
-    item.getTagCompound()
   }
 }
