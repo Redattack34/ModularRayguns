@@ -23,6 +23,8 @@ case class OptionalGunComponents(
   body : Option[RaygunBody], chamber : Option[RaygunChamber], battery : Option[RaygunBattery],
   lens : Option[RaygunLens], acc : Option[RaygunAccessory] ) {
 
+  def components : Seq[RaygunModule] = body.toSeq ++ chamber ++ battery ++ lens ++ acc
+
   def this( comp : GunComponents ) = this( Some( comp.body ),
       Some( comp.chamber ), Some( comp.battery ), comp.lens, comp.accessory );
 }

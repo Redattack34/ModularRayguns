@@ -52,8 +52,7 @@ object RaygunNbtUtils {
 
   def getComponentInfo( item : ItemStack ): Seq[String] =
     for {
-      comp <- getAllValidComponents( item ).productIterator.toSeq
-      module <- comp
+      module <- getAllValidComponents( item ).components
       item <- Option( module.item )
     } yield I18n.getString( item.getUnlocalizedName() + ".name" )
 
