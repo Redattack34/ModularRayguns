@@ -36,6 +36,7 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
   setMaxStackSize(1)
   setCreativeTab(ModularRayguns.raygunsTab)
   setUnlocalizedName("rayguns.Raygun")
+  setTextureName("rayguns:dummy")
 
   override def getAdditionalInfo(item : ItemStack, player : EntityPlayer) : Iterable[String] =
     getBattery( item ).map( _.getChargeString( item ) ) ++ RaygunNbtUtils.getComponentInfo( item )

@@ -16,6 +16,7 @@ object BrokenGun extends ScalaItem( Config.brokenGun ) with MoreInformation {
   setMaxStackSize(1)
   setCreativeTab(ModularRayguns.raygunsTab)
   setUnlocalizedName("rayguns.BrokenRaygun")
+  setTextureName("rayguns:dummy")
 
   override def getAdditionalInfo(item : ItemStack, player : EntityPlayer) : Iterable[String] =
     RaygunNbtUtils.getComponentInfo(item)
