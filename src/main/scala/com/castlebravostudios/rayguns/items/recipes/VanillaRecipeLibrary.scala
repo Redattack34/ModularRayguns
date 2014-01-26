@@ -186,6 +186,7 @@ object VanillaRecipeLibrary extends RecipeLibrary {
     registerT1Emitter( Emitters.tier2CuttingEmitter, Item.pickaxeIron, Item.shovelIron, Item.pickaxeIron, Item.shovelIron )
     registerT3Emitter( Emitters.tier3CuttingEmitter, Item.pickaxeDiamond, Item.shovelDiamond, Item.pickaxeDiamond, Item.shovelDiamond )
     registerT1Emitter( Emitters.shrinkRayEmitter, Block.pistonBase, Block.pistonBase, Block.pistonBase, Block.pistonBase )
+    registerT2Emitter( Emitters.matterTransporterEmitter, Item.enderPearl, Block.pistonBase, Item.enderPearl, Block.pistonBase )
   }
 
   private def registerLenses() = {

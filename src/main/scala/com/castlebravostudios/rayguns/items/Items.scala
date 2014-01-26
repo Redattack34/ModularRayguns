@@ -66,6 +66,7 @@ object Items {
     registerItem( Emitters.tier1CuttingEmitter )
     registerItem( Emitters.tier2CuttingEmitter )
     registerItem( Emitters.tier3CuttingEmitter )
+    registerItem( Emitters.matterTransporterEmitter )
 
     registerModule( BasicBattery, Config.basicBattery )
     registerModule( AdvancedBattery, Config.advancedBattery )

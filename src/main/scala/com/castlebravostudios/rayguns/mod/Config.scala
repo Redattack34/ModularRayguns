@@ -79,6 +79,7 @@ object Config {
   var emitterTier1Cutting : Int = _
   var emitterTier2Cutting : Int = _
   var emitterTier3Cutting : Int = _
+  var emitterMatterTransporter : Int = _
 
   var chamberLaser : Int = _
   var chamberHeatRay : Int = _
@@ -174,6 +175,7 @@ object Config {
     emitterTier1Cutting = config.getItem( "emitterTier1Cutting", 5512 ).getInt
     emitterTier2Cutting = config.getItem( "emitterTier2Cutting", 5513 ).getInt
     emitterTier3Cutting = config.getItem( "emitterTier3Cutting", 5514 ).getInt
+    emitterMatterTransporter = config.getItem( "emitterMatterTransporter", 5515 ).getInt
   }
 
   private def loadChamberItemIds( config : Configuration ) : Unit = {

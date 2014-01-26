@@ -149,6 +149,7 @@ class NEIModularRaygunsConfig extends IConfigureNEI {
     range.add( Emitters.lifeForceEmitter )
     range.add( Emitters.lightningEmitter )
     range.add( Emitters.tractorEmitter )
+    range.add( Emitters.matterTransporterEmitter )
     range
   }
 

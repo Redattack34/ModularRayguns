@@ -40,6 +40,7 @@ item.rayguns.TractorEmitter.name=Tractor Emitter
 item.rayguns.Tier1CuttingEmitter.name=Cutting Beam Emitter Mk. 1
 item.rayguns.Tier2CuttingEmitter.name=Cutting Beam Emitter Mk. 2
 item.rayguns.Tier3CuttingEmitter.name=Cutting Beam Emitter Mk. 3
+item.rayguns.MatterTransporterEmitter.name=Matter Transporter Beam Emitter
 
 item.rayguns.PreciseBeamLens.name=Precise Beam Lens
 item.rayguns.PreciseLens.name=Precise Bolt Lens
