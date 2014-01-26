@@ -96,6 +96,7 @@ class NEIModularRaygunsConfig extends IConfigureNEI {
     addModule( range, LifeForceChamber )
     addModule( range, LightningChamber )
     addModule( range, TractorChamber )
+    addModule( range, MatterTransporterChamber )
     range
   }
 

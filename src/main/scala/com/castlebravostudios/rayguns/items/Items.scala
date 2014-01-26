@@ -100,6 +100,7 @@ object Items {
     registerModule( Tier1CuttingChamber, Config.chamberCuttingTier1 )
     registerModule( Tier2CuttingChamber, Config.chamberCuttingTier2 )
     registerModule( Tier3CuttingChamber, Config.chamberCuttingTier3 )
+    registerModule( MatterTransporterChamber, Config.chamberMatterTransporter )
   }
 
   /**
