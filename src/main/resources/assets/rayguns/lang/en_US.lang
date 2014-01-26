@@ -24,6 +24,7 @@ item.rayguns.TractorChamber.name=Tractor Beam Chamber
 item.rayguns.Tier1CuttingChamber.name=Cutting Beam Chamber Mk. 1
 item.rayguns.Tier2CuttingChamber.name=Cutting Beam Chamber Mk. 2
 item.rayguns.Tier3CuttingChamber.name=Cutting Beam Chamber Mk. 3
+item.rayguns.MatterTransporterChamber.name=Matter Transporter Beam Chamber
 
 item.rayguns.ExplosiveEmitter.name=Explosive Emitter
 item.rayguns.FortifiedSunlightEmitter.name=Fortified Sunlight Emitter
@@ -40,6 +41,7 @@ item.rayguns.TractorEmitter.name=Tractor Emitter
 item.rayguns.Tier1CuttingEmitter.name=Cutting Beam Emitter Mk. 1
 item.rayguns.Tier2CuttingEmitter.name=Cutting Beam Emitter Mk. 2
 item.rayguns.Tier3CuttingEmitter.name=Cutting Beam Emitter Mk. 3
+item.rayguns.MatterTransporterEmitter.name=Matter Transporter Beam Emitter
 
 item.rayguns.PreciseBeamLens.name=Precise Beam Lens
 item.rayguns.PreciseLens.name=Precise Bolt Lens
@@ -92,6 +94,7 @@ rayguns.TractorChamber.segment=Tractor
 rayguns.Tier1CuttingChamber.segment=Mk. 1 Cutting 
 rayguns.Tier2CuttingChamber.segment=Mk. 2 Cutting
 rayguns.Tier3CuttingChamber.segment=Mk. 3 Cutting
+rayguns.MatterTransporterChamber.segment=Matter Transporter
 
 rayguns.ExtendedBattery.segment=Extended
 rayguns.RefireCapacitor.segment=Rapid

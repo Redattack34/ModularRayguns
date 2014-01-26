@@ -75,13 +75,13 @@ object LightningEffect extends BaseEffect {
     }
   }
 
-  override def createBeamEntity( world : World ) : LightningBeamEntity = {
+  override def createBeamEntity( world : World, player : EntityPlayer ) : LightningBeamEntity = {
     val beam = new LightningBeamEntity( world )
     beam.effect = this
     beam
   }
 
-  override def createBoltEntity( world : World ) : LightningBoltEntity = {
+  override def createBoltEntity( world : World, player : EntityPlayer ) : LightningBoltEntity = {
     val bolt = new LightningBoltEntity( world )
     bolt.effect = this
     bolt

@@ -49,5 +49,6 @@ object Effects {
     EffectRegistry.registerEffect( LifeForceEffect )
     EffectRegistry.registerEffect( LightningEffect )
     EffectRegistry.registerEffect( TractorEffect )
+    EffectRegistry.registerEffect( MatterTransporterEffect )
   }
 }

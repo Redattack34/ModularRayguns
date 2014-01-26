@@ -58,13 +58,13 @@ abstract class BaseChamber extends BaseRaygunModule with RaygunChamber {
   def initShot( world : World, player : EntityPlayer, shot : Shootable ) : Unit = ()
 
   def createAndInitBolt( world : World, player : EntityPlayer ) : BaseBoltEntity = {
-    val bolt = shotEffect.createBoltEntity(world)
+    val bolt = shotEffect.createBoltEntity(world, player)
     initBolt( world, player, bolt )
     bolt
   }
 
   def createAndInitBeam( world : World, player : EntityPlayer ) : BaseBeamEntity = {
-    val beam = shotEffect.createBeamEntity(world)
+    val beam = shotEffect.createBeamEntity(world, player)
     initBeam(world, player, beam)
     beam
   }
@@ -72,12 +72,12 @@ abstract class BaseChamber extends BaseRaygunModule with RaygunChamber {
   def registerChargedShotHandler( ) : Unit = {
     BeamRegistry.register({
       case ChargeFireEvent(_, ch, _, Some(ChargeLens), _, charge ) if ch eq this => { (world, player) =>
-        val bolt = createAndInitBolt(world, player )
+        val bolt = createAndInitBolt( world, player )
         bolt.charge = charge
         BoltUtils.spawnNormal( world, bolt, player )
       }
       case ChargeFireEvent(_, ch, _, Some(ChargeBeamLens), _, charge ) if ch eq this => { (world, player) =>
-        val beam = createAndInitBeam(world, player )
+        val beam = createAndInitBeam( world, player )
         beam.charge = charge
         BeamUtils.spawnSingleShot( beam, world, player )
       }

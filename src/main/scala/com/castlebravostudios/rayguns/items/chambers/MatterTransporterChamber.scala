@@ -25,58 +25,29 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.castlebravostudios.rayguns.entities
+package com.castlebravostudios.rayguns.items.chambers
 
-import com.castlebravostudios.rayguns.api.EffectRegistry
-import com.castlebravostudios.rayguns.entities.effects.BaseEffect
-import com.google.common.io.ByteArrayDataInput
-import com.google.common.io.ByteArrayDataOutput
-import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData
-import net.minecraft.entity.Entity
-import net.minecraft.nbt.NBTTagCompound
-import net.minecraft.world.World
-import javax.swing.plaf.nimbus.Effect
+import com.castlebravostudios.rayguns.api.items.ItemModule
+import com.castlebravostudios.rayguns.entities.effects.LaserEffect
+import com.castlebravostudios.rayguns.mod.ModularRayguns
+import com.castlebravostudios.rayguns.entities.effects.MatterTransporterEffect
 
-abstract class BaseShootable( world : World ) extends Entity( world ) with Shootable with IEntityAdditionalSpawnData {
+object MatterTransporterChamber extends BaseChamber {
 
-  var effect : BaseEffect = _
-  var charge : Double = 1.0d
+  val moduleKey = "MatterTransporterChamber"
+  val powerModifier = 2.0
+  val shotEffect = MatterTransporterEffect
+  val nameSegmentKey = "rayguns.MatterTransporterChamber.segment"
 
-  override def writeEntityToNBT( tag : NBTTagCompound ) : Unit = {
-    tag.setDouble("charge", charge)
-    tag.setString("effect", effect.effectKey )
+  def createItem( id : Int ) = new ItemModule( id, this )
+    .setUnlocalizedName("rayguns.MatterTransporterChamber")
+    .setTextureName("rayguns:chamber_matter_transporter")
+    .setCreativeTab( ModularRayguns.raygunsTab )
+    .setMaxStackSize(1)
+
+  def registerShotHandlers() : Unit = {
+    registerSingleShotHandlers()
   }
 
-  override def readEntityFromNBT( tag : NBTTagCompound ) : Unit = {
-    charge = tag.getDouble("charge")
 
-    val key = tag.getString( "effect" )
-    initEffect( key )
-  }
-
-  def writeSpawnData( out : ByteArrayDataOutput ) : Unit = {
-    out.writeDouble( charge )
-    out.writeUTF( effect.effectKey )
-  }
-
-  def readSpawnData( in : ByteArrayDataInput ) : Unit = {
-    charge = in.readDouble()
-    val key = in.readUTF()
-    initEffect( key )
-  }
-
-  private def initEffect( key : String ) : Unit = {
-    val e = EffectRegistry.getEffect( key )
-    e match {
-      case Some(effect) => this.effect = effect
-      case None => {
-        System.err.println("Unknown effect key: " + key )
-        setDead()
-      }
-    }
-  }
-
-  def entityInit() : Unit = ()
-
-  def random = this.rand
 }
