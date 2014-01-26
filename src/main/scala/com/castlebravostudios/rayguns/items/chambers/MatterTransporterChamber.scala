@@ -30,12 +30,13 @@ package com.castlebravostudios.rayguns.items.chambers
 import com.castlebravostudios.rayguns.api.items.ItemModule
 import com.castlebravostudios.rayguns.entities.effects.LaserEffect
 import com.castlebravostudios.rayguns.mod.ModularRayguns
+import com.castlebravostudios.rayguns.entities.effects.MatterTransporterEffect
 
 object MatterTransporterChamber extends BaseChamber {
 
   val moduleKey = "MatterTransporterChamber"
   val powerModifier = 2.0
-  val shotEffect = LaserEffect
+  val shotEffect = MatterTransporterEffect
   val nameSegmentKey = "rayguns.MatterTransporterChamber.segment"
 
   def createItem( id : Int ) = new ItemModule( id, this )
@@ -46,7 +47,7 @@ object MatterTransporterChamber extends BaseChamber {
 
   def registerShotHandlers() : Unit = {
     registerSingleShotHandlers()
-    registerScatterShotHandler()
-    registerChargedShotHandler()
   }
+
+
 }

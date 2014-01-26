@@ -32,13 +32,13 @@ import com.castlebravostudios.rayguns.entities.BaseBoltEntity
 import com.castlebravostudios.rayguns.entities.BoltRenderer
 import com.castlebravostudios.rayguns.entities.Shootable
 import com.castlebravostudios.rayguns.utils.BlockPos
-
 import net.minecraft.block.Block
 import net.minecraft.block.BlockFluid
 import net.minecraft.entity.Entity
 import net.minecraft.util.ResourceLocation
 import net.minecraft.world.World
 import net.minecraftforge.fluids.IFluidBlock
+import net.minecraft.entity.player.EntityPlayer
 
 trait BaseEffect {
 
@@ -111,13 +111,13 @@ trait BaseEffect {
   def lineTexture : ResourceLocation = BoltRenderer.lineBlackTexture
   def chargeTexture : ResourceLocation
 
-  def createBeamEntity( world : World ) : BaseBeamEntity = {
+  def createBeamEntity( world : World, player : EntityPlayer ) : BaseBeamEntity = {
     val beam = new BaseBeamEntity( world )
     beam.effect = this
     beam
   }
 
-  def createBoltEntity( world : World ) : BaseBoltEntity = {
+  def createBoltEntity( world : World, player : EntityPlayer ) : BaseBoltEntity = {
     val bolt = new BaseBoltEntity( world )
     bolt.effect = this
     bolt
