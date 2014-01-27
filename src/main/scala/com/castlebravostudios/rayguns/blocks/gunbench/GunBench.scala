@@ -41,12 +41,17 @@ import net.minecraft.tileentity.TileEntity
 import net.minecraft.world.World
 import com.castlebravostudios.rayguns.mod.ModularRayguns
 import com.castlebravostudios.rayguns.blocks.BaseContainerBlock
+import net.minecraft.client.renderer.texture.IconRegister
+import net.minecraft.util.Icon
+import net.minecraft.block.Block
 
 class GunBench(id : Int) extends BaseContainerBlock(id) {
+
   setHardness(2.0F)
   setResistance(5.0f)
   setUnlocalizedName("rayguns.GunBench")
   setCreativeTab(ModularRayguns.raygunsTab)
+  setTextureName("rayguns:gun_bench")
 
   def openGui( player : EntityPlayer, world : World, x : Int, y : Int, z : Int ) : Unit =
     player.openGui(ModularRayguns, 0, world, x, y, z)
