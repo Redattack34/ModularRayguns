@@ -45,7 +45,7 @@ import net.minecraft.item.ItemStack
 import com.castlebravostudios.rayguns.items.bodies.FireflyBody
 import com.castlebravostudios.rayguns.entities.effects.Effects
 
-@Mod(modid="mod_ModularRayguns", version="1.0-alpha1", modLanguage="scala", useMetadata=true)
+@Mod(modid="mod_ModularRayguns", version="1.0-alpha2", modLanguage="scala", useMetadata=true)
 @NetworkMod(clientSideRequired=true, serverSideRequired=true)
 object ModularRayguns {
 
