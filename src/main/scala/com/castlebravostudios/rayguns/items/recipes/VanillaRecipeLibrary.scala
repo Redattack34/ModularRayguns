@@ -147,6 +147,7 @@ object VanillaRecipeLibrary extends RecipeLibrary {
     registerT2Chamber( LifeForceChamber, Emitters.lifeForceEmitter)
     registerT1Chamber( LightningChamber, Emitters.lightningEmitter)
     registerT2Chamber( TractorChamber, Emitters.tractorEmitter)
+    registerT2Chamber( MatterTransporterChamber, Emitters.matterTransporterEmitter )
   }
 
   private def registerEmitters() = {
