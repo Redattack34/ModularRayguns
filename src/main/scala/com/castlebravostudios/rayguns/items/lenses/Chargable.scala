@@ -27,19 +27,32 @@
 
 package com.castlebravostudios.rayguns.items.lenses
 
-import com.castlebravostudios.rayguns.api.items.BaseRaygunModule
 import com.castlebravostudios.rayguns.api.items.ItemModule
-import com.castlebravostudios.rayguns.api.items.RaygunLens
-import com.castlebravostudios.rayguns.mod.ModularRayguns
+import com.castlebravostudios.rayguns.api.items.RaygunModule
+import com.castlebravostudios.rayguns.items.misc.PrefireEvent
+import com.castlebravostudios.rayguns.items.misc.RayGun
+import com.castlebravostudios.rayguns.items.misc.GetFireInformationEvent
+import com.castlebravostudios.rayguns.utils.ChargeFireEvent
 
-object ChargeLens extends BaseRaygunModule with RaygunLens with Chargable {
-  val moduleKey = "ChargeLens"
-  val powerModifier = 1.5
-  val nameSegmentKey = "rayguns.ChargeLens.segment"
+trait Chargable extends RaygunModule {
 
-  def createItem( id : Int ) = new ItemModule( id, this )
-    .setUnlocalizedName("rayguns.ChargeLens")
-    .setTextureName("rayguns:lens_charge")
-    .setCreativeTab( ModularRayguns.raygunsTab )
-    .setMaxStackSize(1)
+  abstract override def handleGetFireInformationEvent( event : GetFireInformationEvent ) : Unit = {
+    super.handleGetFireInformationEvent(event)
+
+    if ( event.player.getItemInUse() eq event.gun ) {
+      val charge = RayGun.getChargePower( event.gun, event.player.getItemInUseCount() )
+      event.powerMult *= Math.pow( charge, 0.444444444d )
+      event.fireEvent = new ChargeFireEvent( event.components, charge )
+    }
+  }
+
+  abstract override def handlePrefireEvent( event : PrefireEvent ) : Unit = {
+    super.handlePrefireEvent(event)
+
+    if ( event.player.getItemInUse() == null ) {
+      event.player.setItemInUse( event.gun, Integer.MAX_VALUE )
+      event.canFire = false
+    }
+  }
+
 }

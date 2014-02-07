@@ -52,16 +52,26 @@ import com.castlebravostudios.rayguns.utils.GunComponents
 import com.castlebravostudios.rayguns.utils.DefaultFireEvent
 import com.castlebravostudios.rayguns.utils.DefaultFireEvent
 import com.castlebravostudios.rayguns.utils.GunComponents
+import com.castlebravostudios.rayguns.utils.GunComponents
+
+case class GetFireInformationEvent(
+    val player : EntityPlayer,
+    val world : World,
+    val gun : ItemStack,
+    val components : GunComponents,
+    var cooldownTicks : Int,
+    var powerMult : Double,
+    var fireEvent : FireEvent )
 
 case class PrefireEvent(
     val player : EntityPlayer,
     val world : World,
     val gun : ItemStack,
     val components : GunComponents,
-    var canFire : Boolean,
-    var fireEvent : FireEvent,
-    var cooldownTicks : Int,
-    var powerMult : Double )
+    val cooldownTicks : Int,
+    val powerMult : Double,
+    val fireEvent : FireEvent,
+    var canFire : Boolean )
 
 case class PostfireEvent(
     val player : EntityPlayer,
@@ -99,22 +109,27 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
     getBattery( item ).map( _.getChargeString( item ) ) ++ RaygunNbtUtils.getComponentInfo( item )
 
   override def onPlayerStoppedUsing(item : ItemStack, world : World, player : EntityPlayer, itemUseCount : Int ): Unit = {
-    val chargePower = getChargePower(item, itemUseCount)
+    def breakGun = {
+      val slot = player.inventory.currentItem
+      val brokenGun = buildBrokenGun(item)
+      player.inventory.setInventorySlotContents( slot, brokenGun )
+    }
 
     val components = getComponents( item )
-    val lens = components.flatMap( _.lens )
-    if ( lens.isEmpty || ( lens.get != ChargeBeamLens && lens.get != ChargeLens ) ) {
+
+    if ( components.isEmpty ) {
+      breakGun
       return
     }
 
-    val prefire = new PrefireEvent( player, world, item, components.get,
-        getCooldownTime( item ) == 0,
-        components.get.getFireEvent( 1.0d ), 10,
-        components.get.components.map(_.powerModifier).product )
-    if ( !prefire.canFire ) return item
+    val prefireEvent = prefire( player, world, item, components.get )
+    if ( !prefireEvent.canFire ) return
 
-    val creator = BeamRegistry.getFunction( prefire.fireEvent )
-    creator.foreach { fire( prefire, _) }
+    val creator = BeamRegistry.getFunction( prefireEvent.fireEvent )
+    creator match {
+      case Some( f ) => fire( prefireEvent, f )
+      case None => breakGun
+    }
   }
 
   def getChargePower(item: ItemStack, itemUseCount: Int): Double = {
@@ -130,25 +145,27 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
       return buildBrokenGun( item )
     }
 
-    val lens = components.flatMap( _.lens )
-    if ( lens.exists( lens => lens == ChargeBeamLens || lens == ChargeLens ) ) {
-      player.setItemInUse(item, getMaxItemUseDuration(item))
-      return item
-    }
+    val prefireEvent = prefire( player, world, item, components.get )
+    if ( !prefireEvent.canFire ) return item
 
-    val prefire = new PrefireEvent( player, world, item, components.get,
-        getCooldownTime( item ) == 0,
-        components.get.getFireEvent( 1.0d ), 10,
-        components.get.components.map(_.powerModifier).product )
-    components.get.components.foreach( comp => comp.handlePrefireEvent( prefire ) );
-    if ( !prefire.canFire ) return item
-
-    val creator = BeamRegistry.getFunction( prefire.fireEvent )
+    val creator = BeamRegistry.getFunction( prefireEvent.fireEvent )
 
     creator match {
-      case Some( f ) => { fire( prefire, f ); item }
+      case Some( f ) => { fire( prefireEvent, f ); item }
       case None => buildBrokenGun( item )
     }
+  }
+
+  private def prefire( player : EntityPlayer, world : World, gun : ItemStack, components : GunComponents  ) : PrefireEvent = {
+    val getInfo = GetFireInformationEvent( player, world, gun, components, 10, 1.0d,
+        new DefaultFireEvent( components ) );
+    components.components.foreach( comp => comp.handleGetFireInformationEvent( getInfo ) );
+
+    val prefireEvent = PrefireEvent( player, world, gun, components,
+        getInfo.cooldownTicks, getInfo.powerMult, getInfo.fireEvent,
+        getCooldownTime( gun ) == 0 )
+    components.components.foreach( comp => comp.handlePrefireEvent( prefireEvent ) )
+    prefireEvent
   }
 
   private def fire( prefire : PrefireEvent, f : BeamRegistry.BeamCreator ): Unit = {

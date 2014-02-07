@@ -38,6 +38,7 @@ import net.minecraft.world.World
 import com.castlebravostudios.rayguns.items.misc.PrefireEvent
 import com.castlebravostudios.rayguns.items.misc.GunTickEvent
 import com.castlebravostudios.rayguns.items.misc.PostfireEvent
+import com.castlebravostudios.rayguns.items.misc.GetFireInformationEvent
 
 trait RaygunModule {
 
@@ -78,6 +79,12 @@ trait RaygunModule {
    * After this method is called, item should not return null.
    */
   def registerItem( id : Int ) : Unit
+
+  /**
+   * Event fired by a raygun to all modules to collect information before preparing
+   * to fire. This is used for calculating the power cost, among other things.
+   */
+  def handleGetFireInformationEvent( event : GetFireInformationEvent ) : Unit = ()
 
   /**
    * Event fired by a raygun to all modules it contains just before firing. This
