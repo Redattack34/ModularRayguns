@@ -31,6 +31,8 @@ import com.castlebravostudios.rayguns.api.items.BaseRaygunModule
 import com.castlebravostudios.rayguns.api.items.ItemModule
 import com.castlebravostudios.rayguns.api.items.RaygunAccessory
 import com.castlebravostudios.rayguns.mod.ModularRayguns
+import com.castlebravostudios.rayguns.items.misc.PrefireEvent
+import com.castlebravostudios.rayguns.items.misc.GetFireInformationEvent
 
 object RefireCapacitor extends BaseRaygunModule with RaygunAccessory {
   val moduleKey = "RefireCapacitor"
@@ -42,4 +44,9 @@ object RefireCapacitor extends BaseRaygunModule with RaygunAccessory {
     .setTextureName("rayguns:refire_capacitor")
     .setCreativeTab( ModularRayguns.raygunsTab )
     .setMaxStackSize(1)
+
+  override def handleGetFireInformationEvent( event : GetFireInformationEvent ) : Unit = {
+    super.handleGetFireInformationEvent(event)
+    event.cooldownTicks /= 2
+  }
 }

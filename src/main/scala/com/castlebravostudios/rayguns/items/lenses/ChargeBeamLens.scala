@@ -38,7 +38,7 @@ import com.castlebravostudios.rayguns.api.items.BaseRaygunModule
 import com.castlebravostudios.rayguns.api.items.ItemModule
 import com.castlebravostudios.rayguns.mod.ModularRayguns
 
-object ChargeBeamLens extends BaseRaygunModule with RaygunLens {
+object ChargeBeamLens extends BaseRaygunModule with RaygunLens with Chargable {
   val moduleKey = "ChargeBeamLens"
   val powerModifier = 1.2
   val nameSegmentKey = "rayguns.ChargeBeamLens.segment"

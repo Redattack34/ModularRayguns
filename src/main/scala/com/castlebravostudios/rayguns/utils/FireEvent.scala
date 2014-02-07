@@ -38,8 +38,6 @@ import com.castlebravostudios.rayguns.api.items.RaygunBattery
 trait FireEvent extends {
   def components : Seq[RaygunModule]
 
-  def powerMultiplier : Double = components.map(_.powerModifier).product
-
   def isValid : Boolean = BeamRegistry.isValid(this)
 }
 case class DefaultFireEvent(body : RaygunBody, chamber : RaygunChamber, battery : RaygunBattery,
@@ -55,8 +53,6 @@ case class ChargeFireEvent( body : RaygunBody, chamber : RaygunChamber, battery 
 
   def this( comp : GunComponents, charge : Double ) = this( comp.body,
     comp.chamber, comp.battery, comp.lens, comp.accessory, charge );
-
-  override def powerMultiplier : Double = super.powerMultiplier * Math.pow( charge, 0.444444444d );
 
   def components : Seq[RaygunModule] = Seq( body, chamber, battery ) ++ lens ++ accessory
 }

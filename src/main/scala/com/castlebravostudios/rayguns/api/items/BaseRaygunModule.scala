@@ -27,6 +27,8 @@
 
 package com.castlebravostudios.rayguns.api.items
 
+import com.castlebravostudios.rayguns.items.misc.GetFireInformationEvent
+
 abstract class BaseRaygunModule extends RaygunModule {
 
   private[this] var _item : ItemModule = _
@@ -41,4 +43,10 @@ abstract class BaseRaygunModule extends RaygunModule {
    * Create an ItemModule with the given ID and configure it as necessary.
    */
   protected def createItem( id : Int ) : ItemModule
+
+  override def handleGetFireInformationEvent( event : GetFireInformationEvent ) : Unit = {
+    event.powerMult *= this.powerModifier
+  }
+
+  override def toString = this.getClass().getSimpleName
 }

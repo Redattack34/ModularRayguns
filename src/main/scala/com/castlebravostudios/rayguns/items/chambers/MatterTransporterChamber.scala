@@ -31,6 +31,7 @@ import com.castlebravostudios.rayguns.api.items.ItemModule
 import com.castlebravostudios.rayguns.entities.effects.LaserEffect
 import com.castlebravostudios.rayguns.mod.ModularRayguns
 import com.castlebravostudios.rayguns.entities.effects.MatterTransporterEffect
+import com.castlebravostudios.rayguns.items.misc.PrefireEvent
 
 object MatterTransporterChamber extends BaseChamber {
 
@@ -49,5 +50,8 @@ object MatterTransporterChamber extends BaseChamber {
     registerSingleShotHandlers()
   }
 
-
+  override def handlePrefireEvent( event : PrefireEvent ) : Unit = {
+    val id = MatterTransporterEffect.getPlacedBlockId( event.player )
+    event.canFire &&= id.isDefined
+  }
 }

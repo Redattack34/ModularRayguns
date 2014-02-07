@@ -75,7 +75,7 @@ object RaygunRender extends IItemRenderer with ITickHandler {
   }
 
   private def offsetForRecoil(item: net.minecraft.item.ItemStack) : Unit = {
-    val maxCooldown = Math.max( RayGun.getBaseCooldownTime( item ), 1 )
+    val maxCooldown = Math.max( RayGun.getMaxCooldownTime( item ), 1 )
     val curCooldown = Math.min( RayGun.getCooldownTime( item ), maxCooldown )
 
     val coolPercent = Math.max( 0.0f, ( curCooldown.toFloat - partialTickTime ) / maxCooldown )

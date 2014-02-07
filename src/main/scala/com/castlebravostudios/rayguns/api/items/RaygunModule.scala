@@ -32,6 +32,13 @@ import com.castlebravostudios.rayguns.items.Items
 import com.castlebravostudios.rayguns.api.ModuleRegistry
 import net.minecraft.creativetab.CreativeTabs
 import com.castlebravostudios.rayguns.mod.ModularRayguns
+import net.minecraft.item.ItemStack
+import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.world.World
+import com.castlebravostudios.rayguns.items.misc.PrefireEvent
+import com.castlebravostudios.rayguns.items.misc.GunTickEvent
+import com.castlebravostudios.rayguns.items.misc.PostfireEvent
+import com.castlebravostudios.rayguns.items.misc.GetFireInformationEvent
 
 trait RaygunModule {
 
@@ -72,4 +79,29 @@ trait RaygunModule {
    * After this method is called, item should not return null.
    */
   def registerItem( id : Int ) : Unit
+
+  /**
+   * Event fired by a raygun to all modules to collect information before preparing
+   * to fire. This is used for calculating the power cost, among other things.
+   */
+  def handleGetFireInformationEvent( event : GetFireInformationEvent ) : Unit = ()
+
+  /**
+   * Event fired by a raygun to all modules it contains just before firing. This
+   * is used for checking power and rejecting the attempt to fire, among other
+   * things.
+   */
+  def handlePrefireEvent( event : PrefireEvent ) : Unit = ()
+
+  /**
+   * Event fired by a raygun to all modules it contains just after firing. This
+   * is used for subtracting power and other things.
+   */
+  def handlePostfireEvent( event : PostfireEvent ) : Unit = ()
+
+  /**
+   * Event fired by a raygun to all modules it contains every server tick while
+   * it's in the player's inventory.
+   */
+  def handleTickEvent( event : GunTickEvent ) : Unit = ()
 }
