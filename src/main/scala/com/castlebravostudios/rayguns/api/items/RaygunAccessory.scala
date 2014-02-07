@@ -34,5 +34,4 @@ import net.minecraft.entity.Entity
 
 trait RaygunAccessory extends RaygunModule {
 
-  def onGunUpdate( world : World, entity : Entity, stack : ItemStack ) : Unit = Unit
 }

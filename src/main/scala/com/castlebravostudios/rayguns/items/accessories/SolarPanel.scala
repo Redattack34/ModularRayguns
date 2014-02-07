@@ -28,18 +28,16 @@
 package com.castlebravostudios.rayguns.items.accessories
 
 import java.util.Random
-
 import scala.collection.mutable.WeakHashMap
-
 import com.castlebravostudios.rayguns.api.items.BaseRaygunModule
 import com.castlebravostudios.rayguns.api.items.ItemModule
 import com.castlebravostudios.rayguns.api.items.RaygunAccessory
 import com.castlebravostudios.rayguns.mod.ModularRayguns
 import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
-
 import net.minecraft.entity.Entity
 import net.minecraft.item.ItemStack
 import net.minecraft.world.World
+import com.castlebravostudios.rayguns.items.misc.GunTickEvent
 
 object SolarPanel extends BaseRaygunModule with RaygunAccessory {
   val moduleKey = "SolarPanel"
@@ -55,11 +53,9 @@ object SolarPanel extends BaseRaygunModule with RaygunAccessory {
   private[this] val entityMap = WeakHashMap[Entity, Boolean]()
   private[this] val random = new Random()
 
-  override def onGunUpdate(world : World, entity : Entity, stack : ItemStack ) : Unit = {
-    if ( canSeeTheSun( world, entity ) && random.nextInt( 2 ) == 0 ) {
-      RaygunNbtUtils.getBattery( stack ).foreach { batt =>
-        batt.addCharge(stack, 1)
-      }
+  override def handleTickEvent( event : GunTickEvent ) {
+    if ( canSeeTheSun( event.world, event.player ) && event.world.getWorldTime() % 10 == 0 ) {
+      event.components.battery.addCharge( event.gun, 1 )
     }
   }
 

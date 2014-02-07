@@ -48,6 +48,35 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.Icon
 import net.minecraft.world.World
 import com.castlebravostudios.rayguns.items.ChargableItem
+import com.castlebravostudios.rayguns.utils.GunComponents
+import com.castlebravostudios.rayguns.utils.DefaultFireEvent
+import com.castlebravostudios.rayguns.utils.DefaultFireEvent
+import com.castlebravostudios.rayguns.utils.GunComponents
+
+case class PrefireEvent(
+    val player : EntityPlayer,
+    val world : World,
+    val gun : ItemStack,
+    val components : GunComponents,
+    var canFire : Boolean,
+    var fireEvent : FireEvent,
+    var cooldownTicks : Int,
+    var powerMult : Double )
+
+case class PostfireEvent(
+    val player : EntityPlayer,
+    val world : World,
+    val gun : ItemStack,
+    val components : GunComponents,
+    val fireEvent : FireEvent,
+    val powerMult : Double )
+
+case class GunTickEvent(
+    val player : EntityPlayer,
+    val world : World,
+    val gun : ItemStack,
+    val components : GunComponents,
+    val isSelected : Boolean )
 
 object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
   with ChargableItem with RFItemPowerConnector with IC2ItemPowerConnector {
@@ -59,6 +88,7 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
   import RaygunNbtUtils._
 
   private val cooldownTime = "CooldownTime"
+  private val maxCooldownTime = "MaxCooldownTime"
 
   setMaxStackSize(1)
   setCreativeTab(ModularRayguns.raygunsTab)
@@ -77,9 +107,14 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
       return
     }
 
-    val event = components.get.getFireEvent( chargePower )
-    val creator = BeamRegistry.getFunction( event )
-    creator.foreach { fire(item, components.get, event, world, player, _) }
+    val prefire = new PrefireEvent( player, world, item, components.get,
+        getCooldownTime( item ) == 0,
+        components.get.getFireEvent( 1.0d ), 10,
+        components.get.components.map(_.powerModifier).product )
+    if ( !prefire.canFire ) return item
+
+    val creator = BeamRegistry.getFunction( prefire.fireEvent )
+    creator.foreach { fire( prefire, _) }
   }
 
   def getChargePower(item: ItemStack, itemUseCount: Int): Double = {
@@ -101,25 +136,31 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
       return item
     }
 
-    val creator = for {
-      comp <- components
-      event = comp.getFireEvent( 1.0d )
-      function <- BeamRegistry.getFunction( event )
-    } yield function
+    val prefire = new PrefireEvent( player, world, item, components.get,
+        getCooldownTime( item ) == 0,
+        components.get.getFireEvent( 1.0d ), 10,
+        components.get.components.map(_.powerModifier).product )
+    components.get.components.foreach( comp => comp.handlePrefireEvent( prefire ) );
+    if ( !prefire.canFire ) return item
+
+    val creator = BeamRegistry.getFunction( prefire.fireEvent )
 
     creator match {
-      case Some( f ) => { fire(item, components.get, components.get.getFireEvent( 1.0d ), world, player, f); item }
+      case Some( f ) => { fire( prefire, f ); item }
       case None => buildBrokenGun( item )
     }
   }
 
-  private def fire( item : ItemStack, components : GunComponents, event : FireEvent,
-      world : World, player : EntityPlayer, f : BeamRegistry.BeamCreator ): Unit = {
-    if ( getCooldownTime(item) != 0 ) return
-    if ( !components.battery.drainPower( player, item, event ) ) return
+  private def fire( prefire : PrefireEvent, f : BeamRegistry.BeamCreator ): Unit = {
+    f( prefire.world, prefire.player )
+    setCooldownTime( prefire.gun, prefire.cooldownTicks )
+    setMaxCooldownTime( prefire.gun, prefire.cooldownTicks )
 
-    f( world, player )
-    setCooldownTime( item, getBaseCooldownTime( components ) )
+    val postFire = PostfireEvent( prefire.player, prefire.world,
+        prefire.gun, prefire.components, prefire.fireEvent, prefire.powerMult )
+
+    prefire.components.components.foreach(
+        comp => comp.handlePostfireEvent( postFire ) )
   }
 
   override def onUpdate( item: ItemStack, world : World, entity: Entity, par4 : Int, par5 : Boolean) : Unit = {
@@ -130,27 +171,30 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
       setCooldownTime( item, newTime );
     }
 
-    getComponents(item).flatMap( _.accessory )
-      .foreach( _.onGunUpdate(world, entity, item ) )
-  }
+    val components = getComponents( item )
+    if ( components.isEmpty ) return
 
-  def getBaseCooldownTime( item : ItemStack ) : Short = getComponents(item) match {
-    case Some( comp ) => getBaseCooldownTime(comp)
-    case None => 0
-  }
-
-  private def getBaseCooldownTime( components : GunComponents ) : Short = {
-    components.accessory match {
-      case Some(RefireCapacitor) => 5
-      case _ => 10
+    entity match {
+      case player : EntityPlayer => {
+        val tickEvent = new GunTickEvent( player, world, item, components.get,
+            player.inventory.getCurrentItem() eq item );
+        components.get.components.foreach( comp => comp.handleTickEvent( tickEvent ) )
+      }
+      case _ => ()
     }
   }
 
   private def setCooldownTime( item : ItemStack, ticks : Int ) =
     item.getTagCompoundSafe.setShort( cooldownTime, ticks.shortValue )
 
+  private def setMaxCooldownTime( item : ItemStack, ticks : Int ) =
+    item.getTagCompoundSafe.setShort( maxCooldownTime, ticks.shortValue )
+
   def getCooldownTime( item : ItemStack ) =
     item.getTagCompoundSafe.getShort( cooldownTime )
+
+  def getMaxCooldownTime( item : ItemStack ) =
+    item.getTagCompoundSafe.getShort( maxCooldownTime )
 
   override def getDamage( item : ItemStack ) : Int = 1
   override def getDisplayDamage( item : ItemStack ) : Int = getChargeDepleted( item )
@@ -170,14 +214,7 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
     bodyIcon.getOrElse(itemIcon)
   }
 
-  override def getMaxItemUseDuration( item : ItemStack ) : Int = {
-    val lens = getComponents( item ).flatMap( _.lens )
-    lens match {
-      case Some( ChargeLens ) => 72000
-      case Some( ChargeBeamLens ) => 72000
-      case _ => 0
-    }
-  }
+  override def getMaxItemUseDuration( item : ItemStack ) : Int = Integer.MAX_VALUE
 
   def getChargeCapacity( item : ItemStack ) : Int =
     getBattery( item ).map( _.maxCapacity ).getOrElse(1)

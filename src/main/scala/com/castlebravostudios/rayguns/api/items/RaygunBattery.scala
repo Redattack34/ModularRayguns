@@ -30,9 +30,10 @@ package com.castlebravostudios.rayguns.api.items
 import com.castlebravostudios.rayguns.utils.FireEvent
 import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
 import com.castlebravostudios.rayguns.utils.Extensions.ItemStackExtension
-
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
+import com.castlebravostudios.rayguns.items.misc.PrefireEvent
+import com.castlebravostudios.rayguns.items.misc.PostfireEvent
 
 trait RaygunBattery extends RaygunModule {
 
@@ -44,16 +45,17 @@ trait RaygunBattery extends RaygunModule {
   def maxChargePerTick : Int
   def ic2Tier : Int
 
-  def drainPower( player : EntityPlayer, item : ItemStack, event : FireEvent ) : Boolean = {
-    val powerMult = event.powerMultiplier
-    val powerDrain = powerMult * powerBase
-    if ( getChargeDepleted( item ) + powerDrain <= maxCapacity ) {
-      addCharge( item, -powerDrain.intValue() )
-      true
+  override def handlePrefireEvent( event : PrefireEvent ) : Unit = {
+    val powerDrain = powerBase * event.powerMult
+    if ( getChargeDepleted( event.gun ) + powerDrain > maxCapacity ) {
+      event.canFire = false
     }
-    else false
   }
 
+  override def handlePostfireEvent( event : PostfireEvent ) : Unit = {
+    val powerDrain = powerBase * event.powerMult
+    addCharge( event.gun, -powerDrain.intValue() )
+  }
 
   def getChargeDepleted( item : ItemStack ) : Int = {
     val tag = item.getTagCompoundSafe
