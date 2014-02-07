@@ -76,6 +76,18 @@ object MatterTransporterEffect extends BaseEffect {
   val beamTexture = new ResourceLocation( "rayguns", "textures/beams/matter_transporter_beam.png" )
   val chargeTexture = new ResourceLocation( "rayguns", "textures/effects/charge/matter_transporter_charge.png" )
 
+  def getPlacedBlockId( player : EntityPlayer ) : Option[Int] = {
+    val currentSlot = player.inventory.currentItem
+    val itemSlot = ( currentSlot + 1 ) % 8
+
+    val stack = player.inventory.getStackInSlot( itemSlot )
+    if ( stack == null ) return None
+    val item = stack.getItem()
+    if ( !item.isInstanceOf[ItemBlock] ) return None
+
+    Some( item.itemID )
+  }
+
   private def deductTransportedItem( player: EntityPlayer ) : Int = {
     val currentSlot = player.inventory.currentItem
     val itemSlot = ( currentSlot + 1 ) % 8
