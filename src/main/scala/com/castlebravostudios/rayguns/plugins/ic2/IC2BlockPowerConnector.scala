@@ -48,7 +48,7 @@ trait IC2BlockPowerConnector extends TileEntity with IEnergySink {
 
   var euBuffer : Double = 0
   var postedOnLoad = false
-  def ic2PowerMultiplier = Config.ic2PowerMultiplier
+  def ic2PowerMultiplier : Double = Config.ic2PowerMultiplier
 
   override def updateEntity() : Unit = {
     if ( ic2Loaded && !postedOnLoad && worldObj.isOnServer ) {
@@ -83,9 +83,7 @@ trait IC2BlockPowerConnector extends TileEntity with IEnergySink {
       euBuffer -= chargeFromBuffer * ic2PowerMultiplier
       0
     }
-    else {
-      32
-    }
+    else 32
   }
 
   @Optional.Method( modid = "IC2" )

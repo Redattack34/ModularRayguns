@@ -48,5 +48,5 @@ abstract class BaseRaygunModule extends RaygunModule {
     event.powerMult *= this.powerModifier
   }
 
-  override def toString = this.getClass().getSimpleName
+  override def toString : String = this.getClass().getSimpleName
 }

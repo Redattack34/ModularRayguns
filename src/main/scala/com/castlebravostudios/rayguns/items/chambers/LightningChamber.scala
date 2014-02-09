@@ -47,7 +47,7 @@ object LightningChamber extends BaseChamber {
   val shotEffect = LightningEffect
   val nameSegmentKey = "rayguns.LightningChamber.segment"
 
-  def createItem( id : Int ) = new ItemModule( id, this )
+  def createItem( id : Int ) : ItemModule = new ItemModule( id, this )
     .setUnlocalizedName("rayguns.LightningChamber")
     .setTextureName("rayguns:chamber_lightning")
     .setCreativeTab( ModularRayguns.raygunsTab )
@@ -72,6 +72,6 @@ object LightningChamber extends BaseChamber {
     val blocks = RaytraceUtils.rayTraceBlocks(world, start, end)( (_, _, _) => true )
     val actualEnd = blocks.headOption.map( _.hitVec ).getOrElse( end )
 
-    MidpointDisplacement.createPositionList( new Vector3( start ), new Vector3( actualEnd ) )
+    MidpointDisplacement.createPositionList( Vector3( start ), Vector3( actualEnd ) )
   }
 }

@@ -39,21 +39,23 @@ case class GunComponents(body : RaygunBody, chamber : RaygunChamber, battery : R
   def components : Seq[RaygunModule] = Seq( body, chamber, battery ) ++ lens ++ accessory
 
   def getFireEvent( charge : Double ) : FireEvent = lens match {
-    case Some( ChargeLens ) => new ChargeFireEvent( this, charge )
-    case Some( ChargeBeamLens ) => new ChargeFireEvent( this, charge )
-    case _ => new DefaultFireEvent( this )
+    case Some( ChargeLens ) => ChargeFireEvent( this, charge )
+    case Some( ChargeBeamLens ) => ChargeFireEvent( this, charge )
+    case _ => DefaultFireEvent( this )
   }
 
   def isValid : Boolean = components.forall( c => c != null && ModuleRegistry.isRegistered(c) )
 }
+
 case class OptionalGunComponents(
   body : Option[RaygunBody], chamber : Option[RaygunChamber], battery : Option[RaygunBattery],
   lens : Option[RaygunLens], acc : Option[RaygunAccessory] ) {
 
   def components : Seq[RaygunModule] = body.toSeq ++ chamber ++ battery ++ lens ++ acc
-
-  def this( comp : GunComponents ) = this( Some( comp.body ),
-      Some( comp.chamber ), Some( comp.battery ), comp.lens, comp.accessory );
 }
-
+object OptionalGunComponents {
+  def apply( comp : GunComponents ) : OptionalGunComponents =
+    new OptionalGunComponents( Some( comp.body ), Some( comp.chamber ),
+        Some( comp.battery ), comp.lens, comp.accessory );
+}
 

@@ -66,8 +66,8 @@ class NEIModularRaygunsConfig extends IConfigureNEI {
     API.registerGuiOverlayHandler( classOf[LensGrinderGui], new DefaultOverlayHandler, recipeKey )
   }
 
-  def getName = ModularRayguns.getClass().getAnnotation(classOf[Mod]).name()
-  def getVersion = ModularRayguns.getClass().getAnnotation(classOf[Mod]).version()
+  def getName : String = ModularRayguns.getClass().getAnnotation(classOf[Mod]).name()
+  def getVersion : String = ModularRayguns.getClass().getAnnotation(classOf[Mod]).version()
 
   private def mainItemRange: MultiItemRange = {
     val range = new MultiItemRange()

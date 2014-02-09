@@ -27,16 +27,19 @@
 
 package com.castlebravostudios.rayguns.utils
 
-import net.minecraft.util.Vec3
-import net.minecraft.util.MathHelper
-import net.minecraft.world.World
-import net.minecraft.block.Block
-import net.minecraft.util.MovingObjectPosition
-import net.minecraft.util.AxisAlignedBB
-import net.minecraft.entity.Entity
 import scala.collection.JavaConverters._
-import net.minecraft.entity.EntityLivingBase
+
 import com.castlebravostudios.rayguns.utils.Extensions.WorldExtension
+
+import net.minecraft.block.Block
+import net.minecraft.entity.Entity
+import net.minecraft.entity.EntityLivingBase
+import net.minecraft.util.AxisAlignedBB
+import net.minecraft.util.MathHelper
+import net.minecraft.util.MovingObjectPosition
+
+import net.minecraft.util.Vec3
+import net.minecraft.world.World
 
 object RaytraceUtils {
 
@@ -54,7 +57,7 @@ object RaytraceUtils {
     val (stepX, stepY, stepZ) = (diff.x.signum, diff.y.signum, diff.z.signum)
 
     // Find the length of a ray such that one component equals the desired length
-    def rayLength( component : Double, length : Double ) ={
+    def rayLength( component : Double, length : Double ) : Double = {
       val l = diff.divideBy( component / length ).length
       if ( l.isNaN() || l.isInfinite() ) Double.MaxValue
       else l
@@ -64,7 +67,9 @@ object RaytraceUtils {
     val tDeltaY = rayLength( diff.y, 1.0 )
     val tDeltaZ = rayLength( diff.z, 1.0 )
 
-    def blockSide( k : Int, stepK : Int ) = if ( stepK < 0 ) k else k + stepK
+    def blockSide( k : Int, stepK : Int ) : Int =
+      if ( stepK < 0 ) k else k + stepK
+
     val tMaxX = rayLength( diff.x, blockSide(x, stepX) - start.x )
     val tMaxY = rayLength( diff.y, blockSide(y, stepY) - start.y )
     val tMaxZ = rayLength( diff.z, blockSide(z, stepZ) - start.z )
@@ -72,7 +77,7 @@ object RaytraceUtils {
     val length = diff.length
 
     def blocksRec( x : Int, y : Int, z : Int, tMaxX : Double, tMaxY : Double, tMaxZ : Double ) : Stream[BlockPos] = {
-      def branch = if ( tMaxX > length && tMaxY > length && tMaxZ > length ) Stream.empty
+      def branch : Stream[BlockPos] = if ( tMaxX > length && tMaxY > length && tMaxZ > length ) Stream.empty
                    else if ( tMaxX <= tMaxY && tMaxX <= tMaxZ ) blocksRec( x + stepX, y, z, tMaxX + tDeltaX, tMaxY, tMaxZ )
                    else if ( tMaxY <= tMaxX && tMaxY <= tMaxZ ) blocksRec( x, y + stepY, z, tMaxX, tMaxY + tDeltaY, tMaxZ )
                    else if ( tMaxZ <= tMaxX && tMaxZ <= tMaxY ) blocksRec( x, y, z + stepZ, tMaxX, tMaxY, tMaxZ + tDeltaZ )
@@ -105,7 +110,7 @@ object RaytraceUtils {
    */
   def rayTraceBlocks( world : World, start : Vec3, end : Vec3 )( f : (Block, Int, BlockPos) => Boolean ) : Stream[MOP] = {
     for {
-      (b, m, BlockPos(x, y, z) ) <- blocksHit( world, new Vector3( start ), new Vector3( end ) )(f)
+      (b, m, BlockPos(x, y, z) ) <- blocksHit( world, Vector3( start ), Vector3( end ) )(f)
       hit = b.collisionRayTrace(world, x, y, z, start, end)
       if ( hit != null )
     } yield hit

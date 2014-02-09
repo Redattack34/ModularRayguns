@@ -90,12 +90,12 @@ object FrostRayEffect extends BaseEffect {
     if ( frozenBlock != null ) {
       worldObj.setBlock(hitX, hitY, hitZ, frozenBlock.blockID)
     }
-    else if ( material.blocksMovement && worldObj.isAirBlock(hitX, hitY+1, hitZ) ) {
-      worldObj.setBlock( hitX, hitY+1, hitZ, Block.snow.blockID )
+    else if ( material.blocksMovement && worldObj.isAirBlock(hitX, hitY + 1, hitZ) ) {
+      worldObj.setBlock( hitX, hitY + 1, hitZ, Block.snow.blockID )
     }
   }
 
-  override def collidesWithLiquids(shootable : Shootable) = true
+  override def collidesWithLiquids(shootable : Shootable) : Boolean = true
 
   override def createImpactParticles( shootable : Shootable, hitX : Double, hitY : Double, hitZ : Double ) : Unit = {
     for ( _ <- 0 until 4 ) {

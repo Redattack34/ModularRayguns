@@ -43,7 +43,7 @@ object ChargeBeamLens extends BaseRaygunModule with RaygunLens with Chargable {
   val powerModifier = 1.2
   val nameSegmentKey = "rayguns.ChargeBeamLens.segment"
 
-  def createItem( id : Int ) = new ItemModule( id, this )
+  def createItem( id : Int ) : ItemModule = new ItemModule( id, this )
     .setUnlocalizedName("rayguns.ChargeBeamLens")
     .setTextureName("rayguns:lens_charge_beam")
     .setCreativeTab( ModularRayguns.raygunsTab )

@@ -52,13 +52,13 @@ trait IC2ItemPowerConnector extends Item with ISpecialElectricItem {
   def getEmptyItemId( item : ItemStack ) : Int = this.itemID
 
   @Optional.Method( modid = "IC2" )
-  def getMaxCharge( item : ItemStack ) = ( getMaxCharge( item ) * ic2PowerMultiplier ).toInt
+  def getMaxCharge( item : ItemStack ) : Int = ( getMaxCharge( item ) * ic2PowerMultiplier ).toInt
 
   @Optional.Method( modid = "IC2" )
-  def getTier( item : ItemStack ) = getIC2Tier( item )
+  def getTier( item : ItemStack ) : Int = getIC2Tier( item )
 
   @Optional.Method( modid = "IC2" )
-  def getTransferLimit( item : ItemStack ) = ( getMaxChargePerTick( item ) * ic2PowerMultiplier).toInt
+  def getTransferLimit( item : ItemStack ): Int = ( getMaxChargePerTick( item ) * ic2PowerMultiplier).toInt
 
   @Optional.Method( modid = "IC2" )
   def getManager( item : ItemStack ) : IElectricItemManager = RaygunElectricItemHandler

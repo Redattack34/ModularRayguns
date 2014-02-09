@@ -74,10 +74,17 @@ class NEILensGrinderRecipeManager extends ShapedRecipeHandler {
     drawProgressBar(84, 24, 176, 0, 24, 16, 48, 0);
   }
 
-  override def getGuiClass() = classOf[LensGrinderGui]
-  override def getGuiTexture() = "rayguns:textures/gui/container/lens_grinder.png"
-  override def getRecipeName = "Lens Grinder"
-  override def getOverlayIdentifier() = NEIModularRaygunsConfig.recipeKey
+  override def getGuiClass() : Class[LensGrinderGui] =
+    classOf[LensGrinderGui]
+
+  override def getGuiTexture() : String =
+    "rayguns:textures/gui/container/lens_grinder.png"
+
+  override def getRecipeName : String =
+    "Lens Grinder"
+
+  override def getOverlayIdentifier() : String =
+    NEIModularRaygunsConfig.recipeKey
 
   private def getShape(recipe: LensGrinderRecipe) : CachedShapedRecipe = {
     new CachedShapedRecipe( recipe.recipe )

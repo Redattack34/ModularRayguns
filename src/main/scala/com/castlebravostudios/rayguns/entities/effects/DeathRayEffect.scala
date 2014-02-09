@@ -90,5 +90,5 @@ object DeathRayEffect extends BaseEffect {
   val boltTexture = new ResourceLocation( "rayguns", "textures/bolts/death_ray_bolt.png" )
   val beamTexture = new ResourceLocation( "rayguns", "textures/beams/death_ray_beam.png" )
   val chargeTexture = new ResourceLocation( "rayguns", "textures/effects/charge/death_ray_charge.png" )
-  override def lineTexture = BoltRenderer.lineWhiteTexture
+  override def lineTexture : ResourceLocation = BoltRenderer.lineWhiteTexture
 }

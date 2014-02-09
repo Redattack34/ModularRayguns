@@ -112,7 +112,7 @@ class BaseBoltEntity( world : World ) extends BaseShootable( world ) with IProje
     case _ => ()
   }
 
-  override def setSize( width : Float, height : Float ) = super.setSize( width, height )
+  override def setSize( width : Float, height : Float ) : Unit = super.setSize( width, height )
 
   def onImpact( pos : MovingObjectPosition ) : Boolean = {
     effect.createImpactParticles( this, posX, posY, posZ )

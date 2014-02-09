@@ -56,7 +56,7 @@ class GunBenchTileEntity extends BaseInventoryTileEntity {
 
   override def getSizeInventory : Int = inv.length
   override def getStackInSlot( slot : Int ) : ItemStack = inv(slot)
-  override def setInventorySlotContents( slot : Int, stack : ItemStack ) = {
+  override def setInventorySlotContents( slot : Int, stack : ItemStack ) : Unit = {
     inv(slot) = stack
     if ( stack != null && stack.stackSize > getInventoryStackLimit() ) {
       stack.stackSize = getInventoryStackLimit()
@@ -64,8 +64,8 @@ class GunBenchTileEntity extends BaseInventoryTileEntity {
   }
 
   def onSlotChanged( slot : Int ) : Unit = {
-      def toStack( module : RaygunModule ) = new ItemStack( module.item, 1 )
-      def setSlot( slot : Int ) ( item : ItemStack ) = setInventorySlotContents( slot, item )
+      def toStack( module : RaygunModule ) : ItemStack = new ItemStack( module.item, 1 )
+      def setSlot( slot : Int ) ( item : ItemStack ) : Unit = setInventorySlotContents( slot, item )
       if ( slot == OUTPUT_SLOT && inv(OUTPUT_SLOT) != null ) {
         val components = getAllValidComponents( inv(OUTPUT_SLOT) )
         components.body.map(toStack).foreach(setSlot(BODY_SLOT))

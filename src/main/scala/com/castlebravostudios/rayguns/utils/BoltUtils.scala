@@ -69,7 +69,7 @@ object BoltUtils {
   }
 
   private def aimVector( shooter : EntityLivingBase ) : Vector3 = {
-    val look = new Vector3( shooter.getLookVec )
+    val look = Vector3( shooter.getLookVec )
 
     if ( shooter.isSneaking && !isCreativeFlying( shooter ) ) look.copy( y = 0 ) else look
   }

@@ -114,7 +114,7 @@ object RaygunNbtUtils {
   }
 
   private def buildModuleTag( components : GunComponents ) : NBTTagCompound =
-    buildModuleTag( new OptionalGunComponents( components ) )
+    buildModuleTag( OptionalGunComponents( components ) )
   private def buildModuleTag( components : OptionalGunComponents ) : NBTTagCompound = {
     val tag = new NBTTagCompound( MODULES_TAG )
     components.body.foreach( setTag( tag, BODY_STR )(_) )
@@ -147,7 +147,7 @@ object RaygunNbtUtils {
    * Note that not all of the replacements are used in the default en_US language file.
    */
   def getRaygunName( components : GunComponents ) : String = {
-    def translate( opt : RaygunModule) = I18n.getString( opt.nameSegmentKey )
+    def translate( opt : RaygunModule) : String = I18n.getString( opt.nameSegmentKey )
 
     I18n.getString("rayguns.RaygunNamePattern")
       .replaceAll("@chamber@", translate( components.chamber ) )

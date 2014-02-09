@@ -110,5 +110,5 @@ class LightningBoltEntity(world : World) extends BaseBoltEntity(world) with Ligh
   }
 }
 class LightningBeamEntity(world : World) extends BaseBeamEntity(world) with LightningShootable {
-  override def depletionRate = 0.2d
+  override val depletionRate = 0.2d
 }

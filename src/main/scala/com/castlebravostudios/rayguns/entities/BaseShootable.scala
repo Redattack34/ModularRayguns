@@ -36,6 +36,7 @@ import net.minecraft.entity.Entity
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.world.World
 import javax.swing.plaf.nimbus.Effect
+import java.util.Random
 
 abstract class BaseShootable( world : World ) extends Entity( world ) with Shootable with IEntityAdditionalSpawnData {
 
@@ -78,5 +79,5 @@ abstract class BaseShootable( world : World ) extends Entity( world ) with Shoot
 
   def entityInit() : Unit = ()
 
-  def random = this.rand
+  def random : Random = this.rand
 }

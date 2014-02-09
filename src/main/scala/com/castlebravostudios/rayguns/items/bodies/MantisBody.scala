@@ -37,7 +37,7 @@ object MantisBody extends BaseRaygunModule with RaygunBody {
   val powerModifier = 1.0
   val nameSegmentKey = "rayguns.MantisBody.segment"
 
-  def createItem( id : Int ) = new ItemModule( id, this )
+  def createItem( id : Int ) : ItemModule = new ItemModule( id, this )
     .setUnlocalizedName("rayguns.MantisBody")
     .setTextureName("rayguns:body_mantis")
     .setCreativeTab( ModularRayguns.raygunsTab )

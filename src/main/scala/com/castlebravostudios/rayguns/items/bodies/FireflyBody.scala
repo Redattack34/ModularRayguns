@@ -37,7 +37,7 @@ object FireflyBody extends BaseRaygunModule with RaygunBody {
   val powerModifier = 1.0
   val nameSegmentKey = "rayguns.FireflyBody.segment"
 
-  def createItem( id : Int ) = new ItemModule( id, this )
+  def createItem( id : Int ) : ItemModule = new ItemModule( id, this )
     .setUnlocalizedName("rayguns.FireflyBody")
     .setTextureName("rayguns:body_firefly")
     .setCreativeTab( ModularRayguns.raygunsTab )

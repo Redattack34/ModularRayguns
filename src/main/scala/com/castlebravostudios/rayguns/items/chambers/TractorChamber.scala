@@ -37,7 +37,7 @@ object TractorChamber extends BaseChamber {
   val shotEffect = TractorEffect
   val nameSegmentKey = "rayguns.TractorChamber.segment"
 
-  def createItem( id : Int ) = new ItemModule( id, this )
+  def createItem( id : Int ) : ItemModule = new ItemModule( id, this )
     .setUnlocalizedName("rayguns.TractorChamber")
     .setTextureName("rayguns:chamber_tractor")
     .setCreativeTab( ModularRayguns.raygunsTab )

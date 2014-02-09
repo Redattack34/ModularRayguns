@@ -40,7 +40,7 @@ object LensGrinderRecipeRegistry {
 
   private var _recipes = Seq[LensGrinderRecipe]()
 
-  def recipes = _recipes
+  def recipes : Seq[LensGrinderRecipe] = _recipes
   def getRecipe( i : InventoryCrafting ) : Option[LensGrinderRecipe] =
     _recipes.find( recipe => recipe.recipe.matches( i, null ) )
 

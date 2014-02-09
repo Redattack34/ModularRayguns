@@ -37,7 +37,7 @@ object ExtendedBattery extends BaseRaygunModule with RaygunAccessory {
   val powerModifier = 2.0 / 3.0
   val nameSegmentKey = "rayguns.ExtendedBattery.segment"
 
-  def createItem( id : Int ) = new ItemModule( id, this )
+  def createItem( id : Int ) : ItemModule = new ItemModule( id, this )
     .setUnlocalizedName("rayguns.ExtendedBattery")
     .setTextureName("rayguns:extended_battery")
     .setCreativeTab( ModularRayguns.raygunsTab )

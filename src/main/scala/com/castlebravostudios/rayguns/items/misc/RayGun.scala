@@ -109,7 +109,7 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
     getBattery( item ).map( _.getChargeString( item ) ) ++ RaygunNbtUtils.getComponentInfo( item )
 
   override def onPlayerStoppedUsing(item : ItemStack, world : World, player : EntityPlayer, itemUseCount : Int ): Unit = {
-    def breakGun = {
+    def breakGun : Unit = {
       val slot = player.inventory.currentItem
       val brokenGun = buildBrokenGun(item)
       player.inventory.setInventorySlotContents( slot, brokenGun )
@@ -158,7 +158,8 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
 
   private def prefire( player : EntityPlayer, world : World, gun : ItemStack, components : GunComponents  ) : PrefireEvent = {
     val getInfo = GetFireInformationEvent( player, world, gun, components, 10, 1.0d,
-        new DefaultFireEvent( components ) );
+        DefaultFireEvent( components ) );
+
     components.components.foreach( comp => comp.handleGetFireInformationEvent( getInfo ) );
 
     val prefireEvent = PrefireEvent( player, world, gun, components,
@@ -207,20 +208,20 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
   private def setMaxCooldownTime( item : ItemStack, ticks : Int ) =
     item.getTagCompoundSafe.setShort( maxCooldownTime, ticks.shortValue )
 
-  def getCooldownTime( item : ItemStack ) =
+  def getCooldownTime( item : ItemStack ) : Short =
     item.getTagCompoundSafe.getShort( cooldownTime )
 
-  def getMaxCooldownTime( item : ItemStack ) =
+  def getMaxCooldownTime( item : ItemStack ) : Short =
     item.getTagCompoundSafe.getShort( maxCooldownTime )
 
   override def getDamage( item : ItemStack ) : Int = 1
   override def getDisplayDamage( item : ItemStack ) : Int = getChargeDepleted( item )
-  override def isDamaged( item : ItemStack ) = getDisplayDamage( item ) > 0
+  override def isDamaged( item : ItemStack ) : Boolean = getDisplayDamage( item ) > 0
 
   override def getMaxDamage( item: ItemStack ) : Int = getChargeCapacity( item )
 
-  override def requiresMultipleRenderPasses() = true
-  override def getRenderPasses(metadata : Int) = 1
+  override def requiresMultipleRenderPasses() : Boolean = true
+  override def getRenderPasses(metadata : Int) : Int = 1
 
   override def getIcon( item : ItemStack, pass : Int ) : Icon = {
     val bodyIcon = for {

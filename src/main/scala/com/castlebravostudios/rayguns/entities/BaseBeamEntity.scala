@@ -42,7 +42,7 @@ import com.castlebravostudios.rayguns.api.EffectRegistry
 
 class BaseBeamEntity(world : World) extends BaseShootable( world ) {
 
-  def depletionRate = 0.3d
+  def depletionRate : Double = 0.3d
   var length : Double = 0
 
   ignoreFrustumCheck = true
