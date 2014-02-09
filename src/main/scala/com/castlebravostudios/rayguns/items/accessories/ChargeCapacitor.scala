@@ -33,8 +33,9 @@ import com.castlebravostudios.rayguns.api.items.RaygunAccessory
 import com.castlebravostudios.rayguns.mod.ModularRayguns
 import com.castlebravostudios.rayguns.items.misc.PrefireEvent
 import com.castlebravostudios.rayguns.items.misc.GetFireInformationEvent
+import com.castlebravostudios.rayguns.items.lenses.Chargable
 
-object ChargeCapacitor extends BaseRaygunModule with RaygunAccessory {
+object ChargeCapacitor extends BaseRaygunModule with RaygunAccessory with Chargable {
   val moduleKey = "ChargeCapacitor"
   val powerModifier = 1.0
   val nameSegmentKey = "rayguns.ChargeCapacitor.segment"
@@ -44,9 +45,4 @@ object ChargeCapacitor extends BaseRaygunModule with RaygunAccessory {
     .setTextureName("rayguns:charge_capacitor")
     .setCreativeTab( ModularRayguns.raygunsTab )
     .setMaxStackSize(1)
-
-  override def handleGetFireInformationEvent( event : GetFireInformationEvent ) : Unit = {
-    super.handleGetFireInformationEvent(event)
-    event.cooldownTicks /= 2
-  }
 }

@@ -100,4 +100,4 @@ rayguns.MatterTransporterChamber.segment=Matter Transporter
 rayguns.ExtendedBattery.segment=Extended
 rayguns.RefireCapacitor.segment=Rapid
 rayguns.SolarPanel.segment=Solar
-rayguns.ChargePanel.segment=Charging
+rayguns.ChargeCapacitor.segment=Charging

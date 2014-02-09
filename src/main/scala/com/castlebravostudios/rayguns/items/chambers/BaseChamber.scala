@@ -29,7 +29,6 @@ package com.castlebravostudios.rayguns.items.chambers
 
 import com.castlebravostudios.rayguns.api.BeamRegistry
 import com.castlebravostudios.rayguns.api.items.BaseRaygunModule
-
 import com.castlebravostudios.rayguns.api.items.RaygunChamber
 import com.castlebravostudios.rayguns.entities.BaseBeamEntity
 import com.castlebravostudios.rayguns.entities.BaseBoltEntity
@@ -44,10 +43,10 @@ import com.castlebravostudios.rayguns.utils.BeamUtils
 import com.castlebravostudios.rayguns.utils.BoltUtils
 import com.castlebravostudios.rayguns.utils.ChargeFireEvent
 import com.castlebravostudios.rayguns.utils.DefaultFireEvent
-
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.ResourceLocation
 import net.minecraft.world.World
+import com.castlebravostudios.rayguns.items.accessories.ChargeCapacitor
 
 
 abstract class BaseChamber extends BaseRaygunModule with RaygunChamber {
@@ -78,6 +77,21 @@ abstract class BaseChamber extends BaseRaygunModule with RaygunChamber {
         BoltUtils.spawnNormal( world, bolt, player )
       }
       case ChargeFireEvent(_, ch, _, Some(ChargeBeamLens), _, charge ) if ch eq this => { (world, player) =>
+        val beam = createAndInitBeam( world, player )
+        beam.charge = charge
+        BeamUtils.spawnSingleShot( beam, world, player )
+      }
+      case ChargeFireEvent(_, ch, _, None, Some(ChargeCapacitor), charge) if ch eq this => { (world, player) =>
+        val bolt = createAndInitBolt( world, player )
+        bolt.charge = charge
+        BoltUtils.spawnNormal( world, bolt, player )
+      }
+      case ChargeFireEvent(_, ch, _, Some(PreciseLens), Some(ChargeCapacitor), charge ) if ch eq this => { (world, player) =>
+        val bolt = createAndInitBolt( world, player )
+        bolt.charge = charge
+        BoltUtils.spawnNormal( world, bolt, player )
+      }
+      case ChargeFireEvent(_, ch, _, Some(PreciseBeamLens), Some(ChargeCapacitor), charge ) if ch eq this => { (world, player) =>
         val beam = createAndInitBeam( world, player )
         beam.charge = charge
         BeamUtils.spawnSingleShot( beam, world, player )
