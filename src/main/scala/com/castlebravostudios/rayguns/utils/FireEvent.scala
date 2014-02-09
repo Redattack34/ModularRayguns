@@ -34,14 +34,14 @@ import com.castlebravostudios.rayguns.api.ShotRegistry
 import com.castlebravostudios.rayguns.api.items.RaygunAccessory
 import com.castlebravostudios.rayguns.api.items.RaygunModule
 import com.castlebravostudios.rayguns.api.items.RaygunBattery
+import net.minecraft.util.Vec3
 
 trait FireEvent extends {
   def components : Seq[RaygunModule]
-
   def isValid : Boolean = ShotRegistry.isValid(this)
 }
 
-case class DefaultFireEvent(body : RaygunBody, chamber : RaygunChamber, battery : RaygunBattery,
+case class DefaultFireEvent( body : RaygunBody, chamber : RaygunChamber, battery : RaygunBattery,
     lens : Option[RaygunLens], accessory : Option[RaygunAccessory] ) extends FireEvent {
 
   def components : Seq[RaygunModule] = Seq( body, chamber, battery ) ++ lens ++ accessory

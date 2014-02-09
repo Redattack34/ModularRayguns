@@ -41,12 +41,12 @@ import com.castlebravostudios.rayguns.utils.Extensions.WorldExtension
 import com.castlebravostudios.rayguns.utils.FireEvent
 import com.castlebravostudios.rayguns.utils.GunComponents
 import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
-
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.util.Icon
 import net.minecraft.world.World
+import com.castlebravostudios.rayguns.utils.Vector3
 
 case class GetFireInformationEvent(
     val player : EntityPlayer,
@@ -161,7 +161,7 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
     prefireEvent
   }
 
-  private def fire( prefire : PrefireEvent, f : ShotRegistry.BeamCreator ): Unit = {
+  private def fire( prefire : PrefireEvent, f : (World, EntityPlayer) => Unit ): Unit = {
     f( prefire.world, prefire.player )
     setCooldownTime( prefire.gun, prefire.cooldownTicks )
     setMaxCooldownTime( prefire.gun, prefire.cooldownTicks )

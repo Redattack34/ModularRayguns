@@ -72,4 +72,6 @@ case class Vector3( val x : Double, val y : Double, val z : Double ) {
 }
 object Vector3 {
   def apply( vec : Vec3 ) : Vector3 = new Vector3( vec.xCoord, vec.yCoord, vec.zCoord )
+
+  val zero = new Vector3( 0, 0, 0 )
 }

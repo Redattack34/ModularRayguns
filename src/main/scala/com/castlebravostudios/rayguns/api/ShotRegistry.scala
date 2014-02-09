@@ -27,33 +27,99 @@
 
 package com.castlebravostudios.rayguns.api
 
-import com.castlebravostudios.rayguns.api.items.RaygunBody
-import com.castlebravostudios.rayguns.api.items.RaygunAccessory
-import com.castlebravostudios.rayguns.api.items.RaygunBattery
-import com.castlebravostudios.rayguns.api.items.RaygunLens
-import com.castlebravostudios.rayguns.api.items.RaygunChamber
-import com.castlebravostudios.rayguns.utils.GunComponents
-import net.minecraft.world.World
-import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.entity.Entity
+import com.castlebravostudios.rayguns.entities.Shootable
 import com.castlebravostudios.rayguns.utils.FireEvent
+import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.world.World
+import com.castlebravostudios.rayguns.utils.BoltUtils
+import com.castlebravostudios.rayguns.entities.BaseBoltEntity
+import com.castlebravostudios.rayguns.entities.BaseBeamEntity
+import com.castlebravostudios.rayguns.utils.BeamUtils
+import com.castlebravostudios.rayguns.utils.Logging
 
-object ShotRegistry {
 
-  type BeamCreator = (World, EntityPlayer) => Unit
 
-  private var registrations = Seq[PartialFunction[FireEvent, BeamCreator]]()
+/**
+ * Registry for the objects that turn a mouse click with raygun in hand into a
+ * shot.<p>
+ *
+ * There are three ways to hook into the shot creation using BeamRegistry.
+ *  - Shot Creators take a FireEvent and produce a sequence of Shootables.
+ *  - Shot Modifiers are like ShotCreators, but they always take precedence over
+ *  shot creators, so they're useful for hooks that modify the results of a
+ *  ShotCreator.
+ *  - Shot Handlers take a FireEvent, world and player, and cause something to
+ *  happen. One is preregistered that uses the creators and modifiers and
+ *  spawns the resulting shots into the world.
+ *
+ * Generally, hooks that are registered later
+ *
+ * All of the hooks are in the form of PartialFunctions, so you should implement
+ * isDefinedAt to ignore all fire events and so on that you don't want to handle.
+ * Scala has special syntax for this, similar to pattern matching, so you don't
+ * have to - see BaseChamber for a Scala example.
+ */
+
+object ShotRegistry extends Logging {
+
+  type ShotCreator = PartialFunction[FireEvent, (World, EntityPlayer) => Seq[Shootable]]
+  type ShotHandler = PartialFunction[FireEvent, (World, EntityPlayer) => Unit]
+
+  private var creators = Seq[ShotCreator]()
+  private var modifiers = Seq[ShotCreator]()
+  private var handlers = Seq[ShotHandler]()
+
+  def registerCreator( c : ShotCreator ) : Unit =
+    creators = c +: creators
+
+  def registerModifier( m : ShotCreator ) : Unit =
+    modifiers = m +: modifiers
+
+  def registerHandler( h : ShotHandler ) : Unit =
+    handlers = h +: handlers
 
   /**
-   * Register a partial function which maps module combinations to beam creation
-   * functions.
+   * Returns true if there is a shot modifier or shot creator that can handle
+   * the given event.
    */
-  def register( f : PartialFunction[FireEvent, BeamCreator] ) : Unit =
-    registrations = f +: registrations
+  def hasShotCreator( event :  FireEvent ) = getShotCreator( event ).isDefined
 
-  def isValid( m : FireEvent ) : Boolean =
-    registrations.exists( _.isDefinedAt( m ) )
+  /**
+   * Get the shot modifier or shot creator that can handle the given event,
+   * or None if none has been registered. This can be used in shot modifiers
+   * and shot handlers to get a shot creator for a given event, though care
+   * should be taken to ensure that you don't get back the hook you're calling
+   * from (or another which might call yours).
+   */
+  def getShotCreator( event : FireEvent ) : Option[ShotCreator] =
+    modifiers.find( _.isDefinedAt( event ) )
+      .orElse( creators.find( _.isDefinedAt( event ) ) )
 
-  def getFunction( m : FireEvent ) : Option[BeamCreator] =
-    registrations.find( _.isDefinedAt(m) ).map( _.apply(m) )
+  /**
+   * Returns true if there is a shot handler that can handle the given event.
+   * Not to be confused with hasShotCreator.
+   */
+  def isValid( event : FireEvent ) = getShotHandler( event ).isDefined
+
+  def getShotHandler( event : FireEvent ) : Option[ShotHandler] =
+    handlers.find( _.isDefinedAt( event) )
+
+  def getFunction( event : FireEvent ) : Option[(World, EntityPlayer) => Unit] =
+    getShotHandler( event ).map( _.apply( event ) )
+
+  registerHandler({
+    case ( event ) if ( hasShotCreator( event ) ) => { ( world, player ) =>
+      val shotCreator = getShotCreator( event ).get
+
+      shotCreator.apply( event ).apply( world, player ).foreach { shot => shot match {
+        case bolt : BaseBoltEntity => BoltUtils.spawn( world, player, bolt )
+        case beam : BaseBeamEntity => BeamUtils.spawn( world, player, beam )
+        case _ => {
+          severe( s"Unknown shot type ($shot, $event) - register your own handler." )
+        }
+        }
+      }
+    }
+  })
+
 }

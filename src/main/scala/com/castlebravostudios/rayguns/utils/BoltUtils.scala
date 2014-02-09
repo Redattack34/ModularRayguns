@@ -41,6 +41,9 @@ object BoltUtils {
 
   private final val rand = new Random();
 
+  def spawn( world : World, player : EntityLivingBase, bolt : BaseBoltEntity ) : Unit =
+    spawnNormal( world, bolt, player )
+
   def spawnNormal( world : World, bolt : BaseBoltEntity, shooter : EntityLivingBase ) : Unit = {
     if ( world.isOnClient ) return
     initBolt(bolt, shooter)

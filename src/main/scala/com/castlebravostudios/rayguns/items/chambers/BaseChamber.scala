@@ -69,45 +69,48 @@ abstract class BaseChamber extends BaseRaygunModule with RaygunChamber {
   }
 
   def registerChargedShotHandler( ) : Unit = {
-    ShotRegistry.register({
-      case ChargeFireEvent(_, ch, _, None, Some(ChargeCapacitor), charge) if ch eq this => { (world, player) =>
-        val bolt = createAndInitBolt( world, player )
-        bolt.charge = charge
-        BoltUtils.spawnNormal( world, bolt, player )
-      }
-      case ChargeFireEvent(_, ch, _, Some(PreciseLens), Some(ChargeCapacitor), charge ) if ch eq this => { (world, player) =>
-        val bolt = createAndInitBolt( world, player )
-        bolt.charge = charge
-        BoltUtils.spawnNormal( world, bolt, player )
-      }
-      case ChargeFireEvent(_, ch, _, Some(PreciseBeamLens), Some(ChargeCapacitor), charge ) if ch eq this => { (world, player) =>
-        val beam = createAndInitBeam( world, player )
-        beam.charge = charge
-        BeamUtils.spawnSingleShot( beam, world, player )
+    def toDefault( ev : ChargeFireEvent ) : DefaultFireEvent =
+      new DefaultFireEvent( ev.body, ev.chamber, ev.battery, ev.lens, ev.accessory )
+    def canCharge( ev : ChargeFireEvent ) : Boolean =
+      ShotRegistry.hasShotCreator( toDefault( ev ) )
+
+    ShotRegistry.registerModifier({
+      case ev@ChargeFireEvent(_, ch, _, _, Some(ChargeCapacitor), charge) if (ch eq this) && canCharge( ev ) => { (world, player) =>
+        val newEvent = toDefault( ev )
+        val creator = ShotRegistry.getShotCreator( newEvent ).get
+        val seq = creator( newEvent )( world, player )
+
+        val adjustedCharge = if ( charge < 1 ) charge
+          else ( ( charge - 1 ) / seq.size ) + 1
+
+        seq.foreach( _.charge = adjustedCharge )
+        seq
       }
     })
   }
 
   def registerScatterShotHandler( ) : Unit = {
-    ShotRegistry.register({
+/*    ShotRegistry.register({
       case DefaultFireEvent(_, ch, _, Some(WideLens), _ ) if ch eq this => { (world, player) =>
         BoltUtils.spawnScatter(world, player, 9, 0.1f ){ () =>
           createAndInitBolt(world, player )
         }
       }
-    })
+    })*/
   }
 
   def registerSingleShotHandlers( ) : Unit = {
-    ShotRegistry.register({
+    ShotRegistry.registerCreator({
       case DefaultFireEvent(_, ch, _, None, _) if ch eq this => { (world, player) =>
-        BoltUtils.spawnNormal( world, createAndInitBolt( world, player ), player )
+        Seq( createAndInitBolt( world, player ) )
       }
       case DefaultFireEvent(_, ch, _, Some(PreciseLens), _ ) if ch eq this => { (world, player) =>
-        BoltUtils.spawnPrecise( world, createAndInitBolt(world, player), player )
+        val bolt = createAndInitBolt(world, player)
+        bolt.depletionRate =  0.025d
+        Seq( bolt )
       }
       case DefaultFireEvent(_, ch, _, Some(PreciseBeamLens), _ ) if ch eq this => { (world, player) =>
-        BeamUtils.spawnSingleShot( createAndInitBeam(world, player), world, player )
+        Seq( createAndInitBeam(world, player) )
       }
     })
   }
