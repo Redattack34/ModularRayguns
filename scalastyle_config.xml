@@ -72,7 +72,7 @@
    <parameter name="maxParameters"><![CDATA[8]]></parameter>
   </parameters>
  </check>
- <check class="org.scalastyle.scalariform.MagicNumberChecker" level="warning" enabled="true">
+ <check class="org.scalastyle.scalariform.MagicNumberChecker" level="warning" enabled="false">
   <parameters>
    <parameter name="ignore"><![CDATA[-1,0,1,2,3]]></parameter>
   </parameters>

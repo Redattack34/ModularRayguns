@@ -83,6 +83,7 @@ trait BaseEffect {
   /**
    * Get the opposite side of the given side.
    */
+  //scalastyle:off magic.number
   def invertSide( side : Int ) : Int = side match {
       case 0 => 1
       case 1 => 0
@@ -100,6 +101,7 @@ trait BaseEffect {
     case 4 => BlockPos(-1, 0, 0)
     case 5 => BlockPos( 1, 0, 0)
   }
+  //scalastyle:on magic.number
 
   /**
    * Adjust the coords to the block adjacent to the struck side.

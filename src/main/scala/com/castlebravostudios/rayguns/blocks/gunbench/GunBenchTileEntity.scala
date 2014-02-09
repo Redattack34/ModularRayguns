@@ -46,7 +46,9 @@ import com.castlebravostudios.rayguns.api.items.RaygunModule
 class GunBenchTileEntity extends BaseInventoryTileEntity {
   private[this] val inv = Array.fill[ItemStack](6)(null)
 
+  //scalastyle:off import.grouping
   import GunBenchTileEntity.{BODY_SLOT, LENS_SLOT, CHAMBER_SLOT, BATTERY_SLOT, ACC_SLOT, OUTPUT_SLOT}
+  //scalastyle:on import.grouping
 
   override def getSizeInventory : Int = inv.length
   override def getStackInSlot( slot : Int ) : ItemStack = inv(slot)

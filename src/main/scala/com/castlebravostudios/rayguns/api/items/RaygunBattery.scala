@@ -37,7 +37,9 @@ import com.castlebravostudios.rayguns.items.misc.PostfireEvent
 
 trait RaygunBattery extends RaygunModule {
 
+  //scalastyle:off import.grouping
   import RaygunBattery.powerBase
+  //scalastyle:on import.grouping
 
   val chargeDepleted = "ChargeDepleted"
 
