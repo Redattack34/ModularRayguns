@@ -81,6 +81,7 @@ object Items {
     registerModule( ExtendedBattery, Config.extendedBattery )
     registerModule( RefireCapacitor, Config.refireCapacitor )
     registerModule( SolarPanel, Config.solarPanel )
+    registerModule( ChargeCapacitor, Config.chargeCapacitor )
   }
 
   private def registerLenses() : Unit = {

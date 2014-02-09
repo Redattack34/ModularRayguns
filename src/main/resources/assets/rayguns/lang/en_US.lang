@@ -1,6 +1,7 @@
 item.rayguns.ExtendedBattery.name=Extended Battery
 item.rayguns.RefireCapacitor.name=Refire Capacitor
 item.rayguns.SolarPanel.name=Solar Panel
+item.rayguns.ChargeCapacitor.name=Charge Capacitor
 
 item.rayguns.AdvancedBattery.name=Advanced Battery
 item.rayguns.BasicBattery.name=Basic Battery
@@ -99,3 +100,4 @@ rayguns.MatterTransporterChamber.segment=Matter Transporter
 rayguns.ExtendedBattery.segment=Extended
 rayguns.RefireCapacitor.segment=Rapid
 rayguns.SolarPanel.segment=Solar
+rayguns.ChargePanel.segment=Charging

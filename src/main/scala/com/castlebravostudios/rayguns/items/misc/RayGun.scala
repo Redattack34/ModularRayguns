@@ -28,31 +28,25 @@
 package com.castlebravostudios.rayguns.items.misc
 
 import com.castlebravostudios.rayguns.api.BeamRegistry
+import com.castlebravostudios.rayguns.items.ChargableItem
 import com.castlebravostudios.rayguns.items.MoreInformation
 import com.castlebravostudios.rayguns.items.ScalaItem
-import com.castlebravostudios.rayguns.items.accessories.RefireCapacitor
-import com.castlebravostudios.rayguns.items.lenses.ChargeBeamLens
-import com.castlebravostudios.rayguns.items.lenses.ChargeLens
 import com.castlebravostudios.rayguns.mod.Config
 import com.castlebravostudios.rayguns.mod.ModularRayguns
 import com.castlebravostudios.rayguns.plugins.ic2.IC2ItemPowerConnector
 import com.castlebravostudios.rayguns.plugins.te.RFItemPowerConnector
+import com.castlebravostudios.rayguns.utils.DefaultFireEvent
+import com.castlebravostudios.rayguns.utils.Extensions.ItemStackExtension
 import com.castlebravostudios.rayguns.utils.Extensions.WorldExtension
 import com.castlebravostudios.rayguns.utils.FireEvent
 import com.castlebravostudios.rayguns.utils.GunComponents
 import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
-import com.castlebravostudios.rayguns.utils.Extensions.ItemStackExtension
+
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.util.Icon
 import net.minecraft.world.World
-import com.castlebravostudios.rayguns.items.ChargableItem
-import com.castlebravostudios.rayguns.utils.GunComponents
-import com.castlebravostudios.rayguns.utils.DefaultFireEvent
-import com.castlebravostudios.rayguns.utils.DefaultFireEvent
-import com.castlebravostudios.rayguns.utils.GunComponents
-import com.castlebravostudios.rayguns.utils.GunComponents
 
 case class GetFireInformationEvent(
     val player : EntityPlayer,

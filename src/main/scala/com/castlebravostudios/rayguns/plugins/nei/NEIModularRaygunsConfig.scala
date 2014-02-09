@@ -124,6 +124,7 @@ class NEIModularRaygunsConfig extends IConfigureNEI {
     addModule( range, ExtendedBattery )
     addModule( range, RefireCapacitor )
     addModule( range, SolarPanel )
+    addModule( range, ChargeCapacitor )
     range
   }
 

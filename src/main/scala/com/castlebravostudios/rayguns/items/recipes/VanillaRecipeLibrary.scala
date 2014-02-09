@@ -86,6 +86,13 @@ object VanillaRecipeLibrary extends RecipeLibrary {
       ( 'I' -> Item.ingotIron ),
       ( 'R' -> Block.blockRedstone ),
       ( 'G' -> Block.glass ) )
+    addModuleRecipe( ChargeCapacitor,
+      "GIG",
+      "IDI",
+      "GIG",
+      ( 'G' -> Item.ingotGold ),
+      ( 'I' -> Item.ingotIron ),
+      ( 'D' -> EnergizedDiamond ) )
   }
 
   private def registerBatteries() = {
