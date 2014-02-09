@@ -82,7 +82,8 @@ object ModularRayguns {
   }
 
   val raygunsTab  = new CreativeTabs("tabRayguns") {
-    override def getIconItemStack : ItemStack = new ItemStack( FireflyBody.item, 1, 0 )
+    override def getIconItemStack : ItemStack =
+      new ItemStack( FireflyBody.item.get, 1, 0 )
   }
 
   def texture( path : String ) : ResourceLocation =

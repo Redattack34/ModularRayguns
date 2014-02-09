@@ -60,7 +60,10 @@ class GunBenchTileEntity extends BaseInventoryTileEntity {
   }
 
   def onSlotChanged( slot : Int ) : Unit = {
-      def toStack( module : RaygunModule ) : ItemStack = new ItemStack( module.item, 1 )
+      def toStack( module : RaygunModule ) : ItemStack = module.item match {
+        case Some( item ) => new ItemStack( item, 1 )
+        case None => null
+      }
       def setSlot( slot : Int ) ( item : ItemStack ) : Unit = setInventorySlotContents( slot, item )
       if ( slot == OUTPUT_SLOT && inv(OUTPUT_SLOT) != null ) {
         val components = RaygunNbtUtils.getAllValidComponents( inv(OUTPUT_SLOT) )

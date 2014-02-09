@@ -67,16 +67,16 @@ trait RaygunModule {
   def nameSegmentKey : String
 
   /**
-   * Get the item associated with this module, or null if registerItem has not
+   * Get the item associated with this module, or None if registerItem has not
    * been called.
    */
-  def item : ItemModule
+  def item : Option[ItemModule]
 
   /**
    * Create the ItemModule associated with this module and register it with the
    * game under the given ID. If ID is less than or equal to zero, this method
    * should do nothing - this module has been disabled in the configuration file.
-   * After this method is called, item should not return null.
+   * After this method is called, item should not return None.
    */
   def registerItem( id : Int ) : Unit
 
