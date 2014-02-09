@@ -71,18 +71,20 @@ trait BaseEffect {
    */
   def createImpactParticles( shootable : Shootable, hitX : Double, hitY : Double, hitZ : Double ) : Unit = ()
 
-  def canCollideWithBlock( shootable : Shootable, b : Block, metadata : Int, pos : BlockPos ) =
+  def canCollideWithBlock( shootable : Shootable, b : Block, metadata : Int, pos : BlockPos ) : Boolean =
     if ( b.isInstanceOf[BlockFluid] || b.isInstanceOf[IFluidBlock] ) collidesWithLiquids(shootable)
     else true
 
-  def canCollideWithEntity( shootable : Shootable, entity : Entity ) = !(entity == shootable.shooter)
+  def canCollideWithEntity( shootable : Shootable, entity : Entity ) : Boolean =
+    !(entity == shootable.shooter)
 
   def collidesWithLiquids( shootable : Shootable ) : Boolean = false
 
   /**
    * Get the opposite side of the given side.
    */
-  def invertSide( side : Int ) = side match {
+  //scalastyle:off magic.number
+  def invertSide( side : Int ) : Int = side match {
       case 0 => 1
       case 1 => 0
       case 2 => 3
@@ -93,12 +95,13 @@ trait BaseEffect {
 
   def hitOffset( side : Int ) : BlockPos = side match {
     case 0 => BlockPos(0, -1, 0)
-    case 1 => BlockPos(0, +1, 0)
+    case 1 => BlockPos(0,  1, 0)
     case 2 => BlockPos(0, 0, -1)
-    case 3 => BlockPos(0, 0, +1)
+    case 3 => BlockPos(0, 0,  1)
     case 4 => BlockPos(-1, 0, 0)
-    case 5 => BlockPos(+1, 0, 0)
+    case 5 => BlockPos( 1, 0, 0)
   }
+  //scalastyle:on magic.number
 
   /**
    * Adjust the coords to the block adjacent to the struck side.

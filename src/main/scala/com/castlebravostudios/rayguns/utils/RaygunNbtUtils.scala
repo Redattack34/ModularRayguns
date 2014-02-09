@@ -49,8 +49,6 @@ import com.castlebravostudios.rayguns.utils.Extensions.ItemStackExtension
 
 object RaygunNbtUtils {
 
-  import ModuleRegistry._
-
   val BODY_STR = "body"
   val LENS_STR = "lens"
   val CHAMBER_STR = "chamber"
@@ -67,10 +65,10 @@ object RaygunNbtUtils {
    */
   def getComponents( item : ItemStack ) : Option[GunComponents] = {
     for { body <- getComponent(item, BODY_STR)(ModuleRegistry.getBody)
-          chamber <- getComponent(item, CHAMBER_STR)(getChamber)
+          chamber <- getComponent(item, CHAMBER_STR)(ModuleRegistry.getChamber)
           battery <- getComponent(item, BATTERY_STR)(ModuleRegistry.getBattery)
-          lens = getComponent(item, LENS_STR)(getLens)
-          accessory = getComponent(item, ACC_STR)(getAccessory) }
+          lens = getComponent(item, LENS_STR)(ModuleRegistry.getLens)
+          accessory = getComponent(item, ACC_STR)(ModuleRegistry.getAccessory) }
       yield GunComponents( body, chamber, battery, lens, accessory )
     }
 
@@ -114,7 +112,7 @@ object RaygunNbtUtils {
   }
 
   private def buildModuleTag( components : GunComponents ) : NBTTagCompound =
-    buildModuleTag( new OptionalGunComponents( components ) )
+    buildModuleTag( OptionalGunComponents( components ) )
   private def buildModuleTag( components : OptionalGunComponents ) : NBTTagCompound = {
     val tag = new NBTTagCompound( MODULES_TAG )
     components.body.foreach( setTag( tag, BODY_STR )(_) )
@@ -147,7 +145,7 @@ object RaygunNbtUtils {
    * Note that not all of the replacements are used in the default en_US language file.
    */
   def getRaygunName( components : GunComponents ) : String = {
-    def translate( opt : RaygunModule) = I18n.getString( opt.nameSegmentKey )
+    def translate( opt : RaygunModule) : String = I18n.getString( opt.nameSegmentKey )
 
     I18n.getString("rayguns.RaygunNamePattern")
       .replaceAll("@chamber@", translate( components.chamber ) )
@@ -170,11 +168,11 @@ object RaygunNbtUtils {
    * it is invalid.
    */
   def getAllValidComponents( item : ItemStack ) : OptionalGunComponents = {
-    val body = getComponent(item, BODY_STR)(getBody)
-    val chamber = getComponent(item, CHAMBER_STR)(getChamber)
-    val battery = getComponent(item, BATTERY_STR)(ModuleRegistry.getBattery)
-    val lens = getComponent(item, LENS_STR)(getLens)
-    val accessory = getComponent(item, ACC_STR)(getAccessory)
+    val body =      getComponent(item, BODY_STR)   (ModuleRegistry.getBody)
+    val chamber =   getComponent(item, CHAMBER_STR)(ModuleRegistry.getChamber)
+    val battery =   getComponent(item, BATTERY_STR)(ModuleRegistry.getBattery)
+    val lens =      getComponent(item, LENS_STR)   (ModuleRegistry.getLens)
+    val accessory = getComponent(item, ACC_STR)    (ModuleRegistry.getAccessory)
     OptionalGunComponents( body, chamber, battery, lens, accessory )
   }
 }

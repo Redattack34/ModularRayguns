@@ -39,7 +39,7 @@ object RefireCapacitor extends BaseRaygunModule with RaygunAccessory {
   val powerModifier = 1.0
   val nameSegmentKey = "rayguns.RefireCapacitor.segment"
 
-  def createItem( id : Int ) = new ItemModule( id, this )
+  def createItem( id : Int ) : ItemModule = new ItemModule( id, this )
     .setUnlocalizedName("rayguns.RefireCapacitor")
     .setTextureName("rayguns:refire_capacitor")
     .setCreativeTab( ModularRayguns.raygunsTab )

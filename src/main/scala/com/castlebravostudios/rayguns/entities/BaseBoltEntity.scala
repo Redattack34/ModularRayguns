@@ -28,25 +28,19 @@
 package com.castlebravostudios.rayguns.entities
 
 import scala.annotation.tailrec
-import scala.collection.JavaConversions.asScalaBuffer
-import com.castlebravostudios.rayguns.entities.effects.BaseEffect
+
 import com.castlebravostudios.rayguns.utils.BlockPos
 import com.castlebravostudios.rayguns.utils.RaytraceUtils
-import net.minecraft.block.Block
+import com.google.common.io.ByteArrayDataInput
+import com.google.common.io.ByteArrayDataOutput
+
 import net.minecraft.entity.Entity
 import net.minecraft.entity.IProjectile
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.util.EnumMovingObjectType
 import net.minecraft.util.MathHelper
 import net.minecraft.util.MovingObjectPosition
-import net.minecraft.util.Vec3
 import net.minecraft.world.World
-import net.minecraft.util.ResourceLocation
-import com.castlebravostudios.rayguns.utils.Extensions._
-import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData
-import com.google.common.io.ByteArrayDataInput
-import com.google.common.io.ByteArrayDataOutput
-import com.castlebravostudios.rayguns.api.EffectRegistry
 
 /**
  * Base class for beam entities. Most of this code is a poor translation
@@ -112,7 +106,7 @@ class BaseBoltEntity( world : World ) extends BaseShootable( world ) with IProje
     case _ => ()
   }
 
-  override def setSize( width : Float, height : Float ) = super.setSize( width, height )
+  override def setSize( width : Float, height : Float ) : Unit = super.setSize( width, height )
 
   def onImpact( pos : MovingObjectPosition ) : Boolean = {
     effect.createImpactParticles( this, posX, posY, posZ )
@@ -162,7 +156,7 @@ class BaseBoltEntity( world : World ) extends BaseShootable( world ) with IProje
   override def isInRangeToRenderDist(limit : Double) : Boolean = {
     var d1 = this.boundingBox.getAverageEdgeLength() * 4.0D
     d1 *= 64.0D
-    return limit < d1 * d1
+    limit < d1 * d1
   }
 
   override def setThrowableHeading(xIn : Double, yIn : Double, zIn : Double, velocityMult : Float, scatterMult : Float ) : Unit = {

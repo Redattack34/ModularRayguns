@@ -44,18 +44,25 @@ import com.castlebravostudios.rayguns.items.bodies.MantisBody
 import net.minecraft.item.ItemStack
 import com.castlebravostudios.rayguns.items.bodies.FireflyBody
 import com.castlebravostudios.rayguns.entities.effects.Effects
+import net.minecraft.util.ResourceLocation
+import java.util.logging.Logger
 
 @Mod(modid="mod_ModularRayguns", version="1.0-alpha2", modLanguage="scala", useMetadata=true)
 @NetworkMod(clientSideRequired=true, serverSideRequired=true)
 object ModularRayguns {
+
+  private var _logger : Logger = _
+  def logger : Logger = _logger
 
   @SidedProxy(clientSide="com.castlebravostudios.rayguns.mod.ClientProxy",
       serverSide="com.castlebravostudios.rayguns.mod.CommonProxy")
   var proxy : CommonProxy = null
 
   @EventHandler
-  def preInit( event : FMLPreInitializationEvent ) : Unit =
+  def preInit( event : FMLPreInitializationEvent ) : Unit = {
+    _logger = event.getModLog()
     Config.load( event.getSuggestedConfigurationFile() )
+  }
 
   @EventHandler
   def postInit( event : FMLPostInitializationEvent ) : Unit = Unit
@@ -77,4 +84,7 @@ object ModularRayguns {
   val raygunsTab  = new CreativeTabs("tabRayguns") {
     override def getIconItemStack : ItemStack = new ItemStack( FireflyBody.item, 1, 0 )
   }
+
+  def texture( path : String ) : ResourceLocation =
+    new ResourceLocation( "rayguns", path )
 }

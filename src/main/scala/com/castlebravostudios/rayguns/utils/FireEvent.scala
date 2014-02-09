@@ -40,19 +40,24 @@ trait FireEvent extends {
 
   def isValid : Boolean = BeamRegistry.isValid(this)
 }
+
 case class DefaultFireEvent(body : RaygunBody, chamber : RaygunChamber, battery : RaygunBattery,
     lens : Option[RaygunLens], accessory : Option[RaygunAccessory] ) extends FireEvent {
 
   def components : Seq[RaygunModule] = Seq( body, chamber, battery ) ++ lens ++ accessory
-
-  def this( comp : GunComponents ) = this( comp.body,
-    comp.chamber, comp.battery, comp.lens, comp.accessory );
 }
+object DefaultFireEvent {
+  def apply( comp : GunComponents ) : DefaultFireEvent =
+    new DefaultFireEvent( comp.body, comp.chamber, comp.battery, comp.lens, comp.accessory )
+}
+
 case class ChargeFireEvent( body : RaygunBody, chamber : RaygunChamber, battery : RaygunBattery,
     lens : Option[RaygunLens], accessory : Option[RaygunAccessory], charge : Double ) extends FireEvent {
 
-  def this( comp : GunComponents, charge : Double ) = this( comp.body,
-    comp.chamber, comp.battery, comp.lens, comp.accessory, charge );
-
   def components : Seq[RaygunModule] = Seq( body, chamber, battery ) ++ lens ++ accessory
+}
+object ChargeFireEvent {
+
+  def apply( comp : GunComponents, charge : Double ) : ChargeFireEvent =
+    new ChargeFireEvent( comp.body, comp.chamber, comp.battery, comp.lens, comp.accessory, charge );
 }

@@ -40,7 +40,7 @@ object MatterTransporterChamber extends BaseChamber {
   val shotEffect = MatterTransporterEffect
   val nameSegmentKey = "rayguns.MatterTransporterChamber.segment"
 
-  def createItem( id : Int ) = new ItemModule( id, this )
+  def createItem( id : Int ) : ItemModule = new ItemModule( id, this )
     .setUnlocalizedName("rayguns.MatterTransporterChamber")
     .setTextureName("rayguns:chamber_matter_transporter")
     .setCreativeTab( ModularRayguns.raygunsTab )

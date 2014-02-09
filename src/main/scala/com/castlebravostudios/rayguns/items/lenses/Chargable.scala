@@ -42,7 +42,7 @@ trait Chargable extends RaygunModule {
     if ( event.player.getItemInUse() eq event.gun ) {
       val charge = RayGun.getChargePower( event.gun, event.player.getItemInUseCount() )
       event.powerMult *= Math.pow( charge, 0.444444444d )
-      event.fireEvent = new ChargeFireEvent( event.components, charge )
+      event.fireEvent = ChargeFireEvent( event.components, charge )
     }
   }
 

@@ -27,26 +27,27 @@
 
 package com.castlebravostudios.rayguns.items.chambers
 
-import com.castlebravostudios.rayguns.api.items.RaygunChamber
-import com.castlebravostudios.rayguns.mod.ModularRayguns
-import net.minecraft.item.Item
 import com.castlebravostudios.rayguns.api.BeamRegistry
-import com.castlebravostudios.rayguns.utils.DefaultFireEvent
-import com.castlebravostudios.rayguns.entities.effects.BaseEffect
-import com.castlebravostudios.rayguns.utils.BoltUtils
-import com.castlebravostudios.rayguns.items.lenses.WideLens
-import com.castlebravostudios.rayguns.items.lenses.PreciseLens
-import com.castlebravostudios.rayguns.items.lenses.PreciseBeamLens
-import com.castlebravostudios.rayguns.utils.BeamUtils
-import com.castlebravostudios.rayguns.utils.ChargeFireEvent
-import com.castlebravostudios.rayguns.items.lenses.ChargeLens
-import com.castlebravostudios.rayguns.items.lenses.ChargeBeamLens
+import com.castlebravostudios.rayguns.api.items.BaseRaygunModule
+
+import com.castlebravostudios.rayguns.api.items.RaygunChamber
 import com.castlebravostudios.rayguns.entities.BaseBeamEntity
 import com.castlebravostudios.rayguns.entities.BaseBoltEntity
 import com.castlebravostudios.rayguns.entities.Shootable
+import com.castlebravostudios.rayguns.entities.effects.BaseEffect
+import com.castlebravostudios.rayguns.items.lenses.ChargeBeamLens
+import com.castlebravostudios.rayguns.items.lenses.ChargeLens
+import com.castlebravostudios.rayguns.items.lenses.PreciseBeamLens
+import com.castlebravostudios.rayguns.items.lenses.PreciseLens
+import com.castlebravostudios.rayguns.items.lenses.WideLens
+import com.castlebravostudios.rayguns.utils.BeamUtils
+import com.castlebravostudios.rayguns.utils.BoltUtils
+import com.castlebravostudios.rayguns.utils.ChargeFireEvent
+import com.castlebravostudios.rayguns.utils.DefaultFireEvent
+
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.util.ResourceLocation
 import net.minecraft.world.World
-import com.castlebravostudios.rayguns.api.items.BaseRaygunModule
 
 
 abstract class BaseChamber extends BaseRaygunModule with RaygunChamber {
@@ -108,5 +109,5 @@ abstract class BaseChamber extends BaseRaygunModule with RaygunChamber {
     })
   }
 
-  def chargeTexture = shotEffect.chargeTexture
+  def chargeTexture : ResourceLocation = shotEffect.chargeTexture
 }

@@ -105,7 +105,6 @@ object Config {
   var recipeLibrary : RecipeLibrary = _
 
   def load( file : File ): Unit = {
-    println( file.getAbsolutePath() );
     val config = new Configuration( file )
     config.load()
 
@@ -125,7 +124,10 @@ object Config {
     }
   }
 
-  private def loadMiscItemIds( config : Configuration ): Unit = {rayGun=config.getItem( "rayGun", 4999 ).getInt()
+  //scalastyle:off magic.number
+
+  private def loadMiscItemIds( config : Configuration ) : Unit = {
+    rayGun=config.getItem( "rayGun", 4999 ).getInt()
     brokenGun=config.getItem( "brokenGun", 5000 ).getInt()
     energizedDiamond=config.getItem( "energizedDiamond", 5001 ).getInt()
     glassGainMedium=config.getItem( "glassGainMedium", 5002 ).getInt()
@@ -133,29 +135,34 @@ object Config {
     diamondGainMedium=config.getItem( "diamondGainMedium", 5004 ).getInt()
   }
 
-  private def loadBatteryItemIds( config : Configuration ): Unit = {basicBattery=config.getItem( "basicBattery", 5101 ).getInt()
+  private def loadBatteryItemIds( config : Configuration ) : Unit = {
+    basicBattery=config.getItem( "basicBattery", 5101 ).getInt()
     advancedBattery=config.getItem( "advancedBattery", 5102 ).getInt()
     ultimateBattery=config.getItem( "ultimateBattery", 5103 ).getInt()
     infiniteBattery=config.getItem( "infiniteBattery", 5104 ).getInt()
   }
 
-  private def loadLensItemIds( config : Configuration ): Unit = {preciseLens=config.getItem( "preciseLens", 5201 ).getInt()
+  private def loadLensItemIds( config : Configuration ) : Unit = {
+    preciseLens=config.getItem( "preciseLens", 5201 ).getInt()
     wideLens=config.getItem( "wideLens", 5202 ).getInt()
     preciseBeamLens=config.getItem( "beamLens", 5203 ).getInt()
     chargeLens=config.getItem( "chargeLens", 5204 ).getInt()
     chargeBeamLens=config.getItem( "chargeBeamLens", 5205 ).getInt()
   }
 
-  private def loadAccessoryItemIds( config : Configuration ): Unit = {extendedBattery=config.getItem( "extendedBattery", 5301 ).getInt()
+  private def loadAccessoryItemIds( config : Configuration ) : Unit = {
+    extendedBattery=config.getItem( "extendedBattery", 5301 ).getInt()
     refireCapacitor=config.getItem( "refireCapacitor", 5302 ).getInt()
     solarPanel=config.getItem( "solarPanel", 5303 ).getInt()
   }
 
-  private def loadGunBodyItemIds( config : Configuration ): Unit = {mantisBody=config.getItem( "mantisBody", 5401 ).getInt
+  private def loadGunBodyItemIds( config : Configuration ) : Unit = {
+    mantisBody=config.getItem( "mantisBody", 5401 ).getInt
     fireflyBody=config.getItem( "fireflyBody", 5402 ).getInt
   }
 
-  private def loadEmitterItemIds( config : Configuration ): Unit = {emitterShrinkRay=config.getItem( "emitterShrinkRay", 5500 ).getInt
+  private def loadEmitterItemIds( config : Configuration ) : Unit = {
+    emitterShrinkRay=config.getItem( "emitterShrinkRay", 5500 ).getInt
     emitterLaser=config.getItem( "emitterLaser", 5501 ).getInt
     emitterHeatRay=config.getItem( "emitterHeatRay", 5502 ).getInt
     emitterLifeForce=config.getItem( "emitterLifeForce", 5503 ).getInt
@@ -173,7 +180,8 @@ object Config {
     emitterMatterTransporter=config.getItem( "emitterMatterTransporter", 5515 ).getInt
   }
 
-  private def loadChamberItemIds( config : Configuration ): Unit = {chamberLaser=config.getItem( "chamberLaser", 5601 ).getInt
+  private def loadChamberItemIds( config : Configuration ) : Unit = {
+    chamberLaser=config.getItem( "chamberLaser", 5601 ).getInt
     chamberHeatRay=config.getItem( "chamberHeatRay", 5602 ).getInt
     chamberLifeForce=config.getItem( "chamberLifeForce", 5603 ).getInt
     chamberFrostRay=config.getItem( "chamberFrostRay", 5604 ).getInt
@@ -190,18 +198,20 @@ object Config {
     chamberMatterTransporter=config.getItem( "chamberMatterTransporter", 5615 ).getInt
   }
 
-  private def loadMisc( config : Configuration ): Unit = {minLightningDetail=config.get( "misc", "minLightningDetailSize", 0.01d ).getDouble( 0.01d )
+  private def loadMisc( config : Configuration ) : Unit = {
+    minLightningDetail=config.get( "misc", "minLightningDetailSize", 0.01d ).getDouble( 0.01d )
     lightningFlash=config.get( "misc", "lightningFlashEnabled", true ).getBoolean( true )
     rfPowerMultiplier=config.get( "misc", "rfPowerMultiplier", 20.0d ).getDouble( 20.0d )
     ic2PowerMultiplier=config.get( "misc", "ic2PowerMultiplier", 4.0d ).getDouble( 4.0d )
   }
 
-  private def loadBlockIds( config : Configuration ): Unit = {gunBench=config.getBlock( "gunBench", 1337 ).getInt()
+  private def loadBlockIds( config : Configuration ) : Unit = {
+    gunBench=config.getBlock( "gunBench", 1337 ).getInt()
     lensGrinder=config.getBlock( "lensGrinder", 1338 ).getInt()
     invisibleRedstone=config.getBlock( "invisibleRedstone", 1339 ).getInt()
   }
 
-  def loadRecipes(config: Configuration) = {
+  def loadRecipes(config: Configuration) : Unit = {
     val str = config.get( "Recipes", "recipeLibrary", "vanilla", "Current allowed values are: vanilla" );
     recipeLibrary=VanillaRecipeLibrary
   }

@@ -32,6 +32,4 @@ import net.minecraft.item.ItemStack
 import net.minecraft.world.World
 import net.minecraft.entity.Entity
 
-trait RaygunAccessory extends RaygunModule {
-
-}
+trait RaygunAccessory extends RaygunModule

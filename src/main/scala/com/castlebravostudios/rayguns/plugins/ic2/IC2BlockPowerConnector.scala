@@ -39,16 +39,15 @@ import ic2.api.energy.tile.IEnergySink
 import com.castlebravostudios.rayguns.mod.Config
 import net.minecraft.nbt.NBTTagCompound
 import cpw.mods.fml.common.Loader
+import IC2BlockPowerConnector.ic2Loaded
 
 @Optional.Interface(iface="ic2.api.energy.tile.IEnergySink", modid="IC2", striprefs=true)
 trait IC2BlockPowerConnector extends TileEntity with IEnergySink {
   self : PoweredBlock =>
 
-  import IC2BlockPowerConnector._
-
   var euBuffer : Double = 0
   var postedOnLoad = false
-  def ic2PowerMultiplier = Config.ic2PowerMultiplier
+  def ic2PowerMultiplier : Double = Config.ic2PowerMultiplier
 
   override def updateEntity() : Unit = {
     if ( ic2Loaded && !postedOnLoad && worldObj.isOnServer ) {
@@ -83,9 +82,7 @@ trait IC2BlockPowerConnector extends TileEntity with IEnergySink {
       euBuffer -= chargeFromBuffer * ic2PowerMultiplier
       0
     }
-    else {
-      32
-    }
+    else 32
   }
 
   @Optional.Method( modid = "IC2" )

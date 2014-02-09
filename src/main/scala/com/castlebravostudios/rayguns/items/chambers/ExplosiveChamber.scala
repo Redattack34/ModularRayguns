@@ -37,7 +37,7 @@ object ExplosiveChamber extends BaseChamber {
   val shotEffect = ExplosiveEffect
   val nameSegmentKey = "rayguns.ExplosiveChamber.segment"
 
-  def createItem( id : Int ) = new ItemModule( id, this )
+  def createItem( id : Int ) : ItemModule = new ItemModule( id, this )
     .setUnlocalizedName("rayguns.ExplosiveChamber")
     .setTextureName("rayguns:chamber_explosive")
     .setCreativeTab( ModularRayguns.raygunsTab )

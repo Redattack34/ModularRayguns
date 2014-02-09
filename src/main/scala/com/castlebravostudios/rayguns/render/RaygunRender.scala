@@ -138,9 +138,9 @@ object RaygunRender extends IItemRenderer with ITickHandler {
 
   def tickEnd( tickType : EnumSet[TickType], tickData : Object* ) : Unit = ()
 
-  def ticks() = EnumSet.of( TickType.RENDER )
+  def ticks() : EnumSet[TickType] = EnumSet.of( TickType.RENDER )
 
-  def getLabel() = "RaygunRenderer"
+  def getLabel() : String = "RaygunRenderer"
 
   type Vertex = (Double, Double, Double, Double, Double)
   private def chargeVertices = Array[Vertex](

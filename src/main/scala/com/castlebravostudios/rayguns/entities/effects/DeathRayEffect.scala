@@ -28,10 +28,8 @@
 package com.castlebravostudios.rayguns.entities.effects
 
 import com.castlebravostudios.rayguns.entities.BoltRenderer
-
 import com.castlebravostudios.rayguns.entities.Shootable
 import com.castlebravostudios.rayguns.items.misc.RayGun
-
 import net.minecraft.block.Block
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
@@ -40,6 +38,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.EntityDamageSource
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.common.IPlantable
+import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 object DeathRayEffect extends BaseEffect {
 
@@ -81,14 +80,14 @@ object DeathRayEffect extends BaseEffect {
 
   private val blockMatch : PartialFunction[Block, Int] = {
     case i : IPlantable => 0
-    case b if b == Block.grass => Block.dirt.blockID
-    case b if b == Block.mycelium => Block.dirt.blockID
-    case b if b == Block.leaves => 0
-    case b if b == Block.vine => 0
+    case Block.grass => Block.dirt.blockID
+    case Block.mycelium => Block.dirt.blockID
+    case Block.leaves => 0
+    case Block.vine => 0
   }
 
-  val boltTexture = new ResourceLocation( "rayguns", "textures/bolts/death_ray_bolt.png" )
-  val beamTexture = new ResourceLocation( "rayguns", "textures/beams/death_ray_beam.png" )
-  val chargeTexture = new ResourceLocation( "rayguns", "textures/effects/charge/death_ray_charge.png" )
-  override def lineTexture = BoltRenderer.lineWhiteTexture
+  val boltTexture = ModularRayguns.texture( "textures/bolts/death_ray_bolt.png" )
+  val beamTexture = ModularRayguns.texture( "textures/beams/death_ray_beam.png" )
+  val chargeTexture = ModularRayguns.texture( "textures/effects/charge/death_ray_charge.png" )
+  override def lineTexture : ResourceLocation = BoltRenderer.lineWhiteTexture
 }

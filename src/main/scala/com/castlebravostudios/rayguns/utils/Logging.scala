@@ -25,28 +25,36 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.castlebravostudios.rayguns.api.items
+package com.castlebravostudios.rayguns.utils
 
-import com.castlebravostudios.rayguns.items.misc.GetFireInformationEvent
+import com.castlebravostudios.rayguns.mod.ModularRayguns
+import java.util.logging.Level
 
-abstract class BaseRaygunModule extends RaygunModule {
+trait Logging {
 
-  private[this] var _item : ItemModule = _
+  private val logger = ModularRayguns.logger
 
-  def item : ItemModule = this._item
+  protected def severe( message : => String ) =
+    log( Level.SEVERE, message )
 
-  def registerItem( id : Int ) : Unit = {
-    this._item = createItem( id )
+  protected def warning( message : => String ) =
+    log( Level.WARNING, message )
+
+  protected def info( message : => String ) =
+    log( Level.INFO, message )
+
+  protected def fine( message : => String ) =
+    log( Level.FINE, message )
+
+  protected def finer( message : => String ) =
+    log( Level.FINER, message )
+
+  protected def finest( message : => String ) =
+    log( Level.FINEST, message )
+
+  private def log( level : Level, message : => String ) = {
+    if ( logger.isLoggable( level ) ) {
+      logger.log( level, message )
+    }
   }
-
-  /**
-   * Create an ItemModule with the given ID and configure it as necessary.
-   */
-  protected def createItem( id : Int ) : ItemModule
-
-  override def handleGetFireInformationEvent( event : GetFireInformationEvent ) : Unit = {
-    event.powerMult *= this.powerModifier
-  }
-
-  override def toString : String = this.getClass().getSimpleName
 }

@@ -36,6 +36,7 @@ import net.minecraft.util.Vec3
 import net.minecraft.client.renderer.texture.IconRegister
 import net.minecraft.block.ITileEntityProvider
 import net.minecraft.tileentity.TileEntity
+import net.minecraft.util.MovingObjectPosition
 
 /**
  * Invisible block that emits a strong redstone signal to one side, depending
@@ -56,7 +57,7 @@ class InvisibleRedstone(id : Int) extends Block( id, Material.air ) with ITileEn
     world.notifyBlocksOfNeighborChange(x, y, z + 1, this.blockID);
   }
 
-  override def breakBlock(world : World, x : Int, y : Int, z : Int, blockId : Int, metadata : Int ) = {
+  override def breakBlock(world : World, x : Int, y : Int, z : Int, blockId : Int, metadata : Int ) : Unit = {
     world.notifyBlocksOfNeighborChange(x, y - 1, z, this.blockID);
     world.notifyBlocksOfNeighborChange(x, y + 1, z, this.blockID);
     world.notifyBlocksOfNeighborChange(x - 1, y, z, this.blockID);
@@ -65,9 +66,7 @@ class InvisibleRedstone(id : Int) extends Block( id, Material.air ) with ITileEn
     world.notifyBlocksOfNeighborChange(x, y, z + 1, this.blockID);
   }
 
-  override def isProvidingWeakPower( access : IBlockAccess, x : Int, y : Int, z : Int, side : Int ) : Int = {
-    return 15
-  }
+  override def isProvidingWeakPower( access : IBlockAccess, x : Int, y : Int, z : Int, side : Int ) : Int = 15
 
   override def isProvidingStrongPower( access : IBlockAccess, x : Int, y : Int, z : Int, side : Int ) : Int = {
     val metadata = access.getBlockMetadata(x, y, z);
@@ -88,7 +87,8 @@ class InvisibleRedstone(id : Int) extends Block( id, Material.air ) with ITileEn
 
   override def quantityDropped( rand : Random ) : Int = 0
 
-  override def collisionRayTrace(world : World, x : Int, y : Int, z : Int, start : Vec3, end : Vec3) = null
+  override def collisionRayTrace(world : World, x : Int, y : Int, z : Int,
+      start : Vec3, end : Vec3) : MovingObjectPosition = null
 
   override def registerIcons( reg : IconRegister ) : Unit = ()
 

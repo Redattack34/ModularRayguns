@@ -29,12 +29,12 @@ package com.castlebravostudios.rayguns.entities.effects
 
 import com.castlebravostudios.rayguns.entities.Shootable
 import com.castlebravostudios.rayguns.utils.BlockPos
-
 import net.minecraft.block.Block
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.EntityDamageSource
 import net.minecraft.util.ResourceLocation
+import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 
 object HeatRayEffect extends BaseEffect {
@@ -78,7 +78,7 @@ object HeatRayEffect extends BaseEffect {
     }
   }
 
-  val boltTexture = new ResourceLocation( "rayguns", "textures/bolts/heat_bolt.png" )
-  val beamTexture = new ResourceLocation( "rayguns", "textures/beams/heat_beam.png" )
-  val chargeTexture = new ResourceLocation( "rayguns", "textures/effects/charge/heat_charge.png" )
+  val boltTexture = ModularRayguns.texture( "textures/bolts/heat_bolt.png" )
+  val beamTexture = ModularRayguns.texture( "textures/beams/heat_beam.png" )
+  val chargeTexture = ModularRayguns.texture( "textures/effects/charge/heat_charge.png" )
 }

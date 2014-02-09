@@ -32,11 +32,12 @@ import net.minecraft.client.resources.I18n
 import net.minecraft.entity.player.InventoryPlayer
 import net.minecraft.util.ResourceLocation
 import org.lwjgl.opengl.GL11
+import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 class GunBenchGui( playerInv: InventoryPlayer, tileEntity: GunBenchTileEntity )
   extends GuiContainer( new GunBenchContainer( playerInv, tileEntity ) ) {
 
-  private val texture = new ResourceLocation( "rayguns", "textures/gui/container/gun_bench.png" )
+  private val texture = ModularRayguns.texture( "textures/gui/container/gun_bench.png" )
 
   //Color is in 8-bit RGB. Hence hex. This is a sort of very dark grey.
   private[this] val color = 0x404040

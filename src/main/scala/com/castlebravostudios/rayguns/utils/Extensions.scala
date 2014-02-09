@@ -31,14 +31,14 @@ import net.minecraft.world.World
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
 
-object Extensions {
+object Extensions extends Logging {
   implicit class WorldExtension(val world : World) extends AnyVal {
-    def isOnClient = world.isRemote
-    def isOnServer = !world.isRemote
+    def isOnClient : Boolean = world.isRemote
+    def isOnServer : Boolean = !world.isRemote
 
-    def debug(name : String, value : Any) = {
-      if ( isOnClient ) println( "Client " + name + ": " + value )
-      if ( isOnServer ) println( "Server " + name + ": " + value )
+    def debug(name : String, value : Any) : Unit = {
+      if ( isOnClient ) info( s"Client $name: $value" )
+      if ( isOnServer ) info( s"Server $name: $value" )
     }
   }
 

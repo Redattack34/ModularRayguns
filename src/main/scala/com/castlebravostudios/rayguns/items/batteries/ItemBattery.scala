@@ -47,7 +47,7 @@ class ItemBattery( id : Int, val battery : RaygunBattery ) extends ItemModule( i
 
   override def getDamage( item : ItemStack ) : Int = 1
   override def getDisplayDamage( item : ItemStack ) : Int = battery.getChargeDepleted(item)
-  override def isDamaged( item : ItemStack ) = getDisplayDamage( item ) > 0
+  override def isDamaged( item : ItemStack ) : Boolean = getDisplayDamage( item ) > 0
 
   override def getMaxDamage( item: ItemStack ) : Int = battery.maxCapacity
 
@@ -56,5 +56,5 @@ class ItemBattery( id : Int, val battery : RaygunBattery ) extends ItemModule( i
   def setChargeDepleted( item : ItemStack, depleted : Int ) : Unit = battery.setChargeDepleted( item, depleted )
   def addCharge( item : ItemStack, delta : Int ) : Unit = battery.addCharge( item, delta )
   def getMaxChargePerTick( item : ItemStack ) : Int = battery.maxChargePerTick
-  def getIC2Tier( item : ItemStack ) = battery.ic2Tier
+  def getIC2Tier( item : ItemStack ) : Int = battery.ic2Tier
 }

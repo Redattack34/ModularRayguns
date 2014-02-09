@@ -27,36 +27,32 @@
 
 package com.castlebravostudios.rayguns.blocks.gunbench
 
-import net.minecraft.inventory.IInventory
-import net.minecraft.item.ItemStack
-import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.tileentity.TileEntity
-import net.minecraft.nbt.NBTTagCompound
-import net.minecraft.nbt.NBTTagList
-import com.castlebravostudios.rayguns.api.items.RaygunBody
-import com.castlebravostudios.rayguns.api.items.RaygunLens
-import com.castlebravostudios.rayguns.api.items.RaygunChamber
-import com.castlebravostudios.rayguns.api.items.RaygunBattery
-import com.castlebravostudios.rayguns.api.items.RaygunAccessory
-import net.minecraft.item.Item
-import com.castlebravostudios.rayguns.items.misc.BrokenGun
-import scala.Array.canBuildFrom
-import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
-import com.castlebravostudios.rayguns.items.misc.RayGun
-import com.castlebravostudios.rayguns.blocks.BaseInventoryTileEntity
-import com.castlebravostudios.rayguns.utils.GunComponents
-import com.castlebravostudios.rayguns.api.items.RaygunModule
 import com.castlebravostudios.rayguns.api.items.ItemModule
+import com.castlebravostudios.rayguns.api.items.RaygunAccessory
+import com.castlebravostudios.rayguns.api.items.RaygunBattery
+import com.castlebravostudios.rayguns.api.items.RaygunBody
+import com.castlebravostudios.rayguns.api.items.RaygunChamber
+import com.castlebravostudios.rayguns.api.items.RaygunLens
+import com.castlebravostudios.rayguns.api.items.RaygunModule
+import com.castlebravostudios.rayguns.blocks.BaseInventoryTileEntity
+import com.castlebravostudios.rayguns.items.misc.BrokenGun
+import com.castlebravostudios.rayguns.items.misc.RayGun
+import com.castlebravostudios.rayguns.utils.GunComponents
+import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
+import net.minecraft.item.Item
+import net.minecraft.item.ItemStack
+import com.castlebravostudios.rayguns.api.items.RaygunModule
 
 class GunBenchTileEntity extends BaseInventoryTileEntity {
   private[this] val inv = Array.fill[ItemStack](6)(null)
 
-  import RaygunNbtUtils._
-  import GunBenchTileEntity._
+  //scalastyle:off import.grouping
+  import GunBenchTileEntity.{BODY_SLOT, LENS_SLOT, CHAMBER_SLOT, BATTERY_SLOT, ACC_SLOT, OUTPUT_SLOT}
+  //scalastyle:on import.grouping
 
   override def getSizeInventory : Int = inv.length
   override def getStackInSlot( slot : Int ) : ItemStack = inv(slot)
-  override def setInventorySlotContents( slot : Int, stack : ItemStack ) = {
+  override def setInventorySlotContents( slot : Int, stack : ItemStack ) : Unit = {
     inv(slot) = stack
     if ( stack != null && stack.stackSize > getInventoryStackLimit() ) {
       stack.stackSize = getInventoryStackLimit()
@@ -64,10 +60,10 @@ class GunBenchTileEntity extends BaseInventoryTileEntity {
   }
 
   def onSlotChanged( slot : Int ) : Unit = {
-      def toStack( module : RaygunModule ) = new ItemStack( module.item, 1 )
-      def setSlot( slot : Int ) ( item : ItemStack ) = setInventorySlotContents( slot, item )
+      def toStack( module : RaygunModule ) : ItemStack = new ItemStack( module.item, 1 )
+      def setSlot( slot : Int ) ( item : ItemStack ) : Unit = setInventorySlotContents( slot, item )
       if ( slot == OUTPUT_SLOT && inv(OUTPUT_SLOT) != null ) {
-        val components = getAllValidComponents( inv(OUTPUT_SLOT) )
+        val components = RaygunNbtUtils.getAllValidComponents( inv(OUTPUT_SLOT) )
         components.body.map(toStack).foreach(setSlot(BODY_SLOT))
         components.chamber.map(toStack).foreach(setSlot(CHAMBER_SLOT))
         components.battery.map(toStack).foreach(setSlot(BATTERY_SLOT))
@@ -78,7 +74,7 @@ class GunBenchTileEntity extends BaseInventoryTileEntity {
 
       val components = GunComponents( body, chamber, battery, lens, accessory )
 
-      val gunStack = buildGun( components ).orNull
+      val gunStack = RaygunNbtUtils.buildGun( components ).orNull
       copyCharge( inv(BATTERY_SLOT), gunStack )
       setInventorySlotContents( OUTPUT_SLOT, gunStack )
   }
@@ -134,16 +130,19 @@ class GunBenchTileEntity extends BaseInventoryTileEntity {
       case i : ItemModule => i.module
       case _ => null
     }
-    slot match {
-      case BODY_SLOT => module.isInstanceOf[RaygunBody]
-      case LENS_SLOT => module.isInstanceOf[RaygunLens]
-      case CHAMBER_SLOT => module.isInstanceOf[RaygunChamber]
-      case BATTERY_SLOT => module.isInstanceOf[RaygunBattery]
-      case ACC_SLOT => module.isInstanceOf[RaygunAccessory]
-      case OUTPUT_SLOT => ( item == RayGun || item == BrokenGun ) &&
-                          inv.forall( _ == null )
-    }
+
+    if ( slot == OUTPUT_SLOT ) ( item == RayGun || item == BrokenGun ) && inv.forall( _ == null )
+    else slotMatchesModule( slot, module )
   }
+
+  private def slotMatchesModule( slot : Int, module : RaygunModule ) : Boolean = slot match {
+    case BODY_SLOT => module.isInstanceOf[RaygunBody]
+    case LENS_SLOT => module.isInstanceOf[RaygunLens]
+    case CHAMBER_SLOT => module.isInstanceOf[RaygunChamber]
+    case BATTERY_SLOT => module.isInstanceOf[RaygunBattery]
+    case ACC_SLOT => module.isInstanceOf[RaygunAccessory]
+  }
+
 }
 object GunBenchTileEntity {
 

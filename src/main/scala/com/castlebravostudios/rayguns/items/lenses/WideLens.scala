@@ -37,7 +37,7 @@ object WideLens extends BaseRaygunModule with RaygunLens {
   val powerModifier = 3.0
   val nameSegmentKey = "rayguns.WideLens.segment"
 
-  def createItem( id : Int ) = new ItemModule( id, this )
+  def createItem( id : Int ) : ItemModule = new ItemModule( id, this )
     .setUnlocalizedName("rayguns.WideLens")
     .setTextureName("rayguns:lens_wide")
     .setCreativeTab( ModularRayguns.raygunsTab )
