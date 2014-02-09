@@ -30,7 +30,7 @@ package com.castlebravostudios.rayguns.utils
 import com.castlebravostudios.rayguns.api.items.RaygunLens
 import com.castlebravostudios.rayguns.api.items.RaygunBody
 import com.castlebravostudios.rayguns.api.items.RaygunChamber
-import com.castlebravostudios.rayguns.api.BeamRegistry
+import com.castlebravostudios.rayguns.api.ShotRegistry
 import com.castlebravostudios.rayguns.api.items.RaygunAccessory
 import com.castlebravostudios.rayguns.api.items.RaygunModule
 import com.castlebravostudios.rayguns.api.items.RaygunBattery
@@ -38,7 +38,7 @@ import com.castlebravostudios.rayguns.api.items.RaygunBattery
 trait FireEvent extends {
   def components : Seq[RaygunModule]
 
-  def isValid : Boolean = BeamRegistry.isValid(this)
+  def isValid : Boolean = ShotRegistry.isValid(this)
 }
 
 case class DefaultFireEvent(body : RaygunBody, chamber : RaygunChamber, battery : RaygunBattery,

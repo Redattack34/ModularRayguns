@@ -27,7 +27,7 @@
 
 package com.castlebravostudios.rayguns.items.misc
 
-import com.castlebravostudios.rayguns.api.BeamRegistry
+import com.castlebravostudios.rayguns.api.ShotRegistry
 import com.castlebravostudios.rayguns.items.ChargableItem
 import com.castlebravostudios.rayguns.items.MoreInformation
 import com.castlebravostudios.rayguns.items.ScalaItem
@@ -117,7 +117,7 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
     val prefireEvent = prefire( player, world, item, components.get )
     if ( !prefireEvent.canFire ) return
 
-    val creator = BeamRegistry.getFunction( prefireEvent.fireEvent )
+    val creator = ShotRegistry.getFunction( prefireEvent.fireEvent )
     creator match {
       case Some( f ) => fire( prefireEvent, f )
       case None => breakGun
@@ -140,7 +140,7 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
     val prefireEvent = prefire( player, world, item, components.get )
     if ( !prefireEvent.canFire ) return item
 
-    val creator = BeamRegistry.getFunction( prefireEvent.fireEvent )
+    val creator = ShotRegistry.getFunction( prefireEvent.fireEvent )
 
     creator match {
       case Some( f ) => { fire( prefireEvent, f ); item }
@@ -161,7 +161,7 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
     prefireEvent
   }
 
-  private def fire( prefire : PrefireEvent, f : BeamRegistry.BeamCreator ): Unit = {
+  private def fire( prefire : PrefireEvent, f : ShotRegistry.BeamCreator ): Unit = {
     f( prefire.world, prefire.player )
     setCooldownTime( prefire.gun, prefire.cooldownTicks )
     setMaxCooldownTime( prefire.gun, prefire.cooldownTicks )

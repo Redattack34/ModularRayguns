@@ -30,7 +30,7 @@ package com.castlebravostudios.rayguns.utils
 import net.minecraft.nbt.NBTTagCompound
 import com.castlebravostudios.rayguns.api.items.RaygunModule
 import net.minecraft.item.ItemStack
-import com.castlebravostudios.rayguns.api.BeamRegistry
+import com.castlebravostudios.rayguns.api.ShotRegistry
 import com.castlebravostudios.rayguns.api.ModuleRegistry
 import com.castlebravostudios.rayguns.blocks.gunbench.GunBenchTileEntity
 import com.castlebravostudios.rayguns.api.items.RaygunBody
@@ -100,7 +100,7 @@ object RaygunNbtUtils {
   }
 
   def buildGun( components : GunComponents ) : Option[ItemStack] =
-    if ( components.isValid && BeamRegistry.isValid( components.getFireEvent(1.0d) ) ) Some( buildValidGun( components ) )
+    if ( components.isValid && ShotRegistry.isValid( components.getFireEvent(1.0d) ) ) Some( buildValidGun( components ) )
     else None
 
   private def buildValidGun( components : GunComponents ) : ItemStack = {

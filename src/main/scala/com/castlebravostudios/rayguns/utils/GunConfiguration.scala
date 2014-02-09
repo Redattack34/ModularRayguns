@@ -28,7 +28,7 @@
 package com.castlebravostudios.rayguns.utils
 
 import com.castlebravostudios.rayguns.api.ModuleRegistry
-import com.castlebravostudios.rayguns.api.BeamRegistry
+import com.castlebravostudios.rayguns.api.ShotRegistry
 import com.castlebravostudios.rayguns.api.items.RaygunLens
 import com.castlebravostudios.rayguns.api.items.RaygunModule
 import com.castlebravostudios.rayguns.api.items.RaygunBody

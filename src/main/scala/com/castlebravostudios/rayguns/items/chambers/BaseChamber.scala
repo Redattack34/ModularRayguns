@@ -27,7 +27,7 @@
 
 package com.castlebravostudios.rayguns.items.chambers
 
-import com.castlebravostudios.rayguns.api.BeamRegistry
+import com.castlebravostudios.rayguns.api.ShotRegistry
 import com.castlebravostudios.rayguns.api.items.BaseRaygunModule
 import com.castlebravostudios.rayguns.api.items.RaygunChamber
 import com.castlebravostudios.rayguns.entities.BaseBeamEntity
@@ -69,7 +69,7 @@ abstract class BaseChamber extends BaseRaygunModule with RaygunChamber {
   }
 
   def registerChargedShotHandler( ) : Unit = {
-    BeamRegistry.register({
+    ShotRegistry.register({
       case ChargeFireEvent(_, ch, _, None, Some(ChargeCapacitor), charge) if ch eq this => { (world, player) =>
         val bolt = createAndInitBolt( world, player )
         bolt.charge = charge
@@ -89,7 +89,7 @@ abstract class BaseChamber extends BaseRaygunModule with RaygunChamber {
   }
 
   def registerScatterShotHandler( ) : Unit = {
-    BeamRegistry.register({
+    ShotRegistry.register({
       case DefaultFireEvent(_, ch, _, Some(WideLens), _ ) if ch eq this => { (world, player) =>
         BoltUtils.spawnScatter(world, player, 9, 0.1f ){ () =>
           createAndInitBolt(world, player )
@@ -99,7 +99,7 @@ abstract class BaseChamber extends BaseRaygunModule with RaygunChamber {
   }
 
   def registerSingleShotHandlers( ) : Unit = {
-    BeamRegistry.register({
+    ShotRegistry.register({
       case DefaultFireEvent(_, ch, _, None, _) if ch eq this => { (world, player) =>
         BoltUtils.spawnNormal( world, createAndInitBolt( world, player ), player )
       }

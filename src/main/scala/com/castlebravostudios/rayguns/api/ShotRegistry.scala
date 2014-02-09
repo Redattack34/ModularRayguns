@@ -38,7 +38,7 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.entity.Entity
 import com.castlebravostudios.rayguns.utils.FireEvent
 
-object BeamRegistry {
+object ShotRegistry {
 
   type BeamCreator = (World, EntityPlayer) => Unit
 
