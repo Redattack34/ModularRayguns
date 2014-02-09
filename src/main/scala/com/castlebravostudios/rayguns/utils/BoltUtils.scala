@@ -27,15 +27,15 @@
 
 package com.castlebravostudios.rayguns.utils
 
-import net.minecraft.entity.EntityLivingBase
-import net.minecraft.world.World
-import net.minecraft.entity.Entity
-import net.minecraft.util.MathHelper
 import java.util.Random
-import net.minecraft.entity.player.EntityPlayer
+
 import com.castlebravostudios.rayguns.entities.BaseBoltEntity
-import com.castlebravostudios.rayguns.utils.Extensions._
-import net.minecraft.util.Vec3
+import com.castlebravostudios.rayguns.utils.Extensions.WorldExtension
+
+import net.minecraft.entity.EntityLivingBase
+import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.util.MathHelper
+import net.minecraft.world.World
 
 object BoltUtils {
 

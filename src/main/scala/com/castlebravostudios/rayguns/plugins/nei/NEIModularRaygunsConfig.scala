@@ -27,6 +27,7 @@
 
 package com.castlebravostudios.rayguns.plugins.nei
 
+//scalastyle:off
 import com.castlebravostudios.rayguns.api.items.RaygunModule
 import com.castlebravostudios.rayguns.items.Blocks
 import com.castlebravostudios.rayguns.items.accessories._
@@ -43,9 +44,10 @@ import codechicken.nei.api.IConfigureNEI
 import cpw.mods.fml.common.Mod
 import com.castlebravostudios.rayguns.blocks.lensgrinder.LensGrinderGui
 import codechicken.nei.recipe.DefaultOverlayHandler
+import com.castlebravostudios.rayguns.plugins.nei.NEIModularRaygunsConfig.recipeKey
+//scalastyle:on
 
 class NEIModularRaygunsConfig extends IConfigureNEI {
-  import NEIModularRaygunsConfig.recipeKey
 
   def loadConfig() : Unit = {
     API.hideItem( Blocks.invisibleRedstone.blockID )

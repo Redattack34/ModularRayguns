@@ -27,11 +27,14 @@
 
 package com.castlebravostudios.rayguns.entities
 
+import com.castlebravostudios.rayguns.entities.effects.LightningBeamEntity
+import com.castlebravostudios.rayguns.entities.effects.LightningBoltEntity
+import com.castlebravostudios.rayguns.entities.effects.MatterTransporterBeamEntity
+import com.castlebravostudios.rayguns.entities.effects.MatterTransporterBoltEntity
+
 import com.castlebravostudios.rayguns.mod.ModularRayguns
-import cpw.mods.fml.client.registry.RenderingRegistry
+
 import cpw.mods.fml.common.registry.EntityRegistry
-import net.minecraft.entity.Entity
-import com.castlebravostudios.rayguns.entities.effects._
 
 object Entities {
 

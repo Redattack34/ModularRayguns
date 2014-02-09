@@ -27,7 +27,7 @@
 
 package com.castlebravostudios.rayguns.utils
 
-import scala.collection.JavaConverters._
+import scala.collection.JavaConverters.collectionAsScalaIterableConverter
 
 import com.castlebravostudios.rayguns.utils.Extensions.WorldExtension
 
@@ -127,7 +127,7 @@ object RaytraceUtils {
     aabb = aabb.expand(diffLength, diffLength, diffLength)
     world.getEntitiesWithinAABBExcludingEntity(owner, aabb)
       .asInstanceOf[java.util.List[Entity]]
-      .asScala
+      .asScala.toSeq
   }
 
   def collidableEntities( world : World, owner : Entity, start : Vec3, end : Vec3 )( f : Entity => Boolean ) : Seq[Entity] =

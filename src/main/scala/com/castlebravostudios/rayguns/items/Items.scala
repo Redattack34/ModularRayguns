@@ -27,6 +27,7 @@
 
 package com.castlebravostudios.rayguns.items
 
+//scalastyle:off
 import com.castlebravostudios.rayguns.items.accessories._
 import com.castlebravostudios.rayguns.items.batteries._
 import com.castlebravostudios.rayguns.items.bodies._
@@ -34,14 +35,14 @@ import com.castlebravostudios.rayguns.items.chambers._
 import com.castlebravostudios.rayguns.items.emitters._
 import com.castlebravostudios.rayguns.items.lenses._
 import com.castlebravostudios.rayguns.items.misc._
+//scalastyle:on
 import net.minecraft.item.Item
 import com.castlebravostudios.rayguns.items.chambers.LaserChamber
 import com.castlebravostudios.rayguns.api.ModuleRegistrationHelper
 import com.castlebravostudios.rayguns.mod.Config
+import ModuleRegistrationHelper.registerModule
 
 object Items {
-
-  import ModuleRegistrationHelper._
 
   def registerItems : Unit = {
     registerItem( RayGun )

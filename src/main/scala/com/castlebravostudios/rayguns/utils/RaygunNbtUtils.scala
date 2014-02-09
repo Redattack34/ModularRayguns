@@ -49,8 +49,6 @@ import com.castlebravostudios.rayguns.utils.Extensions.ItemStackExtension
 
 object RaygunNbtUtils {
 
-  import ModuleRegistry._
-
   val BODY_STR = "body"
   val LENS_STR = "lens"
   val CHAMBER_STR = "chamber"
@@ -67,10 +65,10 @@ object RaygunNbtUtils {
    */
   def getComponents( item : ItemStack ) : Option[GunComponents] = {
     for { body <- getComponent(item, BODY_STR)(ModuleRegistry.getBody)
-          chamber <- getComponent(item, CHAMBER_STR)(getChamber)
+          chamber <- getComponent(item, CHAMBER_STR)(ModuleRegistry.getChamber)
           battery <- getComponent(item, BATTERY_STR)(ModuleRegistry.getBattery)
-          lens = getComponent(item, LENS_STR)(getLens)
-          accessory = getComponent(item, ACC_STR)(getAccessory) }
+          lens = getComponent(item, LENS_STR)(ModuleRegistry.getLens)
+          accessory = getComponent(item, ACC_STR)(ModuleRegistry.getAccessory) }
       yield GunComponents( body, chamber, battery, lens, accessory )
     }
 
@@ -170,11 +168,11 @@ object RaygunNbtUtils {
    * it is invalid.
    */
   def getAllValidComponents( item : ItemStack ) : OptionalGunComponents = {
-    val body = getComponent(item, BODY_STR)(getBody)
-    val chamber = getComponent(item, CHAMBER_STR)(getChamber)
-    val battery = getComponent(item, BATTERY_STR)(ModuleRegistry.getBattery)
-    val lens = getComponent(item, LENS_STR)(getLens)
-    val accessory = getComponent(item, ACC_STR)(getAccessory)
+    val body =      getComponent(item, BODY_STR)   (ModuleRegistry.getBody)
+    val chamber =   getComponent(item, CHAMBER_STR)(ModuleRegistry.getChamber)
+    val battery =   getComponent(item, BATTERY_STR)(ModuleRegistry.getBattery)
+    val lens =      getComponent(item, LENS_STR)   (ModuleRegistry.getLens)
+    val accessory = getComponent(item, ACC_STR)    (ModuleRegistry.getAccessory)
     OptionalGunComponents( body, chamber, battery, lens, accessory )
   }
 }

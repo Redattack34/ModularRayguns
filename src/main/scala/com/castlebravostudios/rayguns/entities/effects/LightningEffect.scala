@@ -27,22 +27,21 @@
 
 package com.castlebravostudios.rayguns.entities.effects
 
-import com.castlebravostudios.rayguns.entities.Shootable
-import com.castlebravostudios.rayguns.entities.BaseBoltEntity
-import net.minecraft.entity.Entity
-import net.minecraft.util.EntityDamageSource
-import net.minecraft.world.World
 import com.castlebravostudios.rayguns.entities.BaseBeamEntity
-import com.castlebravostudios.rayguns.utils.Vector3
-import com.castlebravostudios.rayguns.utils.MidpointDisplacement
-import scala.collection.SortedSet
+import com.castlebravostudios.rayguns.entities.BaseBoltEntity
+import com.castlebravostudios.rayguns.entities.Shootable
 import com.castlebravostudios.rayguns.mod.Config
-import com.castlebravostudios.rayguns.utils.Extensions._
-import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.block.Block
-import net.minecraft.entity.monster.EntityCreeper
 import com.castlebravostudios.rayguns.utils.BlockPos
+import com.castlebravostudios.rayguns.utils.Extensions.WorldExtension
+import com.castlebravostudios.rayguns.utils.MidpointDisplacement
+import com.castlebravostudios.rayguns.utils.Vector3
+
+import net.minecraft.entity.Entity
+import net.minecraft.entity.monster.EntityCreeper
+import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.util.EntityDamageSource
 import net.minecraft.util.ResourceLocation
+import net.minecraft.world.World
 
 object LightningEffect extends BaseEffect {
 

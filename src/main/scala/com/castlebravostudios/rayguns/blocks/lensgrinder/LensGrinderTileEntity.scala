@@ -43,11 +43,11 @@ import com.castlebravostudios.rayguns.plugins.ic2.IC2BlockPowerConnector
 import net.minecraft.network.packet.Packet132TileEntityData
 import net.minecraft.network.INetworkManager
 import net.minecraft.network.packet.Packet
+import LensGrinderTileEntity.OUTPUT_SLOT
 
 class LensGrinderTileEntity extends BaseInventoryTileEntity with PoweredBlock
   with RFBlockPowerConnector with IC2BlockPowerConnector {
 
-  import LensGrinderTileEntity._
 
   private[this] val input = new InventoryCrafting( new DummyContainer(), 3, 3 )
   private[this] var output : ItemStack = null

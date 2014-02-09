@@ -37,7 +37,7 @@ import com.castlebravostudios.rayguns.items.misc.PostfireEvent
 
 trait RaygunBattery extends RaygunModule {
 
-  import RaygunBattery._
+  import RaygunBattery.powerBase
 
   val chargeDepleted = "ChargeDepleted"
 

@@ -95,8 +95,6 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
   private val ticksPerSecond : Int = 20
   private val maxChargeTicks : Int = ( maxChargeTime * ticksPerSecond ).toInt
 
-  import RaygunNbtUtils._
-
   private val cooldownTime = "CooldownTime"
   private val maxCooldownTime = "MaxCooldownTime"
 
@@ -106,16 +104,16 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
   setTextureName("rayguns:dummy")
 
   override def getAdditionalInfo(item : ItemStack, player : EntityPlayer) : Iterable[String] =
-    getBattery( item ).map( _.getChargeString( item ) ) ++ RaygunNbtUtils.getComponentInfo( item )
+    RaygunNbtUtils.getBattery( item ).map( _.getChargeString( item ) ) ++ RaygunNbtUtils.getComponentInfo( item )
 
   override def onPlayerStoppedUsing(item : ItemStack, world : World, player : EntityPlayer, itemUseCount : Int ): Unit = {
     def breakGun : Unit = {
       val slot = player.inventory.currentItem
-      val brokenGun = buildBrokenGun(item)
+      val brokenGun = RaygunNbtUtils.buildBrokenGun(item)
       player.inventory.setInventorySlotContents( slot, brokenGun )
     }
 
-    val components = getComponents( item )
+    val components = RaygunNbtUtils.getComponents( item )
 
     if ( components.isEmpty ) {
       breakGun
@@ -139,10 +137,10 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
   }
 
   override def onItemRightClick(item : ItemStack, world : World, player : EntityPlayer ) : ItemStack = {
-    val components = getComponents( item )
+    val components = RaygunNbtUtils.getComponents( item )
 
     if ( components.isEmpty ) {
-      return buildBrokenGun( item )
+      return RaygunNbtUtils.buildBrokenGun( item )
     }
 
     val prefireEvent = prefire( player, world, item, components.get )
@@ -152,7 +150,7 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
 
     creator match {
       case Some( f ) => { fire( prefireEvent, f ); item }
-      case None => buildBrokenGun( item )
+      case None => RaygunNbtUtils.buildBrokenGun( item )
     }
   }
 
@@ -189,7 +187,7 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
       setCooldownTime( item, newTime );
     }
 
-    val components = getComponents( item )
+    val components = RaygunNbtUtils.getComponents( item )
     if ( components.isEmpty ) return
 
     entity match {
@@ -225,7 +223,7 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
 
   override def getIcon( item : ItemStack, pass : Int ) : Icon = {
     val bodyIcon = for {
-      components <- getComponents( item )
+      components <- RaygunNbtUtils.getComponents( item )
       bodyItem <- Option( components.body.item )
       icon = bodyItem.getIconFromDamage(0)
     } yield icon
@@ -235,15 +233,15 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
   override def getMaxItemUseDuration( item : ItemStack ) : Int = Integer.MAX_VALUE
 
   def getChargeCapacity( item : ItemStack ) : Int =
-    getBattery( item ).map( _.maxCapacity ).getOrElse(1)
+    RaygunNbtUtils.getBattery( item ).map( _.maxCapacity ).getOrElse(1)
   def getChargeDepleted( item : ItemStack ) : Int =
-    getBattery( item ).map( _.getChargeDepleted( item ) ).getOrElse( 0 )
+    RaygunNbtUtils.getBattery( item ).map( _.getChargeDepleted( item ) ).getOrElse( 0 )
   def setChargeDepleted( item : ItemStack, depleted : Int ) : Unit =
-    getBattery( item ).foreach( _.setChargeDepleted( item, depleted ) )
+    RaygunNbtUtils.getBattery( item ).foreach( _.setChargeDepleted( item, depleted ) )
   def addCharge( item : ItemStack, delta : Int ) : Unit =
-    getBattery( item ).foreach( _.addCharge( item, delta ) )
+    RaygunNbtUtils.getBattery( item ).foreach( _.addCharge( item, delta ) )
   def getMaxChargePerTick( item : ItemStack ) : Int =
-    getBattery( item ).map( _.maxChargePerTick ).getOrElse( 0 )
+    RaygunNbtUtils.getBattery( item ).map( _.maxChargePerTick ).getOrElse( 0 )
   def getIC2Tier( item : ItemStack ) : Int =
-    getBattery( item ).map( _.ic2Tier ).getOrElse( Integer.MAX_VALUE )
+    RaygunNbtUtils.getBattery( item ).map( _.ic2Tier ).getOrElse( Integer.MAX_VALUE )
 }

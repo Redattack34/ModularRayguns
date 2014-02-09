@@ -30,6 +30,7 @@ package com.castlebravostudios.rayguns.entities
 import org.lwjgl.opengl.GL11
 
 import com.castlebravostudios.rayguns.entities.effects.BaseEffect
+import com.castlebravostudios.rayguns.entities.BoltRenderer.Vertex
 
 import net.minecraft.client.renderer.OpenGlHelper
 import net.minecraft.client.renderer.Tessellator
@@ -38,7 +39,6 @@ import net.minecraft.entity.Entity
 import net.minecraft.util.ResourceLocation
 
 class BoltRenderer extends Render {
-  import BoltRenderer._
 
   def doRender( e : Entity, x : Double, y : Double, z : Double, yaw : Float, partialTickTime : Float) : Unit = {
     doRender( e.asInstanceOf[BaseBoltEntity with BaseEffect], x, y, z, yaw, partialTickTime )
@@ -60,10 +60,10 @@ class BoltRenderer extends Render {
 
     val tes = Tessellator.instance
 
-    drawVertices( tes, cubeVertices )
+    drawVertices( tes, BoltRenderer.cubeVertices )
     GL11.glScalef(1.1f, 1.1f, 1.01f)
     bindTexture( e.effect.lineTexture )
-    drawVertices( tes, reversedVertices )
+    drawVertices( tes, BoltRenderer.reversedVertices )
 
     OpenGlHelper.setActiveTexture(OpenGlHelper.lightmapTexUnit)
     GL11.glEnable(GL11.GL_TEXTURE_2D)

@@ -27,11 +27,16 @@
 
 package com.castlebravostudios.rayguns.utils
 
-import com.castlebravostudios.rayguns.api.items._
 import com.castlebravostudios.rayguns.api.ModuleRegistry
 import com.castlebravostudios.rayguns.api.BeamRegistry
 import com.castlebravostudios.rayguns.items.lenses.ChargeLens
 import com.castlebravostudios.rayguns.items.lenses.ChargeBeamLens
+import com.castlebravostudios.rayguns.api.items.RaygunLens
+import com.castlebravostudios.rayguns.api.items.RaygunModule
+import com.castlebravostudios.rayguns.api.items.RaygunBody
+import com.castlebravostudios.rayguns.api.items.RaygunChamber
+import com.castlebravostudios.rayguns.api.items.RaygunAccessory
+import com.castlebravostudios.rayguns.api.items.RaygunBattery
 
 case class GunComponents(body : RaygunBody, chamber : RaygunChamber, battery : RaygunBattery,
     lens : Option[RaygunLens], accessory : Option[RaygunAccessory] ) {

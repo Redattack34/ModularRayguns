@@ -27,6 +27,7 @@
 
 package com.castlebravostudios.rayguns.items.recipes
 
+//scalastyle:off
 import com.castlebravostudios.rayguns.api.items._
 import com.castlebravostudios.rayguns.items.accessories._
 import com.castlebravostudios.rayguns.items.batteries._
@@ -47,6 +48,7 @@ import com.castlebravostudios.rayguns.blocks.lensgrinder.LensGrinder
 import com.castlebravostudios.rayguns.blocks.gunbench.GunBench
 import com.castlebravostudios.rayguns.blocks.lensgrinder.LensGrinder
 import com.castlebravostudios.rayguns.items.Blocks
+//scalastyle:on
 
 object VanillaRecipeLibrary extends RecipeLibrary {
 
