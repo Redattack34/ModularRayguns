@@ -31,12 +31,12 @@ import com.castlebravostudios.rayguns.items.misc.GetFireInformationEvent
 
 abstract class BaseRaygunModule extends RaygunModule {
 
-  private[this] var _item : ItemModule = _
+  private[this] var _item : Option[ItemModule] = None
 
-  def item : ItemModule = this._item
+  override def item : Option[ItemModule] = this._item
 
   def registerItem( id : Int ) : Unit = {
-    this._item = createItem( id )
+    this._item = Some( createItem( id ) )
   }
 
   /**

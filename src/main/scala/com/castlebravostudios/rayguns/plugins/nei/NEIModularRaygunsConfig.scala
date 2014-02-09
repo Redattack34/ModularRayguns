@@ -156,11 +156,8 @@ class NEIModularRaygunsConfig extends IConfigureNEI {
     range
   }
 
-  private def addModule( range: MultiItemRange, module : RaygunModule ) = {
-    if ( module.item != null ) {
-      range.add(module.item)
-    }
-  }
+  private def addModule( range: MultiItemRange, module : RaygunModule ) =
+    module.item.foreach( range.add )
 }
 object NEIModularRaygunsConfig {
   val recipeKey = "LensGrinder"

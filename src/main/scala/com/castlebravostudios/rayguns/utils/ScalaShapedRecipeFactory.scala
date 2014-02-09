@@ -37,7 +37,7 @@ import com.castlebravostudios.rayguns.api.items.RaygunModule
  * A factory for ShapedRecipes which handles Scala varargs better than the default.
  * Also can understand recipes where tuples are used to map between characters and
  * items, and will automatically convert RaygunModules in the recipes to their
- * associated item, throwing an IllegalArgumentException if that item is null.
+ * associated item, throwing an IllegalArgumentException if that item is None.
  */
 object ScalaShapedRecipeFactory {
 
@@ -67,15 +67,15 @@ object ScalaShapedRecipeFactory {
     case ( c : Char ) :: ( i : Block ) :: tail => parseMappings( tail ) + ( c -> new ItemStack( i ) )
     case ( c : Char ) :: ( i : ItemStack ) :: tail => parseMappings( tail ) + ( c -> i )
     case ( c : Char ) :: ( i : RaygunModule ) :: tail => {
-      require( i.item != null )
-      parseMappings( tail ) + ( c -> new ItemStack( i.item ) )
+      require( i.item.isDefined )
+      parseMappings( tail ) + ( c -> new ItemStack( i.item.get ) )
     }
     case ( c : Char, i : Item ) :: tail => parseMappings( tail ) + ( c -> new ItemStack( i ) )
     case ( c : Char, i : Block ) :: tail => parseMappings( tail ) + ( c -> new ItemStack( i ) )
     case ( c : Char, i : ItemStack ) :: tail => parseMappings( tail ) + ( c -> i )
     case ( c : Char, i : RaygunModule ) :: tail => {
-      require( i.item != null )
-      parseMappings( tail ) + ( c -> new ItemStack( i.item ) )
+      require( i.item.isDefined )
+      parseMappings( tail ) + ( c -> new ItemStack( i.item.get ) )
     }
     case _ => Map()
   }

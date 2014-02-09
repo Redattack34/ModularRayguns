@@ -224,7 +224,7 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
   override def getIcon( item : ItemStack, pass : Int ) : Icon = {
     val bodyIcon = for {
       components <- RaygunNbtUtils.getComponents( item )
-      bodyItem <- Option( components.body.item )
+      bodyItem <- components.body.item
       icon = bodyItem.getIconFromDamage(0)
     } yield icon
     bodyIcon.getOrElse(itemIcon)

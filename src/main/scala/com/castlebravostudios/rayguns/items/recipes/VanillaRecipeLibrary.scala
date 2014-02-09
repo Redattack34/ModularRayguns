@@ -198,34 +198,45 @@ object VanillaRecipeLibrary extends RecipeLibrary {
   private def registerLenses() = {
     def addChargeLensRecipe( chargeLens : RaygunLens, baseLens : RaygunLens ) : Unit =
     {
-      if ( chargeLens.item == null || baseLens.item == null || BasicBattery.item == null ) {
-        return;
+      for {
+        chargeLensItem <- chargeLens.item
+        baseLensItem <- baseLens.item
+        batteryItem <- BasicBattery.item
+      } {
+        GameRegistry.addShapelessRecipe( new ItemStack( chargeLensItem, 1 ),
+          baseLensItem, batteryItem )
       }
-
-      GameRegistry.addShapelessRecipe( new ItemStack( chargeLens.item, 1 ),
-          baseLens.item, BasicBattery.item )
     }
     addChargeLensRecipe(ChargeBeamLens, PreciseBeamLens)
     addChargeLensRecipe(ChargeLens, PreciseLens)
 
-    if ( PreciseBeamLens.item != null ) {
-      LensGrinderRecipeRegistry.register( 600, new ItemStack(PreciseBeamLens.item),
+    for {
+      item <- PreciseBeamLens.item
+    }{
+      LensGrinderRecipeRegistry.register( 600, new ItemStack( item ),
         "IGI",
         "GGG",
         "IGI",
         ( 'G' -> Block.glowStone ),
         ( 'I' -> Item.ingotIron ) )
     }
-    if ( PreciseLens.item != null ) {
-      LensGrinderRecipeRegistry.register( 600, new ItemStack( PreciseLens.item ),
+
+
+    for {
+      item <- PreciseLens.item
+    } {
+      LensGrinderRecipeRegistry.register( 600, new ItemStack(item ),
         "IGI",
         "GGG",
         "IGI",
         ( 'G' -> Block.glass ),
         ( 'I' -> Item.ingotIron ) )
     }
-    if ( WideLens.item != null ) {
-      LensGrinderRecipeRegistry.register( 1200, new ItemStack( WideLens.item ),
+
+    for {
+      item <- WideLens.item
+    } {
+      LensGrinderRecipeRegistry.register( 1200, new ItemStack( item ),
         "IGI",
         "GDG",
         "IGI",
@@ -277,11 +288,11 @@ object VanillaRecipeLibrary extends RecipeLibrary {
     }
 
     //Skip modules where the module or a recipe ingredient has been disabled.
-    if ( modules.exists( _.item == null ) ) {
+    if ( modules.exists( _.item.isEmpty ) ) {
       return
     }
 
     GameRegistry.addRecipe( ScalaShapedRecipeFactory(
-        new ItemStack( module.item, 1 ), params:_* ) );
+        new ItemStack( module.item.get, 1 ), params:_* ) );
   }
 }
