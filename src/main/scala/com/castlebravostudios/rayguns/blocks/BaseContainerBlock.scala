@@ -41,6 +41,7 @@ import net.minecraft.block.material.MapColor
 
 abstract class BaseContainerBlock(id : Int) extends BlockContainer(id, new Material(MapColor.ironColor)) {
 
+  //scalastyle:off parameter.number
   override def onBlockActivated(world : World, x : Int, y : Int, z : Int, player : EntityPlayer,
     metadata : Int, par7 : Float, par8 : Float, par9 : Float ) : Boolean = {
 
@@ -52,6 +53,7 @@ abstract class BaseContainerBlock(id : Int) extends BlockContainer(id, new Mater
     openGui(player, world, x, y, z);
     true
   }
+  //scalastyle:off
 
   override def breakBlock( world : World, x : Int, y : Int, z : Int, par5 : Int, par6 : Int ) : Unit = {
     dropItems( world, x, y, z )

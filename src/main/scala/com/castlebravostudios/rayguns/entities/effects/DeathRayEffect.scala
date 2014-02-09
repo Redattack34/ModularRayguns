@@ -81,10 +81,10 @@ object DeathRayEffect extends BaseEffect {
 
   private val blockMatch : PartialFunction[Block, Int] = {
     case i : IPlantable => 0
-    case b if b == Block.grass => Block.dirt.blockID
-    case b if b == Block.mycelium => Block.dirt.blockID
-    case b if b == Block.leaves => 0
-    case b if b == Block.vine => 0
+    case Block.grass => Block.dirt.blockID
+    case Block.mycelium => Block.dirt.blockID
+    case Block.leaves => 0
+    case Block.vine => 0
   }
 
   val boltTexture = new ResourceLocation( "rayguns", "textures/bolts/death_ray_bolt.png" )

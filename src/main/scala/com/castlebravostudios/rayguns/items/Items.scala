@@ -45,13 +45,60 @@ import ModuleRegistrationHelper.registerModule
 object Items {
 
   def registerItems : Unit = {
-    registerItem( RayGun )
-    registerItem( BrokenGun )
-    registerItem( EnergizedDiamond )
-    registerItem( GlassGainMedium )
-    registerItem( GlowstoneGainMedium )
-    registerItem( DiamondGainMedium )
+    registerMisc()
+    registerEmitters()
+    registerBatteries()
+    registerLenses()
+    registerAccessories()
+    registerBodies()
+    registerChambers()
+  }
 
+  private def registerChambers() : Unit = {
+    registerModule( LaserChamber, Config.chamberLaser )
+    registerModule( HeatRayChamber, Config.chamberHeatRay )
+    registerModule( LifeForceChamber, Config.chamberLifeForce )
+    registerModule( FrostRayChamber, Config.chamberFrostRay )
+    registerModule( FortifiedSunlightChamber, Config.chamberFortifiedSunlight )
+    registerModule( ExplosiveChamber, Config.chamberExplosive )
+    registerModule( DeathRayChamber, Config.chamberDeathRay )
+    registerModule( EnderChamber, Config.chamberEnder )
+    registerModule( LightningChamber, Config.chamberLightning )
+    registerModule( ImpulseChamber, Config.chamberImpulse )
+    registerModule( TractorChamber, Config.chamberTractor )
+    registerModule( Tier1CuttingChamber, Config.chamberCuttingTier1 )
+    registerModule( Tier2CuttingChamber, Config.chamberCuttingTier2 )
+    registerModule( Tier3CuttingChamber, Config.chamberCuttingTier3 )
+    registerModule( MatterTransporterChamber, Config.chamberMatterTransporter )
+  }
+
+  private def registerBodies() : Unit = {
+    registerModule( MantisBody, Config.mantisBody )
+    registerModule( FireflyBody, Config.fireflyBody )
+  }
+
+  private def registerAccessories() : Unit = {
+    registerModule( ExtendedBattery, Config.extendedBattery )
+    registerModule( RefireCapacitor, Config.refireCapacitor )
+    registerModule( SolarPanel, Config.solarPanel )
+  }
+
+  private def registerLenses() : Unit = {
+    registerModule( PreciseLens, Config.preciseLens )
+    registerModule( WideLens, Config.wideLens )
+    registerModule( PreciseBeamLens, Config.preciseBeamLens )
+    registerModule( ChargeLens, Config.chargeLens )
+    registerModule( ChargeBeamLens, Config.chargeBeamLens )
+  }
+
+  private def registerBatteries() : Unit = {
+    registerModule( BasicBattery, Config.basicBattery )
+    registerModule( AdvancedBattery, Config.advancedBattery )
+    registerModule( UltimateBattery, Config.ultimateBattery )
+    registerModule( InfiniteBattery, Config.infiniteBattery )
+  }
+
+  private def registerEmitters() : Unit = {
     registerItem( Emitters.shrinkRayEmitter )
     registerItem( Emitters.laserEmitter )
     registerItem( Emitters.heatRayEmitter )
@@ -68,40 +115,15 @@ object Items {
     registerItem( Emitters.tier2CuttingEmitter )
     registerItem( Emitters.tier3CuttingEmitter )
     registerItem( Emitters.matterTransporterEmitter )
+  }
 
-    registerModule( BasicBattery, Config.basicBattery )
-    registerModule( AdvancedBattery, Config.advancedBattery )
-    registerModule( UltimateBattery, Config.ultimateBattery )
-    registerModule( InfiniteBattery, Config.infiniteBattery )
-
-    registerModule( PreciseLens, Config.preciseLens )
-    registerModule( WideLens, Config.wideLens )
-    registerModule( PreciseBeamLens, Config.preciseBeamLens )
-    registerModule( ChargeLens, Config.chargeLens )
-    registerModule( ChargeBeamLens, Config.chargeBeamLens )
-
-    registerModule( ExtendedBattery, Config.extendedBattery )
-    registerModule( RefireCapacitor, Config.refireCapacitor )
-    registerModule( SolarPanel, Config.solarPanel )
-
-    registerModule( MantisBody, Config.mantisBody )
-    registerModule( FireflyBody, Config.fireflyBody )
-
-    registerModule( LaserChamber, Config.chamberLaser )
-    registerModule( HeatRayChamber, Config.chamberHeatRay )
-    registerModule( LifeForceChamber, Config.chamberLifeForce )
-    registerModule( FrostRayChamber, Config.chamberFrostRay )
-    registerModule( FortifiedSunlightChamber, Config.chamberFortifiedSunlight )
-    registerModule( ExplosiveChamber, Config.chamberExplosive )
-    registerModule( DeathRayChamber, Config.chamberDeathRay )
-    registerModule( EnderChamber, Config.chamberEnder )
-    registerModule( LightningChamber, Config.chamberLightning )
-    registerModule( ImpulseChamber, Config.chamberImpulse )
-    registerModule( TractorChamber, Config.chamberTractor )
-    registerModule( Tier1CuttingChamber, Config.chamberCuttingTier1 )
-    registerModule( Tier2CuttingChamber, Config.chamberCuttingTier2 )
-    registerModule( Tier3CuttingChamber, Config.chamberCuttingTier3 )
-    registerModule( MatterTransporterChamber, Config.chamberMatterTransporter )
+  private def registerMisc() : Unit = {
+    registerItem( RayGun )
+    registerItem( BrokenGun )
+    registerItem( EnergizedDiamond )
+    registerItem( GlassGainMedium )
+    registerItem( GlowstoneGainMedium )
+    registerItem( DiamondGainMedium )
   }
 
   /**

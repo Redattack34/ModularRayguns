@@ -39,9 +39,9 @@ import com.castlebravostudios.rayguns.items.misc.BrokenGun
 import com.castlebravostudios.rayguns.items.misc.RayGun
 import com.castlebravostudios.rayguns.utils.GunComponents
 import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
-
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
+import com.castlebravostudios.rayguns.api.items.RaygunModule
 
 class GunBenchTileEntity extends BaseInventoryTileEntity {
   private[this] val inv = Array.fill[ItemStack](6)(null)
@@ -128,16 +128,19 @@ class GunBenchTileEntity extends BaseInventoryTileEntity {
       case i : ItemModule => i.module
       case _ => null
     }
-    slot match {
-      case BODY_SLOT => module.isInstanceOf[RaygunBody]
-      case LENS_SLOT => module.isInstanceOf[RaygunLens]
-      case CHAMBER_SLOT => module.isInstanceOf[RaygunChamber]
-      case BATTERY_SLOT => module.isInstanceOf[RaygunBattery]
-      case ACC_SLOT => module.isInstanceOf[RaygunAccessory]
-      case OUTPUT_SLOT => ( item == RayGun || item == BrokenGun ) &&
-                          inv.forall( _ == null )
-    }
+
+    if ( slot == OUTPUT_SLOT ) ( item == RayGun || item == BrokenGun ) && inv.forall( _ == null )
+    else slotMatchesModule( slot, module )
   }
+
+  private def slotMatchesModule( slot : Int, module : RaygunModule ) : Boolean = slot match {
+    case BODY_SLOT => module.isInstanceOf[RaygunBody]
+    case LENS_SLOT => module.isInstanceOf[RaygunLens]
+    case CHAMBER_SLOT => module.isInstanceOf[RaygunChamber]
+    case BATTERY_SLOT => module.isInstanceOf[RaygunBattery]
+    case ACC_SLOT => module.isInstanceOf[RaygunAccessory]
+  }
+
 }
 object GunBenchTileEntity {
 

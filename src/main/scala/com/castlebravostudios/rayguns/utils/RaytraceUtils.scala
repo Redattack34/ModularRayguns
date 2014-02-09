@@ -50,6 +50,7 @@ object RaytraceUtils {
    * Amanatides, John & Woo, Andrew. A Fast Voxel Traversal Algorithm for Ray Tracing
    * http://www.cse.yorku.ca/~amana/research/grid.pdf
    */
+  //scalastyle:off cyclomatic.complexity
   def blocks( start : Vector3, end : Vector3 ) : Stream[BlockPos] = {
     val BlockPos(x, y, z) = start.toBlockPos
     val endPos = end.toBlockPos
@@ -87,6 +88,7 @@ object RaytraceUtils {
 
     blocksRec(x, y, z, tMaxX, tMaxY, tMaxZ).takeWhile( _ != endPos ).append(Stream(endPos))
   }
+  //scalastyle:on cyclomatic.complexity
 
   /**
    * Get all non-air blocks that could potentially intersect the line segment
