@@ -27,32 +27,26 @@
 
 package com.castlebravostudios.rayguns.items.misc
 
-import com.castlebravostudios.rayguns.api.BeamRegistry
+import com.castlebravostudios.rayguns.api.ShotRegistry
+import com.castlebravostudios.rayguns.items.ChargableItem
 import com.castlebravostudios.rayguns.items.MoreInformation
 import com.castlebravostudios.rayguns.items.ScalaItem
-import com.castlebravostudios.rayguns.items.accessories.RefireCapacitor
-import com.castlebravostudios.rayguns.items.lenses.ChargeBeamLens
-import com.castlebravostudios.rayguns.items.lenses.ChargeLens
 import com.castlebravostudios.rayguns.mod.Config
 import com.castlebravostudios.rayguns.mod.ModularRayguns
 import com.castlebravostudios.rayguns.plugins.ic2.IC2ItemPowerConnector
 import com.castlebravostudios.rayguns.plugins.te.RFItemPowerConnector
+import com.castlebravostudios.rayguns.utils.DefaultFireEvent
+import com.castlebravostudios.rayguns.utils.Extensions.ItemStackExtension
 import com.castlebravostudios.rayguns.utils.Extensions.WorldExtension
 import com.castlebravostudios.rayguns.utils.FireEvent
 import com.castlebravostudios.rayguns.utils.GunComponents
 import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
-import com.castlebravostudios.rayguns.utils.Extensions.ItemStackExtension
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.util.Icon
 import net.minecraft.world.World
-import com.castlebravostudios.rayguns.items.ChargableItem
-import com.castlebravostudios.rayguns.utils.GunComponents
-import com.castlebravostudios.rayguns.utils.DefaultFireEvent
-import com.castlebravostudios.rayguns.utils.DefaultFireEvent
-import com.castlebravostudios.rayguns.utils.GunComponents
-import com.castlebravostudios.rayguns.utils.GunComponents
+import com.castlebravostudios.rayguns.utils.Vector3
 
 case class GetFireInformationEvent(
     val player : EntityPlayer,
@@ -123,7 +117,7 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
     val prefireEvent = prefire( player, world, item, components.get )
     if ( !prefireEvent.canFire ) return
 
-    val creator = BeamRegistry.getFunction( prefireEvent.fireEvent )
+    val creator = ShotRegistry.getFunction( prefireEvent.fireEvent )
     creator match {
       case Some( f ) => fire( prefireEvent, f )
       case None => breakGun
@@ -146,7 +140,7 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
     val prefireEvent = prefire( player, world, item, components.get )
     if ( !prefireEvent.canFire ) return item
 
-    val creator = BeamRegistry.getFunction( prefireEvent.fireEvent )
+    val creator = ShotRegistry.getFunction( prefireEvent.fireEvent )
 
     creator match {
       case Some( f ) => { fire( prefireEvent, f ); item }
@@ -167,7 +161,7 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
     prefireEvent
   }
 
-  private def fire( prefire : PrefireEvent, f : BeamRegistry.BeamCreator ): Unit = {
+  private def fire( prefire : PrefireEvent, f : (World, EntityPlayer) => Unit ): Unit = {
     f( prefire.world, prefire.player )
     setCooldownTime( prefire.gun, prefire.cooldownTicks )
     setMaxCooldownTime( prefire.gun, prefire.cooldownTicks )

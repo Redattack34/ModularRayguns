@@ -27,11 +27,11 @@
 
 package com.castlebravostudios.rayguns.items.lenses
 
-import com.castlebravostudios.rayguns.api.items.ItemModule
 import com.castlebravostudios.rayguns.api.items.RaygunModule
+import com.castlebravostudios.rayguns.items.misc.GetFireInformationEvent
 import com.castlebravostudios.rayguns.items.misc.PrefireEvent
 import com.castlebravostudios.rayguns.items.misc.RayGun
-import com.castlebravostudios.rayguns.items.misc.GetFireInformationEvent
+import com.castlebravostudios.rayguns.utils.Vector3
 import com.castlebravostudios.rayguns.utils.ChargeFireEvent
 
 trait Chargable extends RaygunModule {

@@ -25,27 +25,27 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.castlebravostudios.rayguns.items.lenses
+package com.castlebravostudios.rayguns.api
 
-import com.castlebravostudios.rayguns.api.ModuleRegistry
-import com.castlebravostudios.rayguns.api.items.RaygunLens
-import com.castlebravostudios.rayguns.items.batteries.BasicBattery
-import com.castlebravostudios.rayguns.mod.Config
-import cpw.mods.fml.common.registry.GameRegistry
-import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
-import com.castlebravostudios.rayguns.api.items.BaseRaygunModule
-import com.castlebravostudios.rayguns.api.items.ItemModule
-import com.castlebravostudios.rayguns.mod.ModularRayguns
+import com.castlebravostudios.rayguns.utils.FireEvent
+import com.castlebravostudios.rayguns.api.ShotRegistry.ShotCreator
+import net.minecraft.entity.player.EntityPlayer
+import com.castlebravostudios.rayguns.entities.Shootable
+import net.minecraft.world.World
 
-object ChargeBeamLens extends BaseRaygunModule with RaygunLens with Chargable {
-  val moduleKey = "ChargeBeamLens"
-  val powerModifier = 1.2
-  val nameSegmentKey = "rayguns.ChargeBeamLens.segment"
+object ShotModifier {
 
-  def createItem( id : Int ) : ItemModule = new ItemModule( id, this )
-    .setUnlocalizedName("rayguns.ChargeBeamLens")
-    .setTextureName("rayguns:lens_charge_beam")
-    .setCreativeTab( ModularRayguns.raygunsTab )
-    .setMaxStackSize(1)
+  def apply( transform : PartialFunction[FireEvent, FireEvent] )(
+      create: PartialFunction[FireEvent, (() => Seq[Shootable] ) => Seq[Shootable]] ) : ShotCreator = {
+
+    {
+      case ev : FireEvent if create.isDefinedAt( ev ) && ShotRegistry.hasShotCreator( transform( ev ) ) => { ( world, player ) =>
+        val newEvent = transform( ev )
+        val creator = ShotRegistry.getShotCreator( newEvent ).get
+        val seq = () => creator( newEvent )( world, player )
+
+        create(ev)(seq)
+      }
+    }
+  }
 }

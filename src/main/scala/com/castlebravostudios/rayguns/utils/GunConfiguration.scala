@@ -28,24 +28,23 @@
 package com.castlebravostudios.rayguns.utils
 
 import com.castlebravostudios.rayguns.api.ModuleRegistry
-import com.castlebravostudios.rayguns.api.BeamRegistry
-import com.castlebravostudios.rayguns.items.lenses.ChargeLens
-import com.castlebravostudios.rayguns.items.lenses.ChargeBeamLens
+import com.castlebravostudios.rayguns.api.ShotRegistry
 import com.castlebravostudios.rayguns.api.items.RaygunLens
 import com.castlebravostudios.rayguns.api.items.RaygunModule
 import com.castlebravostudios.rayguns.api.items.RaygunBody
 import com.castlebravostudios.rayguns.api.items.RaygunChamber
 import com.castlebravostudios.rayguns.api.items.RaygunAccessory
 import com.castlebravostudios.rayguns.api.items.RaygunBattery
+import com.castlebravostudios.rayguns.items.accessories.ChargeCapacitor
 
 case class GunComponents(body : RaygunBody, chamber : RaygunChamber, battery : RaygunBattery,
     lens : Option[RaygunLens], accessory : Option[RaygunAccessory] ) {
 
   def components : Seq[RaygunModule] = Seq( body, chamber, battery ) ++ lens ++ accessory
 
-  def getFireEvent( charge : Double ) : FireEvent = lens match {
-    case Some( ChargeLens ) => ChargeFireEvent( this, charge )
-    case Some( ChargeBeamLens ) => ChargeFireEvent( this, charge )
+  //TODO: Ugly special-case hack. Find a better way to do this.
+  def getFireEvent( charge : Double ) : FireEvent = accessory match {
+    case Some( ChargeCapacitor ) => ChargeFireEvent( this, charge )
     case _ => DefaultFireEvent( this )
   }
 

@@ -46,10 +46,13 @@ object BeamUtils {
 
   val maxBeamLength = 40
 
+  def spawn( world : World, player : EntityLivingBase, shot : BaseBeamEntity ) : Unit =
+    spawnSingleShot( shot, world, player )
+
   def spawnSingleShot( fx : BaseBeamEntity, world : World, player : EntityLivingBase ) : Unit = {
     fx.shooter = player
     val start = RaytraceUtils.getPlayerPosition(world, player)
-    val end = RaytraceUtils.getPlayerTarget(world, player, maxBeamLength)
+    val end = RaytraceUtils.getPlayerTarget(world, player, fx.aimVector, maxBeamLength).toMinecraft( world )
     val hits = RaytraceUtils.rayTrace( world, player, start, end )(
         ( block, metadata, pos ) => fx.effect.canCollideWithBlock( fx, block, metadata, pos),
         ( entity ) => fx.effect.canCollideWithEntity( fx, entity ) )

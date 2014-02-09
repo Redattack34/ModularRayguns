@@ -30,18 +30,18 @@ package com.castlebravostudios.rayguns.utils
 import com.castlebravostudios.rayguns.api.items.RaygunLens
 import com.castlebravostudios.rayguns.api.items.RaygunBody
 import com.castlebravostudios.rayguns.api.items.RaygunChamber
-import com.castlebravostudios.rayguns.api.BeamRegistry
+import com.castlebravostudios.rayguns.api.ShotRegistry
 import com.castlebravostudios.rayguns.api.items.RaygunAccessory
 import com.castlebravostudios.rayguns.api.items.RaygunModule
 import com.castlebravostudios.rayguns.api.items.RaygunBattery
+import net.minecraft.util.Vec3
 
 trait FireEvent extends {
   def components : Seq[RaygunModule]
-
-  def isValid : Boolean = BeamRegistry.isValid(this)
+  def isValid : Boolean = ShotRegistry.isValid(this)
 }
 
-case class DefaultFireEvent(body : RaygunBody, chamber : RaygunChamber, battery : RaygunBattery,
+case class DefaultFireEvent( body : RaygunBody, chamber : RaygunChamber, battery : RaygunBattery,
     lens : Option[RaygunLens], accessory : Option[RaygunAccessory] ) extends FireEvent {
 
   def components : Seq[RaygunModule] = Seq( body, chamber, battery ) ++ lens ++ accessory
@@ -55,6 +55,9 @@ case class ChargeFireEvent( body : RaygunBody, chamber : RaygunChamber, battery 
     lens : Option[RaygunLens], accessory : Option[RaygunAccessory], charge : Double ) extends FireEvent {
 
   def components : Seq[RaygunModule] = Seq( body, chamber, battery ) ++ lens ++ accessory
+
+  def toDefault : DefaultFireEvent =
+    new DefaultFireEvent( body, chamber, battery, lens, accessory )
 }
 object ChargeFireEvent {
 

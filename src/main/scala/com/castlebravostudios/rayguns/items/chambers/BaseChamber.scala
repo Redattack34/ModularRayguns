@@ -27,16 +27,14 @@
 
 package com.castlebravostudios.rayguns.items.chambers
 
-import com.castlebravostudios.rayguns.api.BeamRegistry
+import com.castlebravostudios.rayguns.api.ShotRegistry
 import com.castlebravostudios.rayguns.api.items.BaseRaygunModule
-
 import com.castlebravostudios.rayguns.api.items.RaygunChamber
 import com.castlebravostudios.rayguns.entities.BaseBeamEntity
 import com.castlebravostudios.rayguns.entities.BaseBoltEntity
 import com.castlebravostudios.rayguns.entities.Shootable
 import com.castlebravostudios.rayguns.entities.effects.BaseEffect
-import com.castlebravostudios.rayguns.items.lenses.ChargeBeamLens
-import com.castlebravostudios.rayguns.items.lenses.ChargeLens
+import com.castlebravostudios.rayguns.items.accessories.ChargeCapacitor
 import com.castlebravostudios.rayguns.items.lenses.PreciseBeamLens
 import com.castlebravostudios.rayguns.items.lenses.PreciseLens
 import com.castlebravostudios.rayguns.items.lenses.WideLens
@@ -44,13 +42,18 @@ import com.castlebravostudios.rayguns.utils.BeamUtils
 import com.castlebravostudios.rayguns.utils.BoltUtils
 import com.castlebravostudios.rayguns.utils.ChargeFireEvent
 import com.castlebravostudios.rayguns.utils.DefaultFireEvent
-
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.ResourceLocation
 import net.minecraft.world.World
+import com.castlebravostudios.rayguns.utils.Vector3
+import net.minecraft.util.MathHelper
+import java.util.Random
+import com.castlebravostudios.rayguns.api.ShotModifier
 
 
 abstract class BaseChamber extends BaseRaygunModule with RaygunChamber {
+
+  val rand = new Random()
 
   def shotEffect : BaseEffect
 
@@ -60,51 +63,55 @@ abstract class BaseChamber extends BaseRaygunModule with RaygunChamber {
 
   def createAndInitBolt( world : World, player : EntityPlayer ) : BaseBoltEntity = {
     val bolt = shotEffect.createBoltEntity(world, player)
+    bolt.aimVector = Vector3( player.getLookVec() )
     initBolt( world, player, bolt )
     bolt
   }
 
   def createAndInitBeam( world : World, player : EntityPlayer ) : BaseBeamEntity = {
     val beam = shotEffect.createBeamEntity(world, player)
+    beam.aimVector = Vector3( player.getLookVec() )
     initBeam(world, player, beam)
     beam
   }
 
   def registerChargedShotHandler( ) : Unit = {
-    BeamRegistry.register({
-      case ChargeFireEvent(_, ch, _, Some(ChargeLens), _, charge ) if ch eq this => { (world, player) =>
-        val bolt = createAndInitBolt( world, player )
-        bolt.charge = charge
-        BoltUtils.spawnNormal( world, bolt, player )
-      }
-      case ChargeFireEvent(_, ch, _, Some(ChargeBeamLens), _, charge ) if ch eq this => { (world, player) =>
-        val beam = createAndInitBeam( world, player )
-        beam.charge = charge
-        BeamUtils.spawnSingleShot( beam, world, player )
+    ShotRegistry.registerModifier( ShotModifier{ case ev : ChargeFireEvent => ev.toDefault }{
+      case ChargeFireEvent(_, ch, _, _, Some(ChargeCapacitor), charge) if (ch eq this) => { (f) =>
+        f().map{ shot => shot.charge *= charge; shot }
       }
     })
   }
 
   def registerScatterShotHandler( ) : Unit = {
-    BeamRegistry.register({
-      case DefaultFireEvent(_, ch, _, Some(WideLens), _ ) if ch eq this => { (world, player) =>
-        BoltUtils.spawnScatter(world, player, 9, 0.1f ){ () =>
-          createAndInitBolt(world, player )
+    def getClampedGaussian() : Float =
+      MathHelper.clamp_float(-2.0f, rand.nextGaussian().floatValue, 2.0f)
+    def scatter( vec : Vector3, factor : Float ) : Vector3 =
+      vec.modify( _ + (getClampedGaussian() * factor) ).normalized
+
+    ShotRegistry.registerModifier( ShotModifier{ case ev : DefaultFireEvent => ev.copy( lens = None ) }{
+      case DefaultFireEvent(_, ch, _, Some(WideLens), _ ) if ( ch eq this ) => { (f) =>
+        Seq.fill(9)( f() ).flatten.map{ shot =>
+          shot.aimVector = scatter( shot.aimVector, 0.1f )
+          shot.charge = 0.5
+          shot
         }
       }
     })
   }
 
   def registerSingleShotHandlers( ) : Unit = {
-    BeamRegistry.register({
+    ShotRegistry.registerCreator({
       case DefaultFireEvent(_, ch, _, None, _) if ch eq this => { (world, player) =>
-        BoltUtils.spawnNormal( world, createAndInitBolt( world, player ), player )
+        Seq( createAndInitBolt( world, player ) )
       }
       case DefaultFireEvent(_, ch, _, Some(PreciseLens), _ ) if ch eq this => { (world, player) =>
-        BoltUtils.spawnPrecise( world, createAndInitBolt(world, player), player )
+        val bolt = createAndInitBolt(world, player)
+        bolt.depletionRate =  0.025d
+        Seq( bolt )
       }
       case DefaultFireEvent(_, ch, _, Some(PreciseBeamLens), _ ) if ch eq this => { (world, player) =>
-        BeamUtils.spawnSingleShot( createAndInitBeam(world, player), world, player )
+        Seq( createAndInitBeam(world, player) )
       }
     })
   }

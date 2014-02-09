@@ -25,21 +25,24 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.castlebravostudios.rayguns.items.lenses
+package com.castlebravostudios.rayguns.items.accessories
 
 import com.castlebravostudios.rayguns.api.items.BaseRaygunModule
 import com.castlebravostudios.rayguns.api.items.ItemModule
-import com.castlebravostudios.rayguns.api.items.RaygunLens
+import com.castlebravostudios.rayguns.api.items.RaygunAccessory
 import com.castlebravostudios.rayguns.mod.ModularRayguns
+import com.castlebravostudios.rayguns.items.misc.PrefireEvent
+import com.castlebravostudios.rayguns.items.misc.GetFireInformationEvent
+import com.castlebravostudios.rayguns.items.lenses.Chargable
 
-object ChargeLens extends BaseRaygunModule with RaygunLens with Chargable {
-  val moduleKey = "ChargeLens"
-  val powerModifier = 1.5
-  val nameSegmentKey = "rayguns.ChargeLens.segment"
+object ChargeCapacitor extends BaseRaygunModule with RaygunAccessory with Chargable {
+  val moduleKey = "ChargeCapacitor"
+  val powerModifier = 1.0
+  val nameSegmentKey = "rayguns.ChargeCapacitor.segment"
 
   def createItem( id : Int ) : ItemModule = new ItemModule( id, this )
-    .setUnlocalizedName("rayguns.ChargeLens")
-    .setTextureName("rayguns:lens_charge")
+    .setUnlocalizedName("rayguns.ChargeCapacitor")
+    .setTextureName("rayguns:charge_capacitor")
     .setCreativeTab( ModularRayguns.raygunsTab )
     .setMaxStackSize(1)
 }
