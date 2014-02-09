@@ -42,10 +42,10 @@ import com.castlebravostudios.rayguns.utils.BeamUtils
 import com.castlebravostudios.rayguns.utils.BoltUtils
 import com.castlebravostudios.rayguns.utils.ChargeFireEvent
 import com.castlebravostudios.rayguns.utils.DefaultFireEvent
-
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.ResourceLocation
 import net.minecraft.world.World
+import com.castlebravostudios.rayguns.utils.Vector3
 
 
 abstract class BaseChamber extends BaseRaygunModule with RaygunChamber {
@@ -58,12 +58,14 @@ abstract class BaseChamber extends BaseRaygunModule with RaygunChamber {
 
   def createAndInitBolt( world : World, player : EntityPlayer ) : BaseBoltEntity = {
     val bolt = shotEffect.createBoltEntity(world, player)
+    bolt.aimVector = Vector3( player.getLookVec() )
     initBolt( world, player, bolt )
     bolt
   }
 
   def createAndInitBeam( world : World, player : EntityPlayer ) : BaseBeamEntity = {
     val beam = shotEffect.createBeamEntity(world, player)
+    beam.aimVector = Vector3( player.getLookVec() )
     initBeam(world, player, beam)
     beam
   }
@@ -83,7 +85,7 @@ abstract class BaseChamber extends BaseRaygunModule with RaygunChamber {
         val adjustedCharge = if ( charge < 1 ) charge
           else ( ( charge - 1 ) / seq.size ) + 1
 
-        seq.foreach( _.charge = adjustedCharge )
+        seq.foreach( _.charge *= adjustedCharge )
         seq
       }
     })

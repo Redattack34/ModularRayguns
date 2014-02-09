@@ -47,7 +47,7 @@ object BoltUtils {
   def spawnNormal( world : World, bolt : BaseBoltEntity, shooter : EntityLivingBase ) : Unit = {
     if ( world.isOnClient ) return
     initBolt(bolt, shooter)
-    setMotion(bolt, aimVector( shooter ) )
+    setMotion(bolt, aimVector( shooter, bolt.aimVector ) )
     world.spawnEntityInWorld(bolt)
   }
 
@@ -55,26 +55,23 @@ object BoltUtils {
     if ( world.isOnClient ) return
     initBolt(bolt, shooter)
     bolt.depletionRate = 0.025d
-    setMotion(bolt, aimVector( shooter ) )
+    setMotion(bolt, aimVector( shooter, bolt.aimVector ) )
     world.spawnEntityInWorld(bolt)
   }
 
   def spawnScatter( world : World, shooter : EntityLivingBase, shots : Int, scatterFactor: Float )( bolt : () => BaseBoltEntity ) : Unit = {
     if ( world.isOnClient ) return
-    val lookVec = aimVector( shooter )
     for ( _ <- 0 until shots ) {
       val shot = bolt()
-      val shotVec = scatter( lookVec, scatterFactor )
+      val shotVec = scatter( aimVector( shooter, shot.aimVector ), scatterFactor )
       initBolt( shot, shooter )
       setMotion( shot, shotVec )
       world.spawnEntityInWorld( shot )
     }
   }
 
-  private def aimVector( shooter : EntityLivingBase ) : Vector3 = {
-    val look = Vector3( shooter.getLookVec )
-
-    if ( shooter.isSneaking && !isCreativeFlying( shooter ) ) look.copy( y = 0 ) else look
+  private def aimVector( shooter: EntityLivingBase, lookVec : Vector3 ) : Vector3 = {
+    if ( shooter.isSneaking && !isCreativeFlying( shooter ) ) lookVec.copy( y = 0 ) else lookVec
   }
 
   private def scatter( vec : Vector3, factor : Float ) : Vector3 =
