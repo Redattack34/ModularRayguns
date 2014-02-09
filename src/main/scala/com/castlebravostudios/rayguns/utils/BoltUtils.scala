@@ -41,55 +41,26 @@ object BoltUtils {
 
   private final val rand = new Random();
 
-  def spawn( world : World, player : EntityLivingBase, bolt : BaseBoltEntity ) : Unit =
-    spawnNormal( world, bolt, player )
-
-  def spawnNormal( world : World, bolt : BaseBoltEntity, shooter : EntityLivingBase ) : Unit = {
+  def spawn( world : World, player : EntityLivingBase, bolt : BaseBoltEntity ) : Unit = {
     if ( world.isOnClient ) return
-    initBolt(bolt, shooter)
-    setMotion(bolt, aimVector( shooter, bolt.aimVector ) )
+    initBolt(bolt, player)
+    setMotion(bolt, aimVector( player, bolt.aimVector ) )
     world.spawnEntityInWorld(bolt)
-  }
-
-  def spawnPrecise( world : World, bolt : BaseBoltEntity, shooter : EntityLivingBase ) : Unit = {
-    if ( world.isOnClient ) return
-    initBolt(bolt, shooter)
-    bolt.depletionRate = 0.025d
-    setMotion(bolt, aimVector( shooter, bolt.aimVector ) )
-    world.spawnEntityInWorld(bolt)
-  }
-
-  def spawnScatter( world : World, shooter : EntityLivingBase, shots : Int, scatterFactor: Float )( bolt : () => BaseBoltEntity ) : Unit = {
-    if ( world.isOnClient ) return
-    for ( _ <- 0 until shots ) {
-      val shot = bolt()
-      val shotVec = scatter( aimVector( shooter, shot.aimVector ), scatterFactor )
-      initBolt( shot, shooter )
-      setMotion( shot, shotVec )
-      world.spawnEntityInWorld( shot )
-    }
   }
 
   private def aimVector( shooter: EntityLivingBase, lookVec : Vector3 ) : Vector3 = {
     if ( shooter.isSneaking && !isCreativeFlying( shooter ) ) lookVec.copy( y = 0 ) else lookVec
   }
 
-  private def scatter( vec : Vector3, factor : Float ) : Vector3 =
-    vec.modify( _ + (getClampedGaussian() * factor) )
-      .normalized
-
-  private def getClampedGaussian() : Float =
-    MathHelper.clamp_float(-2.0f, rand.nextGaussian().floatValue, 2.0f)
-
   private def toRadians(yaw: Float): Float = {
     yaw / 180.0F * Math.PI.floatValue
   }
 
-  private def initBolt(bolt: BaseBoltEntity, shooter: net.minecraft.entity.EntityLivingBase): Unit = {
-      bolt.shooter = shooter;
-      bolt.setSize(0.25F, 0.25F);
-      initPositionAngle(bolt, shooter)
-      offsetInFrontOfShooter(bolt)
+  private def initBolt(bolt: BaseBoltEntity, shooter: EntityLivingBase): Unit = {
+    bolt.shooter = shooter;
+    bolt.setSize(0.25F, 0.25F);
+    initPositionAngle(bolt, shooter)
+    offsetInFrontOfShooter(bolt)
   }
 
   /**

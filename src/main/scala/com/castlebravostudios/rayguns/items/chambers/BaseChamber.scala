@@ -46,9 +46,13 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.ResourceLocation
 import net.minecraft.world.World
 import com.castlebravostudios.rayguns.utils.Vector3
+import net.minecraft.util.MathHelper
+import java.util.Random
 
 
 abstract class BaseChamber extends BaseRaygunModule with RaygunChamber {
+
+  val rand = new Random()
 
   def shotEffect : BaseEffect
 
@@ -82,23 +86,38 @@ abstract class BaseChamber extends BaseRaygunModule with RaygunChamber {
         val creator = ShotRegistry.getShotCreator( newEvent ).get
         val seq = creator( newEvent )( world, player )
 
-        val adjustedCharge = if ( charge < 1 ) charge
-          else ( ( charge - 1 ) / seq.size ) + 1
-
-        seq.foreach( _.charge *= adjustedCharge )
+        seq.foreach( _.charge *= charge )
         seq
       }
     })
   }
 
   def registerScatterShotHandler( ) : Unit = {
-/*    ShotRegistry.register({
-      case DefaultFireEvent(_, ch, _, Some(WideLens), _ ) if ch eq this => { (world, player) =>
-        BoltUtils.spawnScatter(world, player, 9, 0.1f ){ () =>
-          createAndInitBolt(world, player )
+    def changeEvent( ev : DefaultFireEvent ) : DefaultFireEvent =
+      ev.copy( lens = None )
+    def canScatter( ev : DefaultFireEvent ) : Boolean =
+      ShotRegistry.hasShotCreator( changeEvent( ev ) )
+    def getClampedGaussian() : Float =
+      MathHelper.clamp_float(-2.0f, rand.nextGaussian().floatValue, 2.0f)
+    def scatter( vec : Vector3, factor : Float ) : Vector3 =
+      vec.modify( _ + (getClampedGaussian() * factor) ).normalized
+
+
+    ShotRegistry.registerModifier({
+      case ev@DefaultFireEvent(_, ch, _, Some(WideLens), _ ) if ( ch eq this ) && canScatter( ev ) => { (world, player) =>
+        val newEvent = changeEvent( ev )
+        val creator = ShotRegistry.getShotCreator( newEvent ).get
+        val seq = (for {
+          _ <- 0 until 9
+        } yield creator( newEvent )( world, player )).flatten
+
+        seq.foreach{ shot =>
+          shot.aimVector = scatter( shot.aimVector, 0.1f )
+          shot.charge = 0.5
         }
+        seq
       }
-    })*/
+    })
   }
 
   def registerSingleShotHandlers( ) : Unit = {
