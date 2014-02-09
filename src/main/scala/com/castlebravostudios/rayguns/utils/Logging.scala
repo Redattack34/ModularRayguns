@@ -27,29 +27,34 @@
 
 package com.castlebravostudios.rayguns.utils
 
-import net.minecraft.world.World
-import net.minecraft.item.ItemStack
-import net.minecraft.nbt.NBTTagCompound
+import com.castlebravostudios.rayguns.mod.ModularRayguns
+import java.util.logging.Level
 
-object Extensions extends Logging {
-  implicit class WorldExtension(val world : World) extends AnyVal {
-    def isOnClient : Boolean = world.isRemote
-    def isOnServer : Boolean = !world.isRemote
+trait Logging {
 
-    def debug(name : String, value : Any) : Unit = {
-      if ( isOnClient ) info( s"Client $name: $value" )
-      if ( isOnServer ) info( s"Server $name: $value" )
+  private val logger = ModularRayguns.logger
+
+  protected def severe( message : => String ) =
+    log( Level.SEVERE, message )
+
+  protected def warning( message : => String ) =
+    log( Level.WARNING, message )
+
+  protected def info( message : => String ) =
+    log( Level.INFO, message )
+
+  protected def fine( message : => String ) =
+    log( Level.FINE, message )
+
+  protected def finer( message : => String ) =
+    log( Level.FINER, message )
+
+  protected def finest( message : => String ) =
+    log( Level.FINEST, message )
+
+  private def log( level : Level, message : => String ) = {
+    if ( logger.isLoggable( level ) ) {
+      logger.log( level, message )
     }
-  }
-
-  implicit class ItemStackExtension( val item : ItemStack ) extends AnyVal {
-
-    def getTagCompoundSafe : NBTTagCompound = {
-      if ( item.getTagCompound() == null ) {
-        item.setTagCompound( new NBTTagCompound() )
-      }
-      item.getTagCompound()
-    }
-
   }
 }

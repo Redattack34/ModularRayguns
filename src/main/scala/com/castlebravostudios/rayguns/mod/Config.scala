@@ -105,7 +105,6 @@ object Config {
   var recipeLibrary : RecipeLibrary = _
 
   def load( file : File ): Unit = {
-    println( file.getAbsolutePath() );
     val config = new Configuration( file )
     config.load()
 
