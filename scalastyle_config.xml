@@ -79,6 +79,8 @@
  </check>
  <check class="org.scalastyle.scalariform.NoWhitespaceBeforeLeftBracketChecker" level="warning" enabled="true"></check>
  <check class="org.scalastyle.scalariform.NoWhitespaceAfterLeftBracketChecker" level="warning" enabled="true"></check>
+  <check class="org.scalastyle.scalariform.ReturnChecker" level="warning" enabled="false"></check>
+ <check class="org.scalastyle.scalariform.NullChecker" level="warning" enabled="false"></check>
  <check class="org.scalastyle.scalariform.NoCloneChecker" level="warning" enabled="true"></check>
  <check class="org.scalastyle.scalariform.NoFinalizeChecker" level="warning" enabled="true"></check>
  <check class="org.scalastyle.scalariform.CovariantEqualsChecker" level="warning" enabled="true"></check>
@@ -128,6 +130,7 @@
    <parameter name="ignoreOverride"><![CDATA[false]]></parameter>
   </parameters>
  </check>
+ <check class="org.scalastyle.file.NewLineAtEofChecker" level="warning" enabled="false"></check>
  <check class="org.scalastyle.file.NoNewLineAtEofChecker" level="warning" enabled="false"></check>
  <check class="org.scalastyle.scalariform.WhileChecker" level="warning" enabled="false"></check>
  <check class="org.scalastyle.scalariform.VarFieldChecker" level="warning" enabled="false"></check>
