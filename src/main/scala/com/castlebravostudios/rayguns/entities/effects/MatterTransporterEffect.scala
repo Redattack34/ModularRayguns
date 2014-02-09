@@ -42,6 +42,7 @@ import net.minecraft.item.ItemBlock
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import com.castlebravostudios.rayguns.utils.Extensions.WorldExtension
+import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 object MatterTransporterEffect extends BaseEffect {
 
@@ -72,9 +73,9 @@ object MatterTransporterEffect extends BaseEffect {
     bolt
   }
 
-  val boltTexture = new ResourceLocation( "rayguns", "textures/bolts/matter_transporter_bolt.png" )
-  val beamTexture = new ResourceLocation( "rayguns", "textures/beams/matter_transporter_beam.png" )
-  val chargeTexture = new ResourceLocation( "rayguns", "textures/effects/charge/matter_transporter_charge.png" )
+  val boltTexture = ModularRayguns.texture( "textures/bolts/matter_transporter_bolt.png" )
+  val beamTexture = ModularRayguns.texture( "textures/beams/matter_transporter_beam.png" )
+  val chargeTexture = ModularRayguns.texture( "textures/effects/charge/matter_transporter_charge.png" )
 
   def getPlacedBlockId( player : EntityPlayer ) : Option[Int] = {
     val currentSlot = player.inventory.currentItem

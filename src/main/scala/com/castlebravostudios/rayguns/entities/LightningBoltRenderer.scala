@@ -37,6 +37,7 @@ import net.minecraft.util.ResourceLocation
 import com.castlebravostudios.rayguns.entities.effects.LightningBoltEntity
 import com.castlebravostudios.rayguns.utils.Vector3
 import com.castlebravostudios.rayguns.mod.Config
+import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 class LightningBoltRenderer extends Render {
 
@@ -98,5 +99,5 @@ class LightningBoltRenderer extends Render {
   }
 
   def getEntityTexture( e : Entity ) : ResourceLocation =
-    new ResourceLocation( "rayguns", "textures/beams/lightning_beam.png" )
+    ModularRayguns.texture( "textures/beams/lightning_beam.png" )
 }

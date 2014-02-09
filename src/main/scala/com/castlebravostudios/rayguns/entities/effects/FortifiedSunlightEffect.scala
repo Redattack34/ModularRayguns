@@ -28,7 +28,6 @@
 package com.castlebravostudios.rayguns.entities.effects
 
 import com.castlebravostudios.rayguns.entities.Shootable
-
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
@@ -37,6 +36,7 @@ import net.minecraft.item.ItemDye
 import net.minecraft.item.ItemStack
 import net.minecraft.util.EntityDamageSource
 import net.minecraft.util.ResourceLocation
+import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 
 object FortifiedSunlightEffect extends BaseEffect {
@@ -74,7 +74,7 @@ object FortifiedSunlightEffect extends BaseEffect {
     }
   }
 
-  val boltTexture = new ResourceLocation( "rayguns", "textures/bolts/sunlight_bolt.png" )
-  val beamTexture = new ResourceLocation( "rayguns", "textures/beams/sunlight_beam.png" )
-  val chargeTexture = new ResourceLocation( "rayguns", "textures/effects/charge/sunlight_charge.png" )
+  val boltTexture = ModularRayguns.texture( "textures/bolts/sunlight_bolt.png" )
+  val beamTexture = ModularRayguns.texture( "textures/beams/sunlight_beam.png" )
+  val chargeTexture = ModularRayguns.texture( "textures/effects/charge/sunlight_charge.png" )
 }

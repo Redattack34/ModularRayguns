@@ -125,6 +125,8 @@ object Config {
     }
   }
 
+  //scalastyle:off magic.number
+
   private def loadMiscItemIds( config : Configuration ) : Unit = {
     rayGun=config.getItem( "rayGun", 4999 ).getInt()
     brokenGun=config.getItem( "brokenGun", 5000 ).getInt()

@@ -27,8 +27,6 @@
 
 package com.castlebravostudios.rayguns.plugins.nei
 
-import java.awt.Rectangle
-
 import com.castlebravostudios.rayguns.api.LensGrinderRecipe
 import com.castlebravostudios.rayguns.api.LensGrinderRecipeRegistry
 import com.castlebravostudios.rayguns.blocks.lensgrinder.LensGrinderGui
@@ -66,8 +64,9 @@ class NEILensGrinderRecipeManager extends ShapedRecipeHandler {
   }
 
   override def loadTransferRects() : Unit = {
-    transferRects.add(new RecipeTransferRect(new Rectangle(84, 23, 24, 18),
-        NEIModularRaygunsConfig.recipeKey));
+    transferRects.add( new RecipeTransferRect(
+        new java.awt.Rectangle(84, 23, 24, 18),
+        NEIModularRaygunsConfig.recipeKey) );
   }
 
   override def drawExtras( recipeIndex: Int ) : Unit = {

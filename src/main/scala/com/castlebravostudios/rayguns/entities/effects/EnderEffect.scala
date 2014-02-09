@@ -31,7 +31,6 @@ import com.castlebravostudios.rayguns.entities.Shootable
 import com.castlebravostudios.rayguns.utils.BlockPos
 import com.castlebravostudios.rayguns.utils.Extensions.WorldExtension
 import com.castlebravostudios.rayguns.utils.RaytraceUtils
-
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.boss.IBossDisplayData
@@ -40,6 +39,7 @@ import net.minecraft.util.ResourceLocation
 import net.minecraft.world.World
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.entity.living.EnderTeleportEvent
+import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 object EnderEffect extends BaseEffect {
 
@@ -79,7 +79,7 @@ object EnderEffect extends BaseEffect {
       if ( worldObj.isAirBlock(x, newY, z) && worldObj.isAirBlock(x, newY + 1, z) ) return Some( newY )
       newY += 1
     }
-    return None
+    None
   }
 
   def maxTeleportDistance( shootable : Shootable ) : Double = shootable.charge * 16
@@ -111,7 +111,7 @@ object EnderEffect extends BaseEffect {
     }
   }
 
-  val boltTexture = new ResourceLocation( "rayguns", "textures/bolts/ender_bolt.png" )
-  val beamTexture = new ResourceLocation( "rayguns", "textures/beams/ender_beam.png" )
-  val chargeTexture = new ResourceLocation( "rayguns", "textures/effects/charge/ender_charge.png" )
+  val boltTexture = ModularRayguns.texture( "textures/bolts/ender_bolt.png" )
+  val beamTexture = ModularRayguns.texture( "textures/beams/ender_beam.png" )
+  val chargeTexture = ModularRayguns.texture( "textures/effects/charge/ender_charge.png" )
 }

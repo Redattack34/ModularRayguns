@@ -44,6 +44,7 @@ import com.castlebravostudios.rayguns.items.bodies.MantisBody
 import net.minecraft.item.ItemStack
 import com.castlebravostudios.rayguns.items.bodies.FireflyBody
 import com.castlebravostudios.rayguns.entities.effects.Effects
+import net.minecraft.util.ResourceLocation
 
 @Mod(modid="mod_ModularRayguns", version="1.0-alpha2", modLanguage="scala", useMetadata=true)
 @NetworkMod(clientSideRequired=true, serverSideRequired=true)
@@ -77,4 +78,7 @@ object ModularRayguns {
   val raygunsTab  = new CreativeTabs("tabRayguns") {
     override def getIconItemStack : ItemStack = new ItemStack( FireflyBody.item, 1, 0 )
   }
+
+  def texture( path : String ) : ResourceLocation =
+    new ResourceLocation( "rayguns", path )
 }

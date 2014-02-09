@@ -28,15 +28,14 @@
 package com.castlebravostudios.rayguns.entities
 
 import org.lwjgl.opengl.GL11
-
 import com.castlebravostudios.rayguns.entities.effects.BaseEffect
 import com.castlebravostudios.rayguns.entities.BoltRenderer.Vertex
-
 import net.minecraft.client.renderer.OpenGlHelper
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.client.renderer.entity.Render
 import net.minecraft.entity.Entity
 import net.minecraft.util.ResourceLocation
+import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 class BoltRenderer extends Render {
 
@@ -115,6 +114,6 @@ object BoltRenderer {
   )
   private val reversedVertices = cubeVertices.view.reverse
 
-  val lineBlackTexture = new ResourceLocation( "rayguns", "textures/bolts/bolt_line_black.png" )
-  val lineWhiteTexture = new ResourceLocation( "rayguns", "textures/bolts/bolt_line_white.png" )
+  val lineBlackTexture = ModularRayguns.texture( "textures/bolts/bolt_line_black.png" )
+  val lineWhiteTexture = ModularRayguns.texture( "textures/bolts/bolt_line_white.png" )
 }

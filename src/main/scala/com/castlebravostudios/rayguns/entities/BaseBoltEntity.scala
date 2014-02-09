@@ -156,7 +156,7 @@ class BaseBoltEntity( world : World ) extends BaseShootable( world ) with IProje
   override def isInRangeToRenderDist(limit : Double) : Boolean = {
     var d1 = this.boundingBox.getAverageEdgeLength() * 4.0D
     d1 *= 64.0D
-    return limit < d1 * d1
+    limit < d1 * d1
   }
 
   override def setThrowableHeading(xIn : Double, yIn : Double, zIn : Double, velocityMult : Float, scatterMult : Float ) : Unit = {

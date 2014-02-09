@@ -47,7 +47,7 @@ abstract class BaseContainerBlock(id : Int) extends BlockContainer(id, new Mater
 
     val entity = world.getBlockTileEntity( x, y, z );
     if ( entity == null || player.isSneaking() ) {
-      return false;
+      return false
     }
 
     openGui(player, world, x, y, z);

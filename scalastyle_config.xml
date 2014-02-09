@@ -79,7 +79,6 @@
  </check>
  <check class="org.scalastyle.scalariform.NoWhitespaceBeforeLeftBracketChecker" level="warning" enabled="true"></check>
  <check class="org.scalastyle.scalariform.NoWhitespaceAfterLeftBracketChecker" level="warning" enabled="true"></check>
- <check class="org.scalastyle.scalariform.ReturnChecker" level="warning" enabled="true"></check>
  <check class="org.scalastyle.scalariform.NoCloneChecker" level="warning" enabled="true"></check>
  <check class="org.scalastyle.scalariform.NoFinalizeChecker" level="warning" enabled="true"></check>
  <check class="org.scalastyle.scalariform.CovariantEqualsChecker" level="warning" enabled="true"></check>
@@ -104,7 +103,7 @@
  <check class="org.scalastyle.scalariform.IfBraceChecker" level="warning" enabled="true">
   <parameters>
    <parameter name="singleLineAllowed"><![CDATA[true]]></parameter>
-   <parameter name="doubleLineAllowed"><![CDATA[false]]></parameter>
+   <parameter name="doubleLineAllowed"><![CDATA[true]]></parameter>
   </parameters>
  </check>
  <check class="org.scalastyle.scalariform.MethodLengthChecker" level="warning" enabled="true">
@@ -148,7 +147,7 @@
  </check>
  <check class="org.scalastyle.scalariform.UnderscoreImportChecker" level="warning" enabled="true"></check>
  <check class="org.scalastyle.scalariform.LowercasePatternMatchChecker" level="warning" enabled="true"></check>
- <check class="org.scalastyle.scalariform.MultipleStringLiteralsChecker" level="warning" enabled="true">
+ <check class="org.scalastyle.scalariform.MultipleStringLiteralsChecker" level="warning" enabled="false">
   <parameters>
    <parameter name="allowed"><![CDATA[2]]></parameter>
    <parameter name="ignoreRegex"><![CDATA[^""$]]></parameter>

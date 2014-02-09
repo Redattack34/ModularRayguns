@@ -35,13 +35,13 @@ import com.castlebravostudios.rayguns.utils.BlockPos
 import com.castlebravostudios.rayguns.utils.Extensions.WorldExtension
 import com.castlebravostudios.rayguns.utils.MidpointDisplacement
 import com.castlebravostudios.rayguns.utils.Vector3
-
 import net.minecraft.entity.Entity
 import net.minecraft.entity.monster.EntityCreeper
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.EntityDamageSource
 import net.minecraft.util.ResourceLocation
 import net.minecraft.world.World
+import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 object LightningEffect extends BaseEffect {
 
@@ -86,9 +86,9 @@ object LightningEffect extends BaseEffect {
     bolt
   }
 
-  val beamTexture = new ResourceLocation( "rayguns", "textures/beams/lightning_beam.png" )
+  val beamTexture = ModularRayguns.texture( "textures/beams/lightning_beam.png" )
   val boltTexture = beamTexture
-  val chargeTexture = new ResourceLocation( "rayguns", "textures/effects/charge/lightning_charge.png" )
+  val chargeTexture = ModularRayguns.texture( "textures/effects/charge/lightning_charge.png" )
 }
 
 trait LightningShootable {
