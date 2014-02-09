@@ -48,6 +48,7 @@ import net.minecraft.world.World
 import com.castlebravostudios.rayguns.utils.Vector3
 import net.minecraft.util.MathHelper
 import java.util.Random
+import com.castlebravostudios.rayguns.api.ShotModifier
 
 
 abstract class BaseChamber extends BaseRaygunModule with RaygunChamber {
@@ -75,47 +76,26 @@ abstract class BaseChamber extends BaseRaygunModule with RaygunChamber {
   }
 
   def registerChargedShotHandler( ) : Unit = {
-    def toDefault( ev : ChargeFireEvent ) : DefaultFireEvent =
-      new DefaultFireEvent( ev.body, ev.chamber, ev.battery, ev.lens, ev.accessory )
-    def canCharge( ev : ChargeFireEvent ) : Boolean =
-      ShotRegistry.hasShotCreator( toDefault( ev ) )
-
-    ShotRegistry.registerModifier({
-      case ev@ChargeFireEvent(_, ch, _, _, Some(ChargeCapacitor), charge) if (ch eq this) && canCharge( ev ) => { (world, player) =>
-        val newEvent = toDefault( ev )
-        val creator = ShotRegistry.getShotCreator( newEvent ).get
-        val seq = creator( newEvent )( world, player )
-
-        seq.foreach( _.charge *= charge )
-        seq
+    ShotRegistry.registerModifier( ShotModifier{ case ev : ChargeFireEvent => ev.toDefault }{
+      case ChargeFireEvent(_, ch, _, _, Some(ChargeCapacitor), charge) if (ch eq this) => { (f) =>
+        f().map{ shot => shot.charge *= charge; shot }
       }
     })
   }
 
   def registerScatterShotHandler( ) : Unit = {
-    def changeEvent( ev : DefaultFireEvent ) : DefaultFireEvent =
-      ev.copy( lens = None )
-    def canScatter( ev : DefaultFireEvent ) : Boolean =
-      ShotRegistry.hasShotCreator( changeEvent( ev ) )
     def getClampedGaussian() : Float =
       MathHelper.clamp_float(-2.0f, rand.nextGaussian().floatValue, 2.0f)
     def scatter( vec : Vector3, factor : Float ) : Vector3 =
       vec.modify( _ + (getClampedGaussian() * factor) ).normalized
 
-
-    ShotRegistry.registerModifier({
-      case ev@DefaultFireEvent(_, ch, _, Some(WideLens), _ ) if ( ch eq this ) && canScatter( ev ) => { (world, player) =>
-        val newEvent = changeEvent( ev )
-        val creator = ShotRegistry.getShotCreator( newEvent ).get
-        val seq = (for {
-          _ <- 0 until 9
-        } yield creator( newEvent )( world, player )).flatten
-
-        seq.foreach{ shot =>
+    ShotRegistry.registerModifier( ShotModifier{ case ev : DefaultFireEvent => ev.copy( lens = None ) }{
+      case DefaultFireEvent(_, ch, _, Some(WideLens), _ ) if ( ch eq this ) => { (f) =>
+        Seq.fill(9)( f() ).flatten.map{ shot =>
           shot.aimVector = scatter( shot.aimVector, 0.1f )
           shot.charge = 0.5
+          shot
         }
-        seq
       }
     })
   }

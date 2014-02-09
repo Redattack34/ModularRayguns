@@ -55,6 +55,9 @@ case class ChargeFireEvent( body : RaygunBody, chamber : RaygunChamber, battery 
     lens : Option[RaygunLens], accessory : Option[RaygunAccessory], charge : Double ) extends FireEvent {
 
   def components : Seq[RaygunModule] = Seq( body, chamber, battery ) ++ lens ++ accessory
+
+  def toDefault : DefaultFireEvent =
+    new DefaultFireEvent( body, chamber, battery, lens, accessory )
 }
 object ChargeFireEvent {
 

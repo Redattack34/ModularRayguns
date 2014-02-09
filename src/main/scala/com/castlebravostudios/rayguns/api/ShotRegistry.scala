@@ -47,7 +47,8 @@ import com.castlebravostudios.rayguns.utils.Logging
  *  - Shot Creators take a FireEvent and produce a sequence of Shootables.
  *  - Shot Modifiers are like ShotCreators, but they always take precedence over
  *  shot creators, so they're useful for hooks that modify the results of a
- *  ShotCreator.
+ *  ShotCreator. Modifiers don't have to be created using ShotModifier, but it
+ *  is helpful.
  *  - Shot Handlers take a FireEvent, world and player, and cause something to
  *  happen. One is preregistered that uses the creators and modifiers and
  *  spawns the resulting shots into the world.
@@ -112,11 +113,11 @@ object ShotRegistry extends Logging {
       val shotCreator = getShotCreator( event ).get
 
       shotCreator.apply( event ).apply( world, player ).foreach { shot => shot match {
-        case bolt : BaseBoltEntity => BoltUtils.spawn( world, player, bolt )
-        case beam : BaseBeamEntity => BeamUtils.spawn( world, player, beam )
-        case _ => {
-          severe( s"Unknown shot type ($shot, $event) - register your own handler." )
-        }
+          case bolt : BaseBoltEntity => BoltUtils.spawn( world, player, bolt )
+          case beam : BaseBeamEntity => BeamUtils.spawn( world, player, beam )
+          case _ => {
+            severe( s"Unknown shot type ($shot, $event) - register your own handler." )
+          }
         }
       }
     }
