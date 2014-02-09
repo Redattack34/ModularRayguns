@@ -34,8 +34,7 @@ import com.castlebravostudios.rayguns.entities.BaseBeamEntity
 import com.castlebravostudios.rayguns.entities.BaseBoltEntity
 import com.castlebravostudios.rayguns.entities.Shootable
 import com.castlebravostudios.rayguns.entities.effects.BaseEffect
-import com.castlebravostudios.rayguns.items.lenses.ChargeBeamLens
-import com.castlebravostudios.rayguns.items.lenses.ChargeLens
+import com.castlebravostudios.rayguns.items.accessories.ChargeCapacitor
 import com.castlebravostudios.rayguns.items.lenses.PreciseBeamLens
 import com.castlebravostudios.rayguns.items.lenses.PreciseLens
 import com.castlebravostudios.rayguns.items.lenses.WideLens
@@ -43,10 +42,10 @@ import com.castlebravostudios.rayguns.utils.BeamUtils
 import com.castlebravostudios.rayguns.utils.BoltUtils
 import com.castlebravostudios.rayguns.utils.ChargeFireEvent
 import com.castlebravostudios.rayguns.utils.DefaultFireEvent
+
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.ResourceLocation
 import net.minecraft.world.World
-import com.castlebravostudios.rayguns.items.accessories.ChargeCapacitor
 
 
 abstract class BaseChamber extends BaseRaygunModule with RaygunChamber {
@@ -71,16 +70,6 @@ abstract class BaseChamber extends BaseRaygunModule with RaygunChamber {
 
   def registerChargedShotHandler( ) : Unit = {
     BeamRegistry.register({
-      case ChargeFireEvent(_, ch, _, Some(ChargeLens), _, charge ) if ch eq this => { (world, player) =>
-        val bolt = createAndInitBolt( world, player )
-        bolt.charge = charge
-        BoltUtils.spawnNormal( world, bolt, player )
-      }
-      case ChargeFireEvent(_, ch, _, Some(ChargeBeamLens), _, charge ) if ch eq this => { (world, player) =>
-        val beam = createAndInitBeam( world, player )
-        beam.charge = charge
-        BeamUtils.spawnSingleShot( beam, world, player )
-      }
       case ChargeFireEvent(_, ch, _, None, Some(ChargeCapacitor), charge) if ch eq this => { (world, player) =>
         val bolt = createAndInitBolt( world, player )
         bolt.charge = charge

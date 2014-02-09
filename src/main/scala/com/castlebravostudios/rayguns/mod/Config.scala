@@ -50,8 +50,6 @@ object Config {
   var preciseLens : Int = _
   var wideLens : Int = _
   var preciseBeamLens : Int = _
-  var chargeLens : Int = _
-  var chargeBeamLens : Int = _
 
   var extendedBattery : Int = _
   var refireCapacitor : Int = _
@@ -147,8 +145,6 @@ object Config {
     preciseLens = config.getItem( "preciseLens", 5201 ).getInt()
     wideLens = config.getItem( "wideLens", 5202 ).getInt()
     preciseBeamLens = config.getItem( "beamLens", 5203 ).getInt()
-    chargeLens = config.getItem( "chargeLens", 5204 ).getInt()
-    chargeBeamLens = config.getItem( "chargeBeamLens", 5205 ).getInt()
   }
 
   private def loadAccessoryItemIds( config : Configuration ) : Unit = {

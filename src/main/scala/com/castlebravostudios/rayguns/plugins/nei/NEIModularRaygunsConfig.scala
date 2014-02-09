@@ -104,8 +104,6 @@ class NEIModularRaygunsConfig extends IConfigureNEI {
 
   private def lensItemRange: MultiItemRange = {
     val range = new MultiItemRange()
-    addModule( range, ChargeBeamLens )
-    addModule( range, ChargeLens )
     addModule( range, PreciseBeamLens )
     addModule( range, PreciseLens )
     addModule( range, WideLens )

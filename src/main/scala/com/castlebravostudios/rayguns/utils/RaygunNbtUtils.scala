@@ -100,7 +100,7 @@ object RaygunNbtUtils {
   }
 
   def buildGun( components : GunComponents ) : Option[ItemStack] =
-    if ( components.isValid && BeamRegistry.isValid(components.getFireEvent(1.0d)) ) Some( buildValidGun( components ) )
+    if ( components.isValid && BeamRegistry.isValid( components.getFireEvent(1.0d) ) ) Some( buildValidGun( components ) )
     else None
 
   private def buildValidGun( components : GunComponents ) : ItemStack = {

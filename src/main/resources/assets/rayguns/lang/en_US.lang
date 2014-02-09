@@ -47,8 +47,6 @@ item.rayguns.MatterTransporterEmitter.name=Matter Transporter Beam Emitter
 item.rayguns.PreciseBeamLens.name=Precise Beam Lens
 item.rayguns.PreciseLens.name=Precise Bolt Lens
 item.rayguns.WideLens.name=Scatter Bolt Lens
-item.rayguns.ChargeLens.name=Charge Lens
-item.rayguns.ChargeBeamLens.name=Charge Beam Lens
 
 item.rayguns.BrokenRaygun.name=Broken Raygun
 item.rayguns.DiamondGainMedium.name=Diamond Gain Medium
@@ -78,8 +76,6 @@ rayguns.RaygunNamePattern=@accessory@ @chamber@ @lens@
 rayguns.PreciseBeamLens.segment=Precise Beam
 rayguns.PreciseLens.segment=Precise Blaster
 rayguns.WideLens.segment=Scatter Blaster
-rayguns.ChargeLens.segment=Charging Blaster
-rayguns.ChargeBeamLens.segment=Charging Beam
 
 rayguns.ExplosiveChamber.segment=Explosive
 rayguns.FortifiedSunlightChamber.segment=Fortified Sunlight

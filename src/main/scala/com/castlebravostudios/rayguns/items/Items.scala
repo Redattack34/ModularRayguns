@@ -88,8 +88,6 @@ object Items {
     registerModule( PreciseLens, Config.preciseLens )
     registerModule( WideLens, Config.wideLens )
     registerModule( PreciseBeamLens, Config.preciseBeamLens )
-    registerModule( ChargeLens, Config.chargeLens )
-    registerModule( ChargeBeamLens, Config.chargeBeamLens )
   }
 
   private def registerBatteries() : Unit = {

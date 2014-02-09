@@ -203,20 +203,6 @@ object VanillaRecipeLibrary extends RecipeLibrary {
   }
 
   private def registerLenses() = {
-    def addChargeLensRecipe( chargeLens : RaygunLens, baseLens : RaygunLens ) : Unit =
-    {
-      for {
-        chargeLensItem <- chargeLens.item
-        baseLensItem <- baseLens.item
-        batteryItem <- BasicBattery.item
-      } {
-        GameRegistry.addShapelessRecipe( new ItemStack( chargeLensItem, 1 ),
-          baseLensItem, batteryItem )
-      }
-    }
-    addChargeLensRecipe(ChargeBeamLens, PreciseBeamLens)
-    addChargeLensRecipe(ChargeLens, PreciseLens)
-
     for {
       item <- PreciseBeamLens.item
     }{
