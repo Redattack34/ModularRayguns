@@ -51,9 +51,10 @@ import com.castlebravostudios.rayguns.items.barrels.TestBarrel
 object RaygunNbtUtils {
 
   val BODY_STR = "body"
-  val LENS_STR = "lens"
-  val CHAMBER_STR = "chamber"
   val BATTERY_STR = "battery"
+  val CHAMBER_STR = "chamber"
+  val BARREL_STR = "barrel"
+  val LENS_STR = "lens"
   val ACC_STR = "accessory"
 
   val MODULES_TAG = "raygunModules"
@@ -68,10 +69,10 @@ object RaygunNbtUtils {
     for { body <- getComponent(item, BODY_STR)(ModuleRegistry.getBody)
           chamber <- getComponent(item, CHAMBER_STR)(ModuleRegistry.getChamber)
           battery <- getComponent(item, BATTERY_STR)(ModuleRegistry.getBattery)
+          barrel <- getComponent(item, BARREL_STR)(ModuleRegistry.getBarrel)
           lens = getComponent(item, LENS_STR)(ModuleRegistry.getLens)
           accessory = getComponent(item, ACC_STR)(ModuleRegistry.getAccessory) }
-    //TODO
-      yield GunComponents( body, chamber, battery, TestBarrel, lens, accessory )
+      yield GunComponents( body, chamber, battery, barrel, lens, accessory )
     }
 
   def getBattery( item : ItemStack ) : Option[RaygunBattery] =
@@ -116,18 +117,20 @@ object RaygunNbtUtils {
   private def buildModuleTag( components : GunComponents ) : NBTTagCompound =
     buildModuleTag( OptionalGunComponents( components ) )
   private def buildModuleTag( components : OptionalGunComponents ) : NBTTagCompound = {
+
+    def setTag( tag : NBTTagCompound, str : String )( item : RaygunModule ) : Unit =
+      tag.setString(str, item.moduleKey)
+
     val tag = new NBTTagCompound( MODULES_TAG )
     components.body.foreach( setTag( tag, BODY_STR )(_) )
     components.chamber.foreach( setTag( tag, CHAMBER_STR )(_) )
     components.battery.foreach( setTag( tag, BATTERY_STR )(_) )
+    components.barrel.foreach( setTag( tag, BARREL_STR )(_) )
     components.lens.foreach( setTag( tag, LENS_STR )(_) )
     components.acc.foreach( setTag( tag, ACC_STR )(_) )
     tag
   }
 
-  private def setTag( tag : NBTTagCompound, str : String )( item : RaygunModule ) : Unit = {
-    tag.setString(str, item.moduleKey)
-  }
 
   /**
    * Constructs a name for the given set of components based on data in the
@@ -143,6 +146,7 @@ object RaygunNbtUtils {
    * {@literal : @lens@}<br>
    * {@literal : @battery@}<br>
    * {@literal : @body@}<p>
+   * {@literal : @barrel@}<p>
    *
    * Note that not all of the replacements are used in the default en_US language file.
    */
@@ -153,6 +157,7 @@ object RaygunNbtUtils {
       .replaceAll("@chamber@", translate( components.chamber ) )
       .replaceAll("@body@", translate( components.body ) )
       .replaceAll("@battery@", translate( components.battery ) )
+      .replaceAll("@barrel@", translate( components.barrel ) )
       .replaceAll("@accessory@", components.accessory.map( translate ).getOrElse("") )
       .replaceAll("@lens@", components.lens.map( translate ).getOrElse("Blaster") )
   }
@@ -173,8 +178,9 @@ object RaygunNbtUtils {
     val body =      getComponent(item, BODY_STR)   (ModuleRegistry.getBody)
     val chamber =   getComponent(item, CHAMBER_STR)(ModuleRegistry.getChamber)
     val battery =   getComponent(item, BATTERY_STR)(ModuleRegistry.getBattery)
+    val barrel =    getComponent(item, BARREL_STR) (ModuleRegistry.getBarrel)
     val lens =      getComponent(item, LENS_STR)   (ModuleRegistry.getLens)
     val accessory = getComponent(item, ACC_STR)    (ModuleRegistry.getAccessory)
-    OptionalGunComponents( body, chamber, battery, Some( TestBarrel ), lens, accessory )
+    OptionalGunComponents( body, chamber, battery, barrel, lens, accessory )
   }
 }
