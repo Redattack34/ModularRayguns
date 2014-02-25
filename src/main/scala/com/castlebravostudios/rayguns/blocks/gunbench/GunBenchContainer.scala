@@ -27,6 +27,7 @@
 
 package com.castlebravostudios.rayguns.blocks.gunbench
 
+import com.castlebravostudios.rayguns.api.items.ItemModule
 import com.castlebravostudios.rayguns.api.items.RaygunAccessory
 import com.castlebravostudios.rayguns.api.items.RaygunBattery
 import com.castlebravostudios.rayguns.api.items.RaygunBody
@@ -35,17 +36,18 @@ import com.castlebravostudios.rayguns.api.items.RaygunLens
 import com.castlebravostudios.rayguns.blocks.BaseContainer
 import com.castlebravostudios.rayguns.blocks.GuiBlockSlot
 import com.castlebravostudios.rayguns.items.misc.RayGun
+import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.entity.player.InventoryPlayer
+import net.minecraft.item.Item
+import net.minecraft.item.ItemStack
 import GunBenchTileEntity.ACC_SLOT
+import GunBenchTileEntity.BARREL_SLOT
 import GunBenchTileEntity.BATTERY_SLOT
 import GunBenchTileEntity.BODY_SLOT
 import GunBenchTileEntity.CHAMBER_SLOT
 import GunBenchTileEntity.LENS_SLOT
 import GunBenchTileEntity.OUTPUT_SLOT
-import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.entity.player.InventoryPlayer
-import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
-import com.castlebravostudios.rayguns.api.items.ItemModule
+import com.castlebravostudios.rayguns.api.items.RaygunBarrel
 
 class GunBenchContainer( inventoryPlayer : InventoryPlayer, entity : GunBenchTileEntity )
   extends BaseContainer( inventoryPlayer, entity ) {
@@ -55,6 +57,7 @@ class GunBenchContainer( inventoryPlayer : InventoryPlayer, entity : GunBenchTil
   addSlotToContainer( new GuiBlockSlot( entity, CHAMBER_SLOT, 106, 19 ) )
   addSlotToContainer( new GuiBlockSlot( entity, BATTERY_SLOT, 106, 37 ) )
   addSlotToContainer( new GuiBlockSlot( entity, ACC_SLOT,      71, 55 ) )
+  addSlotToContainer( new GuiBlockSlot( entity, BARREL_SLOT,   71, 73 ) )
   addSlotToContainer( new GuiBlockSlot( entity, OUTPUT_SLOT,  147, 77 ) )
 
   addPlayerInventory( offsetY = 20 )
@@ -64,13 +67,7 @@ class GunBenchContainer( inventoryPlayer : InventoryPlayer, entity : GunBenchTil
   protected override def transferStackToCustomSlots( player : EntityPlayer, slot : Int, stackInSlot: ItemStack ) : Boolean = {
     val targetSlot = Item.itemsList(stackInSlot.itemID) match {
       case RayGun => OUTPUT_SLOT
-      case item : ItemModule => item.module match {
-        case _: RaygunBody => BODY_SLOT
-        case _: RaygunLens => LENS_SLOT
-        case _: RaygunChamber => CHAMBER_SLOT
-        case _: RaygunBattery => BATTERY_SLOT
-        case _: RaygunAccessory => ACC_SLOT
-      }
+      case item : ItemModule => slotForModule( item )
       case _ => return false
     }
 
@@ -78,5 +75,14 @@ class GunBenchContainer( inventoryPlayer : InventoryPlayer, entity : GunBenchTil
       mergeItemStack( stackInSlot, targetSlot, targetSlot + 1, false );
     }
     else false
+  }
+
+  private def slotForModule( item : ItemModule ) = item.module match {
+    case _: RaygunBody => BODY_SLOT
+    case _: RaygunLens => LENS_SLOT
+    case _: RaygunChamber => CHAMBER_SLOT
+    case _: RaygunBattery => BATTERY_SLOT
+    case _: RaygunAccessory => ACC_SLOT
+    case _: RaygunBarrel => BARREL_SLOT
   }
 }

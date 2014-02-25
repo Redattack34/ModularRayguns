@@ -46,6 +46,7 @@ import net.minecraft.client.resources.I18n
 import com.castlebravostudios.rayguns.api.items.ItemModule
 import com.castlebravostudios.rayguns.items.batteries.ItemBattery
 import com.castlebravostudios.rayguns.utils.Extensions.ItemStackExtension
+import com.castlebravostudios.rayguns.items.barrels.TestBarrel
 
 object RaygunNbtUtils {
 
@@ -69,7 +70,8 @@ object RaygunNbtUtils {
           battery <- getComponent(item, BATTERY_STR)(ModuleRegistry.getBattery)
           lens = getComponent(item, LENS_STR)(ModuleRegistry.getLens)
           accessory = getComponent(item, ACC_STR)(ModuleRegistry.getAccessory) }
-      yield GunComponents( body, chamber, battery, lens, accessory )
+    //TODO
+      yield GunComponents( body, chamber, battery, TestBarrel, lens, accessory )
     }
 
   def getBattery( item : ItemStack ) : Option[RaygunBattery] =
@@ -173,6 +175,6 @@ object RaygunNbtUtils {
     val battery =   getComponent(item, BATTERY_STR)(ModuleRegistry.getBattery)
     val lens =      getComponent(item, LENS_STR)   (ModuleRegistry.getLens)
     val accessory = getComponent(item, ACC_STR)    (ModuleRegistry.getAccessory)
-    OptionalGunComponents( body, chamber, battery, lens, accessory )
+    OptionalGunComponents( body, chamber, battery, Some( TestBarrel ), lens, accessory )
   }
 }
