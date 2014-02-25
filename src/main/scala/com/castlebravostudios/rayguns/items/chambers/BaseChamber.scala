@@ -77,7 +77,7 @@ abstract class BaseChamber extends BaseRaygunModule with RaygunChamber {
 
   def registerChargedShotHandler( ) : Unit = {
     ShotRegistry.registerModifier( ShotModifier{ case ev : ChargeFireEvent => ev.toDefault }{
-      case ChargeFireEvent(_, ch, _, _, Some(ChargeCapacitor), charge) if (ch eq this) => { (f) =>
+      case ChargeFireEvent(_, ch, _, _, _, Some(ChargeCapacitor), charge) if (ch eq this) => { (f) =>
         f().map{ shot => shot.charge *= charge; shot }
       }
     })
@@ -90,7 +90,7 @@ abstract class BaseChamber extends BaseRaygunModule with RaygunChamber {
       vec.modify( _ + (getClampedGaussian() * factor) ).normalized
 
     ShotRegistry.registerModifier( ShotModifier{ case ev : DefaultFireEvent => ev.copy( lens = None ) }{
-      case DefaultFireEvent(_, ch, _, Some(WideLens), _ ) if ( ch eq this ) => { (f) =>
+      case DefaultFireEvent(_, ch, _, _, Some(WideLens), _ ) if ( ch eq this ) => { (f) =>
         Seq.fill(9)( f() ).flatten.map{ shot =>
           shot.aimVector = scatter( shot.aimVector, 0.1f )
           shot.charge = 0.5
@@ -102,15 +102,15 @@ abstract class BaseChamber extends BaseRaygunModule with RaygunChamber {
 
   def registerSingleShotHandlers( ) : Unit = {
     ShotRegistry.registerCreator({
-      case DefaultFireEvent(_, ch, _, None, _) if ch eq this => { (world, player) =>
+      case DefaultFireEvent(_, ch, _, _, None, _) if ch eq this => { (world, player) =>
         Seq( createAndInitBolt( world, player ) )
       }
-      case DefaultFireEvent(_, ch, _, Some(PreciseLens), _ ) if ch eq this => { (world, player) =>
+      case DefaultFireEvent(_, ch, _, _, Some(PreciseLens), _ ) if ch eq this => { (world, player) =>
         val bolt = createAndInitBolt(world, player)
         bolt.depletionRate =  0.025d
         Seq( bolt )
       }
-      case DefaultFireEvent(_, ch, _, Some(PreciseBeamLens), _ ) if ch eq this => { (world, player) =>
+      case DefaultFireEvent(_, ch, _, _, Some(PreciseBeamLens), _ ) if ch eq this => { (world, player) =>
         Seq( createAndInitBeam(world, player) )
       }
     })
