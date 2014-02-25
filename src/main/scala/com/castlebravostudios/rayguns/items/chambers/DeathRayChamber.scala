@@ -45,7 +45,6 @@ object DeathRayChamber extends BaseChamber {
 
   def registerShotHandlers() : Unit = {
     registerSingleShotHandlers()
-    registerScatterShotHandler()
     registerPreciseShotHandler()
   }
 }
