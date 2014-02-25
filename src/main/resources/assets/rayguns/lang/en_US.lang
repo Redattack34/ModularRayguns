@@ -65,6 +65,7 @@ rayguns.container.gunbench.lens=Lens:
 rayguns.container.gunbench.acc=Accessory:
 rayguns.container.gunbench.chamber=Chamber:
 rayguns.container.gunbench.battery=Battery:
+rayguns.container.gunbench.barrel=Barrel:
 rayguns.moreinfo=Hold SHIFT for more information
 rayguns.infinityCharge=Infinity/Infinity
 

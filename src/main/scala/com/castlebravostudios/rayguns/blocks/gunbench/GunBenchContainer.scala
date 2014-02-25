@@ -55,9 +55,9 @@ class GunBenchContainer( inventoryPlayer : InventoryPlayer, entity : GunBenchTil
   addSlotToContainer( new GuiBlockSlot( entity, CHAMBER_SLOT, 106, 19 ) )
   addSlotToContainer( new GuiBlockSlot( entity, BATTERY_SLOT, 106, 37 ) )
   addSlotToContainer( new GuiBlockSlot( entity, ACC_SLOT,      71, 55 ) )
-  addSlotToContainer( new GuiBlockSlot( entity, OUTPUT_SLOT,  147, 57 ) )
+  addSlotToContainer( new GuiBlockSlot( entity, OUTPUT_SLOT,  147, 77 ) )
 
-  addPlayerInventory()
+  addPlayerInventory( offsetY = 20 )
 
   val lastCustomIndex = OUTPUT_SLOT
 
