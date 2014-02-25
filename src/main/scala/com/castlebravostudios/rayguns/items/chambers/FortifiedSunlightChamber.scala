@@ -47,5 +47,6 @@ object FortifiedSunlightChamber extends BaseChamber {
     registerSingleShotHandlers()
     registerScatterShotHandler()
     registerChargedShotHandler()
+    registerPreciseShotHandler()
   }
 }

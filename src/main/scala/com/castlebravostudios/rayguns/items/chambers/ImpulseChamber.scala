@@ -47,5 +47,6 @@ object ImpulseChamber extends BaseChamber {
     registerSingleShotHandlers()
     registerScatterShotHandler()
     registerChargedShotHandler()
+    registerPreciseShotHandler()
   }
 }

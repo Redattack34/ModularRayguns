@@ -57,17 +57,19 @@ object LightningChamber extends BaseChamber {
     registerSingleShotHandlers()
     registerScatterShotHandler()
     registerChargedShotHandler()
+    registerPreciseShotHandler()
   }
 
   override def initBeam( world : World, player : EntityPlayer, beam : BaseBeamEntity ) : Unit = {
     if ( world.isOnClient ) {
-      beam.asInstanceOf[LightningBeamEntity].pointsList = getPointsList( world, beam.aimVector, player )
+      val baseBeam = beam.asInstanceOf[LightningBeamEntity]
+      baseBeam.pointsList = getPointsList( world, beam.aimVector, player, baseBeam.maxRange )
     }
   }
 
-  private def getPointsList( world : World, aim : Vector3, player : EntityPlayer ) : Seq[Vector3] = {
+  private def getPointsList( world : World, aim : Vector3, player : EntityPlayer, range : Int ) : Seq[Vector3] = {
     val start = RaytraceUtils.getPlayerPosition(world, player)
-    val end = RaytraceUtils.getPlayerTarget(world, player, aim, BeamUtils.maxBeamLength).toMinecraft( world )
+    val end = RaytraceUtils.getPlayerTarget(world, player, aim, range).toMinecraft( world )
 
     val blocks = RaytraceUtils.rayTraceBlocks(world, start, end)( (_, _, _) => true )
     val actualEnd = blocks.headOption.map( _.hitVec ).getOrElse( end )

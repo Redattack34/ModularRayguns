@@ -47,5 +47,6 @@ object TractorChamber extends BaseChamber {
     registerSingleShotHandlers()
     registerScatterShotHandler()
     registerChargedShotHandler()
+    registerPreciseShotHandler()
   }
 }

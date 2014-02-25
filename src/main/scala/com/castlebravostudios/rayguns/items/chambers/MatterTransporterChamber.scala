@@ -48,6 +48,7 @@ object MatterTransporterChamber extends BaseChamber {
 
   def registerShotHandlers() : Unit = {
     registerSingleShotHandlers()
+    registerPreciseShotHandler()
   }
 
   override def handlePrefireEvent( event : PrefireEvent ) : Unit = {

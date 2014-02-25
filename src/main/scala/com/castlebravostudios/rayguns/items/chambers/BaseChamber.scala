@@ -49,6 +49,8 @@ import com.castlebravostudios.rayguns.utils.Vector3
 import net.minecraft.util.MathHelper
 import java.util.Random
 import com.castlebravostudios.rayguns.api.ShotModifier
+import com.castlebravostudios.rayguns.items.barrels.BlasterBarrel
+import com.castlebravostudios.rayguns.items.barrels.BeamBarrel
 
 
 abstract class BaseChamber extends BaseRaygunModule with RaygunChamber {
@@ -100,18 +102,30 @@ abstract class BaseChamber extends BaseRaygunModule with RaygunChamber {
     })
   }
 
+  def registerPreciseShotHandler( ) : Unit = {
+    ShotRegistry.registerModifier( ShotModifier{ case ev : DefaultFireEvent => ev.copy( lens = None ) }{
+      case ChargeFireEvent(_, ch, _, BlasterBarrel, Some(PreciseLens), _, charge) if (ch eq this) => { (f) =>
+        f().map{ shot =>
+          shot.asInstanceOf[BaseBoltEntity].depletionRate = 0.025d
+          shot
+        }
+      }
+      case ChargeFireEvent(_, ch, _, BeamBarrel, Some(PreciseLens), _, charge) if (ch eq this) => { (f) =>
+        f().map{ shot =>
+          shot.asInstanceOf[BaseBeamEntity].maxRange = 40
+          shot
+        }
+      }
+    })
+  }
+
   def registerSingleShotHandlers( ) : Unit = {
     ShotRegistry.registerCreator({
-      case DefaultFireEvent(_, ch, _, _, None, _) if ch eq this => { (world, player) =>
+      case DefaultFireEvent(_, ch, _, BlasterBarrel, _, _) if ch eq this => { (world, player) =>
         Seq( createAndInitBolt( world, player ) )
       }
-      case DefaultFireEvent(_, ch, _, _, Some(PreciseLens), _ ) if ch eq this => { (world, player) =>
-        val bolt = createAndInitBolt(world, player)
-        bolt.depletionRate =  0.025d
-        Seq( bolt )
-      }
-      case DefaultFireEvent(_, ch, _, _, Some(PreciseBeamLens), _ ) if ch eq this => { (world, player) =>
-        Seq( createAndInitBeam(world, player) )
+      case DefaultFireEvent(_, ch, _, BeamBarrel, _, _) if ch eq this => { (world, player) =>
+        Seq( createAndInitBeam( world, player ) )
       }
     })
   }

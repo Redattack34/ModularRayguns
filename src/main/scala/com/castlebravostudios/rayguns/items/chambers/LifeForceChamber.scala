@@ -48,5 +48,6 @@ object LifeForceChamber extends BaseChamber {
     registerSingleShotHandlers()
     registerScatterShotHandler()
     registerChargedShotHandler()
+    registerPreciseShotHandler()
   }
 }

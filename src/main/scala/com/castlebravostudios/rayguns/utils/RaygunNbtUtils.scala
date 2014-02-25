@@ -46,7 +46,6 @@ import net.minecraft.client.resources.I18n
 import com.castlebravostudios.rayguns.api.items.ItemModule
 import com.castlebravostudios.rayguns.items.batteries.ItemBattery
 import com.castlebravostudios.rayguns.utils.Extensions.ItemStackExtension
-import com.castlebravostudios.rayguns.items.barrels.TestBarrel
 
 object RaygunNbtUtils {
 
@@ -159,7 +158,7 @@ object RaygunNbtUtils {
       .replaceAll("@battery@", translate( components.battery ) )
       .replaceAll("@barrel@", translate( components.barrel ) )
       .replaceAll("@accessory@", components.accessory.map( translate ).getOrElse("") )
-      .replaceAll("@lens@", components.lens.map( translate ).getOrElse("Blaster") )
+      .replaceAll("@lens@", components.lens.map( translate ).getOrElse("") )
   }
 
   def buildBrokenGun( item : ItemStack ) : ItemStack = {

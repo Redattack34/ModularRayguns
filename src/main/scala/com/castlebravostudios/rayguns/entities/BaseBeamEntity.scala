@@ -45,6 +45,8 @@ class BaseBeamEntity(world : World) extends BaseShootable( world ) {
   def depletionRate : Double = 0.3d
   var length : Double = 0
 
+  var maxRange : Int = 20
+
   ignoreFrustumCheck = true
 
   //I've... repurposed a bunch of the vanilla fields to avoid messing with packets and so on.
@@ -66,5 +68,25 @@ class BaseBeamEntity(world : World) extends BaseShootable( world ) {
     if ( charge <= 0 ) {
       setDead()
     }
+  }
+
+    override def writeEntityToNBT( tag : NBTTagCompound ) : Unit = {
+    super.writeEntityToNBT(tag)
+    tag.setInteger("maxRange", maxRange)
+  }
+
+  override def readEntityFromNBT( tag : NBTTagCompound ) : Unit = {
+    super.readEntityFromNBT(tag)
+    maxRange = tag.getInteger("maxRange")
+  }
+
+  override def writeSpawnData( out : ByteArrayDataOutput ) : Unit = {
+    super.writeSpawnData(out)
+    out.writeInt( maxRange )
+  }
+
+  override def readSpawnData( in : ByteArrayDataInput ) : Unit = {
+    super.readSpawnData(in)
+    maxRange = in.readInt()
   }
 }

@@ -47,6 +47,7 @@ object Tier1CuttingChamber extends BaseChamber {
     registerSingleShotHandlers()
     registerScatterShotHandler()
     registerChargedShotHandler()
+    registerPreciseShotHandler()
   }
 }
 object Tier2CuttingChamber extends BaseChamber {
@@ -65,6 +66,7 @@ object Tier2CuttingChamber extends BaseChamber {
     registerSingleShotHandlers()
     registerScatterShotHandler()
     registerChargedShotHandler()
+    registerPreciseShotHandler()
   }
 }
 object Tier3CuttingChamber extends BaseChamber {
@@ -83,5 +85,6 @@ object Tier3CuttingChamber extends BaseChamber {
     registerSingleShotHandlers()
     registerScatterShotHandler()
     registerChargedShotHandler()
+    registerPreciseShotHandler()
   }
 }
