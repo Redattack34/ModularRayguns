@@ -74,10 +74,10 @@ rayguns.infinityCharge=Infinity/Infinity
 itemGroup.tabRayguns=Modular Rayguns
 
 # See RaygunNbtUtils.getRaygunName for more details.
-rayguns.RaygunNamePattern=@accessory@ @chamber@ @lens@ @barrel@
+rayguns.RaygunNamePattern=@lens@ @accessory@ @chamber@ @barrel@
 
 rayguns.PreciseLens.segment=Precise
-rayguns.WideLens.segment=Scatter
+rayguns.WideLens.segment=Scattering
 
 rayguns.ExplosiveChamber.segment=Explosive
 rayguns.FortifiedSunlightChamber.segment=Fortified Sunlight

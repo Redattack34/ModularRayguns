@@ -159,6 +159,8 @@ object RaygunNbtUtils {
       .replaceAll("@barrel@", translate( components.barrel ) )
       .replaceAll("@accessory@", components.accessory.map( translate ).getOrElse("") )
       .replaceAll("@lens@", components.lens.map( translate ).getOrElse("") )
+      .replaceAll( "  ", " " )
+      .trim
   }
 
   def buildBrokenGun( item : ItemStack ) : ItemStack = {
