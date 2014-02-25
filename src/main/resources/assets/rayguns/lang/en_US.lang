@@ -11,6 +11,9 @@ item.rayguns.UltimateBattery.name=Ultimate Battery
 item.rayguns.FireflyBody.name=Firefly Raygun Body
 item.rayguns.MantisBody.name=Mantis Raygun Body
 
+item.rayguns.BeamBarrel.name=Beam Barrel
+item.rayguns.BlasterBarrel.name=Blaster Barrel
+
 item.rayguns.ExplosiveChamber.name=Explosive Beam Chamber
 item.rayguns.FortifiedSunlightChamber.name=Fortified Sunlight Beam Chamber
 item.rayguns.FrostRayChamber.name=Frost Ray Beam Chamber
@@ -72,11 +75,11 @@ rayguns.infinityCharge=Infinity/Infinity
 itemGroup.tabRayguns=Modular Rayguns
 
 # See RaygunNbtUtils.getRaygunName for more details.
-rayguns.RaygunNamePattern=@accessory@ @chamber@ @lens@
+rayguns.RaygunNamePattern=@accessory@ @chamber@ @lens@ @barrel@
 
-rayguns.PreciseBeamLens.segment=Precise Beam
-rayguns.PreciseLens.segment=Precise Blaster
-rayguns.WideLens.segment=Scatter Blaster
+rayguns.PreciseBeamLens.segment=Precise
+rayguns.PreciseLens.segment=Precise
+rayguns.WideLens.segment=Scatter
 
 rayguns.ExplosiveChamber.segment=Explosive
 rayguns.FortifiedSunlightChamber.segment=Fortified Sunlight
@@ -98,3 +101,6 @@ rayguns.ExtendedBattery.segment=Extended
 rayguns.RefireCapacitor.segment=Rapid
 rayguns.SolarPanel.segment=Solar
 rayguns.ChargeCapacitor.segment=Charging
+
+rayguns.BeamBarrel.segment=Beam
+rayguns.BlasterBarrel.segment=Blaster

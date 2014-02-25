@@ -27,10 +27,11 @@
 
 package com.castlebravostudios.rayguns.items
 
-//scalastyle:off
+//scalastyle:off underscore.import
 import com.castlebravostudios.rayguns.items.accessories._
 import com.castlebravostudios.rayguns.items.batteries._
 import com.castlebravostudios.rayguns.items.bodies._
+import com.castlebravostudios.rayguns.items.barrels._
 import com.castlebravostudios.rayguns.items.chambers._
 import com.castlebravostudios.rayguns.items.emitters._
 import com.castlebravostudios.rayguns.items.lenses._
@@ -40,7 +41,6 @@ import com.castlebravostudios.rayguns.items.chambers.LaserChamber
 import com.castlebravostudios.rayguns.api.ModuleRegistrationHelper
 import com.castlebravostudios.rayguns.mod.Config
 import ModuleRegistrationHelper.registerModule
-import com.castlebravostudios.rayguns.items.barrels.TestBarrel
 
 object Items {
 
@@ -127,7 +127,8 @@ object Items {
   }
 
   private def registerBarrels() : Unit = {
-    registerModule( TestBarrel, Config.barrelTest )
+    registerModule( BeamBarrel, Config.barrelBeam )
+    registerModule( BlasterBarrel, Config.barrelBlaster )
   }
 
   /**
@@ -135,7 +136,7 @@ object Items {
    * I don't actually have to register them anywhere. This merely forces the
    * VM to load (and thus register for me) the Objects.
    */
-  private def registerItem( item : Any) : Unit = {
+  private def registerItem( item : Any ) : Unit = {
     item.hashCode()
   }
 }

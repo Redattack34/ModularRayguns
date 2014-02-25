@@ -96,7 +96,8 @@ object Config {
   var chamberCuttingTier3 : Int = _
   var chamberMatterTransporter : Int = _
 
-  var barrelTest : Int = _
+  var barrelBeam : Int = _
+  var barrelBlaster : Int = _
 
   var minLightningDetail : Double = _
   var lightningFlash : Boolean = _
@@ -200,7 +201,8 @@ object Config {
   }
 
   private def loadBarrelItemIds( config : Configuration ) : Unit = {
-    barrelTest = config.getItem( "barrelTest", 5700 ).getInt
+    barrelBeam = config.getItem( "barrelBeam", 5701 ).getInt
+    barrelBlaster = config.getItem( "barrelBlaster", 5702 ).getInt
   }
 
   private def loadMisc( config : Configuration ) : Unit = {

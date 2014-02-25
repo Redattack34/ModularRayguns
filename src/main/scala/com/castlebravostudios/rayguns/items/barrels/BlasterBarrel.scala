@@ -32,15 +32,15 @@ import com.castlebravostudios.rayguns.api.items.BaseRaygunModule
 import com.castlebravostudios.rayguns.api.items.ItemModule
 import com.castlebravostudios.rayguns.mod.ModularRayguns
 
-object TestBarrel extends BaseRaygunModule with RaygunBarrel {
+object BlasterBarrel extends BaseRaygunModule with RaygunBarrel {
 
-  val moduleKey = "TestBarrel"
+  val moduleKey = "BlasterBarrel"
   val powerModifier = 1.0d;
-  val nameSegmentKey = "rayguns.TestBarrel.segment"
+  val nameSegmentKey = "rayguns.BlasterBarrel.segment"
 
   def createItem( id : Int ) : ItemModule = new ItemModule( id, this )
-    .setUnlocalizedName("rayguns.TestBarrel")
-    .setTextureName("rayguns:test_barrel")
+    .setUnlocalizedName("rayguns.BlasterBarrel")
+    .setTextureName("rayguns:barrel_blaster")
     .setCreativeTab( ModularRayguns.raygunsTab )
     .setMaxStackSize(1)
 }
