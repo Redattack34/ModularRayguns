@@ -27,11 +27,12 @@
 
 package com.castlebravostudios.rayguns.items.recipes
 
-//scalastyle:off
+//scalastyle:off underscore.import
 import com.castlebravostudios.rayguns.api.items._
 import com.castlebravostudios.rayguns.items.accessories._
 import com.castlebravostudios.rayguns.items.batteries._
 import com.castlebravostudios.rayguns.items.bodies._
+import com.castlebravostudios.rayguns.items.barrels._
 import com.castlebravostudios.rayguns.items.emitters.Emitters
 import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.Block
@@ -59,6 +60,7 @@ object VanillaRecipeLibrary extends RecipeLibrary {
     registerChambers()
     registerEmitters()
     registerLenses()
+    registerBarrels()
     registerMisc()
   }
 
@@ -225,6 +227,22 @@ object VanillaRecipeLibrary extends RecipeLibrary {
         ( 'I' -> Item.ingotIron ),
         ( 'D' -> Item.diamond ) )
     }
+  }
+
+  private def registerBarrels() = {
+    addModuleRecipe( BeamBarrel,
+      "GI ",
+      "IGI",
+      " IG",
+      ( 'G' -> Block.glass ),
+      ( 'I' -> Item.ingotIron ) )
+
+    addModuleRecipe( BlasterBarrel,
+      "GI ",
+      "I I",
+      " IG",
+      ( 'G' -> Block.glass ),
+      ( 'I' -> Item.ingotIron ) )
   }
 
   private def registerMisc() = {
