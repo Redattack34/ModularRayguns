@@ -35,12 +35,12 @@ import com.castlebravostudios.rayguns.items.chambers._
 import com.castlebravostudios.rayguns.items.emitters._
 import com.castlebravostudios.rayguns.items.lenses._
 import com.castlebravostudios.rayguns.items.misc._
-//scalastyle:on
 import net.minecraft.item.Item
 import com.castlebravostudios.rayguns.items.chambers.LaserChamber
 import com.castlebravostudios.rayguns.api.ModuleRegistrationHelper
 import com.castlebravostudios.rayguns.mod.Config
 import ModuleRegistrationHelper.registerModule
+import com.castlebravostudios.rayguns.items.barrels.TestBarrel
 
 object Items {
 
@@ -52,6 +52,7 @@ object Items {
     registerAccessories()
     registerBodies()
     registerChambers()
+    registerBarrels()
   }
 
   private def registerChambers() : Unit = {
@@ -123,6 +124,10 @@ object Items {
     registerItem( GlassGainMedium )
     registerItem( GlowstoneGainMedium )
     registerItem( DiamondGainMedium )
+  }
+
+  private def registerBarrels() : Unit = {
+    registerModule( TestBarrel, Config.barrelTest )
   }
 
   /**

@@ -96,6 +96,8 @@ object Config {
   var chamberCuttingTier3 : Int = _
   var chamberMatterTransporter : Int = _
 
+  var barrelTest : Int = _
+
   var minLightningDetail : Double = _
   var lightningFlash : Boolean = _
   var rfPowerMultiplier : Double = _
@@ -114,6 +116,7 @@ object Config {
     loadGunBodyItemIds(config)
     loadEmitterItemIds(config)
     loadChamberItemIds(config)
+    loadBarrelItemIds(config)
     loadBlockIds( config )
     loadMisc( config )
     loadRecipes( config )
@@ -194,6 +197,10 @@ object Config {
     chamberCuttingTier2 = config.getItem( "chamberCuttingTier2", 5613 ).getInt
     chamberCuttingTier3 = config.getItem( "chamberCuttingTier3", 5614 ).getInt
     chamberMatterTransporter = config.getItem( "chamberMatterTransporter", 5615 ).getInt
+  }
+
+  private def loadBarrelItemIds( config : Configuration ) : Unit = {
+    barrelTest = config.getItem( "barrelTest", 5700 ).getInt
   }
 
   private def loadMisc( config : Configuration ) : Unit = {
