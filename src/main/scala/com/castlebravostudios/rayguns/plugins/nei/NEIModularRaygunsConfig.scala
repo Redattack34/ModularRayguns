@@ -27,7 +27,7 @@
 
 package com.castlebravostudios.rayguns.plugins.nei
 
-//scalastyle:off
+//scalastyle:off underscore.import
 import com.castlebravostudios.rayguns.api.items.RaygunModule
 import com.castlebravostudios.rayguns.items.Blocks
 import com.castlebravostudios.rayguns.items.accessories._
@@ -37,6 +37,7 @@ import com.castlebravostudios.rayguns.items.chambers._
 import com.castlebravostudios.rayguns.items.emitters.Emitters
 import com.castlebravostudios.rayguns.items.lenses._
 import com.castlebravostudios.rayguns.items.misc._
+import com.castlebravostudios.rayguns.items.barrels._
 import com.castlebravostudios.rayguns.mod.ModularRayguns
 import codechicken.nei.MultiItemRange
 import codechicken.nei.api.API
@@ -55,12 +56,13 @@ class NEIModularRaygunsConfig extends IConfigureNEI {
     API.hideItem( BrokenGun.itemID )
 
     API.addSetRange("Modular Rayguns", mainItemRange)
-    API.addSetRange("Modular Rayguns.Chambers", chamberItemRange)
-    API.addSetRange("Modular Rayguns.Lenses", lensItemRange)
-    API.addSetRange("Modular Rayguns.Bodies", bodyItemRange)
     API.addSetRange("Modular Rayguns.Accessories", accessoryItemRange)
+    API.addSetRange("Modular Rayguns.Barrels", barrelItemRange)
     API.addSetRange("Modular Rayguns.Batteries", batteryItemRange)
+    API.addSetRange("Modular Rayguns.Bodies", bodyItemRange)
+    API.addSetRange("Modular Rayguns.Chambers", chamberItemRange)
     API.addSetRange("Modular Rayguns.Emitters", emitterItemRange)
+    API.addSetRange("Modular Rayguns.Lenses", lensItemRange)
 
     API.registerRecipeHandler( new NEILensGrinderRecipeManager )
     API.registerUsageHandler( new NEILensGrinderRecipeManager )
@@ -104,7 +106,6 @@ class NEIModularRaygunsConfig extends IConfigureNEI {
 
   private def lensItemRange: MultiItemRange = {
     val range = new MultiItemRange()
-    addModule( range, PreciseBeamLens )
     addModule( range, PreciseLens )
     addModule( range, WideLens )
     range
@@ -132,6 +133,13 @@ class NEIModularRaygunsConfig extends IConfigureNEI {
     addModule( range, AdvancedBattery )
     addModule( range, UltimateBattery )
     addModule( range, InfiniteBattery )
+    range
+  }
+
+  private def barrelItemRange: MultiItemRange = {
+    val range = new MultiItemRange()
+    addModule( range, BeamBarrel )
+    addModule( range, BlasterBarrel )
     range
   }
 
