@@ -204,18 +204,6 @@ object VanillaRecipeLibrary extends RecipeLibrary {
 
   private def registerLenses() = {
     for {
-      item <- PreciseBeamLens.item
-    }{
-      LensGrinderRecipeRegistry.register( 600, new ItemStack( item ),
-        "IGI",
-        "GGG",
-        "IGI",
-        ( 'G' -> Block.glowStone ),
-        ( 'I' -> Item.ingotIron ) )
-    }
-
-
-    for {
       item <- PreciseLens.item
     } {
       LensGrinderRecipeRegistry.register( 600, new ItemStack(item ),
