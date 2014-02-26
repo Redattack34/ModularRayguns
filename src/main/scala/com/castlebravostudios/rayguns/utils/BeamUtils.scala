@@ -58,6 +58,7 @@ object BeamUtils {
         ( entity ) => fx.effect.canCollideWithEntity( fx, entity ) )
 
     fx.setStart( start )
+    fx.end = Vector3( hits.headOption.map( _.hitVec ).getOrElse( end ) )
     fx.rotationPitch = fx.aimVector.pitch
     fx.rotationYaw = fx.aimVector.yaw
 
