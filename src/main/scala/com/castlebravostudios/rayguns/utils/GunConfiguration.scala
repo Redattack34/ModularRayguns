@@ -36,11 +36,12 @@ import com.castlebravostudios.rayguns.api.items.RaygunChamber
 import com.castlebravostudios.rayguns.api.items.RaygunAccessory
 import com.castlebravostudios.rayguns.api.items.RaygunBattery
 import com.castlebravostudios.rayguns.items.accessories.ChargeCapacitor
+import com.castlebravostudios.rayguns.api.items.RaygunBarrel
 
 case class GunComponents(body : RaygunBody, chamber : RaygunChamber, battery : RaygunBattery,
-    lens : Option[RaygunLens], accessory : Option[RaygunAccessory] ) {
+    barrel : RaygunBarrel, lens : Option[RaygunLens], accessory : Option[RaygunAccessory] ) {
 
-  def components : Seq[RaygunModule] = Seq( body, chamber, battery ) ++ lens ++ accessory
+  def components : Seq[RaygunModule] = Seq( body, chamber, battery, barrel ) ++ lens ++ accessory
 
   //TODO: Ugly special-case hack. Find a better way to do this.
   def getFireEvent( charge : Double ) : FireEvent = accessory match {
@@ -53,13 +54,13 @@ case class GunComponents(body : RaygunBody, chamber : RaygunChamber, battery : R
 
 case class OptionalGunComponents(
   body : Option[RaygunBody], chamber : Option[RaygunChamber], battery : Option[RaygunBattery],
-  lens : Option[RaygunLens], acc : Option[RaygunAccessory] ) {
+  barrel : Option[RaygunBarrel], lens : Option[RaygunLens], acc : Option[RaygunAccessory] ) {
 
-  def components : Seq[RaygunModule] = body.toSeq ++ chamber ++ battery ++ lens ++ acc
+  def components : Seq[RaygunModule] = body.toSeq ++ chamber ++ battery ++ barrel ++ lens ++ acc
 }
 object OptionalGunComponents {
   def apply( comp : GunComponents ) : OptionalGunComponents =
     new OptionalGunComponents( Some( comp.body ), Some( comp.chamber ),
-        Some( comp.battery ), comp.lens, comp.accessory );
+        Some( comp.battery ), Some( comp.barrel ), comp.lens, comp.accessory );
 }
 

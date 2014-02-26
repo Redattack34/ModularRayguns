@@ -46,10 +46,12 @@ object LaserEffect extends BaseEffect {
 
   def hitBlock( shootable : Shootable, hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Boolean = true
 
-  override def createImpactParticles( shootable : Shootable, hitX : Double, hitY : Double, hitZ : Double ) : Unit = {
-    for ( _ <- 0 until 4 ) {
-      shootable.worldObj.spawnParticle("smoke", hitX, hitY, hitZ, 0.0D, 0.0D, 0.0D);
-    }
+  override def createImpactParticles( shootable : Shootable, hitX : Double, hitY : Double, hitZ : Double ): Unit = {
+    for ( _ <- 0 until 4) spawnParticle(shootable, hitX, hitY, hitZ)
+  }
+
+  private def spawnParticle(shootable: com.castlebravostudios.rayguns.entities.Shootable, hitX: Double, hitY: Double, hitZ: Double): Unit = {
+    shootable.worldObj.spawnParticle("smoke", hitX, hitY, hitZ, 0.0D, 0.0D, 0.0D)
   }
 
   val boltTexture = ModularRayguns.texture( "textures/bolts/laser_bolt.png" )

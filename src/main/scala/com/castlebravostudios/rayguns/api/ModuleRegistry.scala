@@ -33,6 +33,7 @@ import com.castlebravostudios.rayguns.api.items.RaygunAccessory
 import com.castlebravostudios.rayguns.api.items.RaygunBattery
 import com.castlebravostudios.rayguns.api.items.RaygunLens
 import com.castlebravostudios.rayguns.api.items.RaygunChamber
+import com.castlebravostudios.rayguns.api.items.RaygunBarrel
 
 object ModuleRegistry {
 
@@ -41,6 +42,7 @@ object ModuleRegistry {
   private[this] var registeredBatteries = Map[String, RaygunBattery]()
   private[this] var registeredLenses = Map[String, RaygunLens]()
   private[this] var registeredAccessories = Map[String, RaygunAccessory]()
+  private[this] var registeredBarrels = Map[String, RaygunBarrel]()
 
   def registerModule( module: RaygunModule ) : Unit = module match {
     case item : RaygunBody => registeredBodies += ( item.moduleKey -> item )
@@ -48,6 +50,8 @@ object ModuleRegistry {
     case item : RaygunBattery => registeredBatteries += ( item.moduleKey -> item )
     case item : RaygunLens => registeredLenses += ( item.moduleKey -> item )
     case item : RaygunAccessory => registeredAccessories += ( item.moduleKey -> item )
+    case item : RaygunBarrel => registeredBarrels += ( item.moduleKey -> item )
+    case _ => throw new IllegalArgumentException( "Tried to register an unknown module type." )
   }
 
   def getBody( key : String ) : Option[RaygunBody] = registeredBodies.get( key )
@@ -55,6 +59,7 @@ object ModuleRegistry {
   def getBattery( key : String ) : Option[RaygunBattery] = registeredBatteries.get( key )
   def getLens( key : String ) : Option[RaygunLens] = registeredLenses.get( key )
   def getAccessory( key : String ) : Option[RaygunAccessory] = registeredAccessories.get( key )
+  def getBarrel( key : String ) : Option[RaygunBarrel] = registeredBarrels.get( key )
 
   def isRegistered( module : Any ) : Boolean = module match {
     case item : RaygunBody => registeredBodies.contains(item.moduleKey)
@@ -62,6 +67,7 @@ object ModuleRegistry {
     case item : RaygunBattery => registeredBatteries.contains(item.moduleKey)
     case item : RaygunLens => registeredLenses.contains(item.moduleKey)
     case item : RaygunAccessory => registeredAccessories.contains(item.moduleKey)
+    case item : RaygunBarrel => registeredBarrels.contains( item.moduleKey )
     case _ => false
   }
 }

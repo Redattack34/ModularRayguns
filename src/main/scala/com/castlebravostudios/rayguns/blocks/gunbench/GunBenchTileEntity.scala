@@ -42,12 +42,14 @@ import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import com.castlebravostudios.rayguns.api.items.RaygunModule
+import com.castlebravostudios.rayguns.api.items.RaygunBarrel
 
 class GunBenchTileEntity extends BaseInventoryTileEntity {
-  private[this] val inv = Array.fill[ItemStack](6)(null)
+  private[this] val inv = Array.fill[ItemStack](7)(null)
 
   //scalastyle:off import.grouping
-  import GunBenchTileEntity.{BODY_SLOT, LENS_SLOT, CHAMBER_SLOT, BATTERY_SLOT, ACC_SLOT, OUTPUT_SLOT}
+  import GunBenchTileEntity.{BODY_SLOT, LENS_SLOT, CHAMBER_SLOT,
+    BATTERY_SLOT, ACC_SLOT, BARREL_SLOT, OUTPUT_SLOT}
   //scalastyle:on import.grouping
 
   override def getSizeInventory : Int = inv.length
@@ -65,6 +67,7 @@ class GunBenchTileEntity extends BaseInventoryTileEntity {
         case None => null
       }
       def setSlot( slot : Int ) ( item : ItemStack ) : Unit = setInventorySlotContents( slot, item )
+
       if ( slot == OUTPUT_SLOT && inv(OUTPUT_SLOT) != null ) {
         val components = RaygunNbtUtils.getAllValidComponents( inv(OUTPUT_SLOT) )
         components.body.map(toStack).foreach(setSlot(BODY_SLOT))
@@ -73,9 +76,10 @@ class GunBenchTileEntity extends BaseInventoryTileEntity {
         copyCharge( inv(OUTPUT_SLOT), inv(BATTERY_SLOT) )
         components.lens.map(toStack).foreach(setSlot(LENS_SLOT))
         components.acc.map(toStack).foreach(setSlot(ACC_SLOT))
+        components.barrel.map(toStack).foreach(setSlot(BARREL_SLOT))
       }
 
-      val components = GunComponents( body, chamber, battery, lens, accessory )
+      val components = GunComponents( body, chamber, battery, barrel, lens, accessory )
 
       val gunStack = RaygunNbtUtils.buildGun( components ).orNull
       copyCharge( inv(BATTERY_SLOT), gunStack )
@@ -111,6 +115,7 @@ class GunBenchTileEntity extends BaseInventoryTileEntity {
   private def battery = getModule(BATTERY_SLOT).asInstanceOf[RaygunBattery]
   private def lens = Option( getModule(LENS_SLOT).asInstanceOf[RaygunLens] )
   private def accessory = Option( getModule(ACC_SLOT).asInstanceOf[RaygunAccessory] )
+  private def barrel = getModule(BARREL_SLOT).asInstanceOf[RaygunBarrel]
 
   private def getModule( slot : Int ) : RaygunModule = {
     val stack = inv(slot)
@@ -144,6 +149,7 @@ class GunBenchTileEntity extends BaseInventoryTileEntity {
     case CHAMBER_SLOT => module.isInstanceOf[RaygunChamber]
     case BATTERY_SLOT => module.isInstanceOf[RaygunBattery]
     case ACC_SLOT => module.isInstanceOf[RaygunAccessory]
+    case BARREL_SLOT => module.isInstanceOf[RaygunBarrel]
   }
 
 }
@@ -154,5 +160,6 @@ object GunBenchTileEntity {
   val CHAMBER_SLOT = 2
   val BATTERY_SLOT = 3
   val ACC_SLOT = 4
-  val OUTPUT_SLOT = 5
+  val BARREL_SLOT = 5
+  val OUTPUT_SLOT = 6
 }

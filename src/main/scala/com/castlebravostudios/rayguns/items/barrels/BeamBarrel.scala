@@ -25,27 +25,22 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.castlebravostudios.rayguns.entities
+package com.castlebravostudios.rayguns.items.barrels
 
-import com.castlebravostudios.rayguns.entities.effects.LightningBeamEntity
-import com.castlebravostudios.rayguns.entities.effects.LightningBoltEntity
-import com.castlebravostudios.rayguns.entities.effects.MatterTransporterBeamEntity
-import com.castlebravostudios.rayguns.entities.effects.MatterTransporterBoltEntity
-
+import com.castlebravostudios.rayguns.api.items.RaygunBarrel
+import com.castlebravostudios.rayguns.api.items.BaseRaygunModule
+import com.castlebravostudios.rayguns.api.items.ItemModule
 import com.castlebravostudios.rayguns.mod.ModularRayguns
 
-import cpw.mods.fml.common.registry.EntityRegistry
+object BeamBarrel extends BaseRaygunModule with RaygunBarrel {
 
-object Entities {
+  val moduleKey = "BeamBarrel"
+  val powerModifier = 1.2d;
+  val nameSegmentKey = "rayguns.BeamBarrel.segment"
 
-  def registerEntities : Unit = {
-    EntityRegistry.registerModEntity(classOf[BaseBoltEntity], "BoltEntity", 1, ModularRayguns, 40, 1, true)
-    EntityRegistry.registerModEntity(classOf[BaseBeamEntity], "BeamEntity", 2, ModularRayguns, 40, 1, true)
-    EntityRegistry.registerModEntity(classOf[LightningBoltEntity], "LightningBolt", 3, ModularRayguns, 40, 1, true)
-    EntityRegistry.registerModEntity(classOf[LightningBeamEntity], "LightningBeam", 4, ModularRayguns, 40, 1, true)
-    EntityRegistry.registerModEntity(classOf[MatterTransporterBoltEntity],
-        "MatterTransporterBolt", 5, ModularRayguns, 40, 1, true)
-    EntityRegistry.registerModEntity(classOf[MatterTransporterBeamEntity],
-        "MatterTransporterBeam", 6, ModularRayguns, 40, 1, true)
-  }
+  def createItem( id : Int ) : ItemModule = new ItemModule( id, this )
+    .setUnlocalizedName("rayguns.BeamBarrel")
+    .setTextureName("rayguns:barrel_beam")
+    .setCreativeTab( ModularRayguns.raygunsTab )
+    .setMaxStackSize(1)
 }

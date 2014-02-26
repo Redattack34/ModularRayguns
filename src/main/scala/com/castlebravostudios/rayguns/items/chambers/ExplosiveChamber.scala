@@ -43,5 +43,8 @@ object ExplosiveChamber extends BaseChamber {
     .setCreativeTab( ModularRayguns.raygunsTab )
     .setMaxStackSize(1)
 
-  def registerShotHandlers() : Unit = registerSingleShotHandlers()
+  def registerShotHandlers() : Unit = {
+    registerSingleShotHandlers()
+    registerPreciseShotHandler()
+  }
 }

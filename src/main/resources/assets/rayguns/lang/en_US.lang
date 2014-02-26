@@ -11,6 +11,9 @@ item.rayguns.UltimateBattery.name=Ultimate Battery
 item.rayguns.FireflyBody.name=Firefly Raygun Body
 item.rayguns.MantisBody.name=Mantis Raygun Body
 
+item.rayguns.BeamBarrel.name=Beam Barrel
+item.rayguns.BlasterBarrel.name=Blaster Barrel
+
 item.rayguns.ExplosiveChamber.name=Explosive Beam Chamber
 item.rayguns.FortifiedSunlightChamber.name=Fortified Sunlight Beam Chamber
 item.rayguns.FrostRayChamber.name=Frost Ray Beam Chamber
@@ -44,9 +47,8 @@ item.rayguns.Tier2CuttingEmitter.name=Cutting Beam Emitter Mk. 2
 item.rayguns.Tier3CuttingEmitter.name=Cutting Beam Emitter Mk. 3
 item.rayguns.MatterTransporterEmitter.name=Matter Transporter Beam Emitter
 
-item.rayguns.PreciseBeamLens.name=Precise Beam Lens
-item.rayguns.PreciseLens.name=Precise Bolt Lens
-item.rayguns.WideLens.name=Scatter Bolt Lens
+item.rayguns.PreciseLens.name=Precise Lens
+item.rayguns.WideLens.name=Scatter Lens
 
 item.rayguns.BrokenRaygun.name=Broken Raygun
 item.rayguns.DiamondGainMedium.name=Diamond Gain Medium
@@ -65,17 +67,17 @@ rayguns.container.gunbench.lens=Lens:
 rayguns.container.gunbench.acc=Accessory:
 rayguns.container.gunbench.chamber=Chamber:
 rayguns.container.gunbench.battery=Battery:
+rayguns.container.gunbench.barrel=Barrel:
 rayguns.moreinfo=Hold SHIFT for more information
 rayguns.infinityCharge=Infinity/Infinity
 
 itemGroup.tabRayguns=Modular Rayguns
 
 # See RaygunNbtUtils.getRaygunName for more details.
-rayguns.RaygunNamePattern=@accessory@ @chamber@ @lens@
+rayguns.RaygunNamePattern=@lens@ @accessory@ @chamber@ @barrel@
 
-rayguns.PreciseBeamLens.segment=Precise Beam
-rayguns.PreciseLens.segment=Precise Blaster
-rayguns.WideLens.segment=Scatter Blaster
+rayguns.PreciseLens.segment=Precise
+rayguns.WideLens.segment=Scattering
 
 rayguns.ExplosiveChamber.segment=Explosive
 rayguns.FortifiedSunlightChamber.segment=Fortified Sunlight
@@ -97,3 +99,6 @@ rayguns.ExtendedBattery.segment=Extended
 rayguns.RefireCapacitor.segment=Rapid
 rayguns.SolarPanel.segment=Solar
 rayguns.ChargeCapacitor.segment=Charging
+
+rayguns.BeamBarrel.segment=Beam
+rayguns.BlasterBarrel.segment=Blaster

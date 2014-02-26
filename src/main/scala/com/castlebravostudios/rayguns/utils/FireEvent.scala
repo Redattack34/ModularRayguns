@@ -35,6 +35,7 @@ import com.castlebravostudios.rayguns.api.items.RaygunAccessory
 import com.castlebravostudios.rayguns.api.items.RaygunModule
 import com.castlebravostudios.rayguns.api.items.RaygunBattery
 import net.minecraft.util.Vec3
+import com.castlebravostudios.rayguns.api.items.RaygunBarrel
 
 trait FireEvent extends {
   def components : Seq[RaygunModule]
@@ -42,25 +43,26 @@ trait FireEvent extends {
 }
 
 case class DefaultFireEvent( body : RaygunBody, chamber : RaygunChamber, battery : RaygunBattery,
-    lens : Option[RaygunLens], accessory : Option[RaygunAccessory] ) extends FireEvent {
+    barrel : RaygunBarrel, lens : Option[RaygunLens], accessory : Option[RaygunAccessory] ) extends FireEvent {
 
-  def components : Seq[RaygunModule] = Seq( body, chamber, battery ) ++ lens ++ accessory
+  def components : Seq[RaygunModule] = Seq( body, chamber, battery, barrel ) ++ lens ++ accessory
 }
 object DefaultFireEvent {
   def apply( comp : GunComponents ) : DefaultFireEvent =
-    new DefaultFireEvent( comp.body, comp.chamber, comp.battery, comp.lens, comp.accessory )
+    new DefaultFireEvent( comp.body, comp.chamber, comp.battery, comp.barrel, comp.lens, comp.accessory )
 }
 
 case class ChargeFireEvent( body : RaygunBody, chamber : RaygunChamber, battery : RaygunBattery,
-    lens : Option[RaygunLens], accessory : Option[RaygunAccessory], charge : Double ) extends FireEvent {
+    barrel : RaygunBarrel, lens : Option[RaygunLens], accessory : Option[RaygunAccessory], charge : Double ) extends FireEvent {
 
-  def components : Seq[RaygunModule] = Seq( body, chamber, battery ) ++ lens ++ accessory
+  def components : Seq[RaygunModule] = Seq( body, chamber, battery, barrel ) ++ lens ++ accessory
 
   def toDefault : DefaultFireEvent =
-    new DefaultFireEvent( body, chamber, battery, lens, accessory )
+    new DefaultFireEvent( body, chamber, battery, barrel, lens, accessory )
 }
 object ChargeFireEvent {
 
   def apply( comp : GunComponents, charge : Double ) : ChargeFireEvent =
-    new ChargeFireEvent( comp.body, comp.chamber, comp.battery, comp.lens, comp.accessory, charge );
+    new ChargeFireEvent( comp.body, comp.chamber, comp.battery, comp.barrel,
+        comp.lens, comp.accessory, charge );
 }

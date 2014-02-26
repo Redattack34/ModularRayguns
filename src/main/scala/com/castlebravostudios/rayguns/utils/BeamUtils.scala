@@ -44,22 +44,23 @@ import scala.annotation.tailrec
 
 object BeamUtils {
 
-  val maxBeamLength = 40
-
   def spawn( world : World, player : EntityLivingBase, shot : BaseBeamEntity ) : Unit =
     spawnSingleShot( shot, world, player )
 
   def spawnSingleShot( fx : BaseBeamEntity, world : World, player : EntityLivingBase ) : Unit = {
+    if ( world.isOnClient ) return
+
     fx.shooter = player
     val start = RaytraceUtils.getPlayerPosition(world, player)
-    val end = RaytraceUtils.getPlayerTarget(world, player, fx.aimVector, maxBeamLength).toMinecraft( world )
+    val end = RaytraceUtils.getPlayerTarget(world, player, fx.aimVector, fx.maxRange).toMinecraft( world )
     val hits = RaytraceUtils.rayTrace( world, player, start, end )(
         ( block, metadata, pos ) => fx.effect.canCollideWithBlock( fx, block, metadata, pos),
         ( entity ) => fx.effect.canCollideWithEntity( fx, entity ) )
 
     fx.setStart( start )
-    fx.rotationPitch = if ( player.isSneaking() ) 0 else player.rotationPitch
-    fx.rotationYaw = player.rotationYaw
+    fx.end = Vector3( hits.headOption.map( _.hitVec ).getOrElse( end ) )
+    fx.rotationPitch = fx.aimVector.pitch
+    fx.rotationYaw = fx.aimVector.yaw
 
     val target = applyHitsUntilStop(end, hits, fx)
     fx.length = target.distanceTo(start)
@@ -68,9 +69,8 @@ object BeamUtils {
       case t : TriggerOnDeath => t.triggerAt( fx, target.xCoord, target.yCoord, target.zCoord )
       case _ => ()
     }
-    if ( world.isOnClient ) {
-      world.spawnEntityInWorld(fx)
-    }
+
+    world.spawnEntityInWorld(fx)
   }
 
   /**

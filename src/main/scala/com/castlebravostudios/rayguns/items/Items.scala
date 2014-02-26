@@ -27,15 +27,15 @@
 
 package com.castlebravostudios.rayguns.items
 
-//scalastyle:off
+//scalastyle:off underscore.import
 import com.castlebravostudios.rayguns.items.accessories._
 import com.castlebravostudios.rayguns.items.batteries._
 import com.castlebravostudios.rayguns.items.bodies._
+import com.castlebravostudios.rayguns.items.barrels._
 import com.castlebravostudios.rayguns.items.chambers._
 import com.castlebravostudios.rayguns.items.emitters._
 import com.castlebravostudios.rayguns.items.lenses._
 import com.castlebravostudios.rayguns.items.misc._
-//scalastyle:on
 import net.minecraft.item.Item
 import com.castlebravostudios.rayguns.items.chambers.LaserChamber
 import com.castlebravostudios.rayguns.api.ModuleRegistrationHelper
@@ -52,6 +52,7 @@ object Items {
     registerAccessories()
     registerBodies()
     registerChambers()
+    registerBarrels()
   }
 
   private def registerChambers() : Unit = {
@@ -87,7 +88,6 @@ object Items {
   private def registerLenses() : Unit = {
     registerModule( PreciseLens, Config.preciseLens )
     registerModule( WideLens, Config.wideLens )
-    registerModule( PreciseBeamLens, Config.preciseBeamLens )
   }
 
   private def registerBatteries() : Unit = {
@@ -125,12 +125,17 @@ object Items {
     registerItem( DiamondGainMedium )
   }
 
+  private def registerBarrels() : Unit = {
+    registerModule( BeamBarrel, Config.barrelBeam )
+    registerModule( BlasterBarrel, Config.barrelBlaster )
+  }
+
   /**
    * Since items are Objects, and therefore instantiated when first loaded,
    * I don't actually have to register them anywhere. This merely forces the
    * VM to load (and thus register for me) the Objects.
    */
-  private def registerItem( item : Any) : Unit = {
+  private def registerItem( item : Any ) : Unit = {
     item.hashCode()
   }
 }

@@ -27,6 +27,10 @@
 
 package com.castlebravostudios.rayguns.items.chambers
 
+import java.util.Random
+
+import com.castlebravostudios.rayguns.api.ShotModifier
+
 import com.castlebravostudios.rayguns.api.ShotRegistry
 import com.castlebravostudios.rayguns.api.items.BaseRaygunModule
 import com.castlebravostudios.rayguns.api.items.RaygunChamber
@@ -35,20 +39,18 @@ import com.castlebravostudios.rayguns.entities.BaseBoltEntity
 import com.castlebravostudios.rayguns.entities.Shootable
 import com.castlebravostudios.rayguns.entities.effects.BaseEffect
 import com.castlebravostudios.rayguns.items.accessories.ChargeCapacitor
-import com.castlebravostudios.rayguns.items.lenses.PreciseBeamLens
+import com.castlebravostudios.rayguns.items.barrels.BeamBarrel
+import com.castlebravostudios.rayguns.items.barrels.BlasterBarrel
 import com.castlebravostudios.rayguns.items.lenses.PreciseLens
 import com.castlebravostudios.rayguns.items.lenses.WideLens
-import com.castlebravostudios.rayguns.utils.BeamUtils
-import com.castlebravostudios.rayguns.utils.BoltUtils
 import com.castlebravostudios.rayguns.utils.ChargeFireEvent
 import com.castlebravostudios.rayguns.utils.DefaultFireEvent
+import com.castlebravostudios.rayguns.utils.Vector3
+
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.util.MathHelper
 import net.minecraft.util.ResourceLocation
 import net.minecraft.world.World
-import com.castlebravostudios.rayguns.utils.Vector3
-import net.minecraft.util.MathHelper
-import java.util.Random
-import com.castlebravostudios.rayguns.api.ShotModifier
 
 
 abstract class BaseChamber extends BaseRaygunModule with RaygunChamber {
@@ -77,7 +79,7 @@ abstract class BaseChamber extends BaseRaygunModule with RaygunChamber {
 
   def registerChargedShotHandler( ) : Unit = {
     ShotRegistry.registerModifier( ShotModifier{ case ev : ChargeFireEvent => ev.toDefault }{
-      case ChargeFireEvent(_, ch, _, _, Some(ChargeCapacitor), charge) if (ch eq this) => { (f) =>
+      case ChargeFireEvent(_, ch, _, _, _, Some(ChargeCapacitor), charge) if (ch eq this) => { (f) =>
         f().map{ shot => shot.charge *= charge; shot }
       }
     })
@@ -90,7 +92,7 @@ abstract class BaseChamber extends BaseRaygunModule with RaygunChamber {
       vec.modify( _ + (getClampedGaussian() * factor) ).normalized
 
     ShotRegistry.registerModifier( ShotModifier{ case ev : DefaultFireEvent => ev.copy( lens = None ) }{
-      case DefaultFireEvent(_, ch, _, Some(WideLens), _ ) if ( ch eq this ) => { (f) =>
+      case DefaultFireEvent(_, ch, _, _, Some(WideLens), _ ) if ( ch eq this ) => { (f) =>
         Seq.fill(9)( f() ).flatten.map{ shot =>
           shot.aimVector = scatter( shot.aimVector, 0.1f )
           shot.charge = 0.5
@@ -100,18 +102,30 @@ abstract class BaseChamber extends BaseRaygunModule with RaygunChamber {
     })
   }
 
+  def registerPreciseShotHandler( ) : Unit = {
+    ShotRegistry.registerModifier( ShotModifier{ case ev : DefaultFireEvent => ev.copy( lens = None ) }{
+      case ChargeFireEvent(_, ch, _, BlasterBarrel, Some(PreciseLens), _, charge) if (ch eq this) => { (f) =>
+        f().map{ shot =>
+          shot.asInstanceOf[BaseBoltEntity].depletionRate = 0.025d
+          shot
+        }
+      }
+      case ChargeFireEvent(_, ch, _, BeamBarrel, Some(PreciseLens), _, charge) if (ch eq this) => { (f) =>
+        f().map{ shot =>
+          shot.asInstanceOf[BaseBeamEntity].maxRange = 40
+          shot
+        }
+      }
+    })
+  }
+
   def registerSingleShotHandlers( ) : Unit = {
     ShotRegistry.registerCreator({
-      case DefaultFireEvent(_, ch, _, None, _) if ch eq this => { (world, player) =>
+      case DefaultFireEvent(_, ch, _, BlasterBarrel, _, _) if ch eq this => { (world, player) =>
         Seq( createAndInitBolt( world, player ) )
       }
-      case DefaultFireEvent(_, ch, _, Some(PreciseLens), _ ) if ch eq this => { (world, player) =>
-        val bolt = createAndInitBolt(world, player)
-        bolt.depletionRate =  0.025d
-        Seq( bolt )
-      }
-      case DefaultFireEvent(_, ch, _, Some(PreciseBeamLens), _ ) if ch eq this => { (world, player) =>
-        Seq( createAndInitBeam(world, player) )
+      case DefaultFireEvent(_, ch, _, BeamBarrel, _, _) if ch eq this => { (world, player) =>
+        Seq( createAndInitBeam( world, player ) )
       }
     })
   }

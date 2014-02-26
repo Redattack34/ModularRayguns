@@ -49,7 +49,6 @@ object Config {
 
   var preciseLens : Int = _
   var wideLens : Int = _
-  var preciseBeamLens : Int = _
 
   var extendedBattery : Int = _
   var refireCapacitor : Int = _
@@ -96,6 +95,9 @@ object Config {
   var chamberCuttingTier3 : Int = _
   var chamberMatterTransporter : Int = _
 
+  var barrelBeam : Int = _
+  var barrelBlaster : Int = _
+
   var minLightningDetail : Double = _
   var lightningFlash : Boolean = _
   var rfPowerMultiplier : Double = _
@@ -114,6 +116,7 @@ object Config {
     loadGunBodyItemIds(config)
     loadEmitterItemIds(config)
     loadChamberItemIds(config)
+    loadBarrelItemIds(config)
     loadBlockIds( config )
     loadMisc( config )
     loadRecipes( config )
@@ -144,7 +147,6 @@ object Config {
   private def loadLensItemIds( config : Configuration ) : Unit = {
     preciseLens = config.getItem( "preciseLens", 5201 ).getInt()
     wideLens = config.getItem( "wideLens", 5202 ).getInt()
-    preciseBeamLens = config.getItem( "beamLens", 5203 ).getInt()
   }
 
   private def loadAccessoryItemIds( config : Configuration ) : Unit = {
@@ -194,6 +196,11 @@ object Config {
     chamberCuttingTier2 = config.getItem( "chamberCuttingTier2", 5613 ).getInt
     chamberCuttingTier3 = config.getItem( "chamberCuttingTier3", 5614 ).getInt
     chamberMatterTransporter = config.getItem( "chamberMatterTransporter", 5615 ).getInt
+  }
+
+  private def loadBarrelItemIds( config : Configuration ) : Unit = {
+    barrelBeam = config.getItem( "barrelBeam", 5701 ).getInt
+    barrelBlaster = config.getItem( "barrelBlaster", 5702 ).getInt
   }
 
   private def loadMisc( config : Configuration ) : Unit = {
