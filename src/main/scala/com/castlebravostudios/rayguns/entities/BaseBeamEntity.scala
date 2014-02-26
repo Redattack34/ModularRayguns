@@ -70,7 +70,7 @@ class BaseBeamEntity(world : World) extends BaseShootable( world ) {
     }
   }
 
-    override def writeEntityToNBT( tag : NBTTagCompound ) : Unit = {
+  override def writeEntityToNBT( tag : NBTTagCompound ) : Unit = {
     super.writeEntityToNBT(tag)
     tag.setInteger("maxRange", maxRange)
   }
@@ -83,10 +83,21 @@ class BaseBeamEntity(world : World) extends BaseShootable( world ) {
   override def writeSpawnData( out : ByteArrayDataOutput ) : Unit = {
     super.writeSpawnData(out)
     out.writeInt( maxRange )
+
+    //This is sent already, but not precisely enough.
+    out.writeFloat( rotationYaw )
+    out.writeFloat( rotationPitch )
+
+    out.writeFloat( length.toFloat )
   }
 
   override def readSpawnData( in : ByteArrayDataInput ) : Unit = {
     super.readSpawnData(in)
     maxRange = in.readInt()
+
+    rotationYaw = in.readFloat()
+    rotationPitch = in.readFloat()
+
+    length = in.readFloat()
   }
 }

@@ -40,7 +40,7 @@ object Entities {
 
   def registerEntities : Unit = {
     EntityRegistry.registerModEntity(classOf[BaseBoltEntity], "BoltEntity", 1, ModularRayguns, 40, 1, true)
-    EntityRegistry.registerModEntity(classOf[BaseBoltEntity], "BeamEntity", 2, ModularRayguns, 40, 1, true)
+    EntityRegistry.registerModEntity(classOf[BaseBeamEntity], "BeamEntity", 2, ModularRayguns, 40, 1, true)
     EntityRegistry.registerModEntity(classOf[LightningBoltEntity], "LightningBolt", 3, ModularRayguns, 40, 1, true)
     EntityRegistry.registerModEntity(classOf[LightningBeamEntity], "LightningBeam", 4, ModularRayguns, 40, 1, true)
     EntityRegistry.registerModEntity(classOf[MatterTransporterBoltEntity],

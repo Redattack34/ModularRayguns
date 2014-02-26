@@ -66,7 +66,7 @@ object BeamUtils {
       case t : TriggerOnDeath => t.triggerAt( fx, target.xCoord, target.yCoord, target.zCoord )
       case _ => ()
     }
-    if ( world.isOnClient ) {
+    if ( !world.isOnClient ) {
       world.spawnEntityInWorld(fx)
     }
   }
