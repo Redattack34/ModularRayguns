@@ -48,7 +48,7 @@ class BeamRenderer extends Render {
     GL11.glPushMatrix();
 
     GL11.glTranslated(x, y, z)
-    GL11.glRotatef(180 - e.rotationYaw, 0.0f, 1.0f, 0.0f)
+    GL11.glRotatef(180 + e.rotationYaw, 0.0f, 1.0f, 0.0f)
     GL11.glRotatef(180 - e.rotationPitch, 1.0f, 0.0f, 0.0f)
     GL11.glScalef(0.025f * e.charge.toFloat, 0.025f * e.charge.toFloat, 1.0f)
     GL11.glDisable(GL11.GL_LIGHTING)
