@@ -42,6 +42,7 @@ import net.minecraft.util.EntityDamageSource
 import net.minecraft.util.ResourceLocation
 import net.minecraft.world.World
 import com.castlebravostudios.rayguns.mod.ModularRayguns
+import com.google.common.io.ByteArrayDataInput
 
 object LightningEffect extends BaseEffect {
 
@@ -110,4 +111,11 @@ class LightningBoltEntity(world : World) extends BaseBoltEntity(world) with Ligh
 }
 class LightningBeamEntity(world : World) extends BaseBeamEntity(world) with LightningShootable {
   override val depletionRate = 0.2d
+
+  override def readSpawnData( in : ByteArrayDataInput ) : Unit = {
+    super.readSpawnData( in )
+
+    this.pointsList = MidpointDisplacement.createPositionList(
+        Vector3( posX, posY, posZ ), end )
+  }
 }
