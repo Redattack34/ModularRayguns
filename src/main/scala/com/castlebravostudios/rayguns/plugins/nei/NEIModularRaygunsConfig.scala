@@ -81,6 +81,7 @@ class NEIModularRaygunsConfig extends IConfigureNEI {
     range.add(GlassGainMedium)
     range.add(GlowstoneGainMedium)
     range.add(DiamondGainMedium)
+    range.add(OpticalGlass)
     range
   }
 

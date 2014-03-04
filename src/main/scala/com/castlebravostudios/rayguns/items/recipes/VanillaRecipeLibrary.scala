@@ -277,6 +277,8 @@ object VanillaRecipeLibrary extends RecipeLibrary {
       'I' : Character, Item.ingotIron,
       'S' : Character, Block.sand,
       'G' : Character, Block.glass )
+
+    GameRegistry.addSmelting(Block.glass.blockID,new ItemStack( OpticalGlass, 1 ), 0.1f )
   }
 
   private def addModuleRecipe( module : RaygunModule, params : Any* ) : Unit = {

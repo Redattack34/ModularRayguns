@@ -32,9 +32,9 @@ import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 import net.minecraft.item.Item
 
-object DiamondGainMedium extends Item( Config.diamondGainMedium ) {
+object OpticalGlass extends Item( Config.diamondGainMedium ) {
 
   setCreativeTab(ModularRayguns.raygunsTab)
-  setUnlocalizedName("rayguns.DiamondGainMedium")
-  setTextureName("rayguns:diamond_gain_medium")
+  setUnlocalizedName("rayguns.OpticalGlass")
+  setTextureName("rayguns:optical_glass")
 }

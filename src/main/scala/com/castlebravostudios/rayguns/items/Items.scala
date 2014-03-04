@@ -123,6 +123,7 @@ object Items {
     registerItem( GlassGainMedium )
     registerItem( GlowstoneGainMedium )
     registerItem( DiamondGainMedium )
+    registerItem( OpticalGlass )
   }
 
   private def registerBarrels() : Unit = {

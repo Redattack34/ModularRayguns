@@ -41,6 +41,7 @@ object Config {
   var glassGainMedium : Int = _
   var glowstoneGainMedium : Int = _
   var diamondGainMedium : Int = _
+  var opticalGlass : Int = _
 
   var basicBattery : Int = _
   var advancedBattery : Int = _
@@ -135,6 +136,7 @@ object Config {
     glassGainMedium = config.getItem( "glassGainMedium", 5002 ).getInt()
     glowstoneGainMedium = config.getItem( "glowstoneGainMedium", 5003 ).getInt()
     diamondGainMedium = config.getItem( "diamondGainMedium", 5004 ).getInt()
+    opticalGlass = config.getItem( "opticalGlass", 5005 ).getInt()
   }
 
   private def loadBatteryItemIds( config : Configuration ) : Unit = {
