@@ -44,6 +44,8 @@ object Config {
   var opticalGlass : Int = _
   var redstoneDustedGlass : Int = _
   var glowstoneDustedGlass : Int = _
+  var redstoneDopedGlass : Int = _
+  var glowstoneDopedGlass : Int = _
 
   var basicBattery : Int = _
   var advancedBattery : Int = _
@@ -141,6 +143,8 @@ object Config {
     opticalGlass = config.getItem( "opticalGlass", 5005 ).getInt()
     redstoneDustedGlass = config.getItem( "redstoneDustedGlass", 5006 ).getInt()
     glowstoneDustedGlass = config.getItem( "glowstoneDustedGlass", 5007 ).getInt()
+    redstoneDopedGlass = config.getItem( "redstoneDopedGlass", 5008 ).getInt()
+    glowstoneDopedGlass = config.getItem( "glowstoneDopedGlass", 5009 ).getInt()
   }
 
   private def loadBatteryItemIds( config : Configuration ) : Unit = {

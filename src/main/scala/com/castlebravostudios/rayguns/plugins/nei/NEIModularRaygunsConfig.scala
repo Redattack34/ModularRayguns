@@ -84,6 +84,8 @@ class NEIModularRaygunsConfig extends IConfigureNEI {
     range.add(OpticalGlass)
     range.add(RedstoneDustedGlass)
     range.add(GlowstoneDustedGlass)
+    range.add(RedstoneDopedGlass)
+    range.add(GlowstoneDopedGlass)
     range
   }
 

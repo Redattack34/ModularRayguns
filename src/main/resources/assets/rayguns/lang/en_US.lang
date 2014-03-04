@@ -59,6 +59,8 @@ item.rayguns.Raygun.name=Raygun
 item.rayguns.OpticalGlass.name=Optical Glass
 item.rayguns.RedstoneDustedGlass.name=Redstone Dusted Glass
 item.rayguns.GlowstoneDustedGlass.name=Glowstone Dusted Glass
+item.rayguns.RedstoneDopedGlass.name=Redstone Doped Glass
+item.rayguns.GlowstoneDopedGlass.name=Glowstone Doped Glass
 
 tile.rayguns.GunBench.name=Raygun Workbench
 tile.rayguns.LensGrinder.name=Lens Grinder

@@ -28,27 +28,24 @@
 package com.castlebravostudios.rayguns.items.recipes
 
 //scalastyle:off underscore.import
+import com.castlebravostudios.rayguns.api.LensGrinderRecipeRegistry
 import com.castlebravostudios.rayguns.api.items._
+import com.castlebravostudios.rayguns.items.Blocks
 import com.castlebravostudios.rayguns.items.accessories._
+import com.castlebravostudios.rayguns.items.barrels._
 import com.castlebravostudios.rayguns.items.batteries._
 import com.castlebravostudios.rayguns.items.bodies._
-import com.castlebravostudios.rayguns.items.barrels._
+import com.castlebravostudios.rayguns.items.chambers._
 import com.castlebravostudios.rayguns.items.emitters.Emitters
-import cpw.mods.fml.common.registry.GameRegistry
+import com.castlebravostudios.rayguns.items.lenses._
+import com.castlebravostudios.rayguns.items.misc._
+import com.castlebravostudios.rayguns.utils.ScalaShapedRecipeFactory
+
 import net.minecraft.block.Block
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
-import com.castlebravostudios.rayguns.items.misc._
-import com.castlebravostudios.rayguns.items.chambers._
-import com.castlebravostudios.rayguns.items.lenses._
-import com.castlebravostudios.rayguns.api.LensGrinderRecipeRegistry
-import com.castlebravostudios.rayguns.utils.ScalaShapedRecipeFactory
-import com.castlebravostudios.rayguns.blocks.gunbench.GunBench
-import com.castlebravostudios.rayguns.blocks.gunbench.GunBench
-import com.castlebravostudios.rayguns.blocks.lensgrinder.LensGrinder
-import com.castlebravostudios.rayguns.blocks.gunbench.GunBench
-import com.castlebravostudios.rayguns.blocks.lensgrinder.LensGrinder
-import com.castlebravostudios.rayguns.items.Blocks
+
+import cpw.mods.fml.common.registry.GameRegistry
 //scalastyle:on
 
 object VanillaRecipeLibrary extends RecipeLibrary {
@@ -278,11 +275,17 @@ object VanillaRecipeLibrary extends RecipeLibrary {
       'S' : Character, Block.sand,
       'G' : Character, Block.glass )
 
-    GameRegistry.addSmelting(Block.glass.blockID,new ItemStack( OpticalGlass, 3 ), 0.1f )
+    GameRegistry.addSmelting(Block.glass.blockID, new ItemStack( OpticalGlass, 3 ), 0.1f )
+
     GameRegistry.addShapelessRecipe( new ItemStack( RedstoneDustedGlass ),
         Item.redstone, OpticalGlass )
     GameRegistry.addShapelessRecipe( new ItemStack( GlowstoneDustedGlass ),
         Item.glowstone, OpticalGlass )
+
+    GameRegistry.addSmelting( RedstoneDustedGlass.itemID,
+        new ItemStack( RedstoneDopedGlass ), 0.3f )
+    GameRegistry.addSmelting( GlowstoneDustedGlass.itemID,
+        new ItemStack( GlowstoneDopedGlass ), 0.3f )
   }
 
   private def addModuleRecipe( module : RaygunModule, params : Any* ) : Unit = {

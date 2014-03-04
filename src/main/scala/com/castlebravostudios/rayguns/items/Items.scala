@@ -126,6 +126,8 @@ object Items {
     registerItem( OpticalGlass )
     registerItem( RedstoneDustedGlass )
     registerItem( GlowstoneDustedGlass )
+    registerItem( RedstoneDopedGlass )
+    registerItem( GlowstoneDopedGlass )
   }
 
   private def registerBarrels() : Unit = {
