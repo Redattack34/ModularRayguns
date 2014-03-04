@@ -57,6 +57,8 @@ item.rayguns.GlassGainMedium.name=Glass Gain Medium
 item.rayguns.GlowstoneGainMedium.name=Glowstone Gain Medium
 item.rayguns.Raygun.name=Raygun
 item.rayguns.OpticalGlass.name=Optical Glass
+item.rayguns.RedstoneDustedGlass.name=Redstone Dusted Glass
+item.rayguns.GlowstoneDustedGlass.name=Glowstone Dusted Glass
 
 tile.rayguns.GunBench.name=Raygun Workbench
 tile.rayguns.LensGrinder.name=Lens Grinder
