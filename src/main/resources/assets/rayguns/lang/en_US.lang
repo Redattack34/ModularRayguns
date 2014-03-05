@@ -61,6 +61,9 @@ item.rayguns.RedstoneDustedGlass.name=Redstone Dusted Glass
 item.rayguns.GlowstoneDustedGlass.name=Glowstone Dusted Glass
 item.rayguns.RedstoneDopedGlass.name=Redstone Doped Glass
 item.rayguns.GlowstoneDopedGlass.name=Glowstone Doped Glass
+item.rayguns.Tier1Diode.name=Basic Diode
+item.rayguns.Tier2Diode.name=Advanced Diode
+item.rayguns.Tier3Diode.name=Ultimate Diode
 
 tile.rayguns.GunBench.name=Raygun Workbench
 tile.rayguns.LensGrinder.name=Lens Grinder

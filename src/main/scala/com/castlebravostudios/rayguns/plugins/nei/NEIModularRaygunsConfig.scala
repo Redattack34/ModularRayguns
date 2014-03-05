@@ -46,6 +46,7 @@ import cpw.mods.fml.common.Mod
 import com.castlebravostudios.rayguns.blocks.lensgrinder.LensGrinderGui
 import codechicken.nei.recipe.DefaultOverlayHandler
 import com.castlebravostudios.rayguns.plugins.nei.NEIModularRaygunsConfig.recipeKey
+import com.castlebravostudios.rayguns.items.misc.Tier1Diode
 //scalastyle:on
 
 class NEIModularRaygunsConfig extends IConfigureNEI {
@@ -86,6 +87,9 @@ class NEIModularRaygunsConfig extends IConfigureNEI {
     range.add(GlowstoneDustedGlass)
     range.add(RedstoneDopedGlass)
     range.add(GlowstoneDopedGlass)
+    range.add(Tier1Diode)
+    range.add(Tier2Diode)
+    range.add(Tier3Diode)
     range
   }
 

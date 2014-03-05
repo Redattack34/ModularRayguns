@@ -40,11 +40,9 @@ import com.castlebravostudios.rayguns.items.emitters.Emitters
 import com.castlebravostudios.rayguns.items.lenses._
 import com.castlebravostudios.rayguns.items.misc._
 import com.castlebravostudios.rayguns.utils.ScalaShapedRecipeFactory
-
 import net.minecraft.block.Block
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
-
 import cpw.mods.fml.common.registry.GameRegistry
 //scalastyle:on
 
@@ -286,6 +284,30 @@ object VanillaRecipeLibrary extends RecipeLibrary {
         new ItemStack( RedstoneDopedGlass ), 0.3f )
     GameRegistry.addSmelting( GlowstoneDustedGlass.itemID,
         new ItemStack( GlowstoneDopedGlass ), 0.3f )
+
+    LensGrinderRecipeRegistry.register( 300, new ItemStack( Tier1Diode ),
+        "GGG",
+        "IRI",
+        "GGG",
+        'I' -> Item.ingotIron,
+        'G' -> Block.thinGlass,
+        'R' -> Block.blockRedstone )
+
+    LensGrinderRecipeRegistry.register( 450, new ItemStack( Tier2Diode ),
+        "GGG",
+        "ILI",
+        "GGG",
+        'I' -> Item.ingotIron,
+        'G' -> Block.thinGlass,
+        'L' -> Block.glowStone )
+
+    LensGrinderRecipeRegistry.register( 600, new ItemStack( Tier3Diode ),
+        "GGG",
+        "DSD",
+        "GGG",
+        'D' -> Item.ingotGold,
+        'G' -> Block.thinGlass,
+        'S' -> Item.netherStar )
   }
 
   private def addModuleRecipe( module : RaygunModule, params : Any* ) : Unit = {

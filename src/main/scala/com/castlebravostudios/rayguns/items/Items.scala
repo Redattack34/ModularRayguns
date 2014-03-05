@@ -128,6 +128,9 @@ object Items {
     registerItem( GlowstoneDustedGlass )
     registerItem( RedstoneDopedGlass )
     registerItem( GlowstoneDopedGlass )
+    registerItem( Tier1Diode )
+    registerItem( Tier2Diode )
+    registerItem( Tier3Diode )
   }
 
   private def registerBarrels() : Unit = {

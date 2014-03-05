@@ -46,6 +46,9 @@ object Config {
   var glowstoneDustedGlass : Int = _
   var redstoneDopedGlass : Int = _
   var glowstoneDopedGlass : Int = _
+  var tier1Diode : Int = _
+  var tier2Diode : Int = _
+  var tier3Diode : Int = _
 
   var basicBattery : Int = _
   var advancedBattery : Int = _
@@ -145,6 +148,9 @@ object Config {
     glowstoneDustedGlass = config.getItem( "glowstoneDustedGlass", 5007 ).getInt()
     redstoneDopedGlass = config.getItem( "redstoneDopedGlass", 5008 ).getInt()
     glowstoneDopedGlass = config.getItem( "glowstoneDopedGlass", 5009 ).getInt()
+    tier1Diode = config.getItem( "basicDiode", 5010 ).getInt()
+    tier2Diode = config.getItem( "advancedDiode", 5011 ).getInt()
+    tier3Diode = config.getItem( "ultimateDiode", 5012 ).getInt()
   }
 
   private def loadBatteryItemIds( config : Configuration ) : Unit = {
