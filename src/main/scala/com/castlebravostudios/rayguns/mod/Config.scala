@@ -49,6 +49,9 @@ object Config {
   var tier1Diode : Int = _
   var tier2Diode : Int = _
   var tier3Diode : Int = _
+  var tier1HeatSink : Int = _
+  var tier2HeatSink : Int = _
+  var tier3HeatSink : Int = _
 
   var basicBattery : Int = _
   var advancedBattery : Int = _
@@ -151,6 +154,9 @@ object Config {
     tier1Diode = config.getItem( "basicDiode", 5010 ).getInt()
     tier2Diode = config.getItem( "advancedDiode", 5011 ).getInt()
     tier3Diode = config.getItem( "ultimateDiode", 5012 ).getInt()
+    tier1HeatSink = config.getItem( "basicHeatSink", 5013 ).getInt()
+    tier2HeatSink = config.getItem( "advancedHeatSink", 5014 ).getInt()
+    tier3HeatSink = config.getItem( "ultimateHeatSink", 5015 ).getInt()
   }
 
   private def loadBatteryItemIds( config : Configuration ) : Unit = {

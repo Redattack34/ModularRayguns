@@ -64,6 +64,9 @@ item.rayguns.GlowstoneDopedGlass.name=Glowstone Doped Glass
 item.rayguns.Tier1Diode.name=Basic Diode
 item.rayguns.Tier2Diode.name=Advanced Diode
 item.rayguns.Tier3Diode.name=Ultimate Diode
+item.rayguns.Tier1HeatSink.name=Basic Heat Sink
+item.rayguns.Tier2HeatSink.name=Advanced Heat Sink
+item.rayguns.Tier3HeatSink.name=Ultimate Heat Sink
 
 tile.rayguns.GunBench.name=Raygun Workbench
 tile.rayguns.LensGrinder.name=Lens Grinder

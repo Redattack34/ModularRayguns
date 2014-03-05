@@ -308,6 +308,27 @@ object VanillaRecipeLibrary extends RecipeLibrary {
         'D' -> Item.ingotGold,
         'G' -> Block.thinGlass,
         'S' -> Item.netherStar )
+
+    GameRegistry.addRecipe( new ItemStack( Tier1HeatSink ),
+      "ISI",
+      "ISI",
+      "ISI",
+      'I' : Character, Item.ingotIron,
+      'S' : Character, Item.snowball )
+
+    GameRegistry.addRecipe( new ItemStack( Tier2HeatSink ),
+      "ISI",
+      "ISI",
+      "ISI",
+      'I' : Character, Item.ingotIron,
+      'S' : Character, Block.blockSnow )
+
+    GameRegistry.addRecipe( new ItemStack( Tier3HeatSink ),
+      "ISI",
+      "ISI",
+      "ISI",
+      'I' : Character, Item.ingotIron,
+      'S' : Character, Block.ice )
   }
 
   private def addModuleRecipe( module : RaygunModule, params : Any* ) : Unit = {

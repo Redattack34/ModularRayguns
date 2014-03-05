@@ -90,6 +90,9 @@ class NEIModularRaygunsConfig extends IConfigureNEI {
     range.add(Tier1Diode)
     range.add(Tier2Diode)
     range.add(Tier3Diode)
+    range.add(Tier1HeatSink)
+    range.add(Tier2HeatSink)
+    range.add(Tier3HeatSink)
     range
   }
 

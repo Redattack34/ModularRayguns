@@ -131,6 +131,9 @@ object Items {
     registerItem( Tier1Diode )
     registerItem( Tier2Diode )
     registerItem( Tier3Diode )
+    registerItem( Tier1HeatSink )
+    registerItem( Tier2HeatSink )
+    registerItem( Tier3HeatSink )
   }
 
   private def registerBarrels() : Unit = {
