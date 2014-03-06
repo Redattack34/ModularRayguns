@@ -67,6 +67,9 @@ item.rayguns.Tier3Diode.name=Ultimate Diode
 item.rayguns.Tier1HeatSink.name=Basic Heat Sink
 item.rayguns.Tier2HeatSink.name=Advanced Heat Sink
 item.rayguns.Tier3HeatSink.name=Ultimate Heat Sink
+item.rayguns.Tier1ChamberCasing.name=Basic Chamber Casing
+item.rayguns.Tier2ChamberCasing.name=Advanced Chamber Casing
+item.rayguns.Tier3ChamberCasing.name=Ultimate Chamber Casing
 
 tile.rayguns.GunBench.name=Raygun Workbench
 tile.rayguns.LensGrinder.name=Lens Grinder
