@@ -279,11 +279,15 @@ object VanillaRecipeLibrary extends RecipeLibrary {
         Item.redstone, OpticalGlass )
     GameRegistry.addShapelessRecipe( new ItemStack( GlowstoneDustedGlass ),
         Item.glowstone, OpticalGlass )
+    GameRegistry.addShapelessRecipe( new ItemStack( RadiantDustedGlass ),
+        RadiantDust, OpticalGlass )
 
     GameRegistry.addSmelting( RedstoneDustedGlass.itemID,
-        new ItemStack( RedstoneDopedGlass ), 0.3f )
+        new ItemStack( RedstoneDopedGlass ), 0.1f )
     GameRegistry.addSmelting( GlowstoneDustedGlass.itemID,
-        new ItemStack( GlowstoneDopedGlass ), 0.3f )
+        new ItemStack( GlowstoneDopedGlass ), 0.1f )
+    GameRegistry.addSmelting( RadiantDustedGlass.itemID,
+        new ItemStack( RadiantDopedGlass ), 0.1f )
 
     LensGrinderRecipeRegistry.register( 300, new ItemStack( Tier1Diode ),
         "GGG",
@@ -344,6 +348,13 @@ object VanillaRecipeLibrary extends RecipeLibrary {
       "ISI",
       'I' : Character, Item.diamond,
       'S' : Character, Tier3HeatSink )
+
+    GameRegistry.addRecipe( new ItemStack( RadiantDust ),
+      "RGR",
+      "GRG",
+      "RGR",
+      'R' : Character, Item.redstone,
+      'G' : Character, Item.glowstone )
   }
 
   private def addModuleRecipe( module : RaygunModule, params : Any* ) : Unit = {

@@ -137,6 +137,9 @@ object Items {
     registerItem( Tier1ChamberCasing )
     registerItem( Tier2ChamberCasing )
     registerItem( Tier3ChamberCasing )
+    registerItem( RadiantDust )
+    registerItem( RadiantDustedGlass )
+    registerItem( RadiantDopedGlass )
   }
 
   private def registerBarrels() : Unit = {

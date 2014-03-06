@@ -70,6 +70,9 @@ item.rayguns.Tier3HeatSink.name=Ultimate Heat Sink
 item.rayguns.Tier1ChamberCasing.name=Basic Chamber Casing
 item.rayguns.Tier2ChamberCasing.name=Advanced Chamber Casing
 item.rayguns.Tier3ChamberCasing.name=Ultimate Chamber Casing
+item.rayguns.RadiantDust.name=Radiant Dust
+item.rayguns.RadiantDustedGlass.name=Radiant Dusted Glass
+item.rayguns.RadiantDopedGlass.name=Radiant Doped Glass
 
 tile.rayguns.GunBench.name=Raygun Workbench
 tile.rayguns.LensGrinder.name=Lens Grinder

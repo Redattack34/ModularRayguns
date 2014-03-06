@@ -96,6 +96,9 @@ class NEIModularRaygunsConfig extends IConfigureNEI {
     range.add(Tier1ChamberCasing)
     range.add(Tier2ChamberCasing)
     range.add(Tier3ChamberCasing)
+    range.add(RadiantDust)
+    range.add(RadiantDustedGlass)
+    range.add(RadiantDopedGlass)
     range
   }
 

@@ -55,6 +55,9 @@ object Config {
   var tier1Casing: Int = _
   var tier2Casing: Int = _
   var tier3Casing: Int = _
+  var radiantDust: Int = _
+  var radiantDustedGlass : Int = _
+  var radiantDopedGlass : Int = _
 
   var basicBattery : Int = _
   var advancedBattery : Int = _
@@ -163,6 +166,9 @@ object Config {
     tier1Casing = config.getItem( "basicCasing", 5016 ).getInt()
     tier2Casing = config.getItem( "advancedCasing", 5017 ).getInt()
     tier3Casing = config.getItem( "ultimateCasing", 5018 ).getInt()
+    radiantDust = config.getItem( "radiantDust", 5019 ).getInt()
+    radiantDustedGlass = config.getItem( "radiantDustedGlass", 5020 ).getInt()
+    radiantDopedGlass = config.getItem( "radiantDopedGlass", 5021 ).getInt()
   }
 
   private def loadBatteryItemIds( config : Configuration ) : Unit = {
