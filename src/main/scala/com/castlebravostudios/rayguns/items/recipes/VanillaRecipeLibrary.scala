@@ -28,6 +28,7 @@
 package com.castlebravostudios.rayguns.items.recipes
 
 //scalastyle:off underscore.import
+
 import com.castlebravostudios.rayguns.api.LensGrinderRecipeRegistry
 import com.castlebravostudios.rayguns.api.items._
 import com.castlebravostudios.rayguns.items.Blocks
@@ -39,11 +40,16 @@ import com.castlebravostudios.rayguns.items.chambers._
 import com.castlebravostudios.rayguns.items.emitters.Emitters
 import com.castlebravostudios.rayguns.items.lenses._
 import com.castlebravostudios.rayguns.items.misc._
+import com.castlebravostudios.rayguns.utils.Extensions.ItemExtensions
+import com.castlebravostudios.rayguns.utils.Extensions.BlockExtensions
 import com.castlebravostudios.rayguns.utils.ScalaShapedRecipeFactory
+
 import net.minecraft.block.Block
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
+
 import cpw.mods.fml.common.registry.GameRegistry
+
 //scalastyle:on
 
 object VanillaRecipeLibrary extends RecipeLibrary {
@@ -116,8 +122,8 @@ object VanillaRecipeLibrary extends RecipeLibrary {
         ( 'R' -> core ),
         ( 'I' -> Item.ingotIron ) )
     }
-    addBodyRecipe( FireflyBody, new ItemStack( Item.dyePowder, 1, 1 ) )
-    addBodyRecipe( MantisBody, new ItemStack( Item.dyePowder, 1, 2 ) )
+    addBodyRecipe( FireflyBody, Item.dyePowder.asStack( 1, 1 ) )
+    addBodyRecipe( MantisBody, Item.dyePowder.asStack( 1, 2 ) )
   }
 
   private def registerChambers() = {
@@ -159,7 +165,7 @@ object VanillaRecipeLibrary extends RecipeLibrary {
 
   private def registerEmitters() = {
     def registerEmitter( emitter : Item, core : AnyRef, top : AnyRef, right : AnyRef, bottom : AnyRef, left : AnyRef ) : Unit = {
-      GameRegistry.addRecipe( new ItemStack( emitter, 1 ),
+      GameRegistry.addRecipe( emitter.asStack( 1 ),
         "ITI",
         "LDR",
         "IBI",
@@ -192,7 +198,7 @@ object VanillaRecipeLibrary extends RecipeLibrary {
     registerT2Emitter( Emitters.matterTransporterEmitter, Item.enderPearl, Block.pistonBase, Item.enderPearl, Block.pistonBase )
     registerT2Emitter( Emitters.tier2CuttingEmitter, Item.pickaxeIron, Item.shovelIron, Item.pickaxeIron, Item.shovelIron )
 
-    val witherSkull = new ItemStack( Item.skull, 1, 1 )
+    val witherSkull = Item.skull.asStack( 1, 1 )
     registerT3Emitter( Emitters.deathRayEmitter, witherSkull, witherSkull, witherSkull, witherSkull )
     registerT3Emitter( Emitters.explosiveEmitter, Block.tnt, Block.tnt, Block.tnt, Block.tnt )
     registerT3Emitter( Emitters.tier3CuttingEmitter, Item.pickaxeDiamond, Item.shovelDiamond, Item.pickaxeDiamond, Item.shovelDiamond )
@@ -202,7 +208,7 @@ object VanillaRecipeLibrary extends RecipeLibrary {
     for {
       item <- PreciseLens.item
     } {
-      LensGrinderRecipeRegistry.register( 600, new ItemStack(item ),
+      LensGrinderRecipeRegistry.register( 600, item.asStack,
         "IGI",
         "GGG",
         "IGI",
@@ -213,7 +219,7 @@ object VanillaRecipeLibrary extends RecipeLibrary {
     for {
       item <- WideLens.item
     } {
-      LensGrinderRecipeRegistry.register( 1200, new ItemStack( item ),
+      LensGrinderRecipeRegistry.register( 1200, item.asStack,
         "IGI",
         "GEG",
         "IGI",
@@ -243,7 +249,7 @@ object VanillaRecipeLibrary extends RecipeLibrary {
 
   private def registerMisc() = {
     def addGainMediumRecipe( medium : Item, ticks : Short, glass : Item ) : Unit = {
-        LensGrinderRecipeRegistry.register( ticks, new ItemStack( medium, 1 ),
+        LensGrinderRecipeRegistry.register( ticks, medium.asStack,
           "GGG",
           "MGM",
           "GGG",
@@ -254,13 +260,13 @@ object VanillaRecipeLibrary extends RecipeLibrary {
     addGainMediumRecipe( Tier2GainMedium, 900, GlowstoneDopedGlass )
     addGainMediumRecipe( Tier1GainMedium, 600, RedstoneDopedGlass )
 
-    GameRegistry.addRecipe( new ItemStack( Blocks.gunBench, 1 ),
+    GameRegistry.addRecipe( Blocks.gunBench.asStack,
       "II",
       "BB",
       'I' : Character, Item.ingotIron,
       'B' : Character, Block.workbench )
 
-    GameRegistry.addRecipe( new ItemStack( Blocks.lensGrinder, 1 ),
+    GameRegistry.addRecipe( Blocks.lensGrinder.asStack,
       "III",
       "SGS",
       "III",
@@ -268,23 +274,23 @@ object VanillaRecipeLibrary extends RecipeLibrary {
       'S' : Character, Block.sand,
       'G' : Character, Block.glass )
 
-    GameRegistry.addSmelting(Block.glass.blockID, new ItemStack( OpticalGlass, 3 ), 0.1f )
+    GameRegistry.addSmelting(Block.glass.blockID, OpticalGlass.asStack( 3 ), 0.1f )
 
-    GameRegistry.addShapelessRecipe( new ItemStack( RedstoneDustedGlass ),
+    GameRegistry.addShapelessRecipe( RedstoneDustedGlass.asStack,
         Item.redstone, OpticalGlass )
-    GameRegistry.addShapelessRecipe( new ItemStack( GlowstoneDustedGlass ),
+    GameRegistry.addShapelessRecipe( GlowstoneDustedGlass.asStack,
         Item.glowstone, OpticalGlass )
-    GameRegistry.addShapelessRecipe( new ItemStack( RadiantDustedGlass ),
+    GameRegistry.addShapelessRecipe( RadiantDustedGlass.asStack,
         RadiantDust, OpticalGlass )
 
     GameRegistry.addSmelting( RedstoneDustedGlass.itemID,
-        new ItemStack( RedstoneDopedGlass ), 0.1f )
+        RedstoneDopedGlass.asStack, 0.1f )
     GameRegistry.addSmelting( GlowstoneDustedGlass.itemID,
-        new ItemStack( GlowstoneDopedGlass ), 0.1f )
+        GlowstoneDopedGlass.asStack, 0.1f )
     GameRegistry.addSmelting( RadiantDustedGlass.itemID,
-        new ItemStack( RadiantDopedGlass ), 0.1f )
+        RadiantDopedGlass.asStack, 0.1f )
 
-    LensGrinderRecipeRegistry.register( 300, new ItemStack( Tier1Diode ),
+    LensGrinderRecipeRegistry.register( 300, Tier1Diode.asStack,
         "GGG",
         "IRI",
         "GGG",
@@ -292,7 +298,7 @@ object VanillaRecipeLibrary extends RecipeLibrary {
         'G' -> Block.thinGlass,
         'R' -> Block.blockRedstone )
 
-    LensGrinderRecipeRegistry.register( 450, new ItemStack( Tier2Diode ),
+    LensGrinderRecipeRegistry.register( 450, Tier2Diode.asStack,
         "GGG",
         "ILI",
         "GGG",
@@ -300,7 +306,7 @@ object VanillaRecipeLibrary extends RecipeLibrary {
         'G' -> Block.thinGlass,
         'L' -> Block.glowStone )
 
-    LensGrinderRecipeRegistry.register( 600, new ItemStack( Tier3Diode ),
+    LensGrinderRecipeRegistry.register( 600, Tier3Diode.asStack,
         "GGG",
         "DSD",
         "GGG",
@@ -308,50 +314,50 @@ object VanillaRecipeLibrary extends RecipeLibrary {
         'G' -> Block.thinGlass,
         'S' -> Item.netherStar )
 
-    GameRegistry.addRecipe( new ItemStack( Tier1HeatSink ),
+    GameRegistry.addRecipe( Tier1HeatSink.asStack,
       "ISI",
       "ISI",
       "ISI",
       'I' : Character, Item.ingotIron,
       'S' : Character, Item.snowball )
 
-    GameRegistry.addRecipe( new ItemStack( Tier2HeatSink ),
+    GameRegistry.addRecipe( Tier2HeatSink.asStack,
       "ISI",
       "ISI",
       "ISI",
       'I' : Character, Item.ingotIron,
       'S' : Character, Block.blockSnow )
 
-    GameRegistry.addRecipe( new ItemStack( Tier3HeatSink ),
+    GameRegistry.addRecipe( Tier3HeatSink.asStack,
       "ISI",
       "ISI",
       "ISI",
       'I' : Character, Item.ingotIron,
       'S' : Character, Block.ice )
 
-    GameRegistry.addRecipe( new ItemStack( Tier1ChamberCasing ),
+    GameRegistry.addRecipe( Tier1ChamberCasing.asStack,
       "ISI",
       'I' : Character, Item.ingotIron,
       'S' : Character, Tier1HeatSink )
 
-    GameRegistry.addRecipe( new ItemStack( Tier2ChamberCasing ),
+    GameRegistry.addRecipe( Tier2ChamberCasing.asStack,
       "ISI",
       'I' : Character, Item.ingotGold,
       'S' : Character, Tier2HeatSink )
 
-    GameRegistry.addRecipe( new ItemStack( Tier3ChamberCasing ),
+    GameRegistry.addRecipe( Tier3ChamberCasing.asStack,
       "ISI",
       'I' : Character, Item.diamond,
       'S' : Character, Tier3HeatSink )
 
-    GameRegistry.addRecipe( new ItemStack( RadiantDust ),
+    GameRegistry.addRecipe( RadiantDust.asStack,
       "RGR",
       "GRG",
       "RGR",
       'R' : Character, Item.redstone,
       'G' : Character, Item.glowstone )
 
-    GameRegistry.addRecipe( new ItemStack( Shutter ),
+    GameRegistry.addRecipe( Shutter.asStack,
       "I B",
       "PTR",
       'P' : Character, Block.pistonBase,
@@ -374,6 +380,6 @@ object VanillaRecipeLibrary extends RecipeLibrary {
     }
 
     GameRegistry.addRecipe( ScalaShapedRecipeFactory(
-        new ItemStack( module.item.get, 1 ), params:_* ) );
+        module.item.get.asStack, params:_* ) );
   }
 }

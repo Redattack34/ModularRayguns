@@ -27,22 +27,22 @@
 
 package com.castlebravostudios.rayguns.entities.effects
 
-import net.minecraft.util.ResourceLocation
+import com.castlebravostudios.rayguns.entities.BaseBeamEntity
+import com.castlebravostudios.rayguns.entities.BaseBoltEntity
 import com.castlebravostudios.rayguns.entities.Shootable
-import net.minecraft.entity.Entity
-import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData
-import net.minecraft.nbt.NBTTagCompound
+import com.castlebravostudios.rayguns.mod.ModularRayguns
+import com.castlebravostudios.rayguns.utils.Extensions.ItemExtensions
 import com.google.common.io.ByteArrayDataInput
 import com.google.common.io.ByteArrayDataOutput
-import com.castlebravostudios.rayguns.entities.BaseBoltEntity
-import com.castlebravostudios.rayguns.entities.BaseBeamEntity
-import net.minecraft.world.World
+
+import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.item.ItemBlock
 import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
-import com.castlebravostudios.rayguns.utils.Extensions.WorldExtension
-import com.castlebravostudios.rayguns.mod.ModularRayguns
+import net.minecraft.item.ItemBlock
+import net.minecraft.nbt.NBTTagCompound
+import net.minecraft.world.World
+
+import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData
 
 object MatterTransporterEffect extends BaseEffect {
 
@@ -53,7 +53,7 @@ object MatterTransporterEffect extends BaseEffect {
     if ( itemId == 0 ) return true
 
     val item = Item.itemsList(itemId)
-    item.onItemUse( new ItemStack( item, 1 ), shootable.shooter.asInstanceOf[EntityPlayer], shootable.worldObj,
+    item.onItemUse( item.asStack, shootable.shooter.asInstanceOf[EntityPlayer], shootable.worldObj,
         hitX, hitY, hitZ, side, hitX + 0.5f, hitY + 0.5f, hitZ + 0.5f)
   }
 

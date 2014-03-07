@@ -30,8 +30,11 @@ package com.castlebravostudios.rayguns.utils
 import net.minecraft.world.World
 import net.minecraft.item.ItemStack
 import net.minecraft.nbt.NBTTagCompound
+import net.minecraft.item.Item
+import net.minecraft.block.Block
 
 object Extensions extends Logging {
+
   implicit class WorldExtension(val world : World) extends AnyVal {
     def isOnClient : Boolean = world.isRemote
     def isOnServer : Boolean = !world.isRemote
@@ -51,5 +54,19 @@ object Extensions extends Logging {
       item.getTagCompound()
     }
 
+  }
+
+  implicit class ItemExtensions( val item : Item ) extends AnyVal {
+
+    def asStack : ItemStack = new ItemStack( item )
+    def asStack( count : Int ) : ItemStack = new ItemStack( item, count )
+    def asStack( count : Int, meta : Int ) : ItemStack = new ItemStack( item, count, meta )
+  }
+
+  implicit class BlockExtensions( val block : Block ) extends AnyVal {
+
+    def asStack : ItemStack = new ItemStack( block )
+    def asStack( count : Int ) : ItemStack = new ItemStack( block, count )
+    def asStack( count : Int, meta : Int ) : ItemStack = new ItemStack( block, count, meta )
   }
 }

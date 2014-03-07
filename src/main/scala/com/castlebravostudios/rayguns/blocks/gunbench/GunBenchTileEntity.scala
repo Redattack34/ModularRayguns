@@ -43,6 +43,7 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import com.castlebravostudios.rayguns.api.items.RaygunModule
 import com.castlebravostudios.rayguns.api.items.RaygunBarrel
+import com.castlebravostudios.rayguns.utils.Extensions.ItemExtensions
 
 class GunBenchTileEntity extends BaseInventoryTileEntity {
   private[this] val inv = Array.fill[ItemStack](7)(null)
@@ -63,7 +64,7 @@ class GunBenchTileEntity extends BaseInventoryTileEntity {
 
   def onSlotChanged( slot : Int ) : Unit = {
       def toStack( module : RaygunModule ) : ItemStack = module.item match {
-        case Some( item ) => new ItemStack( item, 1 )
+        case Some( item ) => item.asStack
         case None => null
       }
       def setSlot( slot : Int ) ( item : ItemStack ) : Unit = setInventorySlotContents( slot, item )
