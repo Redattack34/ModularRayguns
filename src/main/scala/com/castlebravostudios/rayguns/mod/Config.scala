@@ -37,7 +37,6 @@ object Config {
 
   var rayGun : Int = _
   var brokenGun : Int = _
-  var energizedDiamond : Int = _
   var glassGainMedium : Int = _
   var glowstoneGainMedium : Int = _
   var diamondGainMedium : Int = _
@@ -59,6 +58,9 @@ object Config {
   var radiantDustedGlass : Int = _
   var radiantDopedGlass : Int = _
   var shutter : Int = _
+  var tier1GainMedium: Int = _
+  var tier2GainMedium: Int = _
+  var tier3GainMedium: Int = _
 
   var basicBattery : Int = _
   var advancedBattery : Int = _
@@ -147,9 +149,8 @@ object Config {
   //scalastyle:off magic.number
 
   private def loadMiscItemIds( config : Configuration ) : Unit = {
-    rayGun = config.getItem( "rayGun", 4999 ).getInt()
-    brokenGun = config.getItem( "brokenGun", 5000 ).getInt()
-    energizedDiamond = config.getItem( "energizedDiamond", 5001 ).getInt()
+    rayGun = config.getItem( "rayGun", 5000 ).getInt()
+    brokenGun = config.getItem( "brokenGun", 5001 ).getInt()
     glassGainMedium = config.getItem( "glassGainMedium", 5002 ).getInt()
     glowstoneGainMedium = config.getItem( "glowstoneGainMedium", 5003 ).getInt()
     diamondGainMedium = config.getItem( "diamondGainMedium", 5004 ).getInt()
@@ -171,6 +172,9 @@ object Config {
     radiantDustedGlass = config.getItem( "radiantDustedGlass", 5020 ).getInt()
     radiantDopedGlass = config.getItem( "radiantDopedGlass", 5021 ).getInt()
     shutter = config.getItem( "shutter", 5022 ).getInt()
+    tier1GainMedium = config.getItem( "basicGainMedium", 5023 ).getInt()
+    tier2GainMedium = config.getItem( "advancedGainMedium", 5024 ).getInt()
+    tier3GainMedium = config.getItem( "ultimateGainMedium", 5025 ).getInt()
   }
 
   private def loadBatteryItemIds( config : Configuration ) : Unit = {

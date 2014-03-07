@@ -140,6 +140,9 @@ object Items {
     registerItem( RadiantDustedGlass )
     registerItem( RadiantDopedGlass )
     registerItem( Shutter )
+    registerItem( Tier1GainMedium )
+    registerItem( Tier2GainMedium )
+    registerItem( Tier3GainMedium )
   }
 
   private def registerBarrels() : Unit = {

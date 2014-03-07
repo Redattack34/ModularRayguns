@@ -132,11 +132,11 @@ object VanillaRecipeLibrary extends RecipeLibrary {
         ( 'E' -> emitter ) )
     }
     def registerT1Chamber( chamber : RaygunChamber, emitter : Item ) : Unit =
-      registerChamber( chamber, emitter, GlassGainMedium, Tier1Diode, Item.ingotIron )
+      registerChamber( chamber, emitter, Tier1GainMedium, Tier1Diode, Item.ingotIron )
     def registerT2Chamber( chamber : RaygunChamber, emitter : Item ) : Unit =
-      registerChamber( chamber, emitter, GlowstoneGainMedium, Tier2Diode, Item.ingotGold )
+      registerChamber( chamber, emitter, Tier2GainMedium, Tier2Diode, Item.ingotGold )
     def registerT3Chamber( chamber : RaygunChamber, emitter : Item ) : Unit =
-      registerChamber( chamber, emitter, DiamondGainMedium, Tier3Diode, Item.diamond )
+      registerChamber( chamber, emitter, Tier3GainMedium, Tier3Diode, Item.diamond )
 
     registerT1Chamber( Tier1CuttingChamber, Emitters.tier1CuttingEmitter)
     registerT1Chamber( HeatRayChamber, Emitters.heatRayEmitter)
@@ -242,16 +242,17 @@ object VanillaRecipeLibrary extends RecipeLibrary {
   }
 
   private def registerMisc() = {
-    def addGainMediumRecipe( medium : Item, ticks : Short, material : AnyRef ) : Unit = {
+    def addGainMediumRecipe( medium : Item, ticks : Short, glass : Item ) : Unit = {
         LensGrinderRecipeRegistry.register( ticks, new ItemStack( medium, 1 ),
-          " M ",
-          "MMM",
-          " M ",
-          ('M' -> material ) )
+          "GGG",
+          "MGM",
+          "GGG",
+          ('M' -> Item.ingotGold ),
+          ('G' -> glass ) )
     }
-    addGainMediumRecipe( DiamondGainMedium, 1200, Item.diamond )
-    addGainMediumRecipe( GlassGainMedium, 600, Block.glass )
-    addGainMediumRecipe( GlowstoneGainMedium, 600, Block.glowStone )
+    addGainMediumRecipe( Tier3GainMedium, 1200, RadiantDopedGlass )
+    addGainMediumRecipe( Tier2GainMedium, 900, GlowstoneDopedGlass )
+    addGainMediumRecipe( Tier1GainMedium, 600, RedstoneDopedGlass )
 
     GameRegistry.addRecipe( new ItemStack( Blocks.gunBench, 1 ),
       "II",
