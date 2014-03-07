@@ -140,6 +140,7 @@ object Items {
     registerItem( RadiantDust )
     registerItem( RadiantDustedGlass )
     registerItem( RadiantDopedGlass )
+    registerItem( Shutter )
   }
 
   private def registerBarrels() : Unit = {

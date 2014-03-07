@@ -99,6 +99,7 @@ class NEIModularRaygunsConfig extends IConfigureNEI {
     range.add(RadiantDust)
     range.add(RadiantDustedGlass)
     range.add(RadiantDopedGlass)
+    range.add(Shutter)
     range
   }
 

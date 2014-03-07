@@ -355,6 +355,15 @@ object VanillaRecipeLibrary extends RecipeLibrary {
       "RGR",
       'R' : Character, Item.redstone,
       'G' : Character, Item.glowstone )
+
+    GameRegistry.addRecipe( new ItemStack( Shutter ),
+      "I B",
+      "PTR",
+      'P' : Character, Block.pistonBase,
+      'T' : Character, Block.torchRedstoneActive,
+      'R' : Character, Item.redstone,
+      'I' : Character, Item.ingotIron,
+      'B' : Character, Block.stoneButton )
   }
 
   private def addModuleRecipe( module : RaygunModule, params : Any* ) : Unit = {

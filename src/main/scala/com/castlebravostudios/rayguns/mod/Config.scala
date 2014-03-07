@@ -58,6 +58,7 @@ object Config {
   var radiantDust: Int = _
   var radiantDustedGlass : Int = _
   var radiantDopedGlass : Int = _
+  var shutter : Int = _
 
   var basicBattery : Int = _
   var advancedBattery : Int = _
@@ -169,6 +170,7 @@ object Config {
     radiantDust = config.getItem( "radiantDust", 5019 ).getInt()
     radiantDustedGlass = config.getItem( "radiantDustedGlass", 5020 ).getInt()
     radiantDopedGlass = config.getItem( "radiantDopedGlass", 5021 ).getInt()
+    shutter = config.getItem( "shutter", 5022 ).getInt()
   }
 
   private def loadBatteryItemIds( config : Configuration ) : Unit = {
