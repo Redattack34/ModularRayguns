@@ -68,37 +68,34 @@ object VanillaRecipeLibrary extends RecipeLibrary {
       ( 'I' -> Item.ingotIron ),
       ( 'R' -> Block.blockRedstone ) )
     addModuleRecipe( RefireCapacitor,
-      "SI ",
-      "IRI",
-      "G G",
-      ( 'S' -> Emitters.shrinkRayEmitter ),
+      "IPI",
+      "IPI",
+      " S ",
+      ( 'S' -> Shutter ),
       ( 'I' -> Item.ingotIron ),
-      ( 'R' -> Block.blockRedstone ),
-      ( 'G' -> Item.ingotGold ) )
+      ( 'P' -> Item.paper ) )
     addModuleRecipe( SolarPanel,
-      "S  ",
       "GGG",
-      "RIR",
-      ( 'S' -> Emitters.shrinkRayEmitter ),
+      "III",
+      "RRR",
       ( 'I' -> Item.ingotIron ),
       ( 'R' -> Block.blockRedstone ),
       ( 'G' -> Block.glass ) )
     addModuleRecipe( ChargeCapacitor,
-      "GIG",
-      "IDI",
-      "GIG",
+      "GLG",
+      "GLG",
+      "B B",
       ( 'G' -> Item.ingotGold ),
-      ( 'I' -> Item.ingotIron ),
-      ( 'D' -> EnergizedDiamond ) )
+      ( 'L' -> Block.glass ),
+      ( 'B' -> BasicBattery ) )
   }
 
   private def registerBatteries() = {
     def addBatteryRecipe( battery : RaygunBattery, core : Any ) : Unit = {
       addModuleRecipe( battery,
-        "SG ",
+        "IGI",
         "IRI",
         "IRI",
-        ( 'S' -> Emitters.shrinkRayEmitter ),
         ( 'G' -> Item.ingotGold ),
         ( 'I' -> Item.ingotIron ),
         ( 'R' -> core ) )
@@ -112,32 +109,34 @@ object VanillaRecipeLibrary extends RecipeLibrary {
   private def registerBodies() = {
     def addBodyRecipe( body : RaygunBody, core : Any ) : Unit = {
       addModuleRecipe( body,
-        "R  ",
-        "IRI",
-        " II",
+        "IR ",
+        " IR",
+        " LI",
+        ( 'L' -> Block.lever ),
         ( 'R' -> core ),
         ( 'I' -> Item.ingotIron ) )
     }
-    addBodyRecipe( FireflyBody, Item.redstone )
-    addBodyRecipe( MantisBody, Item.ingotGold )
+    addBodyRecipe( FireflyBody, new ItemStack( Item.dyePowder, 1, 1 ) )
+    addBodyRecipe( MantisBody, new ItemStack( Item.dyePowder, 1, 2 ) )
   }
 
   private def registerChambers() = {
-    def registerChamber( chamber : RaygunChamber, emitter : Item, medium : Item, casing : Item ) : Unit = {
+    def registerChamber( chamber : RaygunChamber, emitter : Item, medium : Item, diode : Item, casing : Item ) : Unit = {
       addModuleRecipe( chamber,
-        "CCC",
+        "CDC",
         "MME",
-        "CCC",
+        "CDC",
+        ( 'D' -> diode ),
         ( 'C' -> casing ),
         ( 'M' -> medium ),
         ( 'E' -> emitter ) )
     }
     def registerT1Chamber( chamber : RaygunChamber, emitter : Item ) : Unit =
-      registerChamber( chamber, emitter, GlassGainMedium, Item.ingotIron )
+      registerChamber( chamber, emitter, GlassGainMedium, Tier1Diode, Item.ingotIron )
     def registerT2Chamber( chamber : RaygunChamber, emitter : Item ) : Unit =
-      registerChamber( chamber, emitter, GlowstoneGainMedium, Item.ingotGold )
+      registerChamber( chamber, emitter, GlowstoneGainMedium, Tier2Diode, Item.ingotGold )
     def registerT3Chamber( chamber : RaygunChamber, emitter : Item ) : Unit =
-      registerChamber( chamber, emitter, DiamondGainMedium, Item.diamond )
+      registerChamber( chamber, emitter, DiamondGainMedium, Tier3Diode, Item.diamond )
 
     registerT1Chamber( Tier1CuttingChamber, Emitters.tier1CuttingEmitter)
     registerT1Chamber( HeatRayChamber, Emitters.heatRayEmitter)
@@ -172,11 +171,11 @@ object VanillaRecipeLibrary extends RecipeLibrary {
         'L' : Character, left )
     }
     def registerT1Emitter( emitter : Item, top : AnyRef, right : AnyRef, bottom : AnyRef, left : AnyRef ) : Unit =
-      registerEmitter( emitter, Item.diamond, top, right, bottom, left )
+      registerEmitter( emitter, Tier1Diode, top, right, bottom, left )
     def registerT2Emitter( emitter : Item, top : AnyRef, right : AnyRef, bottom : AnyRef, left : AnyRef ) : Unit =
-      registerEmitter( emitter, EnergizedDiamond, top, right, bottom, left )
+      registerEmitter( emitter, Tier2Diode, top, right, bottom, left )
     def registerT3Emitter( emitter : Item, top : AnyRef, right : AnyRef, bottom : AnyRef, left : AnyRef ) : Unit =
-      registerEmitter( emitter, Item.netherStar, top, right, bottom, left )
+      registerEmitter( emitter, Tier3Diode, top, right, bottom, left )
 
     registerT1Emitter( Emitters.laserEmitter, Item.redstone, Item.redstone, Item.redstone, Item.redstone )
     registerT1Emitter( Emitters.heatRayEmitter, Item.coal, Item.bucketLava, Item.coal, Item.bucketLava )
@@ -207,7 +206,7 @@ object VanillaRecipeLibrary extends RecipeLibrary {
         "IGI",
         "GGG",
         "IGI",
-        ( 'G' -> Block.glass ),
+        ( 'G' -> OpticalGlass ),
         ( 'I' -> Item.ingotIron ) )
     }
 
@@ -216,28 +215,30 @@ object VanillaRecipeLibrary extends RecipeLibrary {
     } {
       LensGrinderRecipeRegistry.register( 1200, new ItemStack( item ),
         "IGI",
-        "GDG",
+        "GEG",
         "IGI",
-        ( 'G' -> Block.glass ),
+        ( 'G' -> OpticalGlass ),
         ( 'I' -> Item.ingotIron ),
-        ( 'D' -> Item.diamond ) )
+        ( 'D' -> Item.emerald ) )
     }
   }
 
   private def registerBarrels() = {
     addModuleRecipe( BeamBarrel,
       "GI ",
-      "IGI",
+      "IDI",
       " IG",
       ( 'G' -> Block.glass ),
-      ( 'I' -> Item.ingotIron ) )
+      ( 'I' -> Item.ingotIron ),
+      ( 'D' -> Tier2Diode ) )
 
     addModuleRecipe( BlasterBarrel,
       "GI ",
-      "I I",
+      "ISI",
       " IG",
       ( 'G' -> Block.glass ),
-      ( 'I' -> Item.ingotIron ) )
+      ( 'I' -> Item.ingotIron ),
+      ( 'S' -> Shutter ) )
   }
 
   private def registerMisc() = {
@@ -262,8 +263,9 @@ object VanillaRecipeLibrary extends RecipeLibrary {
 
     GameRegistry.addRecipe( new ItemStack( Blocks.gunBench, 1 ),
       "II",
-      "II",
-      'I' : Character, Item.ingotIron )
+      "BB",
+      'I' : Character, Item.ingotIron,
+      'B' : Character, Block.workbench )
 
     GameRegistry.addRecipe( new ItemStack( Blocks.lensGrinder, 1 ),
       "III",
