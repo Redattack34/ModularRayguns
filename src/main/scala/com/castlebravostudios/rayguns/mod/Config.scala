@@ -37,9 +37,6 @@ object Config {
 
   var rayGun : Int = _
   var brokenGun : Int = _
-  var glassGainMedium : Int = _
-  var glowstoneGainMedium : Int = _
-  var diamondGainMedium : Int = _
   var opticalGlass : Int = _
   var redstoneDustedGlass : Int = _
   var glowstoneDustedGlass : Int = _
@@ -151,9 +148,6 @@ object Config {
   private def loadMiscItemIds( config : Configuration ) : Unit = {
     rayGun = config.getItem( "rayGun", 5000 ).getInt()
     brokenGun = config.getItem( "brokenGun", 5001 ).getInt()
-    glassGainMedium = config.getItem( "glassGainMedium", 5002 ).getInt()
-    glowstoneGainMedium = config.getItem( "glowstoneGainMedium", 5003 ).getInt()
-    diamondGainMedium = config.getItem( "diamondGainMedium", 5004 ).getInt()
     opticalGlass = config.getItem( "opticalGlass", 5005 ).getInt()
     redstoneDustedGlass = config.getItem( "redstoneDustedGlass", 5006 ).getInt()
     glowstoneDustedGlass = config.getItem( "glowstoneDustedGlass", 5007 ).getInt()
