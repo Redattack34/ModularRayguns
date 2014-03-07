@@ -78,7 +78,6 @@ class NEIModularRaygunsConfig extends IConfigureNEI {
     val range = new MultiItemRange()
     range.add(Blocks.gunBench)
     range.add(Blocks.lensGrinder)
-    range.add(EnergizedDiamond)
     range.add(GlassGainMedium)
     range.add(GlowstoneGainMedium)
     range.add(DiamondGainMedium)

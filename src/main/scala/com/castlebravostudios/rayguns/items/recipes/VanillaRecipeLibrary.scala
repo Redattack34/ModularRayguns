@@ -253,14 +253,6 @@ object VanillaRecipeLibrary extends RecipeLibrary {
     addGainMediumRecipe( GlassGainMedium, 600, Block.glass )
     addGainMediumRecipe( GlowstoneGainMedium, 600, Block.glowStone )
 
-    GameRegistry.addRecipe( new ItemStack( EnergizedDiamond, 1 ),
-      "GRG",
-      "RDR",
-      "GRG",
-      'G' : Character, Block.glowStone,
-      'R' : Character, Block.blockRedstone,
-      'D' : Character, Item.diamond )
-
     GameRegistry.addRecipe( new ItemStack( Blocks.gunBench, 1 ),
       "II",
       "BB",

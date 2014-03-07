@@ -119,7 +119,6 @@ object Items {
   private def registerMisc() : Unit = {
     registerItem( RayGun )
     registerItem( BrokenGun )
-    registerItem( EnergizedDiamond )
     registerItem( GlassGainMedium )
     registerItem( GlowstoneGainMedium )
     registerItem( DiamondGainMedium )
