@@ -62,32 +62,38 @@ object VanillaRecipeLibrary extends RecipeLibrary {
     registerEmitters()
     registerLenses()
     registerBarrels()
+    registerGainMedia()
+    registerDustedGlass()
+    registerDopedGlass()
+    registerDiodes()
+    registerHeatSinks()
+    registerCasings()
     registerMisc()
   }
 
   private def registerAccessories() = {
-    addModuleRecipe( ExtendedBattery,
+    addModuleShaped( ExtendedBattery,
       "SI ",
       "IRI",
       " I ",
       ( 'S' -> Emitters.shrinkRayEmitter ),
       ( 'I' -> Item.ingotIron ),
       ( 'R' -> Block.blockRedstone ) )
-    addModuleRecipe( RefireCapacitor,
+    addModuleShaped( RefireCapacitor,
       "IPI",
       "IPI",
       " S ",
       ( 'S' -> Shutter ),
       ( 'I' -> Item.ingotIron ),
       ( 'P' -> Item.paper ) )
-    addModuleRecipe( SolarPanel,
+    addModuleShaped( SolarPanel,
       "GGG",
       "III",
       "RRR",
       ( 'I' -> Item.ingotIron ),
       ( 'R' -> Block.blockRedstone ),
       ( 'G' -> Block.glass ) )
-    addModuleRecipe( ChargeCapacitor,
+    addModuleShaped( ChargeCapacitor,
       "GLG",
       "GLG",
       "B B",
@@ -98,7 +104,7 @@ object VanillaRecipeLibrary extends RecipeLibrary {
 
   private def registerBatteries() = {
     def addBatteryRecipe( battery : RaygunBattery, core : Any ) : Unit = {
-      addModuleRecipe( battery,
+      addModuleShaped( battery,
         "IGI",
         "IRI",
         "IRI",
@@ -114,7 +120,7 @@ object VanillaRecipeLibrary extends RecipeLibrary {
 
   private def registerBodies() = {
     def addBodyRecipe( body : RaygunBody, core : Any ) : Unit = {
-      addModuleRecipe( body,
+      addModuleShaped( body,
         "IR ",
         " IR",
         " LI",
@@ -128,7 +134,7 @@ object VanillaRecipeLibrary extends RecipeLibrary {
 
   private def registerChambers() = {
     def registerChamber( chamber : RaygunChamber, emitter : Item, medium : Item, diode : Item, casing : Item ) : Unit = {
-      addModuleRecipe( chamber,
+      addModuleShaped( chamber,
         "CDC",
         "MME",
         "CDC",
@@ -165,16 +171,16 @@ object VanillaRecipeLibrary extends RecipeLibrary {
 
   private def registerEmitters() = {
     def registerEmitter( emitter : Item, core : AnyRef, top : AnyRef, right : AnyRef, bottom : AnyRef, left : AnyRef ) : Unit = {
-      GameRegistry.addRecipe( emitter.asStack( 1 ),
+      addShaped( emitter.asStack,
         "ITI",
         "LDR",
         "IBI",
-        'I' : Character, Item.ingotIron,
-        'D' : Character, core,
-        'T' : Character, top,
-        'R' : Character, right,
-        'B' : Character, bottom,
-        'L' : Character, left )
+        'I' -> Item.ingotIron,
+        'D' -> core,
+        'T' -> top,
+        'R' -> right,
+        'B' -> bottom,
+        'L' -> left )
     }
     def registerT1Emitter( emitter : Item, top : AnyRef, right : AnyRef, bottom : AnyRef, left : AnyRef ) : Unit =
       registerEmitter( emitter, Tier1Diode, top, right, bottom, left )
@@ -205,32 +211,24 @@ object VanillaRecipeLibrary extends RecipeLibrary {
   }
 
   private def registerLenses() = {
-    for {
-      item <- PreciseLens.item
-    } {
-      LensGrinderRecipeRegistry.register( 600, item.asStack,
-        "IGI",
-        "GGG",
-        "IGI",
-        ( 'G' -> OpticalGlass ),
-        ( 'I' -> Item.ingotIron ) )
-    }
+    addModuleLensGrinder( 600, PreciseLens,
+      "IGI",
+      "GGG",
+      "IGI",
+      ( 'G' -> OpticalGlass ),
+      ( 'I' -> Item.ingotIron ) )
 
-    for {
-      item <- WideLens.item
-    } {
-      LensGrinderRecipeRegistry.register( 1200, item.asStack,
-        "IGI",
-        "GEG",
-        "IGI",
-        ( 'G' -> OpticalGlass ),
-        ( 'I' -> Item.ingotIron ),
-        ( 'D' -> Item.emerald ) )
-    }
+    addModuleLensGrinder( 1200, WideLens,
+      "IGI",
+      "GEG",
+      "IGI",
+      ( 'G' -> OpticalGlass ),
+      ( 'I' -> Item.ingotIron ),
+      ( 'E' -> Item.emerald ) )
   }
 
   private def registerBarrels() = {
-    addModuleRecipe( BeamBarrel,
+    addModuleShaped( BeamBarrel,
       "GI ",
       "IDI",
       " IG",
@@ -238,7 +236,7 @@ object VanillaRecipeLibrary extends RecipeLibrary {
       ( 'I' -> Item.ingotIron ),
       ( 'D' -> Tier2Diode ) )
 
-    addModuleRecipe( BlasterBarrel,
+    addModuleShaped( BlasterBarrel,
       "GI ",
       "ISI",
       " IG",
@@ -248,8 +246,95 @@ object VanillaRecipeLibrary extends RecipeLibrary {
   }
 
   private def registerMisc() = {
+    addShaped( Blocks.gunBench.asStack,
+      "II",
+      "BB",
+      'I' -> Item.ingotIron,
+      'B' -> Block.workbench )
+
+    addShaped( Blocks.lensGrinder.asStack,
+      "III",
+      "SGS",
+      "III",
+      'I' -> Item.ingotIron,
+      'S' -> Block.sand,
+      'G' -> Block.glass )
+
+    addSmelting( Block.glass, OpticalGlass.asStack( 3 ), 0.1f )
+
+    addShaped( RadiantDust.asStack,
+      "RGR",
+      "GRG",
+      "RGR",
+      'R' -> Item.redstone,
+      'G' -> Item.glowstone )
+
+    addShaped( Shutter.asStack,
+      "I B",
+      "PTR",
+      'P' -> Block.pistonBase,
+      'T' -> Block.torchRedstoneActive,
+      'R' -> Item.redstone,
+      'I' -> Item.ingotIron,
+      'B' -> Block.stoneButton )
+  }
+
+  private def registerCasings() : Unit = {
+    def addCasing( casing : Item, heatSink : Item ) : Unit = {
+      addShaped( casing.asStack,
+        "ISI",
+        'I' -> Item.ingotIron,
+        'S' -> heatSink )
+    }
+    addCasing( Tier1ChamberCasing, Tier1HeatSink )
+    addCasing( Tier2ChamberCasing, Tier2HeatSink )
+    addCasing( Tier3ChamberCasing, Tier3HeatSink )
+  }
+
+  private def registerHeatSinks() : Unit = {
+    def addHeatSink( heatSink : Item, core : Any ) : Unit = {
+      addShaped( heatSink.asStack,
+        "ICI",
+        "ICI",
+        "ICI",
+        'I' -> Item.ingotIron,
+        'C' -> core )
+    }
+    addHeatSink( Tier1HeatSink, Item.snowball )
+    addHeatSink( Tier2HeatSink, Block.blockSnow )
+    addHeatSink( Tier3HeatSink, Block.ice )
+  }
+
+  private def registerDiodes() : Unit = {
+    def addDiode( time : Short, diode : Item, wire : Any, core : Any ) : Unit = {
+      addLensGrinder( time, diode.asStack,
+        "GGG",
+        "WCW",
+        "GGG",
+        'W' -> wire,
+        'G' -> Block.thinGlass,
+        'C' -> core )
+    }
+    addDiode( 300, Tier1Diode, Item.ingotIron, Block.blockRedstone )
+    addDiode( 450, Tier2Diode, Item.ingotIron, Block.glowStone )
+    addDiode( 600, Tier3Diode, Item.ingotGold, Item.netherStar )
+  }
+
+  private def registerDopedGlass() : Unit = {
+    addSmelting( RedstoneDustedGlass, RedstoneDopedGlass.asStack, 0.1f )
+    addSmelting( GlowstoneDustedGlass, GlowstoneDopedGlass.asStack, 0.1f )
+    addSmelting( RadiantDustedGlass, RadiantDopedGlass.asStack, 0.1f )
+  }
+
+  private def registerDustedGlass() : Unit = {
+    addShapeless( RedstoneDustedGlass.asStack, Item.redstone, OpticalGlass )
+    addShapeless( GlowstoneDustedGlass.asStack, Item.glowstone, OpticalGlass )
+    addShapeless( RadiantDustedGlass.asStack, RadiantDust, OpticalGlass )
+  }
+
+  private def registerGainMedia(): Unit = {
     def addGainMediumRecipe( medium : Item, ticks : Short, glass : Item ) : Unit = {
-        LensGrinderRecipeRegistry.register( ticks, medium.asStack,
+        addLensGrinder( ticks, medium.asStack,
           "GGG",
           "MGM",
           "GGG",
@@ -259,127 +344,5 @@ object VanillaRecipeLibrary extends RecipeLibrary {
     addGainMediumRecipe( Tier3GainMedium, 1200, RadiantDopedGlass )
     addGainMediumRecipe( Tier2GainMedium, 900, GlowstoneDopedGlass )
     addGainMediumRecipe( Tier1GainMedium, 600, RedstoneDopedGlass )
-
-    GameRegistry.addRecipe( Blocks.gunBench.asStack,
-      "II",
-      "BB",
-      'I' : Character, Item.ingotIron,
-      'B' : Character, Block.workbench )
-
-    GameRegistry.addRecipe( Blocks.lensGrinder.asStack,
-      "III",
-      "SGS",
-      "III",
-      'I' : Character, Item.ingotIron,
-      'S' : Character, Block.sand,
-      'G' : Character, Block.glass )
-
-    GameRegistry.addSmelting(Block.glass.blockID, OpticalGlass.asStack( 3 ), 0.1f )
-
-    GameRegistry.addShapelessRecipe( RedstoneDustedGlass.asStack,
-        Item.redstone, OpticalGlass )
-    GameRegistry.addShapelessRecipe( GlowstoneDustedGlass.asStack,
-        Item.glowstone, OpticalGlass )
-    GameRegistry.addShapelessRecipe( RadiantDustedGlass.asStack,
-        RadiantDust, OpticalGlass )
-
-    GameRegistry.addSmelting( RedstoneDustedGlass.itemID,
-        RedstoneDopedGlass.asStack, 0.1f )
-    GameRegistry.addSmelting( GlowstoneDustedGlass.itemID,
-        GlowstoneDopedGlass.asStack, 0.1f )
-    GameRegistry.addSmelting( RadiantDustedGlass.itemID,
-        RadiantDopedGlass.asStack, 0.1f )
-
-    LensGrinderRecipeRegistry.register( 300, Tier1Diode.asStack,
-        "GGG",
-        "IRI",
-        "GGG",
-        'I' -> Item.ingotIron,
-        'G' -> Block.thinGlass,
-        'R' -> Block.blockRedstone )
-
-    LensGrinderRecipeRegistry.register( 450, Tier2Diode.asStack,
-        "GGG",
-        "ILI",
-        "GGG",
-        'I' -> Item.ingotIron,
-        'G' -> Block.thinGlass,
-        'L' -> Block.glowStone )
-
-    LensGrinderRecipeRegistry.register( 600, Tier3Diode.asStack,
-        "GGG",
-        "DSD",
-        "GGG",
-        'D' -> Item.ingotGold,
-        'G' -> Block.thinGlass,
-        'S' -> Item.netherStar )
-
-    GameRegistry.addRecipe( Tier1HeatSink.asStack,
-      "ISI",
-      "ISI",
-      "ISI",
-      'I' : Character, Item.ingotIron,
-      'S' : Character, Item.snowball )
-
-    GameRegistry.addRecipe( Tier2HeatSink.asStack,
-      "ISI",
-      "ISI",
-      "ISI",
-      'I' : Character, Item.ingotIron,
-      'S' : Character, Block.blockSnow )
-
-    GameRegistry.addRecipe( Tier3HeatSink.asStack,
-      "ISI",
-      "ISI",
-      "ISI",
-      'I' : Character, Item.ingotIron,
-      'S' : Character, Block.ice )
-
-    GameRegistry.addRecipe( Tier1ChamberCasing.asStack,
-      "ISI",
-      'I' : Character, Item.ingotIron,
-      'S' : Character, Tier1HeatSink )
-
-    GameRegistry.addRecipe( Tier2ChamberCasing.asStack,
-      "ISI",
-      'I' : Character, Item.ingotGold,
-      'S' : Character, Tier2HeatSink )
-
-    GameRegistry.addRecipe( Tier3ChamberCasing.asStack,
-      "ISI",
-      'I' : Character, Item.diamond,
-      'S' : Character, Tier3HeatSink )
-
-    GameRegistry.addRecipe( RadiantDust.asStack,
-      "RGR",
-      "GRG",
-      "RGR",
-      'R' : Character, Item.redstone,
-      'G' : Character, Item.glowstone )
-
-    GameRegistry.addRecipe( Shutter.asStack,
-      "I B",
-      "PTR",
-      'P' : Character, Block.pistonBase,
-      'T' : Character, Block.torchRedstoneActive,
-      'R' : Character, Item.redstone,
-      'I' : Character, Item.ingotIron,
-      'B' : Character, Block.stoneButton )
-  }
-
-  private def addModuleRecipe( module : RaygunModule, params : Any* ) : Unit = {
-    val modules = module +: params.flatMap{
-      case mod : RaygunModule => Some( mod )
-      case (c, mod : RaygunModule) => Some( mod )
-      case _ => None
-    }
-
-    //Skip modules where the module or a recipe ingredient has been disabled.
-    if ( modules.exists( _.item.isEmpty ) ) {
-      return
-    }
-
-    GameRegistry.addRecipe( ScalaShapedRecipeFactory(
-        module.item.get.asStack, params:_* ) );
   }
 }
