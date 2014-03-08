@@ -36,7 +36,6 @@ item.rayguns.FrostRayEmitter.name=Frost Ray Emitter
 item.rayguns.HeatRayEmitter.name=Heat Ray Emitter
 item.rayguns.LaserEmitter.name=Laser Emitter
 item.rayguns.LifeForceEmitter.name=Life Force Emitter
-item.rayguns.ShrinkRayEmitter.name=Shrink Ray Emitter
 item.rayguns.DeathRayEmitter.name=Death Ray Emitter
 item.rayguns.EnderEmitter.name=Ender Emitter
 item.rayguns.LightningEmitter.name=Lightning Emitter

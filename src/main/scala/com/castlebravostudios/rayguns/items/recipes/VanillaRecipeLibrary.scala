@@ -73,12 +73,11 @@ object VanillaRecipeLibrary extends RecipeLibrary {
 
   private def registerAccessories() = {
     addModuleShaped( ExtendedBattery,
-      "SI ",
-      "IRI",
-      " I ",
-      ( 'S' -> Emitters.shrinkRayEmitter ),
-      ( 'I' -> Item.ingotIron ),
-      ( 'R' -> Block.blockRedstone ) )
+      "CCC",
+      "III",
+      "CCC",
+      ( 'C' -> Block.ice ),
+      ( 'I' -> Item.ingotIron ) )
     addModuleShaped( RefireCapacitor,
       "IPI",
       "IPI",
@@ -192,7 +191,6 @@ object VanillaRecipeLibrary extends RecipeLibrary {
     registerT1Emitter( Emitters.laserEmitter, Item.redstone, Item.redstone, Item.redstone, Item.redstone )
     registerT1Emitter( Emitters.heatRayEmitter, Item.coal, Item.bucketLava, Item.coal, Item.bucketLava )
     registerT1Emitter( Emitters.lightningEmitter, Block.blockIron, Block.blockRedstone, Block.blockIron, Block.blockRedstone )
-    registerT1Emitter( Emitters.shrinkRayEmitter, Block.pistonBase, Block.pistonBase, Block.pistonBase, Block.pistonBase )
     registerT1Emitter( Emitters.tier1CuttingEmitter, Item.pickaxeStone, Item.shovelStone, Item.pickaxeStone, Item.shovelStone )
 
     registerT2Emitter( Emitters.frostRayEmitter, Block.ice, Block.blockSnow, Block.ice, Block.blockSnow )

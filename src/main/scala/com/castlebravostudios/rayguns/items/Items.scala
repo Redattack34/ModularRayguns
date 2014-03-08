@@ -98,7 +98,6 @@ object Items {
   }
 
   private def registerEmitters() : Unit = {
-    registerItem( Emitters.shrinkRayEmitter )
     registerItem( Emitters.laserEmitter )
     registerItem( Emitters.heatRayEmitter )
     registerItem( Emitters.lifeForceEmitter )
