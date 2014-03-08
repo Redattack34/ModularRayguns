@@ -28,16 +28,15 @@
 package com.castlebravostudios.rayguns.entities.effects
 
 import com.castlebravostudios.rayguns.entities.Shootable
+import com.castlebravostudios.rayguns.mod.ModularRayguns
+import com.castlebravostudios.rayguns.utils.Extensions.ItemExtensions
+
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.Item
 import net.minecraft.item.ItemDye
-import net.minecraft.item.ItemStack
 import net.minecraft.util.EntityDamageSource
-import net.minecraft.util.ResourceLocation
-import com.castlebravostudios.rayguns.mod.ModularRayguns
-
 
 object FortifiedSunlightEffect extends BaseEffect {
 
@@ -59,7 +58,7 @@ object FortifiedSunlightEffect extends BaseEffect {
 
   def hitBlock( shootable : Shootable, hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Boolean = {
     if ( shootable.charge > 2.5 && shootable.shooter.isInstanceOf[EntityPlayer] ) {
-      ItemDye.applyBonemeal(new ItemStack( Item.dyePowder, 1 ), shootable.worldObj,
+      ItemDye.applyBonemeal( Item.dyePowder.asStack( 1, 0 ), shootable.worldObj,
           hitX, hitY, hitZ, shootable.shooter.asInstanceOf[EntityPlayer])
     }
     true

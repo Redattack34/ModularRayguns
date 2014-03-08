@@ -46,6 +46,7 @@ import cpw.mods.fml.common.Mod
 import com.castlebravostudios.rayguns.blocks.lensgrinder.LensGrinderGui
 import codechicken.nei.recipe.DefaultOverlayHandler
 import com.castlebravostudios.rayguns.plugins.nei.NEIModularRaygunsConfig.recipeKey
+import com.castlebravostudios.rayguns.items.misc.Tier1Diode
 //scalastyle:on
 
 class NEIModularRaygunsConfig extends IConfigureNEI {
@@ -77,30 +78,49 @@ class NEIModularRaygunsConfig extends IConfigureNEI {
     val range = new MultiItemRange()
     range.add(Blocks.gunBench)
     range.add(Blocks.lensGrinder)
-    range.add(EnergizedDiamond)
-    range.add(GlassGainMedium)
-    range.add(GlowstoneGainMedium)
-    range.add(DiamondGainMedium)
+    range.add(OpticalGlass)
+    range.add(RadiantDust)
+    range.add(Shutter)
+    range.add(RedstoneDustedGlass)
+    range.add(GlowstoneDustedGlass)
+    range.add(RadiantDustedGlass)
+    range.add(RedstoneDopedGlass)
+    range.add(GlowstoneDopedGlass)
+    range.add(RadiantDopedGlass)
+    range.add(Tier1Diode)
+    range.add(Tier2Diode)
+    range.add(Tier3Diode)
+    range.add(Tier1HeatSink)
+    range.add(Tier2HeatSink)
+    range.add(Tier3HeatSink)
+    range.add(Tier1ChamberCasing)
+    range.add(Tier2ChamberCasing)
+    range.add(Tier3ChamberCasing)
+    range.add(Tier1GainMedium)
+    range.add(Tier2GainMedium)
+    range.add(Tier3GainMedium)
     range
   }
 
   private def chamberItemRange: MultiItemRange = {
     val range = new MultiItemRange()
-    addModule( range, Tier1CuttingChamber )
-    addModule( range, Tier2CuttingChamber )
-    addModule( range, Tier3CuttingChamber )
-    addModule( range, DeathRayChamber )
-    addModule( range, EnderChamber )
-    addModule( range, ExplosiveChamber )
-    addModule( range, FortifiedSunlightChamber )
-    addModule( range, FrostRayChamber )
-    addModule( range, HeatRayChamber )
-    addModule( range, ImpulseChamber )
     addModule( range, LaserChamber )
-    addModule( range, LifeForceChamber )
+    addModule( range, HeatRayChamber )
     addModule( range, LightningChamber )
+    addModule( range, Tier1CuttingChamber )
+
+    addModule( range, FrostRayChamber )
+    addModule( range, LifeForceChamber )
+    addModule( range, EnderChamber )
+    addModule( range, FortifiedSunlightChamber )
+    addModule( range, ImpulseChamber )
     addModule( range, TractorChamber )
     addModule( range, MatterTransporterChamber )
+    addModule( range, Tier2CuttingChamber )
+
+    addModule( range, DeathRayChamber )
+    addModule( range, ExplosiveChamber )
+    addModule( range, Tier3CuttingChamber )
     range
   }
 
@@ -145,21 +165,25 @@ class NEIModularRaygunsConfig extends IConfigureNEI {
 
   private def emitterItemRange: MultiItemRange = {
     val range = new MultiItemRange()
-    range.add( Emitters.tier1CuttingEmitter )
-    range.add( Emitters.tier2CuttingEmitter )
-    range.add( Emitters.tier3CuttingEmitter )
-    range.add( Emitters.deathRayEmitter )
-    range.add( Emitters.enderEmitter )
-    range.add( Emitters.explosiveEmitter )
-    range.add( Emitters.fortifiedSunlightEmitter )
-    range.add( Emitters.frostRayEmitter )
-    range.add( Emitters.heatRayEmitter )
-    range.add( Emitters.impulseEmitter )
+
     range.add( Emitters.laserEmitter )
-    range.add( Emitters.lifeForceEmitter )
+    range.add( Emitters.heatRayEmitter )
     range.add( Emitters.lightningEmitter )
+    range.add( Emitters.tier1CuttingEmitter )
+
+    range.add( Emitters.frostRayEmitter )
+    range.add( Emitters.lifeForceEmitter )
+    range.add( Emitters.enderEmitter )
+    range.add( Emitters.fortifiedSunlightEmitter )
+    range.add( Emitters.impulseEmitter )
     range.add( Emitters.tractorEmitter )
     range.add( Emitters.matterTransporterEmitter )
+    range.add( Emitters.tier2CuttingEmitter )
+
+    range.add( Emitters.deathRayEmitter )
+    range.add( Emitters.explosiveEmitter )
+    range.add( Emitters.tier3CuttingEmitter )
+
     range
   }
 

@@ -30,15 +30,16 @@ package com.castlebravostudios.rayguns.entities.effects
 import com.castlebravostudios.rayguns.entities.BoltRenderer
 import com.castlebravostudios.rayguns.entities.Shootable
 import com.castlebravostudios.rayguns.items.misc.RayGun
+import com.castlebravostudios.rayguns.mod.ModularRayguns
+import com.castlebravostudios.rayguns.utils.Extensions.ItemExtensions
+
 import net.minecraft.block.Block
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.item.ItemStack
 import net.minecraft.util.EntityDamageSource
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.common.IPlantable
-import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 object DeathRayEffect extends BaseEffect {
 
@@ -73,7 +74,7 @@ object DeathRayEffect extends BaseEffect {
 
   private def canEdit( shootable : Shootable, x : Int, y : Int, z : Int, side : Int ) : Boolean = {
     shootable.shooter match {
-      case player : EntityPlayer => player.canPlayerEdit(x, y, z, side, new ItemStack( RayGun ) )
+      case player : EntityPlayer => player.canPlayerEdit(x, y, z, side, RayGun.asStack )
       case _ => false
     }
   }

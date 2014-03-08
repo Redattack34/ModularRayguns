@@ -27,25 +27,24 @@
 
 package com.castlebravostudios.rayguns.mod
 
-import cpw.mods.fml.common.network.NetworkMod
+import java.util.logging.Logger
+import com.castlebravostudios.rayguns.blocks.TileEntities
+import com.castlebravostudios.rayguns.entities.Entities
+import com.castlebravostudios.rayguns.entities.effects.Effects
+import com.castlebravostudios.rayguns.items.Blocks
+import com.castlebravostudios.rayguns.items.Items
+import com.castlebravostudios.rayguns.items.bodies.FireflyBody
+import com.castlebravostudios.rayguns.utils.Extensions.ItemExtensions
+import net.minecraft.creativetab.CreativeTabs
+import net.minecraft.item.ItemStack
+import net.minecraft.util.ResourceLocation
 import cpw.mods.fml.common.Mod
 import cpw.mods.fml.common.SidedProxy
-import cpw.mods.fml.common.event.FMLPreInitializationEvent
-import cpw.mods.fml.common.event.FMLPostInitializationEvent
 import cpw.mods.fml.common.event.FMLInitializationEvent
-import com.castlebravostudios.rayguns.items.Items
-import com.castlebravostudios.rayguns.items.Blocks
+import cpw.mods.fml.common.event.FMLPostInitializationEvent
+import cpw.mods.fml.common.event.FMLPreInitializationEvent
+import cpw.mods.fml.common.network.NetworkMod
 import cpw.mods.fml.common.Mod.EventHandler
-import com.castlebravostudios.rayguns.entities.Entities
-import com.castlebravostudios.rayguns.blocks.TileEntities
-import cpw.mods.fml.common.registry.LanguageRegistry
-import net.minecraft.creativetab.CreativeTabs
-import com.castlebravostudios.rayguns.items.bodies.MantisBody
-import net.minecraft.item.ItemStack
-import com.castlebravostudios.rayguns.items.bodies.FireflyBody
-import com.castlebravostudios.rayguns.entities.effects.Effects
-import net.minecraft.util.ResourceLocation
-import java.util.logging.Logger
 
 @Mod(modid="mod_ModularRayguns", version="1.0-alpha2", modLanguage="scala", useMetadata=true)
 @NetworkMod(clientSideRequired=true, serverSideRequired=true)
@@ -83,7 +82,7 @@ object ModularRayguns {
 
   val raygunsTab  = new CreativeTabs("tabRayguns") {
     override def getIconItemStack : ItemStack =
-      new ItemStack( FireflyBody.item.get, 1, 0 )
+      FireflyBody.item.get.asStack
   }
 
   def texture( path : String ) : ResourceLocation =

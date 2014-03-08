@@ -31,12 +31,13 @@ import com.castlebravostudios.rayguns.api.LensGrinderRecipeRegistry
 import com.castlebravostudios.rayguns.mod.Config
 import com.castlebravostudios.rayguns.mod.ModularRayguns
 
+import net.minecraft.block.Block
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 
-object DiamondGainMedium extends Item( Config.diamondGainMedium ) {
+object Tier3GainMedium extends Item( Config.tier3GainMedium ) {
 
   setCreativeTab(ModularRayguns.raygunsTab)
-  setUnlocalizedName("rayguns.DiamondGainMedium")
-  setTextureName("rayguns:diamond_gain_medium")
+  setUnlocalizedName("rayguns.Tier3GainMedium")
+  setTextureName("rayguns:gain_medium_t3")
 }

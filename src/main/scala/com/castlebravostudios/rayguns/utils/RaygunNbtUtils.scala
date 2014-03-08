@@ -46,6 +46,7 @@ import net.minecraft.client.resources.I18n
 import com.castlebravostudios.rayguns.api.items.ItemModule
 import com.castlebravostudios.rayguns.items.batteries.ItemBattery
 import com.castlebravostudios.rayguns.utils.Extensions.ItemStackExtension
+import com.castlebravostudios.rayguns.utils.Extensions.ItemExtensions
 
 object RaygunNbtUtils {
 
@@ -106,7 +107,7 @@ object RaygunNbtUtils {
     else None
 
   private def buildValidGun( components : GunComponents ) : ItemStack = {
-    val stack = new ItemStack( RayGun )
+    val stack = RayGun.asStack
     stack.stackSize = 1
     stack.setTagInfo( MODULES_TAG, buildModuleTag( components ) )
     stack.setItemName( getRaygunName( components ) )
@@ -164,7 +165,7 @@ object RaygunNbtUtils {
   }
 
   def buildBrokenGun( item : ItemStack ) : ItemStack = {
-    val stack = new ItemStack( BrokenGun )
+    val stack = BrokenGun.asStack
     stack.stackSize = 1
     stack.setTagInfo( MODULES_TAG, buildModuleTag( getAllValidComponents( item ) ) )
     stack

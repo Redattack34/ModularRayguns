@@ -35,9 +35,9 @@ import net.minecraft.block.Block
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 
-object GlassGainMedium extends Item( Config.glassGainMedium ) {
+object Tier2GainMedium extends Item( Config.tier2GainMedium ) {
 
   setCreativeTab(ModularRayguns.raygunsTab)
-  setUnlocalizedName("rayguns.GlassGainMedium")
-  setTextureName("rayguns:glass_gain_medium")
+  setUnlocalizedName("rayguns.Tier2GainMedium")
+  setTextureName("rayguns:gain_medium_t2")
 }

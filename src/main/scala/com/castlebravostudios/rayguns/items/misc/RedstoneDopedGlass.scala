@@ -25,48 +25,16 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.castlebravostudios.rayguns.utils
+package com.castlebravostudios.rayguns.items.misc
 
-import net.minecraft.world.World
-import net.minecraft.item.ItemStack
-import net.minecraft.nbt.NBTTagCompound
+import com.castlebravostudios.rayguns.mod.Config
+import com.castlebravostudios.rayguns.mod.ModularRayguns
+
 import net.minecraft.item.Item
-import net.minecraft.block.Block
 
-object Extensions extends Logging {
+object RedstoneDopedGlass extends Item( Config.redstoneDopedGlass ) {
 
-  implicit class WorldExtension(val world : World) extends AnyVal {
-    def isOnClient : Boolean = world.isRemote
-    def isOnServer : Boolean = !world.isRemote
-
-    def debug(name : String, value : Any) : Unit = {
-      if ( isOnClient ) info( s"Client $name: $value" )
-      if ( isOnServer ) info( s"Server $name: $value" )
-    }
-  }
-
-  implicit class ItemStackExtension( val item : ItemStack ) extends AnyVal {
-
-    def getTagCompoundSafe : NBTTagCompound = {
-      if ( item.getTagCompound() == null ) {
-        item.setTagCompound( new NBTTagCompound() )
-      }
-      item.getTagCompound()
-    }
-
-  }
-
-  implicit class ItemExtensions( val item : Item ) extends AnyVal {
-
-    def asStack : ItemStack = new ItemStack( item )
-    def asStack( count : Int ) : ItemStack = new ItemStack( item, count )
-    def asStack( count : Int, meta : Int ) : ItemStack = new ItemStack( item, count, meta )
-  }
-
-  implicit class BlockExtensions( val block : Block ) extends AnyVal {
-
-    def asStack : ItemStack = new ItemStack( block )
-    def asStack( count : Int ) : ItemStack = new ItemStack( block, count )
-    def asStack( count : Int, meta : Int ) : ItemStack = new ItemStack( block, count, meta )
-  }
+  setCreativeTab(ModularRayguns.raygunsTab)
+  setUnlocalizedName("rayguns.RedstoneDopedGlass")
+  setTextureName("rayguns:redstone_doped_glass")
 }

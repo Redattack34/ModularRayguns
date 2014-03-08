@@ -35,9 +35,9 @@ import net.minecraft.block.Block
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 
-object GlowstoneGainMedium extends Item( Config.glowstoneGainMedium ) {
+object Tier1HeatSink extends Item( Config.tier1HeatSink ) {
 
   setCreativeTab(ModularRayguns.raygunsTab)
-  setUnlocalizedName("rayguns.GlowstoneGainMedium")
-  setTextureName("rayguns:glowstone_gain_medium")
+  setUnlocalizedName("rayguns.Tier1HeatSink")
+  setTextureName("rayguns:heatsink_t1")
 }
