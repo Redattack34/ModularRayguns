@@ -52,9 +52,33 @@ trait Logging {
   protected def finest( message : => String ) =
     log( Level.FINEST, message )
 
+  protected def severe( message : => String, t : Throwable ) =
+    log( Level.SEVERE, message, t )
+
+  protected def warning( message : => String, t : Throwable ) =
+    log( Level.WARNING, message, t )
+
+  protected def info( message : => String, t : Throwable ) =
+    log( Level.INFO, message, t )
+
+  protected def fine( message : => String, t : Throwable ) =
+    log( Level.FINE, message, t )
+
+  protected def finer( message : => String, t : Throwable ) =
+    log( Level.FINER, message, t )
+
+  protected def finest( message : => String, t : Throwable ) =
+    log( Level.FINEST, message, t )
+
   private def log( level : Level, message : => String ) = {
     if ( logger.isLoggable( level ) ) {
       logger.log( level, message )
+    }
+  }
+
+  private def log( level : Level, message : => String, t : Throwable ) = {
+    if ( logger.isLoggable(level) ) {
+      logger.log( level, message, t )
     }
   }
 }

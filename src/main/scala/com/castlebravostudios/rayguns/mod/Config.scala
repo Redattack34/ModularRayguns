@@ -32,6 +32,7 @@ import net.minecraftforge.common.Configuration
 import net.minecraftforge.common.Property
 import com.castlebravostudios.rayguns.items.recipes.RecipeLibrary
 import com.castlebravostudios.rayguns.items.recipes.VanillaRecipeLibrary
+import com.castlebravostudios.rayguns.items.recipes.Ic2RecipeLibrary
 
 object Config {
 
@@ -267,8 +268,14 @@ object Config {
   }
 
   def loadRecipes(config: Configuration) : Unit = {
-    val str = config.get( "config-options", "recipeLibrary", "vanilla", "Current allowed values are: vanilla" );
-    recipeLibrary=VanillaRecipeLibrary
+    val str = config.get( "config-options", "recipeLibrary", "vanilla", "Current allowed values are: vanilla, ic2" ).getString();
+    if ( str == "ic2" ) {
+      require(cpw.mods.fml.common.Loader.isModLoaded("IC2"), "Can't use IC2 recipe library if IC2 isn't loaded." )
+      recipeLibrary = Ic2RecipeLibrary
+    }
+    else {
+      recipeLibrary = VanillaRecipeLibrary
+    }
   }
 
   private class IdRange( config : Configuration, start: Int, name : String, comment : String ) {
