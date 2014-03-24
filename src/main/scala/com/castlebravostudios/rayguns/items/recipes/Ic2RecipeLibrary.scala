@@ -84,6 +84,30 @@ object Ic2RecipeLibrary extends RecipeLibrary with Logging {
     registerMisc()
   }
 
+  def registerIngredients() : Unit = {
+    registerItem( OpticalGlass )
+    registerItem( RedstoneDustedGlass )
+    registerItem( GlowstoneDustedGlass )
+    registerItem( RedstoneDopedGlass )
+    registerItem( GlowstoneDopedGlass )
+    registerItem( Tier1Diode )
+    registerItem( Tier2Diode )
+    registerItem( Tier3Diode )
+    registerItem( Tier1HeatSink )
+    registerItem( Tier2HeatSink )
+    registerItem( Tier3HeatSink )
+    registerItem( Tier1ChamberCasing )
+    registerItem( Tier2ChamberCasing )
+    registerItem( Tier3ChamberCasing )
+    registerItem( RadiantDust )
+    registerItem( RadiantDustedGlass )
+    registerItem( RadiantDopedGlass )
+    registerItem( Shutter )
+    registerItem( Tier1GainMedium )
+    registerItem( Tier2GainMedium )
+    registerItem( Tier3GainMedium )
+  }
+
   private def registerAccessories() = {
     addModuleShaped( ExtendedBattery,
       "CCC",

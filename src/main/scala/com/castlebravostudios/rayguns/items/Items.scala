@@ -118,27 +118,7 @@ object Items {
   private def registerMisc() : Unit = {
     registerItem( RayGun )
     registerItem( BrokenGun )
-    registerItem( OpticalGlass )
-    registerItem( RedstoneDustedGlass )
-    registerItem( GlowstoneDustedGlass )
-    registerItem( RedstoneDopedGlass )
-    registerItem( GlowstoneDopedGlass )
-    registerItem( Tier1Diode )
-    registerItem( Tier2Diode )
-    registerItem( Tier3Diode )
-    registerItem( Tier1HeatSink )
-    registerItem( Tier2HeatSink )
-    registerItem( Tier3HeatSink )
-    registerItem( Tier1ChamberCasing )
-    registerItem( Tier2ChamberCasing )
-    registerItem( Tier3ChamberCasing )
-    registerItem( RadiantDust )
-    registerItem( RadiantDustedGlass )
-    registerItem( RadiantDopedGlass )
-    registerItem( Shutter )
-    registerItem( Tier1GainMedium )
-    registerItem( Tier2GainMedium )
-    registerItem( Tier3GainMedium )
+    Config.recipeLibrary.registerIngredients()
   }
 
   private def registerBarrels() : Unit = {
