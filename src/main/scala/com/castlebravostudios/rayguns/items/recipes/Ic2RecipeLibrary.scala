@@ -43,16 +43,30 @@ import com.castlebravostudios.rayguns.items.misc._
 import com.castlebravostudios.rayguns.utils.Extensions.ItemExtensions
 import com.castlebravostudios.rayguns.utils.Extensions.BlockExtensions
 import com.castlebravostudios.rayguns.utils.ScalaShapedRecipeFactory
-
 import net.minecraft.block.Block
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
-
 import cpw.mods.fml.common.registry.GameRegistry
+import com.castlebravostudios.rayguns.utils.Logging
 
 //scalastyle:on
 
-object VanillaRecipeLibrary extends RecipeLibrary {
+object Ic2RecipeLibrary extends RecipeLibrary with Logging {
+
+  lazy val itemsClass = Class.forName( "ic2.core.Ic2Items" )
+
+  private def getIc2Item( item : String ) : ItemStack = getIc2Item( item, 1 )
+  private def getIc2Item( item : String, count : Int ) : ItemStack = {
+    try {
+      val stack = itemsClass.getField( item ).get( null ).asInstanceOf[ItemStack]
+      val c = stack.copy()
+      c.stackSize = count
+      c
+    }
+    catch {
+      case e : Exception => severe( s"IC2 Recipe Library: Failed to get item$item", e ); null
+    }
+  }
 
   def registerRecipes() : Unit = {
     registerAccessories()
@@ -77,6 +91,7 @@ object VanillaRecipeLibrary extends RecipeLibrary {
     GlowstoneDustedGlass,
     RedstoneDopedGlass,
     GlowstoneDopedGlass,
+    LeadDustedGlass,
     Tier1Diode,
     Tier2Diode,
     Tier3Diode,
@@ -101,44 +116,47 @@ object VanillaRecipeLibrary extends RecipeLibrary {
       "III",
       "CCC",
       ( 'C' -> Block.ice ),
-      ( 'I' -> Item.ingotIron ) )
+      ( 'I' -> getIc2Item( "ironCableItem" ) ) )
     addModuleShaped( RefireCapacitor,
-      "IPI",
-      "IPI",
-      " S ",
-      ( 'S' -> Shutter ),
-      ( 'I' -> Item.ingotIron ),
+      "WPW",
+      "WPW",
+      " C ",
+      ( 'C' -> getIc2Item( "electronicCircuit" ) ),
+      ( 'W' -> getIc2Item( "goldCableItem" ) ),
       ( 'P' -> Item.paper ) )
     addModuleShaped( SolarPanel,
-      "GGG",
-      "III",
-      "RRR",
-      ( 'I' -> Item.ingotIron ),
-      ( 'R' -> Block.blockRedstone ),
-      ( 'G' -> Block.glass ) )
+      "GCG",
+      "CGC",
+      "WRW",
+      ( 'C' -> getIc2Item( "coalDust" ) ),
+      ( 'G' -> Block.glass ),
+      ( 'W' -> getIc2Item( "tinCableItem" ) ) )
     addModuleShaped( ChargeCapacitor,
       "GLG",
       "GLG",
       "B B",
-      ( 'G' -> Item.ingotGold ),
+      ( 'G' -> getIc2Item( "glassFiberCableItem" ) ),
       ( 'L' -> Block.glass ),
       ( 'B' -> BasicBattery ) )
   }
 
   private def registerBatteries() = {
-    def addBatteryRecipe( battery : RaygunBattery, core : Any ) : Unit = {
+    def addBatteryRecipe( battery : RaygunBattery, cable : Any, core : Any ) : Unit = {
       addModuleShaped( battery,
-        "IGI",
+        "ICI",
         "IRI",
         "IRI",
-        ( 'G' -> Item.ingotGold ),
-        ( 'I' -> Item.ingotIron ),
+        ( 'C' -> cable ),
+        ( 'I' -> getIc2Item( "casingiron" ) ),
         ( 'R' -> core ) )
     }
 
-    addBatteryRecipe( BasicBattery, Block.blockRedstone )
-    addBatteryRecipe( AdvancedBattery, BasicBattery )
-    addBatteryRecipe( UltimateBattery, AdvancedBattery )
+    addBatteryRecipe( BasicBattery,
+        getIc2Item( "insulatedCopperCableItem" ), getIc2Item( "reBattery" ) )
+    addBatteryRecipe( AdvancedBattery,
+        getIc2Item( "insulatedGoldCableItem" ), getIc2Item( "advBattery" ) )
+    addBatteryRecipe( UltimateBattery,
+        getIc2Item( "glassFiberCableItem" ), getIc2Item( "energyCrystal" ) )
   }
 
   private def registerBodies() = {
@@ -156,7 +174,7 @@ object VanillaRecipeLibrary extends RecipeLibrary {
   }
 
   private def registerChambers() = {
-    def registerChamber( chamber : RaygunChamber, emitter : Item, medium : Item, diode : Item, casing : Item ) : Unit = {
+    def registerChamber( chamber : RaygunChamber, emitter : Item, medium : Item, diode : Item, casing : Any ) : Unit = {
       addModuleShaped( chamber,
         "CDC",
         "MME",
@@ -167,11 +185,11 @@ object VanillaRecipeLibrary extends RecipeLibrary {
         ( 'E' -> emitter ) )
     }
     def registerT1Chamber( chamber : RaygunChamber, emitter : Item ) : Unit =
-      registerChamber( chamber, emitter, Tier1GainMedium, Tier1Diode, Item.ingotIron )
+      registerChamber( chamber, emitter, Tier1GainMedium, Tier1Diode, Tier1ChamberCasing )
     def registerT2Chamber( chamber : RaygunChamber, emitter : Item ) : Unit =
-      registerChamber( chamber, emitter, Tier2GainMedium, Tier2Diode, Item.ingotGold )
+      registerChamber( chamber, emitter, Tier2GainMedium, Tier2Diode, Tier2ChamberCasing )
     def registerT3Chamber( chamber : RaygunChamber, emitter : Item ) : Unit =
-      registerChamber( chamber, emitter, Tier3GainMedium, Tier3Diode, Item.diamond )
+      registerChamber( chamber, emitter, Tier3GainMedium, Tier3Diode, Tier3ChamberCasing )
 
     registerT1Chamber( Tier1CuttingChamber, Emitters.tier1CuttingEmitter)
     registerT1Chamber( HeatRayChamber, Emitters.heatRayEmitter)
@@ -198,7 +216,7 @@ object VanillaRecipeLibrary extends RecipeLibrary {
         "ITI",
         "LDR",
         "IBI",
-        'I' -> Item.ingotIron,
+        'I' -> getIc2Item( "plateiron" ),
         'D' -> core,
         'T' -> top,
         'R' -> right,
@@ -238,14 +256,14 @@ object VanillaRecipeLibrary extends RecipeLibrary {
       "GGG",
       "IGI",
       ( 'G' -> OpticalGlass ),
-      ( 'I' -> Item.ingotIron ) )
+      ( 'I' -> getIc2Item( "casingiron" ) ) )
 
     addModuleLensGrinder( 1200, WideLens,
       "IGI",
       "GEG",
       "IGI",
       ( 'G' -> OpticalGlass ),
-      ( 'I' -> Item.ingotIron ),
+      ( 'I' -> getIc2Item( "casingiron" ) ),
       ( 'E' -> Item.emerald ) )
   }
 
@@ -255,7 +273,7 @@ object VanillaRecipeLibrary extends RecipeLibrary {
       "IDI",
       " IG",
       ( 'G' -> Block.glass ),
-      ( 'I' -> Item.ingotIron ),
+      ( 'I' -> getIc2Item( "casingiron" ) ),
       ( 'D' -> Tier2Diode ) )
 
     addModuleShaped( BlasterBarrel,
@@ -263,7 +281,7 @@ object VanillaRecipeLibrary extends RecipeLibrary {
       "ISI",
       " IG",
       ( 'G' -> Block.glass ),
-      ( 'I' -> Item.ingotIron ),
+      ( 'I' -> getIc2Item( "casingiron" ) ),
       ( 'S' -> Shutter ) )
   }
 
@@ -271,60 +289,58 @@ object VanillaRecipeLibrary extends RecipeLibrary {
     addShaped( Blocks.gunBench.asStack,
       "II",
       "BB",
-      'I' -> Item.ingotIron,
+      'I' -> getIc2Item( "plateiron" ),
       'B' -> Block.workbench )
 
     addShaped( Blocks.lensGrinder.asStack,
-      "III",
-      "SGS",
-      "III",
-      'I' -> Item.ingotIron,
+      "SSS",
+      "FMF",
+      " C ",
       'S' -> Block.sand,
-      'G' -> Block.glass )
+      'F' -> Item.flint,
+      'M' -> getIc2Item( "machine" ),
+      'C' -> getIc2Item( "electronicCircuit" ) )
 
-    addSmelting( Block.glass, OpticalGlass.asStack( 3 ), 0.1f )
+    addSmelting( LeadDustedGlass, OpticalGlass.asStack( 3 ), 0.1f )
 
     addShaped( RadiantDust.asStack,
-      "RGR",
-      "GRG",
-      "RGR",
+      "RLG",
+      "GRL",
+      "LGR",
       'R' -> Item.redstone,
-      'G' -> Item.glowstone )
+      'G' -> Item.glowstone,
+      'L' -> Item.dyePowder.asStack( 1, 4 ) )
 
     addShaped( Shutter.asStack,
-      "I B",
-      "PTR",
+      "I ",
+      "PC",
       'P' -> Block.pistonBase,
-      'T' -> Block.torchRedstoneActive,
-      'R' -> Item.redstone,
-      'I' -> Item.ingotIron,
-      'B' -> Block.stoneButton )
+      'C' -> getIc2Item( "electronicCircuit" ),
+      'I' -> getIc2Item( "plateiron" ) )
   }
 
   private def registerCasings() : Unit = {
-    def addCasing( casing : Item, heatSink : Item ) : Unit = {
+    def addCasing( casing : Item, metal : Any, heatSink : Item ) : Unit = {
       addShaped( casing.asStack,
-        "ISI",
-        'I' -> Item.ingotIron,
+        "MSM",
+        'M' -> metal,
         'S' -> heatSink )
     }
-    addCasing( Tier1ChamberCasing, Tier1HeatSink )
-    addCasing( Tier2ChamberCasing, Tier2HeatSink )
-    addCasing( Tier3ChamberCasing, Tier3HeatSink )
+    addCasing( Tier1ChamberCasing, getIc2Item( "platetin" ), Tier1HeatSink )
+    addCasing( Tier2ChamberCasing, getIc2Item( "plateiron" ), Tier2HeatSink )
+    addCasing( Tier3ChamberCasing, getIc2Item( "advancedAlloy" ), Tier3HeatSink )
   }
 
   private def registerHeatSinks() : Unit = {
     def addHeatSink( heatSink : Item, core : Any ) : Unit = {
       addShaped( heatSink.asStack,
         "ICI",
-        "ICI",
-        "ICI",
-        'I' -> Item.ingotIron,
+        'I' -> getIc2Item( "plateiron" ),
         'C' -> core )
     }
-    addHeatSink( Tier1HeatSink, Item.snowball )
-    addHeatSink( Tier2HeatSink, Block.blockSnow )
-    addHeatSink( Tier3HeatSink, Block.ice )
+    addHeatSink( Tier1HeatSink, getIc2Item( "reactorCoolantSimple" ) )
+    addHeatSink( Tier2HeatSink, getIc2Item( "reactorCoolantTriple" ) )
+    addHeatSink( Tier3HeatSink, getIc2Item( "reactorCoolantSix" ) )
   }
 
   private def registerDiodes() : Unit = {
@@ -337,9 +353,9 @@ object VanillaRecipeLibrary extends RecipeLibrary {
         'G' -> Block.thinGlass,
         'C' -> core )
     }
-    addDiode( 300, Tier1Diode, Item.ingotIron, Block.blockRedstone )
-    addDiode( 450, Tier2Diode, Item.ingotIron, Block.glowStone )
-    addDiode( 600, Tier3Diode, Item.ingotGold, Item.netherStar )
+    addDiode( 300, Tier1Diode, getIc2Item( "copperCableItem" ), Block.blockRedstone )
+    addDiode( 450, Tier2Diode, getIc2Item( "goldCableItem" ), Block.glowStone )
+    addDiode( 600, Tier3Diode, getIc2Item( "glassFiberCableItem" ), Item.netherStar )
   }
 
   private def registerDopedGlass() : Unit = {
@@ -352,6 +368,7 @@ object VanillaRecipeLibrary extends RecipeLibrary {
     addShapeless( RedstoneDustedGlass.asStack, Item.redstone, OpticalGlass )
     addShapeless( GlowstoneDustedGlass.asStack, Item.glowstone, OpticalGlass )
     addShapeless( RadiantDustedGlass.asStack, RadiantDust, OpticalGlass )
+    addShapeless( LeadDustedGlass.asStack, getIc2Item( "leadDust" ), Block.glass )
   }
 
   private def registerGainMedia(): Unit = {
@@ -360,7 +377,7 @@ object VanillaRecipeLibrary extends RecipeLibrary {
           "GGG",
           "MGM",
           "GGG",
-          ('M' -> Item.ingotGold ),
+          ('M' -> getIc2Item( "silverIngot" ) ),
           ('G' -> glass ) )
     }
     addGainMediumRecipe( Tier3GainMedium, 1200, RadiantDopedGlass )

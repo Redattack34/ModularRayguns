@@ -25,60 +25,16 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.castlebravostudios.rayguns.utils
+package com.castlebravostudios.rayguns.items.misc
 
+import com.castlebravostudios.rayguns.mod.Config
 import com.castlebravostudios.rayguns.mod.ModularRayguns
-import java.util.logging.Level
 
-trait Logging {
+import net.minecraft.item.Item
 
-  private val logger = ModularRayguns.logger
+object LeadDustedGlass extends Item( Config.leadDustedGlass ) {
 
-  protected def severe( message : => String ) =
-    log( Level.SEVERE, message )
-
-  protected def warning( message : => String ) =
-    log( Level.WARNING, message )
-
-  protected def info( message : => String ) =
-    log( Level.INFO, message )
-
-  protected def fine( message : => String ) =
-    log( Level.FINE, message )
-
-  protected def finer( message : => String ) =
-    log( Level.FINER, message )
-
-  protected def finest( message : => String ) =
-    log( Level.FINEST, message )
-
-  protected def severe( message : => String, t : Throwable ) =
-    log( Level.SEVERE, message, t )
-
-  protected def warning( message : => String, t : Throwable ) =
-    log( Level.WARNING, message, t )
-
-  protected def info( message : => String, t : Throwable ) =
-    log( Level.INFO, message, t )
-
-  protected def fine( message : => String, t : Throwable ) =
-    log( Level.FINE, message, t )
-
-  protected def finer( message : => String, t : Throwable ) =
-    log( Level.FINER, message, t )
-
-  protected def finest( message : => String, t : Throwable ) =
-    log( Level.FINEST, message, t )
-
-  private def log( level : Level, message : => String ) = {
-    if ( logger.isLoggable( level ) ) {
-      logger.log( level, message )
-    }
-  }
-
-  private def log( level : Level, message : => String, t : Throwable ) = {
-    if ( logger.isLoggable(level) ) {
-      logger.log( level, message, t )
-    }
-  }
+  setCreativeTab(ModularRayguns.raygunsTab)
+  setUnlocalizedName("rayguns.LeadDustedGlass")
+  setTextureName("rayguns:lead_dusted_glass")
 }
