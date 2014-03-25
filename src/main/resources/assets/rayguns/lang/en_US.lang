@@ -72,6 +72,7 @@ item.rayguns.Shutter.name=Shutter
 item.rayguns.Tier1GainMedium.name=Basic Gain Medium
 item.rayguns.Tier2GainMedium.name=Advanced Gain Medium
 item.rayguns.Tier3GainMedium.name=Ultimate Gain Medium
+item.rayguns.LeadDustedGlass.name=Lead Dusted Glass
 
 tile.rayguns.GunBench.name=Raygun Workbench
 tile.rayguns.LensGrinder.name=Lens Grinder

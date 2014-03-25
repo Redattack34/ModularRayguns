@@ -47,6 +47,7 @@ import com.castlebravostudios.rayguns.blocks.lensgrinder.LensGrinderGui
 import codechicken.nei.recipe.DefaultOverlayHandler
 import com.castlebravostudios.rayguns.plugins.nei.NEIModularRaygunsConfig.recipeKey
 import com.castlebravostudios.rayguns.items.misc.Tier1Diode
+import com.castlebravostudios.rayguns.mod.Config
 //scalastyle:on
 
 class NEIModularRaygunsConfig extends IConfigureNEI {
@@ -78,27 +79,9 @@ class NEIModularRaygunsConfig extends IConfigureNEI {
     val range = new MultiItemRange()
     range.add(Blocks.gunBench)
     range.add(Blocks.lensGrinder)
-    range.add(OpticalGlass)
-    range.add(RadiantDust)
-    range.add(Shutter)
-    range.add(RedstoneDustedGlass)
-    range.add(GlowstoneDustedGlass)
-    range.add(RadiantDustedGlass)
-    range.add(RedstoneDopedGlass)
-    range.add(GlowstoneDopedGlass)
-    range.add(RadiantDopedGlass)
-    range.add(Tier1Diode)
-    range.add(Tier2Diode)
-    range.add(Tier3Diode)
-    range.add(Tier1HeatSink)
-    range.add(Tier2HeatSink)
-    range.add(Tier3HeatSink)
-    range.add(Tier1ChamberCasing)
-    range.add(Tier2ChamberCasing)
-    range.add(Tier3ChamberCasing)
-    range.add(Tier1GainMedium)
-    range.add(Tier2GainMedium)
-    range.add(Tier3GainMedium)
+
+    Config.recipeLibrary.getIngredientItems().foreach( range.add )
+
     range
   }
 

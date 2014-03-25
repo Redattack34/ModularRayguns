@@ -37,13 +37,13 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.block.Block
 import net.minecraft.item.crafting.ShapelessRecipes
-import scala.collection.JavaConversions
+import scala.collection.JavaConversions._
 
 trait RecipeLibrary {
 
   def registerRecipes() : Unit
 
-  def registerIngredients() : Unit
+  def getIngredientItems() : Seq[Item]
 
   protected def addModuleShaped( module : RaygunModule, params : Any* ) : Unit = {
     val modules = findModules( module, params :_* )
@@ -90,8 +90,7 @@ trait RecipeLibrary {
       }
       case _ => throw new IllegalArgumentException( "Invalid shapeless recipe." );
     }
-    GameRegistry.addRecipe(
-        new ShapelessRecipes( output, JavaConversions.seqAsJavaList( stacks ) ) )
+    GameRegistry.addRecipe( new ShapelessRecipes( output, stacks ) )
   }
 
   protected def addLensGrinder( ticks : Short, result : ItemStack, recipe : Any* ): Unit =
@@ -102,9 +101,4 @@ trait RecipeLibrary {
 
   protected def addSmelting( input : Item, output : ItemStack, expMult : Float ): Unit =
     GameRegistry.addSmelting(input.itemID, output, expMult)
-
-  //Items are registered on creation, so if there exists an Item object to pass
-  //here it's already been registered. This method exists for code-clarity
-  //purposes.
-  protected def registerItem( item : Item ) : Unit = item.hashCode
 }

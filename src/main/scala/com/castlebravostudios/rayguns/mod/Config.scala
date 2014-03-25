@@ -59,6 +59,7 @@ object Config {
   var tier1GainMedium: Int = _
   var tier2GainMedium: Int = _
   var tier3GainMedium: Int = _
+  var leadDustedGlass : Int = _
 
   var basicBattery : Int = _
   var advancedBattery : Int = _
@@ -171,6 +172,7 @@ object Config {
     tier1GainMedium = range.getItem( "basicGainMedium" )
     tier2GainMedium = range.getItem( "advancedGainMedium" )
     tier3GainMedium = range.getItem( "ultimateGainMedium" )
+    leadDustedGlass = range.getItem( "leadDustedGlass" )
   }
 
   private def loadBatteryItemIds( config : Configuration ) : Unit = {

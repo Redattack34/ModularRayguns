@@ -118,7 +118,7 @@ object Items {
   private def registerMisc() : Unit = {
     registerItem( RayGun )
     registerItem( BrokenGun )
-    Config.recipeLibrary.registerIngredients()
+    Config.recipeLibrary.getIngredientItems().foreach( registerItem )
   }
 
   private def registerBarrels() : Unit = {
