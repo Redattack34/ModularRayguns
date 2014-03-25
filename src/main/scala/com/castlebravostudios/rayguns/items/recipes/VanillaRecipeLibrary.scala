@@ -167,11 +167,11 @@ object VanillaRecipeLibrary extends RecipeLibrary {
         ( 'E' -> emitter ) )
     }
     def registerT1Chamber( chamber : RaygunChamber, emitter : Item ) : Unit =
-      registerChamber( chamber, emitter, Tier1GainMedium, Tier1Diode, Item.ingotIron )
+      registerChamber( chamber, emitter, Tier1GainMedium, Tier1Diode, Tier1ChamberCasing )
     def registerT2Chamber( chamber : RaygunChamber, emitter : Item ) : Unit =
-      registerChamber( chamber, emitter, Tier2GainMedium, Tier2Diode, Item.ingotGold )
+      registerChamber( chamber, emitter, Tier2GainMedium, Tier2Diode, Tier2ChamberCasing )
     def registerT3Chamber( chamber : RaygunChamber, emitter : Item ) : Unit =
-      registerChamber( chamber, emitter, Tier3GainMedium, Tier3Diode, Item.diamond )
+      registerChamber( chamber, emitter, Tier3GainMedium, Tier3Diode, Tier3ChamberCasing )
 
     registerT1Chamber( Tier1CuttingChamber, Emitters.tier1CuttingEmitter)
     registerT1Chamber( HeatRayChamber, Emitters.heatRayEmitter)
@@ -302,15 +302,15 @@ object VanillaRecipeLibrary extends RecipeLibrary {
   }
 
   private def registerCasings() : Unit = {
-    def addCasing( casing : Item, heatSink : Item ) : Unit = {
+    def addCasing( casing : Item, metal : Any, heatSink : Item ) : Unit = {
       addShaped( casing.asStack,
-        "ISI",
-        'I' -> Item.ingotIron,
+        "MSM",
+        'M' -> metal,
         'S' -> heatSink )
     }
-    addCasing( Tier1ChamberCasing, Tier1HeatSink )
-    addCasing( Tier2ChamberCasing, Tier2HeatSink )
-    addCasing( Tier3ChamberCasing, Tier3HeatSink )
+    addCasing( Tier1ChamberCasing, Item.ingotIron, Tier1HeatSink )
+    addCasing( Tier2ChamberCasing, Item.ingotGold, Tier2HeatSink )
+    addCasing( Tier3ChamberCasing, Item.diamond, Tier3HeatSink )
   }
 
   private def registerHeatSinks() : Unit = {
