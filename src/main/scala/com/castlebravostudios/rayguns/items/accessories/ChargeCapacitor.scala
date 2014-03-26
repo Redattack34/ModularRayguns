@@ -35,6 +35,7 @@ import com.castlebravostudios.rayguns.items.misc.PrefireEvent
 import com.castlebravostudios.rayguns.items.misc.RayGun
 import com.castlebravostudios.rayguns.mod.ModularRayguns
 import com.castlebravostudios.rayguns.utils.ChargeFireEvent
+import com.castlebravostudios.rayguns.utils.Extensions.WorldExtension
 
 object ChargeCapacitor extends BaseRaygunModule with RaygunAccessory {
   val moduleKey = "ChargeCapacitor"
@@ -46,7 +47,7 @@ object ChargeCapacitor extends BaseRaygunModule with RaygunAccessory {
     .setTextureName("rayguns:charge_capacitor")
     .setCreativeTab( ModularRayguns.raygunsTab )
     .setMaxStackSize(1)
-    
+
   override def handleGetFireInformationEvent( event : GetFireInformationEvent ) : Unit = {
     super.handleGetFireInformationEvent(event)
 
@@ -60,9 +61,11 @@ object ChargeCapacitor extends BaseRaygunModule with RaygunAccessory {
   override def handlePrefireEvent( event : PrefireEvent ) : Unit = {
     super.handlePrefireEvent(event)
 
+    //Should only be able to fire after charging then releasing.
+    event.canFire &= event.isOnStoppedUsing
+
     if ( event.player.getItemInUse() == null ) {
       event.player.setItemInUse( event.gun, Integer.MAX_VALUE )
-      event.canFire = false
     }
   }
 }

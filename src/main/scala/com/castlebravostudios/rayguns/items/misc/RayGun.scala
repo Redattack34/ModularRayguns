@@ -65,6 +65,7 @@ case class PrefireEvent(
     val cooldownTicks : Int,
     val powerMult : Double,
     val fireEvent : FireEvent,
+    val isOnStoppedUsing : Boolean,
     var canFire : Boolean )
 
 case class PostfireEvent(
@@ -114,7 +115,8 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
       return
     }
 
-    val prefireEvent = prefire( player, world, item, components.get )
+    val prefireEvent = prefire( player, world, item, components.get,
+        isOnStoppedUsing = true )
     if ( !prefireEvent.canFire ) return
 
     val creator = ShotRegistry.getFunction( prefireEvent.fireEvent )
@@ -137,7 +139,8 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
       return RaygunNbtUtils.buildBrokenGun( item )
     }
 
-    val prefireEvent = prefire( player, world, item, components.get )
+    val prefireEvent = prefire( player, world, item, components.get,
+        isOnStoppedUsing = false )
     if ( !prefireEvent.canFire ) return item
 
     val creator = ShotRegistry.getFunction( prefireEvent.fireEvent )
@@ -148,7 +151,8 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
     }
   }
 
-  private def prefire( player : EntityPlayer, world : World, gun : ItemStack, components : GunComponents  ) : PrefireEvent = {
+  private def prefire( player : EntityPlayer, world : World, gun : ItemStack,
+      components : GunComponents, isOnStoppedUsing : Boolean ) : PrefireEvent = {
     val getInfo = GetFireInformationEvent( player, world, gun, components, 10, 1.0d,
         DefaultFireEvent( components ) );
 
@@ -156,7 +160,7 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
 
     val prefireEvent = PrefireEvent( player, world, gun, components,
         getInfo.cooldownTicks, getInfo.powerMult, getInfo.fireEvent,
-        getCooldownTime( gun ) == 0 )
+        isOnStoppedUsing, getCooldownTime( gun ) == 0 )
     components.components.foreach( comp => comp.handlePrefireEvent( prefireEvent ) )
     prefireEvent
   }
