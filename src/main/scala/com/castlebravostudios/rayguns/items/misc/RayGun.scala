@@ -177,9 +177,7 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
     val currentTime = getCooldownTime(item)
     val newTime = if ( currentTime > 0 ) currentTime - 1 else 0
 
-    if ( world.isOnServer ) {
-      setCooldownTime( item, newTime );
-    }
+    setCooldownTime( item, newTime );
 
     val components = RaygunNbtUtils.getComponents( item )
     if ( components.isEmpty ) return
