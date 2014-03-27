@@ -41,6 +41,7 @@ import net.minecraft.util.EntityDamageSource
 object FortifiedSunlightEffect extends BaseEffect {
 
   val effectKey = "FortifiedSunlight"
+  val damageSourceKey = "fortifiedSunlight"
 
   def hitEntity( shootable : Shootable, entity : Entity ) : Boolean = entity match {
     case e : EntityLivingBase if e.isEntityUndead() => hitUndead( shootable, e ); true
@@ -49,11 +50,11 @@ object FortifiedSunlightEffect extends BaseEffect {
 
   private def hitUndead( shootable : Shootable, entity : EntityLivingBase ) : Unit = {
     entity.setFire( Math.round( shootable.charge.toFloat * 3  ) )
-    entity.attackEntityFrom(new EntityDamageSource("fortifiedsunlight", shootable.shooter), shootable.charge.toFloat * 4 )
+    entity.attackEntityFrom( getDamageSource( shootable ), shootable.charge.toFloat * 4 )
   }
 
   private def hitLiving( shootable : Shootable, entity : Entity ) : Unit = {
-    entity.attackEntityFrom(new EntityDamageSource("fortifiedsunlight", shootable.shooter), shootable.charge.toFloat * 3 )
+    entity.attackEntityFrom( getDamageSource( shootable ), shootable.charge.toFloat * 3 )
   }
 
   def hitBlock( shootable : Shootable, hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Boolean = {

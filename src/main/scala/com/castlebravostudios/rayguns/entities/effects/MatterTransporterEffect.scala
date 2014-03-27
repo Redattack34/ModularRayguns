@@ -47,6 +47,7 @@ import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData
 object MatterTransporterEffect extends BaseEffect {
 
   val effectKey: String = "MatterTransporterEffect"
+  val damageSourceKey = ""
 
   def hitBlock( shootable: Shootable, hitX: Int, hitY: Int, hitZ: Int, side: Int ) : Boolean = {
     val itemId = shootable.asInstanceOf[MatterTransporterShootable].itemId

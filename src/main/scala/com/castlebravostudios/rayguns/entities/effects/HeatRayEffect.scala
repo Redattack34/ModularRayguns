@@ -40,10 +40,11 @@ import com.castlebravostudios.rayguns.mod.ModularRayguns
 object HeatRayEffect extends BaseEffect {
 
   val effectKey = "HeatRay"
+  val damageSourceKey = "heatRay"
 
   def hitEntity( shootable : Shootable, hit : Entity ) : Boolean = {
     hit.setFire( Math.round( shootable.charge.toFloat * 2 ) )
-    hit.attackEntityFrom(new EntityDamageSource("heatray", shootable.shooter), shootable.charge.toFloat.round )
+    hit.attackEntityFrom( getDamageSource( shootable ), shootable.charge.toFloat.round )
 
     true
   }

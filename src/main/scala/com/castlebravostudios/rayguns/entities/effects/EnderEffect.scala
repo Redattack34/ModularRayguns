@@ -44,6 +44,7 @@ import com.castlebravostudios.rayguns.mod.ModularRayguns
 object EnderEffect extends BaseEffect {
 
   val effectKey = "Ender"
+  val damageSourceKey = ""
 
   def hitEntity( shootable : Shootable, entity : Entity ) : Boolean = {
     if ( shootable.worldObj.isOnServer ) {

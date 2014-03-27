@@ -39,13 +39,14 @@ import com.castlebravostudios.rayguns.mod.ModularRayguns
 object LifeForceEffect extends BaseEffect {
 
   val effectKey = "LifeForce"
+  val damageSourceKey = "lifeforce"
 
   def hitEntity( shootable : Shootable, hit : Entity ) : Boolean = {
     if ( hit.isInstanceOf[EntityLivingBase] ) {
       val living = hit.asInstanceOf[EntityLivingBase]
 
       if ( living.isEntityUndead() ) {
-        living.attackEntityFrom(new EntityDamageSource("lifeforce", shootable.shooter), shootable.charge.toFloat * 3 )
+        living.attackEntityFrom( getDamageSource( shootable ), shootable.charge.toFloat * 3 )
       }
       else {
         living.heal( shootable.charge.toFloat * 3 )

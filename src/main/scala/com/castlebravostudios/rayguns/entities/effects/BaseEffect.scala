@@ -39,6 +39,8 @@ import net.minecraft.util.ResourceLocation
 import net.minecraft.world.World
 import net.minecraftforge.fluids.IFluidBlock
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.util.EntityDamageSourceIndirect
+import net.minecraft.util.DamageSource
 
 trait BaseEffect {
 
@@ -50,6 +52,11 @@ trait BaseEffect {
    * IMPORTANT NOTE: This key must not be changed once your plugin is released!
    */
   def effectKey : String
+
+  /**
+   * The key used to look up the damage source text.
+   */
+  def damageSourceKey : String
 
   /**
    * A collision has been detected against the given entity. Return true if the
@@ -125,4 +132,7 @@ trait BaseEffect {
     bolt.effect = this
     bolt
   }
+
+  def getDamageSource( shootable : Shootable ) : DamageSource =
+    new EntityDamageSourceIndirect( damageSourceKey, shootable, shootable.shooter )
 }

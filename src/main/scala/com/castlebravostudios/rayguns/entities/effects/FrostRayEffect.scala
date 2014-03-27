@@ -43,10 +43,10 @@ import com.castlebravostudios.rayguns.mod.ModularRayguns
 object FrostRayEffect extends BaseEffect {
 
   val effectKey = "FrostRay"
+  val damageSourceKey = "frostRay"
 
   def hitEntity( shootable : Shootable, hit : Entity ) : Boolean = {
-    hit.attackEntityFrom(new EntityDamageSource("frostray", shootable.shooter),
-        shootable.charge.toFloat * 2 )
+    hit.attackEntityFrom( getDamageSource( shootable ), shootable.charge.toFloat * 2 )
 
     val livingShooter = shootable.shooter match{
       case l : EntityLivingBase => l

@@ -37,11 +37,11 @@ import com.castlebravostudios.rayguns.mod.ModularRayguns
 object LaserEffect extends BaseEffect {
 
   val effectKey = "Laser"
+  val damageSourceKey = "laser"
 
   def hitEntity( shootable : Shootable, entity : Entity ) : Boolean = {
-    entity.attackEntityFrom(
-      new EntityDamageSource("laser", shootable.shooter), 2f * shootable.charge.toFloat )
-      true
+    entity.attackEntityFrom( getDamageSource( shootable ), 2f * shootable.charge.toFloat )
+    true
   }
 
   def hitBlock( shootable : Shootable, hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Boolean = true
@@ -50,7 +50,7 @@ object LaserEffect extends BaseEffect {
     for ( _ <- 0 until 4) spawnParticle(shootable, hitX, hitY, hitZ)
   }
 
-  private def spawnParticle(shootable: com.castlebravostudios.rayguns.entities.Shootable, hitX: Double, hitY: Double, hitZ: Double): Unit = {
+  private def spawnParticle(shootable: Shootable, hitX: Double, hitY: Double, hitZ: Double): Unit = {
     shootable.worldObj.spawnParticle("smoke", hitX, hitY, hitZ, 0.0D, 0.0D, 0.0D)
   }
 

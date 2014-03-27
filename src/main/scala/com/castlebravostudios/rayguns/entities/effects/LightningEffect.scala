@@ -47,13 +47,13 @@ import com.google.common.io.ByteArrayDataInput
 object LightningEffect extends BaseEffect {
 
   val effectKey = "Lightning"
+  val damageSourceKey = "lightningRay"
 
   def hitEntity( shootable : Shootable, entity : Entity ) : Boolean = {
     if ( entity.isInstanceOf[EntityCreeper] ) return true
 
-    entity.attackEntityFrom(
-      new EntityDamageSource("lightningRay", shootable.shooter), shootable.charge.toFloat * 4.0f )
-      true
+    entity.attackEntityFrom( getDamageSource( shootable ), shootable.charge.toFloat * 4.0f )
+    true
   }
 
   def hitBlock( shootable : Shootable, hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Boolean = {
