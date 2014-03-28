@@ -25,45 +25,29 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.castlebravostudios.rayguns.entities.effects
+package com.castlebravostudios.rayguns.utils
 
-import com.castlebravostudios.rayguns.entities.Shootable
-import net.minecraft.entity.Entity
+import net.minecraft.util.EntityDamageSourceIndirect
+import java.util.Random
+import net.minecraft.util.ChatMessageComponent
 import net.minecraft.entity.EntityLivingBase
-import net.minecraft.util.EntityDamageSource
-import net.minecraft.util.ResourceLocation
-import net.minecraft.world.World
-import com.castlebravostudios.rayguns.mod.ModularRayguns
+import net.minecraft.entity.Entity
 
+class RandomDamageSource( damageType : String, direct : Entity, indirect : Entity )
+  extends EntityDamageSourceIndirect( damageType, direct, indirect ) {
 
-object LifeForceEffect extends BaseEffect {
+  override def getDeathMessage( victim : EntityLivingBase ) : ChatMessageComponent = {
+    val key = s"death.attack.$damageType.${RandomDamageSource.random}"
+    val sourceName = if ( this.getEntity() == null ) this.getSourceOfDamage().getTranslatedEntityName()
+        else this.getEntity().getTranslatedEntityName
+    val victimName = victim.getTranslatedEntityName
 
-  val effectKey = "LifeForce"
-  val damageSourceKey = "lifeForce"
-
-  def hitEntity( shootable : Shootable, hit : Entity ) : Boolean = {
-    if ( hit.isInstanceOf[EntityLivingBase] ) {
-      val living = hit.asInstanceOf[EntityLivingBase]
-
-      if ( living.isEntityUndead() ) {
-        living.attackEntityFrom( getDamageSource( shootable ), shootable.charge.toFloat * 3 )
-      }
-      else {
-        living.heal( shootable.charge.toFloat * 3 )
-      }
-    }
-
-    true
+    ChatMessageComponent.createFromTranslationWithSubstitutions( key,
+        sourceName, victimName )
   }
+}
+object RandomDamageSource {
+  private[this] val rand = new Random()
 
-  def hitBlock( shootable : Shootable, hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Boolean = true
-
-  override def createImpactParticles( shootable : Shootable, hitX : Double, hitY : Double, hitZ : Double ) : Unit = {
-    for ( _ <- 0 until 4 ) {
-      shootable.worldObj.spawnParticle("cloud", hitX, hitY, hitZ, 0.0D, 0.0D, 0.0D);
-    }
-  }
-  val boltTexture = ModularRayguns.texture( "textures/bolts/life_bolt.png" )
-  val beamTexture = ModularRayguns.texture( "textures/beams/life_beam.png" )
-  val chargeTexture = ModularRayguns.texture( "textures/effects/charge/life_charge.png" )
+  def random : Int = rand.nextInt( 3 ) + 1
 }

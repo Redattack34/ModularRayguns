@@ -48,6 +48,7 @@ import net.minecraft.util.Icon
 import net.minecraft.world.World
 import com.castlebravostudios.rayguns.utils.Vector3
 import net.minecraft.util.EntityDamageSource
+import com.castlebravostudios.rayguns.utils.RandomDamageSource
 
 case class GetFireInformationEvent(
     val player : EntityPlayer,
@@ -134,9 +135,6 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
   }
 
   override def onItemRightClick(item : ItemStack, world : World, player : EntityPlayer ) : ItemStack = {
-    player.attackEntityFrom(
-      new EntityDamageSource("laser", player), 20 )
-
     val components = RaygunNbtUtils.getComponents( item )
 
     if ( components.isEmpty ) {

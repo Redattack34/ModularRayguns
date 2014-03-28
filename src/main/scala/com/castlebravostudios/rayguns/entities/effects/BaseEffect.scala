@@ -41,6 +41,7 @@ import net.minecraftforge.fluids.IFluidBlock
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.EntityDamageSourceIndirect
 import net.minecraft.util.DamageSource
+import com.castlebravostudios.rayguns.utils.RandomDamageSource
 
 trait BaseEffect {
 
@@ -134,5 +135,5 @@ trait BaseEffect {
   }
 
   def getDamageSource( shootable : Shootable ) : DamageSource =
-    new EntityDamageSourceIndirect( damageSourceKey, shootable, shootable.shooter )
+    new RandomDamageSource( damageSourceKey, shootable, shootable.shooter )
 }

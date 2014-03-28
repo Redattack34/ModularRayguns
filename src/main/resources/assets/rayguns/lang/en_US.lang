@@ -119,3 +119,35 @@ rayguns.ChargeCapacitor.segment=Charging
 
 rayguns.BeamBarrel.segment=Beam
 rayguns.BlasterBarrel.segment=Blaster
+
+death.attack.deathRay.1=%1$s was kicked off this mortal coil by %2$s's death ray
+death.attack.deathRay.2=%1$s's soul was torn asunder by %2$s's death ray.
+death.attack.deathRay.3=%1$s discovered that there is no justice, there is just %2$s's death ray.
+
+death.attack.fortifiedSunlight.1=%1$s died like an ant under %2$s's magnifying glass.
+death.attack.fortifiedSunlight.2=%1$s's day was fatally brightened by %2$s's sunlight ray.
+death.attack.fortifiedSunlight.3=Rays cast from %2$s's sunlight gun hit %1$s at 3.00x10^8m/s.
+
+death.attack.frostRay.1=%1$s should've listened when %2$s said 'Freeze!'
+death.attack.frostRay.2=%1$s was terminally chilled out by %2$s's frost ray.
+death.attack.frostRay.3=%1$s wasn't frosty enough to avoid %2$s's ice ray.
+
+death.attack.heatRay.1=%2$s's heat ray burned %1$s like the sun in the middle of July.
+death.attack.heatRay.2=%1$s was incinerated by %2$s's heat ray. Toasty!
+death.attack.heatRay.3=%1$s was killed by %2$s's Hadoken-wait, no, it's just a heat ray.
+
+death.attack.impulse.1=%1$s received terminal whiplash from %2$s's impulse ray.
+death.attack.impulse.2=%1$s was accelerated to terminal velocity by %2$s's impulse ray.
+death.attack.impulse.3=%2$s yanked on %1$s's chain too hard with an impulse ray.
+
+death.attack.laser.1=%1$s was fatally dazzled by %2$s's laser.
+death.attack.laser.2=%1$s was illuminated by %2$s's flashli - er, laser.
+death.attack.laser.3=%1$s was blinded to death by %2$s's laser, somehow.
+
+death.attack.lifeForce.1=%2$s killed %1$s with kindness - and a life force ray.
+death.attack.lifeForce.2=Saint %2$s raised the Life Force Ray up on high, and shot %1$s with it.
+death.attack.lifeForce.3=The bright light of %2$s's life force ray shone down on %1$s's bloody impurity.
+
+death.attack.lightningRay.1=%1$s rode %2$s's lightning.
+death.attack.lightningRay.2=%1$s was shocked by how accurate %2$s can be with a lightning ray.
+death.attack.lightningRay.3=%1$s is a great conductor - for %2$s's lightning.
