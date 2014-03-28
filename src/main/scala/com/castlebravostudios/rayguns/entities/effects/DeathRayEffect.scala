@@ -44,6 +44,7 @@ import net.minecraftforge.common.IPlantable
 object DeathRayEffect extends BaseEffect {
 
   val effectKey = "DeathRay"
+  val damageSourceKey = "deathRay"
 
   def hitEntity( shootable : Shootable, hit : Entity ) : Boolean = {
     if ( hit.isInstanceOf[EntityLivingBase] ) {
@@ -53,8 +54,7 @@ object DeathRayEffect extends BaseEffect {
         living.heal(4)
       }
       else {
-        hit.attackEntityFrom(
-          new EntityDamageSource("deathRay", shootable.shooter), 10f)
+        hit.attackEntityFrom( getDamageSource( shootable ), 10f)
       }
     }
 

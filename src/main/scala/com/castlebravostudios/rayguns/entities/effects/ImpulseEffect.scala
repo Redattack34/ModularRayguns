@@ -43,12 +43,12 @@ import com.castlebravostudios.rayguns.mod.ModularRayguns
 object ImpulseEffect extends BaseEffect {
 
   val effectKey = "Impulse"
+  val damageSourceKey = "impulse"
 
   private def impulseStrength( shootable : Shootable ) = 1.5 * shootable.charge
 
   def hitEntity( shootable : Shootable, entity : Entity ) : Boolean = {
-    entity.attackEntityFrom(
-      new EntityDamageSource("impulse", shootable.shooter), 4f)
+    entity.attackEntityFrom( getDamageSource( shootable ), 4f)
 
     val impulse = impulseVector(shootable).mult(impulseStrength(shootable))
     entity.addVelocity(impulse.x, impulse.y, impulse.z)

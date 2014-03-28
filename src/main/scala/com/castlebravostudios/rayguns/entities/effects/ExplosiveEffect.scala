@@ -39,6 +39,7 @@ import com.castlebravostudios.rayguns.mod.ModularRayguns
 object ExplosiveEffect extends BaseEffect with TriggerOnDeath {
 
   val effectKey = "Explosive"
+  val damageSourceKey = ""
 
   /**
    * Fake 'EntityTNTPrimed' which is used to give the correct owner when causing

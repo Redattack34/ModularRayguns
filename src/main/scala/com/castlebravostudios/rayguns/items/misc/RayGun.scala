@@ -47,6 +47,8 @@ import net.minecraft.item.ItemStack
 import net.minecraft.util.Icon
 import net.minecraft.world.World
 import com.castlebravostudios.rayguns.utils.Vector3
+import net.minecraft.util.EntityDamageSource
+import com.castlebravostudios.rayguns.utils.RandomDamageSource
 
 case class GetFireInformationEvent(
     val player : EntityPlayer,
