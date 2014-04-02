@@ -110,7 +110,6 @@ object RaygunNbtUtils {
     val stack = RayGun.asStack
     stack.stackSize = 1
     stack.setTagInfo( MODULES_TAG, buildModuleTag( components ) )
-    stack.setItemName( getRaygunName( components ) )
     stack
   }
 

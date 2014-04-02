@@ -242,4 +242,13 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
     RaygunNbtUtils.getBattery( item ).map( _.maxChargePerTick ).getOrElse( 0 )
   def getIC2Tier( item : ItemStack ) : Int =
     RaygunNbtUtils.getBattery( item ).map( _.ic2Tier ).getOrElse( Integer.MAX_VALUE )
+
+  override def getItemDisplayName( stack : ItemStack ) : String =
+    if ( stack.hasDisplayName() ) {
+      stack.getTagCompoundSafe.getCompoundTag("display").getString( "display" )
+    }
+    else {
+      val comp = RaygunNbtUtils.getComponents( stack )
+      comp.map( RaygunNbtUtils.getRaygunName _ ).getOrElse( "Broken Raygun" )
+    }
 }
