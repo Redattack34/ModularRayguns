@@ -140,12 +140,12 @@ object RaygunNbtUtils {
    * strings which will be replaced with the localized value of the nameSegmentKey
    * field of the appropriate component):<p>
    *
-   * {@literal : @accessory@}<br>
-   * {@literal : @chamber@}<br>
-   * {@literal : @lens@}<br>
-   * {@literal : @battery@}<br>
-   * {@literal : @body@}<p>
-   * {@literal : @barrel@}<p>
+   * {@literal : %1$s} = chamber<br>
+   * {@literal : %2$s} = battery<br>
+   * {@literal : %3$s} = body<p>
+   * {@literal : %4$s} = barrel<p>
+   * {@literal : %5$s} = lens, or the empty string if none<br>
+   * {@literal : %6$s} = accessory, or the empty string if none<br>
    *
    * Note that not all of the replacements are used in the default en_US language file.
    */
@@ -153,14 +153,14 @@ object RaygunNbtUtils {
     def translate( opt : RaygunModule) : String = I18n.getString( opt.nameSegmentKey )
 
     I18n.getString("rayguns.RaygunNamePattern")
-      .replaceAll("@chamber@", translate( components.chamber ) )
-      .replaceAll("@body@", translate( components.body ) )
-      .replaceAll("@battery@", translate( components.battery ) )
-      .replaceAll("@barrel@", translate( components.barrel ) )
-      .replaceAll("@accessory@", components.accessory.map( translate ).getOrElse("") )
-      .replaceAll("@lens@", components.lens.map( translate ).getOrElse("") )
-      .replaceAll( "  ", " " )
-      .trim
+      .format(
+        translate( components.chamber ),
+        translate( components.battery ),
+        translate( components.body ),
+        translate( components.barrel ),
+        components.lens.map( translate ).getOrElse(""),
+        components.accessory.map( translate ).getOrElse("")
+      ).replaceAll( "  ", " " ).trim
   }
 
   def buildBrokenGun( item : ItemStack ) : ItemStack = {
