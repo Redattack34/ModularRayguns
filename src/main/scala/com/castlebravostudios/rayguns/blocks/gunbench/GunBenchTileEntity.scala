@@ -72,6 +72,7 @@ class GunBenchTileEntity extends BaseInventoryTileEntity {
       if ( slot == OUTPUT_SLOT && inv(OUTPUT_SLOT) != null ) {
         val components = RaygunNbtUtils.getAllValidComponents( inv(OUTPUT_SLOT) )
         components.body.map(toStack).foreach(setSlot(BODY_SLOT))
+        copyCustomName( inv(OUTPUT_SLOT), inv(BODY_SLOT) )
         components.chamber.map(toStack).foreach(setSlot(CHAMBER_SLOT))
         components.battery.map(toStack).foreach(setSlot(BATTERY_SLOT))
         copyCharge( inv(OUTPUT_SLOT), inv(BATTERY_SLOT) )
@@ -84,6 +85,7 @@ class GunBenchTileEntity extends BaseInventoryTileEntity {
 
       val gunStack = RaygunNbtUtils.buildGun( components ).orNull
       copyCharge( inv(BATTERY_SLOT), gunStack )
+      copyCustomName( inv(BODY_SLOT), gunStack )
       setInventorySlotContents( OUTPUT_SLOT, gunStack )
   }
 
@@ -93,6 +95,12 @@ class GunBenchTileEntity extends BaseInventoryTileEntity {
       battery.foreach { batt =>
         batt.setChargeDepleted( to, batt.getChargeDepleted( from ) )
       }
+    }
+  }
+
+  private def copyCustomName( from : ItemStack, to : ItemStack ) : Unit = {
+    if ( from != null && to != null && from.hasDisplayName() ) {
+      to.setItemName( from.getDisplayName() )
     }
   }
 
