@@ -123,7 +123,7 @@ class NEIModularRaygunsConfig extends IConfigureNEI {
 
   private def accessoryItemRange: MultiItemRange = {
     val range = new MultiItemRange()
-    addModule( range, ExtendedBattery )
+    addModule( range, HighEfficiencyWiring )
     addModule( range, RefireCapacitor )
     addModule( range, SolarPanel )
     addModule( range, ChargeCapacitor )

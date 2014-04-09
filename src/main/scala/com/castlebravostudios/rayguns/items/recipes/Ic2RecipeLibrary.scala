@@ -111,7 +111,7 @@ object Ic2RecipeLibrary extends RecipeLibrary with Logging {
   )
 
   private def registerAccessories() = {
-    addModuleShaped( ExtendedBattery,
+    addModuleShaped( HighEfficiencyWiring,
       "CCC",
       "III",
       "CCC",

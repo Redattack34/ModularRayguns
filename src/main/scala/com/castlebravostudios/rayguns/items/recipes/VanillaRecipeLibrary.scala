@@ -96,7 +96,7 @@ object VanillaRecipeLibrary extends RecipeLibrary {
   )
 
   private def registerAccessories() = {
-    addModuleShaped( ExtendedBattery,
+    addModuleShaped( HighEfficiencyWiring,
       "CCC",
       "III",
       "CCC",

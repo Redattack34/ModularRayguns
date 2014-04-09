@@ -79,7 +79,7 @@ object Items {
   }
 
   private def registerAccessories() : Unit = {
-    registerModule( ExtendedBattery, Config.extendedBattery )
+    registerModule( HighEfficiencyWiring, Config.highEfficiencyWiring )
     registerModule( RefireCapacitor, Config.refireCapacitor )
     registerModule( SolarPanel, Config.solarPanel )
     registerModule( ChargeCapacitor, Config.chargeCapacitor )

@@ -32,14 +32,14 @@ import com.castlebravostudios.rayguns.api.items.ItemModule
 import com.castlebravostudios.rayguns.api.items.RaygunAccessory
 import com.castlebravostudios.rayguns.mod.ModularRayguns
 
-object ExtendedBattery extends BaseRaygunModule with RaygunAccessory {
+object HighEfficiencyWiring extends BaseRaygunModule with RaygunAccessory {
   val moduleKey = "ExtendedBattery"
   val powerModifier = 2.0 / 3.0
-  val nameSegmentKey = "rayguns.ExtendedBattery.segment"
+  val nameSegmentKey = "rayguns.HighEfficiencyWiring.segment"
 
   def createItem( id : Int ) : ItemModule = new ItemModule( id, this )
-    .setUnlocalizedName("rayguns.ExtendedBattery")
-    .setTextureName("rayguns:extended_battery")
+    .setUnlocalizedName("rayguns.HighEfficiencyWiring")
+    .setTextureName("rayguns:high_efficiency_wiring")
     .setCreativeTab( ModularRayguns.raygunsTab )
     .setMaxStackSize(1)
 }

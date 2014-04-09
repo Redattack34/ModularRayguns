@@ -69,7 +69,7 @@ object Config {
   var preciseLens : Int = _
   var wideLens : Int = _
 
-  var extendedBattery : Int = _
+  var highEfficiencyWiring : Int = _
   var refireCapacitor : Int = _
   var solarPanel : Int = _
   var chargeCapacitor : Int = _
@@ -194,7 +194,7 @@ object Config {
   private def loadAccessoryItemIds( config : Configuration ) : Unit = {
     val range = new IdRange( config, 5300, "accessories", "Accessory Modules - Set to 0 to disable" )
 
-    extendedBattery = range.getItem( "extendedBattery" )
+    highEfficiencyWiring = range.getItem( "highEfficiencyWiring" )
     refireCapacitor = range.getItem( "refireCapacitor" )
     solarPanel = range.getItem( "solarPanel" )
     chargeCapacitor = range.getItem( "chargeCapacitor" )

@@ -1,4 +1,4 @@
-item.rayguns.ExtendedBattery.name=Extended Battery
+item.rayguns.HighEfficiencyWiring.name=High Efficiency Wiring
 item.rayguns.RefireCapacitor.name=Refire Capacitor
 item.rayguns.SolarPanel.name=Solar Panel
 item.rayguns.ChargeCapacitor.name=Charge Capacitor
@@ -112,7 +112,7 @@ rayguns.Tier2CuttingChamber.segment=Mk. 2 Cutting
 rayguns.Tier3CuttingChamber.segment=Mk. 3 Cutting
 rayguns.MatterTransporterChamber.segment=Matter Transporter
 
-rayguns.ExtendedBattery.segment=Extended
+rayguns.HighEfficiencyWiring.segment=Efficient
 rayguns.RefireCapacitor.segment=Rapid
 rayguns.SolarPanel.segment=Solar
 rayguns.ChargeCapacitor.segment=Charging
