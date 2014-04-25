@@ -33,8 +33,12 @@ import net.minecraftforge.common.Property
 import com.castlebravostudios.rayguns.items.recipes.RecipeLibrary
 import com.castlebravostudios.rayguns.items.recipes.VanillaRecipeLibrary
 import com.castlebravostudios.rayguns.items.recipes.Ic2RecipeLibrary
+import com.castlebravostudios.rayguns.items.recipes.ThermalExpansionRecipeLibrary
+import com.castlebravostudios.rayguns.items.recipes.VanillaRecipeLibrary
+import com.castlebravostudios.rayguns.utils.Logging
+import com.castlebravostudios.rayguns.items.recipes.VanillaRecipeLibrary
 
-object Config {
+object Config extends Logging {
 
   var rayGun : Int = _
   var brokenGun : Int = _
@@ -270,13 +274,18 @@ object Config {
   }
 
   def loadRecipes(config: Configuration) : Unit = {
-    val str = config.get( "config-options", "recipeLibrary", "vanilla", "Current allowed values are: vanilla, ic2" ).getString();
-    if ( str == "ic2" ) {
-      require(cpw.mods.fml.common.Loader.isModLoaded("IC2"), "Can't use IC2 recipe library if IC2 isn't loaded." )
-      recipeLibrary = Ic2RecipeLibrary
-    }
-    else {
-      recipeLibrary = VanillaRecipeLibrary
+    val str = config.get( "config-options", "recipeLibrary", "vanilla", "Current allowed values are: vanilla, ic2, thermalExpansion" ).getString();
+    str match {
+      case "vanilla" => recipeLibrary = VanillaRecipeLibrary
+      case "ic2" if cpw.mods.fml.common.Loader.isModLoaded("IC2") =>
+        recipeLibrary = Ic2RecipeLibrary
+      case "thermalExpansion" if cpw.mods.fml.common.Loader.isModLoaded("ThermalExpansion") =>
+        recipeLibrary = ThermalExpansionRecipeLibrary
+      case _ => {
+        severe( "Either the recipe library is set to an unknown value, or the " +
+            "selected library requires a mod that is not installed. Defaulting to vanilla recipes." )
+        recipeLibrary = VanillaRecipeLibrary
+      }
     }
   }
 

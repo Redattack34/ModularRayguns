@@ -45,6 +45,9 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent
 import cpw.mods.fml.common.event.FMLPreInitializationEvent
 import cpw.mods.fml.common.network.NetworkMod
 import cpw.mods.fml.common.Mod.EventHandler
+import net.minecraftforge.fluids.FluidRegistry.FluidRegisterEvent
+import net.minecraftforge.common.MinecraftForge
+import net.minecraftforge.fluids.FluidRegistry
 
 @Mod(modid="mod_ModularRayguns", version="1.0-alpha2", modLanguage="scala", useMetadata=true)
 @NetworkMod(clientSideRequired=true, serverSideRequired=true)
