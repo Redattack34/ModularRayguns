@@ -220,12 +220,12 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
   override def getRenderPasses(metadata : Int) : Int = 1
 
   override def getIcon( item : ItemStack, pass : Int ) : Icon = {
-    val bodyIcon = for {
+    val frameIcon = for {
       components <- RaygunNbtUtils.getComponents( item )
-      bodyItem <- components.body.item
-      icon = bodyItem.getIconFromDamage(0)
+      frameItem <- components.frame.item
+      icon = frameItem.getIconFromDamage(0)
     } yield icon
-    bodyIcon.getOrElse(itemIcon)
+    frameIcon.getOrElse(itemIcon)
   }
 
   override def getMaxItemUseDuration( item : ItemStack ) : Int = Integer.MAX_VALUE

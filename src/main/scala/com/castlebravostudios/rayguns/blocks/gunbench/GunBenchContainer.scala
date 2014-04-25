@@ -30,7 +30,7 @@ package com.castlebravostudios.rayguns.blocks.gunbench
 import com.castlebravostudios.rayguns.api.items.ItemModule
 import com.castlebravostudios.rayguns.api.items.RaygunAccessory
 import com.castlebravostudios.rayguns.api.items.RaygunBattery
-import com.castlebravostudios.rayguns.api.items.RaygunBody
+import com.castlebravostudios.rayguns.api.items.RaygunFrame
 import com.castlebravostudios.rayguns.api.items.RaygunChamber
 import com.castlebravostudios.rayguns.api.items.RaygunLens
 import com.castlebravostudios.rayguns.blocks.BaseContainer
@@ -43,7 +43,7 @@ import net.minecraft.item.ItemStack
 import GunBenchTileEntity.ACC_SLOT
 import GunBenchTileEntity.BARREL_SLOT
 import GunBenchTileEntity.BATTERY_SLOT
-import GunBenchTileEntity.BODY_SLOT
+import GunBenchTileEntity.FRAME_SLOT
 import GunBenchTileEntity.CHAMBER_SLOT
 import GunBenchTileEntity.LENS_SLOT
 import GunBenchTileEntity.OUTPUT_SLOT
@@ -52,10 +52,10 @@ import com.castlebravostudios.rayguns.api.items.RaygunBarrel
 class GunBenchContainer( inventoryPlayer : InventoryPlayer, entity : GunBenchTileEntity )
   extends BaseContainer( inventoryPlayer, entity ) {
 
-  addSlotToContainer( new GuiBlockSlot( entity, BODY_SLOT,     37, 19 ) )
-  addSlotToContainer( new GuiBlockSlot( entity, LENS_SLOT,     37, 37 ) )
-  addSlotToContainer( new GuiBlockSlot( entity, CHAMBER_SLOT, 106, 19 ) )
-  addSlotToContainer( new GuiBlockSlot( entity, BATTERY_SLOT, 106, 37 ) )
+  addSlotToContainer( new GuiBlockSlot( entity, FRAME_SLOT,    44, 19 ) )
+  addSlotToContainer( new GuiBlockSlot( entity, LENS_SLOT,     44, 37 ) )
+  addSlotToContainer( new GuiBlockSlot( entity, CHAMBER_SLOT, 113, 19 ) )
+  addSlotToContainer( new GuiBlockSlot( entity, BATTERY_SLOT, 113, 37 ) )
   addSlotToContainer( new GuiBlockSlot( entity, ACC_SLOT,      71, 55 ) )
   addSlotToContainer( new GuiBlockSlot( entity, BARREL_SLOT,   71, 73 ) )
   addSlotToContainer( new GuiBlockSlot( entity, OUTPUT_SLOT,  147, 77 ) )
@@ -78,7 +78,7 @@ class GunBenchContainer( inventoryPlayer : InventoryPlayer, entity : GunBenchTil
   }
 
   private def slotForModule( item : ItemModule ) = item.module match {
-    case _: RaygunBody => BODY_SLOT
+    case _: RaygunFrame => FRAME_SLOT
     case _: RaygunLens => LENS_SLOT
     case _: RaygunChamber => CHAMBER_SLOT
     case _: RaygunBattery => BATTERY_SLOT

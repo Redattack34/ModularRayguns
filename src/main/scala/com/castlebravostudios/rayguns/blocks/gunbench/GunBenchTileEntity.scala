@@ -30,7 +30,7 @@ package com.castlebravostudios.rayguns.blocks.gunbench
 import com.castlebravostudios.rayguns.api.items.ItemModule
 import com.castlebravostudios.rayguns.api.items.RaygunAccessory
 import com.castlebravostudios.rayguns.api.items.RaygunBattery
-import com.castlebravostudios.rayguns.api.items.RaygunBody
+import com.castlebravostudios.rayguns.api.items.RaygunFrame
 import com.castlebravostudios.rayguns.api.items.RaygunChamber
 import com.castlebravostudios.rayguns.api.items.RaygunLens
 import com.castlebravostudios.rayguns.api.items.RaygunModule
@@ -49,7 +49,7 @@ class GunBenchTileEntity extends BaseInventoryTileEntity {
   private[this] val inv = Array.fill[ItemStack](7)(null)
 
   //scalastyle:off import.grouping
-  import GunBenchTileEntity.{BODY_SLOT, LENS_SLOT, CHAMBER_SLOT,
+  import GunBenchTileEntity.{FRAME_SLOT, LENS_SLOT, CHAMBER_SLOT,
     BATTERY_SLOT, ACC_SLOT, BARREL_SLOT, OUTPUT_SLOT}
   //scalastyle:on import.grouping
 
@@ -71,8 +71,8 @@ class GunBenchTileEntity extends BaseInventoryTileEntity {
 
       if ( slot == OUTPUT_SLOT && inv(OUTPUT_SLOT) != null ) {
         val components = RaygunNbtUtils.getAllValidComponents( inv(OUTPUT_SLOT) )
-        components.body.map(toStack).foreach(setSlot(BODY_SLOT))
-        copyCustomName( inv(OUTPUT_SLOT), inv(BODY_SLOT) )
+        components.frame.map(toStack).foreach(setSlot(FRAME_SLOT))
+        copyCustomName( inv(OUTPUT_SLOT), inv(FRAME_SLOT) )
         components.chamber.map(toStack).foreach(setSlot(CHAMBER_SLOT))
         components.battery.map(toStack).foreach(setSlot(BATTERY_SLOT))
         copyCharge( inv(OUTPUT_SLOT), inv(BATTERY_SLOT) )
@@ -81,11 +81,11 @@ class GunBenchTileEntity extends BaseInventoryTileEntity {
         components.barrel.map(toStack).foreach(setSlot(BARREL_SLOT))
       }
 
-      val components = GunComponents( body, chamber, battery, barrel, lens, accessory )
+      val components = GunComponents( frame, chamber, battery, barrel, lens, accessory )
 
       val gunStack = RaygunNbtUtils.buildGun( components ).orNull
       copyCharge( inv(BATTERY_SLOT), gunStack )
-      copyCustomName( inv(BODY_SLOT), gunStack )
+      copyCustomName( inv(FRAME_SLOT), gunStack )
       setInventorySlotContents( OUTPUT_SLOT, gunStack )
   }
 
@@ -119,7 +119,7 @@ class GunBenchTileEntity extends BaseInventoryTileEntity {
     }
   }
 
-  private def body = getModule(BODY_SLOT).asInstanceOf[RaygunBody]
+  private def frame = getModule(FRAME_SLOT).asInstanceOf[RaygunFrame]
   private def chamber = getModule(CHAMBER_SLOT).asInstanceOf[RaygunChamber]
   private def battery = getModule(BATTERY_SLOT).asInstanceOf[RaygunBattery]
   private def lens = Option( getModule(LENS_SLOT).asInstanceOf[RaygunLens] )
@@ -153,7 +153,7 @@ class GunBenchTileEntity extends BaseInventoryTileEntity {
   }
 
   private def slotMatchesModule( slot : Int, module : RaygunModule ) : Boolean = slot match {
-    case BODY_SLOT => module.isInstanceOf[RaygunBody]
+    case FRAME_SLOT => module.isInstanceOf[RaygunFrame]
     case LENS_SLOT => module.isInstanceOf[RaygunLens]
     case CHAMBER_SLOT => module.isInstanceOf[RaygunChamber]
     case BATTERY_SLOT => module.isInstanceOf[RaygunBattery]
@@ -164,7 +164,7 @@ class GunBenchTileEntity extends BaseInventoryTileEntity {
 }
 object GunBenchTileEntity {
 
-  val BODY_SLOT = 0
+  val FRAME_SLOT = 0
   val LENS_SLOT = 1
   val CHAMBER_SLOT = 2
   val BATTERY_SLOT = 3

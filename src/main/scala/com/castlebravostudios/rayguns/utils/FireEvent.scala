@@ -28,7 +28,7 @@
 package com.castlebravostudios.rayguns.utils
 
 import com.castlebravostudios.rayguns.api.items.RaygunLens
-import com.castlebravostudios.rayguns.api.items.RaygunBody
+import com.castlebravostudios.rayguns.api.items.RaygunFrame
 import com.castlebravostudios.rayguns.api.items.RaygunChamber
 import com.castlebravostudios.rayguns.api.ShotRegistry
 import com.castlebravostudios.rayguns.api.items.RaygunAccessory
@@ -42,27 +42,27 @@ trait FireEvent extends {
   def isValid : Boolean = ShotRegistry.isValid(this)
 }
 
-case class DefaultFireEvent( body : RaygunBody, chamber : RaygunChamber, battery : RaygunBattery,
+case class DefaultFireEvent( frame : RaygunFrame, chamber : RaygunChamber, battery : RaygunBattery,
     barrel : RaygunBarrel, lens : Option[RaygunLens], accessory : Option[RaygunAccessory] ) extends FireEvent {
 
-  def components : Seq[RaygunModule] = Seq( body, chamber, battery, barrel ) ++ lens ++ accessory
+  def components : Seq[RaygunModule] = Seq( frame, chamber, battery, barrel ) ++ lens ++ accessory
 }
 object DefaultFireEvent {
   def apply( comp : GunComponents ) : DefaultFireEvent =
-    new DefaultFireEvent( comp.body, comp.chamber, comp.battery, comp.barrel, comp.lens, comp.accessory )
+    new DefaultFireEvent( comp.frame, comp.chamber, comp.battery, comp.barrel, comp.lens, comp.accessory )
 }
 
-case class ChargeFireEvent( body : RaygunBody, chamber : RaygunChamber, battery : RaygunBattery,
+case class ChargeFireEvent( frame : RaygunFrame, chamber : RaygunChamber, battery : RaygunBattery,
     barrel : RaygunBarrel, lens : Option[RaygunLens], accessory : Option[RaygunAccessory], charge : Double ) extends FireEvent {
 
-  def components : Seq[RaygunModule] = Seq( body, chamber, battery, barrel ) ++ lens ++ accessory
+  def components : Seq[RaygunModule] = Seq( frame, chamber, battery, barrel ) ++ lens ++ accessory
 
   def toDefault : DefaultFireEvent =
-    new DefaultFireEvent( body, chamber, battery, barrel, lens, accessory )
+    new DefaultFireEvent( frame, chamber, battery, barrel, lens, accessory )
 }
 object ChargeFireEvent {
 
   def apply( comp : GunComponents, charge : Double ) : ChargeFireEvent =
-    new ChargeFireEvent( comp.body, comp.chamber, comp.battery, comp.barrel,
+    new ChargeFireEvent( comp.frame, comp.chamber, comp.battery, comp.barrel,
         comp.lens, comp.accessory, charge );
 }

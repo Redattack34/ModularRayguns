@@ -32,7 +32,7 @@ import com.castlebravostudios.rayguns.api.items.RaygunModule
 import com.castlebravostudios.rayguns.items.Blocks
 import com.castlebravostudios.rayguns.items.accessories._
 import com.castlebravostudios.rayguns.items.batteries._
-import com.castlebravostudios.rayguns.items.bodies._
+import com.castlebravostudios.rayguns.items.frames._
 import com.castlebravostudios.rayguns.items.chambers._
 import com.castlebravostudios.rayguns.items.emitters.Emitters
 import com.castlebravostudios.rayguns.items.lenses._
@@ -48,6 +48,7 @@ import codechicken.nei.recipe.DefaultOverlayHandler
 import com.castlebravostudios.rayguns.plugins.nei.NEIModularRaygunsConfig.recipeKey
 import com.castlebravostudios.rayguns.items.misc.Tier1Diode
 import com.castlebravostudios.rayguns.mod.Config
+import com.castlebravostudios.rayguns.items.frames.MantisFrame
 //scalastyle:on
 
 class NEIModularRaygunsConfig extends IConfigureNEI {
@@ -61,7 +62,7 @@ class NEIModularRaygunsConfig extends IConfigureNEI {
     API.addSetRange("Modular Rayguns.Accessories", accessoryItemRange)
     API.addSetRange("Modular Rayguns.Barrels", barrelItemRange)
     API.addSetRange("Modular Rayguns.Batteries", batteryItemRange)
-    API.addSetRange("Modular Rayguns.Bodies", bodyItemRange)
+    API.addSetRange("Modular Rayguns.Frames", frameItemRange)
     API.addSetRange("Modular Rayguns.Chambers", chamberItemRange)
     API.addSetRange("Modular Rayguns.Emitters", emitterItemRange)
     API.addSetRange("Modular Rayguns.Lenses", lensItemRange)
@@ -114,10 +115,10 @@ class NEIModularRaygunsConfig extends IConfigureNEI {
     range
   }
 
-  private def bodyItemRange: MultiItemRange = {
+  private def frameItemRange: MultiItemRange = {
     val range = new MultiItemRange()
-    addModule( range, FireflyBody )
-    addModule( range, MantisBody )
+    addModule( range, FireflyFrame )
+    addModule( range, MantisFrame )
     range
   }
 
