@@ -33,12 +33,12 @@ import com.castlebravostudios.rayguns.api.items.RaygunBody
 import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 object MantisBody extends BaseRaygunModule with RaygunBody {
-  val moduleKey = "MantisBody"
+  val moduleKey = "MantisFrame"
   val powerModifier = 1.0
-  val nameSegmentKey = "rayguns.MantisBody.segment"
+  val nameSegmentKey = "rayguns.MantisFrame.segment"
 
   def createItem( id : Int ) : ItemModule = new ItemModule( id, this )
-    .setUnlocalizedName("rayguns.MantisBody")
+    .setUnlocalizedName("rayguns.MantisFrame")
     .setTextureName("rayguns:frame_mantis")
     .setCreativeTab( ModularRayguns.raygunsTab )
     .setMaxStackSize(1)

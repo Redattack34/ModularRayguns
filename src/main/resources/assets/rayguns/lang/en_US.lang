@@ -8,8 +8,8 @@ item.rayguns.BasicBattery.name=Basic Battery
 item.rayguns.InfiniteBattery.name=Infinite Battery
 item.rayguns.UltimateBattery.name=Ultimate Battery
 
-item.rayguns.FireflyBody.name=Firefly Raygun Body
-item.rayguns.MantisBody.name=Mantis Raygun Body
+item.rayguns.FireflyFrame.name=Firefly Raygun Frame
+item.rayguns.MantisFrame.name=Mantis Raygun Frame
 
 item.rayguns.BeamBarrel.name=Beam Barrel
 item.rayguns.BlasterBarrel.name=Blaster Barrel

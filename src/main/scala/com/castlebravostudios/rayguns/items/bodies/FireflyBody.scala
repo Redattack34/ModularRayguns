@@ -33,12 +33,12 @@ import com.castlebravostudios.rayguns.api.items.RaygunBody
 import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 object FireflyBody extends BaseRaygunModule with RaygunBody {
-  val moduleKey = "FireflyBody"
+  val moduleKey = "FireflyFrame"
   val powerModifier = 1.0
-  val nameSegmentKey = "rayguns.FireflyBody.segment"
+  val nameSegmentKey = "rayguns.FireflyFrame.segment"
 
   def createItem( id : Int ) : ItemModule = new ItemModule( id, this )
-    .setUnlocalizedName("rayguns.FireflyBody")
+    .setUnlocalizedName("rayguns.FireflyFrame")
     .setTextureName("rayguns:frame_firefly")
     .setCreativeTab( ModularRayguns.raygunsTab )
     .setMaxStackSize(1)
