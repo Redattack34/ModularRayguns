@@ -37,7 +37,7 @@ object DeathRayChamber extends BaseChamber {
   val shotEffect = DeathRayEffect
   val nameSegmentKey = "rayguns.DeathRayChamber.segment"
 
-  def createItem( id : Int ) = new ItemModule( id, this )
+  def createItem( id : Int ) : ItemModule = new ItemModule( id, this )
     .setUnlocalizedName("rayguns.DeathRayChamber")
     .setTextureName("rayguns:chamber_death_ray")
     .setCreativeTab( ModularRayguns.raygunsTab )
@@ -45,6 +45,6 @@ object DeathRayChamber extends BaseChamber {
 
   def registerShotHandlers() : Unit = {
     registerSingleShotHandlers()
-    registerScatterShotHandler()
+    registerPreciseShotHandler()
   }
 }

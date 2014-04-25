@@ -27,27 +27,63 @@
 
 package com.castlebravostudios.rayguns.items.misc
 
-import com.castlebravostudios.rayguns.api.BeamRegistry
+import com.castlebravostudios.rayguns.api.ShotRegistry
+import com.castlebravostudios.rayguns.items.ChargableItem
 import com.castlebravostudios.rayguns.items.MoreInformation
 import com.castlebravostudios.rayguns.items.ScalaItem
-import com.castlebravostudios.rayguns.items.accessories.RefireCapacitor
-import com.castlebravostudios.rayguns.items.lenses.ChargeBeamLens
-import com.castlebravostudios.rayguns.items.lenses.ChargeLens
 import com.castlebravostudios.rayguns.mod.Config
 import com.castlebravostudios.rayguns.mod.ModularRayguns
 import com.castlebravostudios.rayguns.plugins.ic2.IC2ItemPowerConnector
 import com.castlebravostudios.rayguns.plugins.te.RFItemPowerConnector
+import com.castlebravostudios.rayguns.utils.DefaultFireEvent
+import com.castlebravostudios.rayguns.utils.Extensions.ItemStackExtension
 import com.castlebravostudios.rayguns.utils.Extensions.WorldExtension
 import com.castlebravostudios.rayguns.utils.FireEvent
 import com.castlebravostudios.rayguns.utils.GunComponents
 import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
-import com.castlebravostudios.rayguns.utils.Extensions.ItemStackExtension
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraft.util.Icon
 import net.minecraft.world.World
-import com.castlebravostudios.rayguns.items.ChargableItem
+import com.castlebravostudios.rayguns.utils.Vector3
+import net.minecraft.util.EntityDamageSource
+import com.castlebravostudios.rayguns.utils.RandomDamageSource
+
+case class GetFireInformationEvent(
+    val player : EntityPlayer,
+    val world : World,
+    val gun : ItemStack,
+    val components : GunComponents,
+    var cooldownTicks : Int,
+    var powerMult : Double,
+    var fireEvent : FireEvent )
+
+case class PrefireEvent(
+    val player : EntityPlayer,
+    val world : World,
+    val gun : ItemStack,
+    val components : GunComponents,
+    val cooldownTicks : Int,
+    val powerMult : Double,
+    val fireEvent : FireEvent,
+    val isOnStoppedUsing : Boolean,
+    var canFire : Boolean )
+
+case class PostfireEvent(
+    val player : EntityPlayer,
+    val world : World,
+    val gun : ItemStack,
+    val components : GunComponents,
+    val fireEvent : FireEvent,
+    val powerMult : Double )
+
+case class GunTickEvent(
+    val player : EntityPlayer,
+    val world : World,
+    val gun : ItemStack,
+    val components : GunComponents,
+    val isSelected : Boolean )
 
 object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
   with ChargableItem with RFItemPowerConnector with IC2ItemPowerConnector {
@@ -56,9 +92,8 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
   private val ticksPerSecond : Int = 20
   private val maxChargeTicks : Int = ( maxChargeTime * ticksPerSecond ).toInt
 
-  import RaygunNbtUtils._
-
   private val cooldownTime = "CooldownTime"
+  private val maxCooldownTime = "MaxCooldownTime"
 
   setMaxStackSize(1)
   setCreativeTab(ModularRayguns.raygunsTab)
@@ -66,20 +101,31 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
   setTextureName("rayguns:dummy")
 
   override def getAdditionalInfo(item : ItemStack, player : EntityPlayer) : Iterable[String] =
-    getBattery( item ).map( _.getChargeString( item ) ) ++ RaygunNbtUtils.getComponentInfo( item )
+    RaygunNbtUtils.getBattery( item ).map( _.getChargeString( item ) ) ++ RaygunNbtUtils.getComponentInfo( item )
 
   override def onPlayerStoppedUsing(item : ItemStack, world : World, player : EntityPlayer, itemUseCount : Int ): Unit = {
-    val chargePower = getChargePower(item, itemUseCount)
+    def breakGun : Unit = {
+      val slot = player.inventory.currentItem
+      val brokenGun = RaygunNbtUtils.buildBrokenGun(item)
+      player.inventory.setInventorySlotContents( slot, brokenGun )
+    }
 
-    val components = getComponents( item )
-    val lens = components.flatMap( _.lens )
-    if ( lens.isEmpty || ( lens.get != ChargeBeamLens && lens.get != ChargeLens ) ) {
+    val components = RaygunNbtUtils.getComponents( item )
+
+    if ( components.isEmpty ) {
+      breakGun
       return
     }
 
-    val event = components.get.getFireEvent( chargePower )
-    val creator = BeamRegistry.getFunction( event )
-    creator.foreach { fire(item, components.get, event, world, player, _) }
+    val prefireEvent = prefire( player, world, item, components.get,
+        isOnStoppedUsing = true )
+    if ( !prefireEvent.canFire ) return
+
+    val creator = ShotRegistry.getFunction( prefireEvent.fireEvent )
+    creator match {
+      case Some( f ) => fire( prefireEvent, f )
+      case None => breakGun
+    }
   }
 
   def getChargePower(item: ItemStack, itemUseCount: Int): Double = {
@@ -89,106 +135,120 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
   }
 
   override def onItemRightClick(item : ItemStack, world : World, player : EntityPlayer ) : ItemStack = {
-    val components = getComponents( item )
+    val components = RaygunNbtUtils.getComponents( item )
 
     if ( components.isEmpty ) {
-      return buildBrokenGun( item )
+      return RaygunNbtUtils.buildBrokenGun( item )
     }
 
-    val lens = components.flatMap( _.lens )
-    if ( lens.exists( lens => lens == ChargeBeamLens || lens == ChargeLens ) ) {
-      player.setItemInUse(item, getMaxItemUseDuration(item))
-      return item
-    }
+    val prefireEvent = prefire( player, world, item, components.get,
+        isOnStoppedUsing = false )
+    if ( !prefireEvent.canFire ) return item
 
-    val creator = for {
-      comp <- components
-      event = comp.getFireEvent( 1.0d )
-      function <- BeamRegistry.getFunction( event )
-    } yield function
+    val creator = ShotRegistry.getFunction( prefireEvent.fireEvent )
 
     creator match {
-      case Some( f ) => { fire(item, components.get, components.get.getFireEvent( 1.0d ), world, player, f); item }
-      case None => buildBrokenGun( item )
+      case Some( f ) => { fire( prefireEvent, f ); item }
+      case None => RaygunNbtUtils.buildBrokenGun( item )
     }
   }
 
-  private def fire( item : ItemStack, components : GunComponents, event : FireEvent,
-      world : World, player : EntityPlayer, f : BeamRegistry.BeamCreator ): Unit = {
-    if ( getCooldownTime(item) != 0 ) return
-    if ( !components.battery.drainPower( player, item, event ) ) return
+  private def prefire( player : EntityPlayer, world : World, gun : ItemStack,
+      components : GunComponents, isOnStoppedUsing : Boolean ) : PrefireEvent = {
+    val getInfo = GetFireInformationEvent( player, world, gun, components, 10, 1.0d,
+        DefaultFireEvent( components ) );
 
-    f( world, player )
-    setCooldownTime( item, getBaseCooldownTime( components ) )
+    components.components.foreach( comp => comp.handleGetFireInformationEvent( getInfo ) );
+
+    val prefireEvent = PrefireEvent( player, world, gun, components,
+        getInfo.cooldownTicks, getInfo.powerMult, getInfo.fireEvent,
+        isOnStoppedUsing, getCooldownTime( gun ) == 0 )
+    components.components.foreach( comp => comp.handlePrefireEvent( prefireEvent ) )
+    prefireEvent
+  }
+
+  private def fire( prefire : PrefireEvent, f : (World, EntityPlayer) => Unit ): Unit = {
+    f( prefire.world, prefire.player )
+    setCooldownTime( prefire.gun, prefire.cooldownTicks )
+    setMaxCooldownTime( prefire.gun, prefire.cooldownTicks )
+
+    val postFire = PostfireEvent( prefire.player, prefire.world,
+        prefire.gun, prefire.components, prefire.fireEvent, prefire.powerMult )
+
+    prefire.components.components.foreach(
+        comp => comp.handlePostfireEvent( postFire ) )
   }
 
   override def onUpdate( item: ItemStack, world : World, entity: Entity, par4 : Int, par5 : Boolean) : Unit = {
     val currentTime = getCooldownTime(item)
     val newTime = if ( currentTime > 0 ) currentTime - 1 else 0
 
-    if ( world.isOnServer ) {
-      setCooldownTime( item, newTime );
-    }
+    setCooldownTime( item, newTime );
 
-    getComponents(item).flatMap( _.accessory )
-      .foreach( _.onGunUpdate(world, entity, item ) )
-  }
+    val components = RaygunNbtUtils.getComponents( item )
+    if ( components.isEmpty ) return
 
-  def getBaseCooldownTime( item : ItemStack ) : Short = getComponents(item) match {
-    case Some( comp ) => getBaseCooldownTime(comp)
-    case None => 0
-  }
-
-  private def getBaseCooldownTime( components : GunComponents ) : Short = {
-    components.accessory match {
-      case Some(RefireCapacitor) => 5
-      case _ => 10
+    entity match {
+      case player : EntityPlayer => {
+        val tickEvent = new GunTickEvent( player, world, item, components.get,
+            player.inventory.getCurrentItem() eq item );
+        components.get.components.foreach( comp => comp.handleTickEvent( tickEvent ) )
+      }
+      case _ => ()
     }
   }
 
   private def setCooldownTime( item : ItemStack, ticks : Int ) =
     item.getTagCompoundSafe.setShort( cooldownTime, ticks.shortValue )
 
-  def getCooldownTime( item : ItemStack ) =
+  private def setMaxCooldownTime( item : ItemStack, ticks : Int ) =
+    item.getTagCompoundSafe.setShort( maxCooldownTime, ticks.shortValue )
+
+  def getCooldownTime( item : ItemStack ) : Short =
     item.getTagCompoundSafe.getShort( cooldownTime )
+
+  def getMaxCooldownTime( item : ItemStack ) : Short =
+    item.getTagCompoundSafe.getShort( maxCooldownTime )
 
   override def getDamage( item : ItemStack ) : Int = 1
   override def getDisplayDamage( item : ItemStack ) : Int = getChargeDepleted( item )
-  override def isDamaged( item : ItemStack ) = getDisplayDamage( item ) > 0
+  override def isDamaged( item : ItemStack ) : Boolean = getDisplayDamage( item ) > 0
 
   override def getMaxDamage( item: ItemStack ) : Int = getChargeCapacity( item )
 
-  override def requiresMultipleRenderPasses() = true
-  override def getRenderPasses(metadata : Int) = 1
+  override def requiresMultipleRenderPasses() : Boolean = true
+  override def getRenderPasses(metadata : Int) : Int = 1
 
   override def getIcon( item : ItemStack, pass : Int ) : Icon = {
-    val bodyIcon = for {
-      components <- getComponents( item )
-      bodyItem <- Option( components.body.item )
-      icon = bodyItem.getIconFromDamage(0)
+    val frameIcon = for {
+      components <- RaygunNbtUtils.getComponents( item )
+      frameItem <- components.frame.item
+      icon = frameItem.getIconFromDamage(0)
     } yield icon
-    bodyIcon.getOrElse(itemIcon)
+    frameIcon.getOrElse(itemIcon)
   }
 
-  override def getMaxItemUseDuration( item : ItemStack ) : Int = {
-    val lens = getComponents( item ).flatMap( _.lens )
-    lens match {
-      case Some( ChargeLens ) => 72000
-      case Some( ChargeBeamLens ) => 72000
-      case _ => 0
-    }
-  }
+  override def getMaxItemUseDuration( item : ItemStack ) : Int = Integer.MAX_VALUE
 
   def getChargeCapacity( item : ItemStack ) : Int =
-    getBattery( item ).map( _.maxCapacity ).getOrElse(1)
+    RaygunNbtUtils.getBattery( item ).map( _.maxCapacity ).getOrElse(1)
   def getChargeDepleted( item : ItemStack ) : Int =
-    getBattery( item ).map( _.getChargeDepleted( item ) ).getOrElse( 0 )
+    RaygunNbtUtils.getBattery( item ).map( _.getChargeDepleted( item ) ).getOrElse( 0 )
   def setChargeDepleted( item : ItemStack, depleted : Int ) : Unit =
-    getBattery( item ).foreach( _.setChargeDepleted( item, depleted ) )
+    RaygunNbtUtils.getBattery( item ).foreach( _.setChargeDepleted( item, depleted ) )
   def addCharge( item : ItemStack, delta : Int ) : Unit =
-    getBattery( item ).foreach( _.addCharge( item, delta ) )
+    RaygunNbtUtils.getBattery( item ).foreach( _.addCharge( item, delta ) )
   def getMaxChargePerTick( item : ItemStack ) : Int =
-    getBattery( item ).map( _.maxChargePerTick ).getOrElse( 0 )
+    RaygunNbtUtils.getBattery( item ).map( _.maxChargePerTick ).getOrElse( 0 )
   def getIC2Tier( item : ItemStack ) : Int =
-    getBattery( item ).map( _.ic2Tier ).getOrElse( Integer.MAX_VALUE )
+    RaygunNbtUtils.getBattery( item ).map( _.ic2Tier ).getOrElse( Integer.MAX_VALUE )
+
+  override def getItemDisplayName( stack : ItemStack ) : String =
+    if ( stack.hasDisplayName() ) {
+      stack.getTagCompoundSafe.getCompoundTag("display").getString( "display" )
+    }
+    else {
+      val comp = RaygunNbtUtils.getComponents( stack )
+      comp.map( RaygunNbtUtils.getRaygunName _ ).getOrElse( "Broken Raygun" )
+    }
 }

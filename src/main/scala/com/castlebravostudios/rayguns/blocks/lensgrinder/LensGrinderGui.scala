@@ -28,16 +28,17 @@
 package com.castlebravostudios.rayguns.blocks.lensgrinder
 
 import org.lwjgl.opengl.GL11
-
 import net.minecraft.client.gui.inventory.GuiContainer
 import net.minecraft.client.resources.I18n
 import net.minecraft.entity.player.InventoryPlayer
-import net.minecraft.util.ResourceLocation
+import com.castlebravostudios.rayguns.mod.ModularRayguns
+
+
 
 class LensGrinderGui( playerInv: InventoryPlayer, tileEntity: LensGrinderTileEntity )
   extends GuiContainer( new LensGrinderContainer( playerInv, tileEntity ) ) {
 
-  private val texture = new ResourceLocation( "rayguns", "textures/gui/container/lens_grinder.png" )
+  private val texture = ModularRayguns.texture( "textures/gui/container/lens_grinder.png" )
 
   //Color is in 8-bit RGB. Hence hex. This is a sort of very dark grey.
   private[this] val color = 0x404040

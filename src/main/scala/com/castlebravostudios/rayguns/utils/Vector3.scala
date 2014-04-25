@@ -33,8 +33,6 @@ import net.minecraft.world.World
 
 case class Vector3( val x : Double, val y : Double, val z : Double ) {
 
-
-  def this( vec : Vec3 ) = this( vec.xCoord, vec.yCoord, vec.zCoord )
   def toBlockPos : BlockPos =
     BlockPos( MathHelper.floor_double(x), MathHelper.floor_double(y), MathHelper.floor_double(z) )
 
@@ -53,10 +51,10 @@ case class Vector3( val x : Double, val y : Double, val z : Double ) {
   def subtract( other : Vector3 ) : Vector3 =
     Vector3( x - other.x, y - other.y, z - other.z )
 
-  def divideBy( n : Double ) =
+  def divideBy( n : Double ) : Vector3 =
     Vector3( x / n, y / n, z / n )
 
-  def mult( n : Double ) = Vector3( x * n, y * n, z * n )
+  def mult( n : Double ) : Vector3 = Vector3( x * n, y * n, z * n )
 
   def distanceTo( other : Vector3 ) : Double = this.subtract( other ).length
 
@@ -67,8 +65,16 @@ case class Vector3( val x : Double, val y : Double, val z : Double ) {
 
   def toList : List[Double] = List( x, y, z )
 
-  def modify( f : Double => Double ) = Vector3( f(x), f(y), f(z) )
+  def modify( f : Double => Double ) : Vector3 = Vector3( f(x), f(y), f(z) )
+
+  def pitch : Float = Math.asin( -y ).toDegrees.toFloat
+  def yaw : Float = Math.atan2( x, z ).toDegrees.toFloat
 
   def toMinecraft( world : World ) : Vec3 =
     world.getWorldVec3Pool().getVecFromPool(x, y, z)
+}
+object Vector3 {
+  def apply( vec : Vec3 ) : Vector3 = new Vector3( vec.xCoord, vec.yCoord, vec.zCoord )
+
+  val zero = new Vector3( 0, 0, 0 )
 }

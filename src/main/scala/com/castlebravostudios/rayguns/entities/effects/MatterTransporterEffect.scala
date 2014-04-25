@@ -27,32 +27,34 @@
 
 package com.castlebravostudios.rayguns.entities.effects
 
-import net.minecraft.util.ResourceLocation
+import com.castlebravostudios.rayguns.entities.BaseBeamEntity
+import com.castlebravostudios.rayguns.entities.BaseBoltEntity
 import com.castlebravostudios.rayguns.entities.Shootable
-import net.minecraft.entity.Entity
-import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData
-import net.minecraft.nbt.NBTTagCompound
+import com.castlebravostudios.rayguns.mod.ModularRayguns
+import com.castlebravostudios.rayguns.utils.Extensions.ItemExtensions
 import com.google.common.io.ByteArrayDataInput
 import com.google.common.io.ByteArrayDataOutput
-import com.castlebravostudios.rayguns.entities.BaseBoltEntity
-import com.castlebravostudios.rayguns.entities.BaseBeamEntity
-import net.minecraft.world.World
+
+import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.item.ItemBlock
 import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
-import com.castlebravostudios.rayguns.utils.Extensions.WorldExtension
+import net.minecraft.item.ItemBlock
+import net.minecraft.nbt.NBTTagCompound
+import net.minecraft.world.World
+
+import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData
 
 object MatterTransporterEffect extends BaseEffect {
 
   val effectKey: String = "MatterTransporterEffect"
+  val damageSourceKey = ""
 
   def hitBlock( shootable: Shootable, hitX: Int, hitY: Int, hitZ: Int, side: Int ) : Boolean = {
     val itemId = shootable.asInstanceOf[MatterTransporterShootable].itemId
     if ( itemId == 0 ) return true
 
     val item = Item.itemsList(itemId)
-    item.onItemUse( new ItemStack( item, 1 ), shootable.shooter.asInstanceOf[EntityPlayer], shootable.worldObj,
+    item.onItemUse( item.asStack, shootable.shooter.asInstanceOf[EntityPlayer], shootable.worldObj,
         hitX, hitY, hitZ, side, hitX + 0.5f, hitY + 0.5f, hitZ + 0.5f)
   }
 
@@ -72,9 +74,21 @@ object MatterTransporterEffect extends BaseEffect {
     bolt
   }
 
-  val boltTexture = new ResourceLocation( "rayguns", "textures/bolts/matter_transporter_bolt.png" )
-  val beamTexture = new ResourceLocation( "rayguns", "textures/beams/matter_transporter_beam.png" )
-  val chargeTexture = new ResourceLocation( "rayguns", "textures/effects/charge/matter_transporter_charge.png" )
+  val boltTexture = ModularRayguns.texture( "textures/bolts/matter_transporter_bolt.png" )
+  val beamTexture = ModularRayguns.texture( "textures/beams/matter_transporter_beam.png" )
+  val chargeTexture = ModularRayguns.texture( "textures/effects/charge/matter_transporter_charge.png" )
+
+  def getPlacedBlockId( player : EntityPlayer ) : Option[Int] = {
+    val currentSlot = player.inventory.currentItem
+    val itemSlot = ( currentSlot + 1 ) % 8
+
+    val stack = player.inventory.getStackInSlot( itemSlot )
+    if ( stack == null ) return None
+    val item = stack.getItem()
+    if ( !item.isInstanceOf[ItemBlock] ) return None
+
+    Some( item.itemID )
+  }
 
   private def deductTransportedItem( player: EntityPlayer ) : Int = {
     val currentSlot = player.inventory.currentItem

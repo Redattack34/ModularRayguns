@@ -37,7 +37,7 @@ object ImpulseChamber extends BaseChamber {
   val shotEffect = ImpulseEffect
   val nameSegmentKey = "rayguns.ImpulseChamber.segment"
 
-  def createItem( id : Int ) = new ItemModule( id, this )
+  def createItem( id : Int ) : ItemModule = new ItemModule( id, this )
     .setUnlocalizedName("rayguns.ImpulseChamber")
     .setTextureName("rayguns:chamber_impulse")
     .setCreativeTab( ModularRayguns.raygunsTab )
@@ -47,5 +47,6 @@ object ImpulseChamber extends BaseChamber {
     registerSingleShotHandlers()
     registerScatterShotHandler()
     registerChargedShotHandler()
+    registerPreciseShotHandler()
   }
 }

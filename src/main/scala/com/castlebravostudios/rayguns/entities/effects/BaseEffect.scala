@@ -39,6 +39,9 @@ import net.minecraft.util.ResourceLocation
 import net.minecraft.world.World
 import net.minecraftforge.fluids.IFluidBlock
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.util.EntityDamageSourceIndirect
+import net.minecraft.util.DamageSource
+import com.castlebravostudios.rayguns.utils.RandomDamageSource
 
 trait BaseEffect {
 
@@ -50,6 +53,11 @@ trait BaseEffect {
    * IMPORTANT NOTE: This key must not be changed once your plugin is released!
    */
   def effectKey : String
+
+  /**
+   * The key used to look up the damage source text.
+   */
+  def damageSourceKey : String
 
   /**
    * A collision has been detected against the given entity. Return true if the
@@ -71,18 +79,20 @@ trait BaseEffect {
    */
   def createImpactParticles( shootable : Shootable, hitX : Double, hitY : Double, hitZ : Double ) : Unit = ()
 
-  def canCollideWithBlock( shootable : Shootable, b : Block, metadata : Int, pos : BlockPos ) =
+  def canCollideWithBlock( shootable : Shootable, b : Block, metadata : Int, pos : BlockPos ) : Boolean =
     if ( b.isInstanceOf[BlockFluid] || b.isInstanceOf[IFluidBlock] ) collidesWithLiquids(shootable)
     else true
 
-  def canCollideWithEntity( shootable : Shootable, entity : Entity ) = !(entity == shootable.shooter)
+  def canCollideWithEntity( shootable : Shootable, entity : Entity ) : Boolean =
+    !(entity == shootable.shooter)
 
   def collidesWithLiquids( shootable : Shootable ) : Boolean = false
 
   /**
    * Get the opposite side of the given side.
    */
-  def invertSide( side : Int ) = side match {
+  //scalastyle:off magic.number
+  def invertSide( side : Int ) : Int = side match {
       case 0 => 1
       case 1 => 0
       case 2 => 3
@@ -93,12 +103,13 @@ trait BaseEffect {
 
   def hitOffset( side : Int ) : BlockPos = side match {
     case 0 => BlockPos(0, -1, 0)
-    case 1 => BlockPos(0, +1, 0)
+    case 1 => BlockPos(0,  1, 0)
     case 2 => BlockPos(0, 0, -1)
-    case 3 => BlockPos(0, 0, +1)
+    case 3 => BlockPos(0, 0,  1)
     case 4 => BlockPos(-1, 0, 0)
-    case 5 => BlockPos(+1, 0, 0)
+    case 5 => BlockPos( 1, 0, 0)
   }
+  //scalastyle:on magic.number
 
   /**
    * Adjust the coords to the block adjacent to the struck side.
@@ -122,4 +133,7 @@ trait BaseEffect {
     bolt.effect = this
     bolt
   }
+
+  def getDamageSource( shootable : Shootable ) : DamageSource =
+    new RandomDamageSource( damageSourceKey, shootable, shootable.shooter )
 }

@@ -47,14 +47,14 @@ object InfiniteBattery extends BaseRaygunModule with RaygunBattery {
   val maxChargePerTick = 16
   val ic2Tier = 4
 
-  def createItem( id : Int ) = new ItemBattery( id, this )
+  def createItem( id : Int ) : ItemModule = new ItemBattery( id, this )
     .setUnlocalizedName("rayguns.InfiniteBattery")
     .setTextureName("rayguns:battery_infinite")
     .setCreativeTab( ModularRayguns.raygunsTab )
     .setMaxStackSize(1)
 
-  override def getChargeDepleted( item : ItemStack ) = 0
-  override def setChargeDepleted( item : ItemStack, depleted : Int ) = ()
+  override def getChargeDepleted( item : ItemStack ) : Int = 0
+  override def setChargeDepleted( item : ItemStack, depleted : Int ) : Unit = ()
   override def addCharge( item : ItemStack, delta : Int ) : Unit = ()
-  override def getChargeString( item : ItemStack ) = I18n.getString("rayguns.infinityCharge")
+  override def getChargeString( item : ItemStack ) : String = I18n.getString("rayguns.infinityCharge")
 }

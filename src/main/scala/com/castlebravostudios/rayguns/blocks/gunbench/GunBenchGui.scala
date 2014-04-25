@@ -32,22 +32,26 @@ import net.minecraft.client.resources.I18n
 import net.minecraft.entity.player.InventoryPlayer
 import net.minecraft.util.ResourceLocation
 import org.lwjgl.opengl.GL11
+import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 class GunBenchGui( playerInv: InventoryPlayer, tileEntity: GunBenchTileEntity )
   extends GuiContainer( new GunBenchContainer( playerInv, tileEntity ) ) {
 
-  private val texture = new ResourceLocation( "rayguns", "textures/gui/container/gun_bench.png" )
+  private val texture = ModularRayguns.texture( "textures/gui/container/gun_bench.png" )
 
   //Color is in 8-bit RGB. Hence hex. This is a sort of very dark grey.
   private[this] val color = 0x404040
 
+  this.ySize = 185
+
   override def drawGuiContainerForegroundLayer( param1 : Int, param2 : Int ) : Unit = {
     fontRenderer.drawString(I18n.getString("rayguns.container.gunbench"), 8, 6, color)
-    fontRenderer.drawString(I18n.getString("rayguns.container.gunbench.body"), 8, 23, color )
+    fontRenderer.drawString(I18n.getString("rayguns.container.gunbench.frame"), 8, 23, color )
     fontRenderer.drawString(I18n.getString("rayguns.container.gunbench.lens"), 8, 40, color )
-    fontRenderer.drawString(I18n.getString("rayguns.container.gunbench.acc"), 8, 58, color )
-    fontRenderer.drawString(I18n.getString("rayguns.container.gunbench.chamber"), 58, 23, color )
-    fontRenderer.drawString(I18n.getString("rayguns.container.gunbench.battery"), 58, 40, color )
+    fontRenderer.drawString(I18n.getString("rayguns.container.gunbench.chamber"), 65, 23, color )
+    fontRenderer.drawString(I18n.getString("rayguns.container.gunbench.battery"), 65, 40, color )
+    fontRenderer.drawString(I18n.getString("rayguns.container.gunbench.acc"), 8, 59, color )
+    fontRenderer.drawString(I18n.getString("rayguns.container.gunbench.barrel"), 8, 76, color )
     fontRenderer.drawString(I18n.getString("container.inventory"), 8, ySize - 96, color)
   }
 

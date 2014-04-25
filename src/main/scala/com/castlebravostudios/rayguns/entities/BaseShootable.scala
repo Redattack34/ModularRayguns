@@ -36,8 +36,11 @@ import net.minecraft.entity.Entity
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.world.World
 import javax.swing.plaf.nimbus.Effect
+import java.util.Random
+import com.castlebravostudios.rayguns.utils.Logging
 
-abstract class BaseShootable( world : World ) extends Entity( world ) with Shootable with IEntityAdditionalSpawnData {
+abstract class BaseShootable( world : World ) extends Entity( world )
+  with Shootable with IEntityAdditionalSpawnData with Logging {
 
   var effect : BaseEffect = _
   var charge : Double = 1.0d
@@ -70,7 +73,7 @@ abstract class BaseShootable( world : World ) extends Entity( world ) with Shoot
     e match {
       case Some(effect) => this.effect = effect
       case None => {
-        System.err.println("Unknown effect key: " + key )
+        severe( s"Unknown effect key: $key" )
         setDead()
       }
     }
@@ -78,5 +81,5 @@ abstract class BaseShootable( world : World ) extends Entity( world ) with Shoot
 
   def entityInit() : Unit = ()
 
-  def random = this.rand
+  def random : Random = this.rand
 }

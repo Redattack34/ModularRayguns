@@ -27,7 +27,78 @@
 
 package com.castlebravostudios.rayguns.items.recipes
 
+import com.castlebravostudios.rayguns.api.LensGrinderRecipeRegistry
+import com.castlebravostudios.rayguns.api.items.RaygunModule
+import com.castlebravostudios.rayguns.utils.Extensions.ItemExtensions
+import com.castlebravostudios.rayguns.utils.Extensions.BlockExtensions
+import com.castlebravostudios.rayguns.utils.ScalaShapedRecipeFactory
+import cpw.mods.fml.common.registry.GameRegistry
+import net.minecraft.item.Item
+import net.minecraft.item.ItemStack
+import net.minecraft.block.Block
+import net.minecraft.item.crafting.ShapelessRecipes
+import scala.collection.JavaConversions._
+
 trait RecipeLibrary {
 
   def registerRecipes() : Unit
+
+  def getIngredientItems() : Seq[Item]
+
+  protected def addModuleShaped( module : RaygunModule, params : Any* ) : Unit = {
+    val modules = findModules( module, params :_* )
+
+    //Skip modules where the module or a recipe ingredient has been disabled.
+    if ( modules.exists( _.item.isEmpty ) ) {
+      return
+    }
+
+    GameRegistry.addRecipe( ScalaShapedRecipeFactory(
+        module.item.get.asStack, params:_* ) );
+  }
+
+  protected def addModuleLensGrinder( time : Short, module : RaygunModule, params : Any* ): Unit = {
+    val modules = findModules( module, params :_* )
+
+    //Skip modules where the module or a recipe ingredient has been disabled.
+    if ( modules.exists( _.item.isEmpty ) ) {
+      return
+    }
+
+    LensGrinderRecipeRegistry.register( time, module.item.get.asStack, params :_* );
+  }
+
+  private def findModules( module : RaygunModule, params : Any* ) : Seq[RaygunModule] = {
+    module +: params.flatMap{
+      case mod : RaygunModule => Some( mod )
+      case (c, mod : RaygunModule) => Some( mod )
+      case _ => None
+    }
+  }
+
+  protected def addShaped( output : ItemStack, recipe : Any* ) : Unit =
+    GameRegistry.addRecipe( ScalaShapedRecipeFactory( output, recipe :_* ) )
+
+  protected def addShapeless( output : ItemStack, recipe : Any* ) : Unit = {
+    val stacks = recipe.map{
+      case item : Item => item.asStack
+      case block : Block => block.asStack
+      case stack : ItemStack => stack.copy
+      case module : RaygunModule => {
+        require( module.item.isDefined )
+        module.item.get.asStack
+      }
+      case _ => throw new IllegalArgumentException( "Invalid shapeless recipe." );
+    }
+    GameRegistry.addRecipe( new ShapelessRecipes( output, stacks ) )
+  }
+
+  protected def addLensGrinder( ticks : Short, result : ItemStack, recipe : Any* ): Unit =
+    LensGrinderRecipeRegistry.register( ticks, result, recipe : _ * )
+
+  protected def addSmelting( input : Block, output : ItemStack, expMult : Float ): Unit =
+    GameRegistry.addSmelting(input.blockID, output, expMult)
+
+  protected def addSmelting( input : Item, output : ItemStack, expMult : Float ): Unit =
+    GameRegistry.addSmelting(input.itemID, output, expMult)
 }

@@ -28,24 +28,25 @@
 package com.castlebravostudios.rayguns.entities.effects
 
 import com.castlebravostudios.rayguns.entities.Shootable
-
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.util.EntityDamageSource
 import net.minecraft.util.ResourceLocation
 import net.minecraft.world.World
+import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 
 object LifeForceEffect extends BaseEffect {
 
   val effectKey = "LifeForce"
+  val damageSourceKey = "lifeForce"
 
   def hitEntity( shootable : Shootable, hit : Entity ) : Boolean = {
     if ( hit.isInstanceOf[EntityLivingBase] ) {
       val living = hit.asInstanceOf[EntityLivingBase]
 
       if ( living.isEntityUndead() ) {
-        living.attackEntityFrom(new EntityDamageSource("lifeforce", shootable.shooter), shootable.charge.toFloat * 3 )
+        living.attackEntityFrom( getDamageSource( shootable ), shootable.charge.toFloat * 3 )
       }
       else {
         living.heal( shootable.charge.toFloat * 3 )
@@ -62,7 +63,7 @@ object LifeForceEffect extends BaseEffect {
       shootable.worldObj.spawnParticle("cloud", hitX, hitY, hitZ, 0.0D, 0.0D, 0.0D);
     }
   }
-  val boltTexture = new ResourceLocation( "rayguns", "textures/bolts/life_bolt.png" )
-  val beamTexture = new ResourceLocation( "rayguns", "textures/beams/life_beam.png" )
-  val chargeTexture = new ResourceLocation( "rayguns", "textures/effects/charge/life_charge.png" )
+  val boltTexture = ModularRayguns.texture( "textures/bolts/life_bolt.png" )
+  val beamTexture = ModularRayguns.texture( "textures/beams/life_beam.png" )
+  val chargeTexture = ModularRayguns.texture( "textures/effects/charge/life_charge.png" )
 }

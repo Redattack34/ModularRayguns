@@ -38,7 +38,7 @@ object FrostRayChamber extends BaseChamber {
   val shotEffect = FrostRayEffect
   val nameSegmentKey = "rayguns.FrostRayChamber.segment"
 
-  def createItem( id : Int ) = new ItemModule( id, this )
+  def createItem( id : Int ) : ItemModule = new ItemModule( id, this )
     .setUnlocalizedName("rayguns.FrostRayChamber")
     .setTextureName("rayguns:chamber_frost_ray")
     .setCreativeTab( ModularRayguns.raygunsTab )
@@ -48,5 +48,6 @@ object FrostRayChamber extends BaseChamber {
     registerSingleShotHandlers()
     registerScatterShotHandler()
     registerChargedShotHandler()
+    registerPreciseShotHandler()
   }
 }

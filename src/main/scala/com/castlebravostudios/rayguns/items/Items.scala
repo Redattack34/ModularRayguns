@@ -27,9 +27,11 @@
 
 package com.castlebravostudios.rayguns.items
 
+//scalastyle:off underscore.import
 import com.castlebravostudios.rayguns.items.accessories._
 import com.castlebravostudios.rayguns.items.batteries._
-import com.castlebravostudios.rayguns.items.bodies._
+import com.castlebravostudios.rayguns.items.frames._
+import com.castlebravostudios.rayguns.items.barrels._
 import com.castlebravostudios.rayguns.items.chambers._
 import com.castlebravostudios.rayguns.items.emitters._
 import com.castlebravostudios.rayguns.items.lenses._
@@ -38,54 +40,23 @@ import net.minecraft.item.Item
 import com.castlebravostudios.rayguns.items.chambers.LaserChamber
 import com.castlebravostudios.rayguns.api.ModuleRegistrationHelper
 import com.castlebravostudios.rayguns.mod.Config
+import ModuleRegistrationHelper.registerModule
+import com.castlebravostudios.rayguns.items.frames.MantisFrame
 
 object Items {
 
-  import ModuleRegistrationHelper._
-
   def registerItems : Unit = {
-    registerItem( RayGun )
-    registerItem( BrokenGun )
-    registerItem( EnergizedDiamond )
-    registerItem( GlassGainMedium )
-    registerItem( GlowstoneGainMedium )
-    registerItem( DiamondGainMedium )
+    registerMisc()
+    registerEmitters()
+    registerBatteries()
+    registerLenses()
+    registerAccessories()
+    registerFrames()
+    registerChambers()
+    registerBarrels()
+  }
 
-    registerItem( Emitters.shrinkRayEmitter )
-    registerItem( Emitters.laserEmitter )
-    registerItem( Emitters.heatRayEmitter )
-    registerItem( Emitters.lifeForceEmitter )
-    registerItem( Emitters.frostRayEmitter )
-    registerItem( Emitters.fortifiedSunlightEmitter )
-    registerItem( Emitters.explosiveEmitter )
-    registerItem( Emitters.deathRayEmitter )
-    registerItem( Emitters.enderEmitter )
-    registerItem( Emitters.lightningEmitter )
-    registerItem( Emitters.impulseEmitter )
-    registerItem( Emitters.tractorEmitter )
-    registerItem( Emitters.tier1CuttingEmitter )
-    registerItem( Emitters.tier2CuttingEmitter )
-    registerItem( Emitters.tier3CuttingEmitter )
-    registerItem( Emitters.matterTransporterEmitter )
-
-    registerModule( BasicBattery, Config.basicBattery )
-    registerModule( AdvancedBattery, Config.advancedBattery )
-    registerModule( UltimateBattery, Config.ultimateBattery )
-    registerModule( InfiniteBattery, Config.infiniteBattery )
-
-    registerModule( PreciseLens, Config.preciseLens )
-    registerModule( WideLens, Config.wideLens )
-    registerModule( PreciseBeamLens, Config.preciseBeamLens )
-    registerModule( ChargeLens, Config.chargeLens )
-    registerModule( ChargeBeamLens, Config.chargeBeamLens )
-
-    registerModule( ExtendedBattery, Config.extendedBattery )
-    registerModule( RefireCapacitor, Config.refireCapacitor )
-    registerModule( SolarPanel, Config.solarPanel )
-
-    registerModule( MantisBody, Config.mantisBody )
-    registerModule( FireflyBody, Config.fireflyBody )
-
+  private def registerChambers() : Unit = {
     registerModule( LaserChamber, Config.chamberLaser )
     registerModule( HeatRayChamber, Config.chamberHeatRay )
     registerModule( LifeForceChamber, Config.chamberLifeForce )
@@ -103,12 +74,65 @@ object Items {
     registerModule( MatterTransporterChamber, Config.chamberMatterTransporter )
   }
 
+  private def registerFrames() : Unit = {
+    registerModule( MantisFrame, Config.mantisFrame )
+    registerModule( FireflyFrame, Config.fireflyFrame )
+  }
+
+  private def registerAccessories() : Unit = {
+    registerModule( HighEfficiencyWiring, Config.highEfficiencyWiring )
+    registerModule( RefireCapacitor, Config.refireCapacitor )
+    registerModule( SolarPanel, Config.solarPanel )
+    registerModule( ChargeCapacitor, Config.chargeCapacitor )
+  }
+
+  private def registerLenses() : Unit = {
+    registerModule( PreciseLens, Config.preciseLens )
+    registerModule( WideLens, Config.wideLens )
+  }
+
+  private def registerBatteries() : Unit = {
+    registerModule( BasicBattery, Config.basicBattery )
+    registerModule( AdvancedBattery, Config.advancedBattery )
+    registerModule( UltimateBattery, Config.ultimateBattery )
+    registerModule( InfiniteBattery, Config.infiniteBattery )
+  }
+
+  private def registerEmitters() : Unit = {
+    registerItem( Emitters.laserEmitter )
+    registerItem( Emitters.heatRayEmitter )
+    registerItem( Emitters.lifeForceEmitter )
+    registerItem( Emitters.frostRayEmitter )
+    registerItem( Emitters.fortifiedSunlightEmitter )
+    registerItem( Emitters.explosiveEmitter )
+    registerItem( Emitters.deathRayEmitter )
+    registerItem( Emitters.enderEmitter )
+    registerItem( Emitters.lightningEmitter )
+    registerItem( Emitters.impulseEmitter )
+    registerItem( Emitters.tractorEmitter )
+    registerItem( Emitters.tier1CuttingEmitter )
+    registerItem( Emitters.tier2CuttingEmitter )
+    registerItem( Emitters.tier3CuttingEmitter )
+    registerItem( Emitters.matterTransporterEmitter )
+  }
+
+  private def registerMisc() : Unit = {
+    registerItem( RayGun )
+    registerItem( BrokenGun )
+    Config.recipeLibrary.getIngredientItems().foreach( registerItem )
+  }
+
+  private def registerBarrels() : Unit = {
+    registerModule( BeamBarrel, Config.barrelBeam )
+    registerModule( BlasterBarrel, Config.barrelBlaster )
+  }
+
   /**
    * Since items are Objects, and therefore instantiated when first loaded,
    * I don't actually have to register them anywhere. This merely forces the
    * VM to load (and thus register for me) the Objects.
    */
-  private def registerItem( item : Any) : Unit = {
+  private def registerItem( item : Any ) : Unit = {
     item.hashCode()
   }
 }

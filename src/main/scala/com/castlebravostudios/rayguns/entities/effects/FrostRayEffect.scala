@@ -29,7 +29,6 @@ package com.castlebravostudios.rayguns.entities.effects
 
 import com.castlebravostudios.rayguns.entities.Shootable
 import com.castlebravostudios.rayguns.utils.BlockPos
-
 import net.minecraft.block.Block
 import net.minecraft.block.material.Material
 import net.minecraft.entity.Entity
@@ -38,15 +37,16 @@ import net.minecraft.potion.Potion
 import net.minecraft.util.EntityDamageSource
 import net.minecraft.util.ResourceLocation
 import net.minecraft.world.World
+import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 
 object FrostRayEffect extends BaseEffect {
 
   val effectKey = "FrostRay"
+  val damageSourceKey = "frostRay"
 
   def hitEntity( shootable : Shootable, hit : Entity ) : Boolean = {
-    hit.attackEntityFrom(new EntityDamageSource("frostray", shootable.shooter),
-        shootable.charge.toFloat * 2 )
+    hit.attackEntityFrom( getDamageSource( shootable ), shootable.charge.toFloat * 2 )
 
     val livingShooter = shootable.shooter match{
       case l : EntityLivingBase => l
@@ -90,12 +90,12 @@ object FrostRayEffect extends BaseEffect {
     if ( frozenBlock != null ) {
       worldObj.setBlock(hitX, hitY, hitZ, frozenBlock.blockID)
     }
-    else if ( material.blocksMovement && worldObj.isAirBlock(hitX, hitY+1, hitZ) ) {
-      worldObj.setBlock( hitX, hitY+1, hitZ, Block.snow.blockID )
+    else if ( material.blocksMovement && worldObj.isAirBlock(hitX, hitY + 1, hitZ) ) {
+      worldObj.setBlock( hitX, hitY + 1, hitZ, Block.snow.blockID )
     }
   }
 
-  override def collidesWithLiquids(shootable : Shootable) = true
+  override def collidesWithLiquids(shootable : Shootable) : Boolean = true
 
   override def createImpactParticles( shootable : Shootable, hitX : Double, hitY : Double, hitZ : Double ) : Unit = {
     for ( _ <- 0 until 4 ) {
@@ -103,7 +103,7 @@ object FrostRayEffect extends BaseEffect {
     }
   }
 
-  val boltTexture = new ResourceLocation( "rayguns", "textures/bolts/frost_bolt.png" )
-  val beamTexture = new ResourceLocation( "rayguns", "textures/beams/frost_beam.png" )
-  val chargeTexture = new ResourceLocation( "rayguns", "textures/effects/charge/frost_charge.png" )
+  val boltTexture = ModularRayguns.texture( "textures/bolts/frost_bolt.png" )
+  val beamTexture = ModularRayguns.texture( "textures/beams/frost_beam.png" )
+  val chargeTexture = ModularRayguns.texture( "textures/effects/charge/frost_charge.png" )
 }

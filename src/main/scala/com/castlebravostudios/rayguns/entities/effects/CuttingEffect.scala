@@ -39,7 +39,6 @@ import net.minecraft.item.ItemSpade
 import net.minecraft.util.ResourceLocation
 
 class CuttingEffect( val key : String, val harvestLevel : Int, val powerMultiplier : Float ) extends BaseEffect {
-
   implicit class ShootableExtension(val shootable : Shootable) {
     def harvestPower( ) : Float = shootable.charge.toFloat * powerMultiplier
     def setHarvestPower( power : Float ) = {
@@ -99,6 +98,7 @@ class CuttingEffect( val key : String, val harvestLevel : Int, val powerMultipli
   }
 
   def effectKey : String = key
+  val damageSourceKey = ""
 
   val boltTexture = new ResourceLocation( "rayguns", s"textures/bolts/cutting_bolt_t${harvestLevel}.png" )
   val beamTexture = new ResourceLocation( "rayguns", s"textures/beams/cutting_beam_t${harvestLevel}.png" )

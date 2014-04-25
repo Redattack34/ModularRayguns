@@ -28,15 +28,17 @@
 package com.castlebravostudios.rayguns.entities
 
 import org.lwjgl.opengl.GL11
-import com.castlebravostudios.rayguns.entities.effects.BaseEffect
+import com.castlebravostudios.rayguns.entities.effects.LightningBeamEntity
+import com.castlebravostudios.rayguns.mod.Config
+import com.castlebravostudios.rayguns.utils.Vector3
 import net.minecraft.client.renderer.OpenGlHelper
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.client.renderer.entity.Render
 import net.minecraft.entity.Entity
 import net.minecraft.util.ResourceLocation
-import com.castlebravostudios.rayguns.entities.effects.LightningBeamEntity
-import com.castlebravostudios.rayguns.utils.Vector3
-import com.castlebravostudios.rayguns.mod.Config
+import com.castlebravostudios.rayguns.mod.ModularRayguns
+
+
 
 class LightningBeamRenderer extends Render {
 
@@ -99,5 +101,5 @@ class LightningBeamRenderer extends Render {
   }
 
   def getEntityTexture( e : Entity ) : ResourceLocation =
-    new ResourceLocation( "rayguns", "textures/beams/lightning_beam.png" )
+    ModularRayguns.texture( "textures/beams/lightning_beam.png" )
 }

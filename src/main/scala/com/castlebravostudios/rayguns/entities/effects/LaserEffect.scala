@@ -28,31 +28,33 @@
 package com.castlebravostudios.rayguns.entities.effects
 
 import com.castlebravostudios.rayguns.entities.Shootable
-
 import net.minecraft.entity.Entity
 import net.minecraft.util.EntityDamageSource
 import net.minecraft.util.ResourceLocation
 import net.minecraft.world.World
+import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 object LaserEffect extends BaseEffect {
 
   val effectKey = "Laser"
+  val damageSourceKey = "laser"
 
   def hitEntity( shootable : Shootable, entity : Entity ) : Boolean = {
-    entity.attackEntityFrom(
-      new EntityDamageSource("laser", shootable.shooter), 2f * shootable.charge.toFloat )
-      true
+    entity.attackEntityFrom( getDamageSource( shootable ), 2f * shootable.charge.toFloat )
+    true
   }
 
   def hitBlock( shootable : Shootable, hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Boolean = true
 
-  override def createImpactParticles( shootable : Shootable, hitX : Double, hitY : Double, hitZ : Double ) : Unit = {
-    for ( _ <- 0 until 4 ) {
-      shootable.worldObj.spawnParticle("smoke", hitX, hitY, hitZ, 0.0D, 0.0D, 0.0D);
-    }
+  override def createImpactParticles( shootable : Shootable, hitX : Double, hitY : Double, hitZ : Double ): Unit = {
+    for ( _ <- 0 until 4) spawnParticle(shootable, hitX, hitY, hitZ)
   }
 
-  val boltTexture = new ResourceLocation( "rayguns", "textures/bolts/laser_bolt.png" )
-  val beamTexture = new ResourceLocation( "rayguns", "textures/beams/laser_beam.png" )
-  val chargeTexture = new ResourceLocation( "rayguns", "textures/effects/charge/laser_charge.png" )
+  private def spawnParticle(shootable: Shootable, hitX: Double, hitY: Double, hitZ: Double): Unit = {
+    shootable.worldObj.spawnParticle("smoke", hitX, hitY, hitZ, 0.0D, 0.0D, 0.0D)
+  }
+
+  val boltTexture = ModularRayguns.texture( "textures/bolts/laser_bolt.png" )
+  val beamTexture = ModularRayguns.texture( "textures/beams/laser_beam.png" )
+  val chargeTexture = ModularRayguns.texture( "textures/effects/charge/laser_charge.png" )
 }

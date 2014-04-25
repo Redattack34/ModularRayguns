@@ -43,11 +43,11 @@ import com.castlebravostudios.rayguns.plugins.ic2.IC2BlockPowerConnector
 import net.minecraft.network.packet.Packet132TileEntityData
 import net.minecraft.network.INetworkManager
 import net.minecraft.network.packet.Packet
+import LensGrinderTileEntity.OUTPUT_SLOT
 
 class LensGrinderTileEntity extends BaseInventoryTileEntity with PoweredBlock
   with RFBlockPowerConnector with IC2BlockPowerConnector {
 
-  import LensGrinderTileEntity._
 
   private[this] val input = new InventoryCrafting( new DummyContainer(), 3, 3 )
   private[this] var output : ItemStack = null
@@ -64,7 +64,7 @@ class LensGrinderTileEntity extends BaseInventoryTileEntity with PoweredBlock
   override def getSizeInventory : Int = 10
   override def getStackInSlot( slot : Int ) : ItemStack =
     if ( slot == OUTPUT_SLOT ) output else input.getStackInSlot( slot )
-  override def setInventorySlotContents( slot : Int, stack : ItemStack ) = {
+  override def setInventorySlotContents( slot : Int, stack : ItemStack ) : Unit = {
     if ( slot == OUTPUT_SLOT ) {
       output = stack
       if ( stack != null && stack.stackSize > getInventoryStackLimit ) {
@@ -157,7 +157,7 @@ class LensGrinderTileEntity extends BaseInventoryTileEntity with PoweredBlock
     }
   }
 
-  def isGrinding = remainingTime > 0
+  def isGrinding : Boolean = remainingTime > 0
   def getTimeRemainingScaled( scale : Int ) : Int = {
     val totalTime : Int = this.recipe.get.ticks
     val factor = (totalTime - remainingTime).toDouble / totalTime.toDouble
@@ -195,7 +195,7 @@ class LensGrinderTileEntity extends BaseInventoryTileEntity with PoweredBlock
     slot != OUTPUT_SLOT
 
   private class DummyContainer extends Container {
-    def canInteractWith( player : EntityPlayer ) = false
+    def canInteractWith( player : EntityPlayer ) : Boolean = false
     override def onCraftMatrixChanged( inv : IInventory ) : Unit = {
       super.onCraftMatrixChanged(inv)
       updateRecipe

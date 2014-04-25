@@ -32,8 +32,8 @@ import net.minecraft.entity.Entity
 
 trait TriggerOnDeath extends BaseEffect {
 
-  def hitEntity( shootable : Shootable, entity : Entity ) = true
-  def hitBlock( shootable : Shootable, hitX : Int, hitY : Int, hitZ : Int, side : Int ) = true
+  def hitEntity( shootable : Shootable, entity : Entity ) : Boolean = true
+  def hitBlock( shootable : Shootable, hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Boolean = true
 
-  def triggerAt( shootable : Shootable, x : Double, y : Double, z : Double )
+  def triggerAt( shootable : Shootable, x : Double, y : Double, z : Double ) : Unit
 }

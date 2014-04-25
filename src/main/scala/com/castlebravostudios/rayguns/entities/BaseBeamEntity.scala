@@ -39,21 +39,28 @@ import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData
 import com.google.common.io.ByteArrayDataInput
 import com.google.common.io.ByteArrayDataOutput
 import com.castlebravostudios.rayguns.api.EffectRegistry
+import com.castlebravostudios.rayguns.utils.Vector3
+import com.castlebravostudios.rayguns.utils.Extensions.WorldExtension
+import net.minecraft.util.MathHelper
 
 class BaseBeamEntity(world : World) extends BaseShootable( world ) {
 
-  def depletionRate = 0.3d
+  def depletionRate : Double = 0.3d
   var length : Double = 0
+
+  var maxRange : Int = 20
+
+  var end : Vector3 = Vector3.zero
 
   ignoreFrustumCheck = true
 
-  //I've... repurposed a bunch of the vanilla fields to avoid messing with packets and so on.
+  //I store the start point in the x/y/z coords to keep the spawn packet small
+  //and because those fields are already stored/transmitted.
   def setStart( start : Vec3 ) : Unit = {
     setPosition(start.xCoord, start.yCoord, start.zCoord)
   }
 
   def onImpact( pos : MovingObjectPosition ) : Boolean = {
-    effect.createImpactParticles( this, pos.hitVec.xCoord, pos.hitVec.yCoord, pos.hitVec.zCoord)
     pos.typeOfHit match {
       case EnumMovingObjectType.ENTITY => effect.hitEntity( this, pos.entityHit )
       case EnumMovingObjectType.TILE => effect.hitBlock( this, pos.blockX, pos.blockY, pos.blockZ, pos.sideHit )
@@ -62,9 +69,53 @@ class BaseBeamEntity(world : World) extends BaseShootable( world ) {
 
   override def onUpdate() : Unit = {
     super.onUpdate
+
     charge -= depletionRate
     if ( charge <= 0 ) {
       setDead()
     }
+  }
+
+  override def writeEntityToNBT( tag : NBTTagCompound ) : Unit = {
+    super.writeEntityToNBT(tag)
+    tag.setInteger("maxRange", maxRange)
+  }
+
+  override def readEntityFromNBT( tag : NBTTagCompound ) : Unit = {
+    super.readEntityFromNBT(tag)
+    maxRange = tag.getInteger("maxRange")
+  }
+
+  override def writeSpawnData( out : ByteArrayDataOutput ) : Unit = {
+    super.writeSpawnData(out)
+    out.writeInt( maxRange )
+
+    //This is sent already, but not precisely enough.
+    out.writeFloat( rotationYaw )
+    out.writeFloat( rotationPitch )
+
+    out.writeFloat( length.toFloat )
+
+    //Send the end point too, so we can spawn particles there client-side
+    out.writeFloat( end.x.toFloat )
+    out.writeFloat( end.y.toFloat )
+    out.writeFloat( end.z.toFloat )
+  }
+
+  override def readSpawnData( in : ByteArrayDataInput ) : Unit = {
+    super.readSpawnData(in)
+    maxRange = in.readInt()
+
+    rotationYaw = in.readFloat()
+    rotationPitch = in.readFloat()
+
+    length = in.readFloat()
+
+    val endX = in.readFloat()
+    val endY = in.readFloat()
+    val endZ = in.readFloat()
+    end = Vector3( endX, endY, endZ )
+
+    effect.createImpactParticles( this, end.x, end.y, end.z )
   }
 }

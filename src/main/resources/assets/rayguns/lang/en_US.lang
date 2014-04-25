@@ -1,14 +1,18 @@
-item.rayguns.ExtendedBattery.name=Extended Battery
+item.rayguns.HighEfficiencyWiring.name=High Efficiency Wiring
 item.rayguns.RefireCapacitor.name=Refire Capacitor
 item.rayguns.SolarPanel.name=Solar Panel
+item.rayguns.ChargeCapacitor.name=Charge Capacitor
 
 item.rayguns.AdvancedBattery.name=Advanced Battery
 item.rayguns.BasicBattery.name=Basic Battery
 item.rayguns.InfiniteBattery.name=Infinite Battery
 item.rayguns.UltimateBattery.name=Ultimate Battery
 
-item.rayguns.FireflyBody.name=Firefly Raygun Body
-item.rayguns.MantisBody.name=Mantis Raygun Body
+item.rayguns.FireflyFrame.name=Firefly Raygun Frame
+item.rayguns.MantisFrame.name=Mantis Raygun Frame
+
+item.rayguns.BeamBarrel.name=Beam Barrel
+item.rayguns.BlasterBarrel.name=Blaster Barrel
 
 item.rayguns.ExplosiveChamber.name=Explosive Beam Chamber
 item.rayguns.FortifiedSunlightChamber.name=Fortified Sunlight Beam Chamber
@@ -32,7 +36,6 @@ item.rayguns.FrostRayEmitter.name=Frost Ray Emitter
 item.rayguns.HeatRayEmitter.name=Heat Ray Emitter
 item.rayguns.LaserEmitter.name=Laser Emitter
 item.rayguns.LifeForceEmitter.name=Life Force Emitter
-item.rayguns.ShrinkRayEmitter.name=Shrink Ray Emitter
 item.rayguns.DeathRayEmitter.name=Death Ray Emitter
 item.rayguns.EnderEmitter.name=Ender Emitter
 item.rayguns.LightningEmitter.name=Lightning Emitter
@@ -43,42 +46,55 @@ item.rayguns.Tier2CuttingEmitter.name=Cutting Beam Emitter Mk. 2
 item.rayguns.Tier3CuttingEmitter.name=Cutting Beam Emitter Mk. 3
 item.rayguns.MatterTransporterEmitter.name=Matter Transporter Beam Emitter
 
-item.rayguns.PreciseBeamLens.name=Precise Beam Lens
-item.rayguns.PreciseLens.name=Precise Bolt Lens
-item.rayguns.WideLens.name=Scatter Bolt Lens
-item.rayguns.ChargeLens.name=Charge Lens
-item.rayguns.ChargeBeamLens.name=Charge Beam Lens
+item.rayguns.PreciseLens.name=Precise Lens
+item.rayguns.WideLens.name=Scatter Lens
 
 item.rayguns.BrokenRaygun.name=Broken Raygun
-item.rayguns.DiamondGainMedium.name=Diamond Gain Medium
-item.rayguns.EnergizedDiamond.name=Energized Diamond
-item.rayguns.GlassGainMedium.name=Glass Gain Medium
-item.rayguns.GlowstoneGainMedium.name=Glowstone Gain Medium
 item.rayguns.Raygun.name=Raygun
+item.rayguns.OpticalGlass.name=Optical Glass
+item.rayguns.RedstoneDustedGlass.name=Redstone Dusted Glass
+item.rayguns.GlowstoneDustedGlass.name=Glowstone Dusted Glass
+item.rayguns.RedstoneDopedGlass.name=Redstone Doped Glass
+item.rayguns.GlowstoneDopedGlass.name=Glowstone Doped Glass
+item.rayguns.Tier1Diode.name=Basic Diode
+item.rayguns.Tier2Diode.name=Advanced Diode
+item.rayguns.Tier3Diode.name=Ultimate Diode
+item.rayguns.Tier1HeatSink.name=Basic Heat Sink
+item.rayguns.Tier2HeatSink.name=Advanced Heat Sink
+item.rayguns.Tier3HeatSink.name=Ultimate Heat Sink
+item.rayguns.Tier1ChamberCasing.name=Basic Chamber Casing
+item.rayguns.Tier2ChamberCasing.name=Advanced Chamber Casing
+item.rayguns.Tier3ChamberCasing.name=Ultimate Chamber Casing
+item.rayguns.RadiantDust.name=Radiant Dust
+item.rayguns.RadiantDustedGlass.name=Radiant Dusted Glass
+item.rayguns.RadiantDopedGlass.name=Radiant Doped Glass
+item.rayguns.Shutter.name=Shutter
+item.rayguns.Tier1GainMedium.name=Basic Gain Medium
+item.rayguns.Tier2GainMedium.name=Advanced Gain Medium
+item.rayguns.Tier3GainMedium.name=Ultimate Gain Medium
+item.rayguns.LeadDustedGlass.name=Lead Dusted Glass
 
 tile.rayguns.GunBench.name=Raygun Workbench
 tile.rayguns.LensGrinder.name=Lens Grinder
 
 rayguns.container.grinder=Lens Grinder
 rayguns.container.gunbench=Raygun Workbench
-rayguns.container.gunbench.body=Body:
+rayguns.container.gunbench.frame=Frame:
 rayguns.container.gunbench.lens=Lens:
 rayguns.container.gunbench.acc=Accessory:
 rayguns.container.gunbench.chamber=Chamber:
 rayguns.container.gunbench.battery=Battery:
+rayguns.container.gunbench.barrel=Barrel:
 rayguns.moreinfo=Hold SHIFT for more information
 rayguns.infinityCharge=Infinity/Infinity
 
 itemGroup.tabRayguns=Modular Rayguns
 
 # See RaygunNbtUtils.getRaygunName for more details.
-rayguns.RaygunNamePattern=@accessory@ @chamber@ @lens@
+rayguns.RaygunNamePattern=%5$s %6$s %1$s %4$s
 
-rayguns.PreciseBeamLens.segment=Precise Beam
-rayguns.PreciseLens.segment=Precise Blaster
-rayguns.WideLens.segment=Scatter Blaster
-rayguns.ChargeLens.segment=Charging Blaster
-rayguns.ChargeBeamLens.segment=Charging Beam
+rayguns.PreciseLens.segment=Precise
+rayguns.WideLens.segment=Scattering
 
 rayguns.ExplosiveChamber.segment=Explosive
 rayguns.FortifiedSunlightChamber.segment=Fortified Sunlight
@@ -96,6 +112,42 @@ rayguns.Tier2CuttingChamber.segment=Mk. 2 Cutting
 rayguns.Tier3CuttingChamber.segment=Mk. 3 Cutting
 rayguns.MatterTransporterChamber.segment=Matter Transporter
 
-rayguns.ExtendedBattery.segment=Extended
+rayguns.HighEfficiencyWiring.segment=Efficient
 rayguns.RefireCapacitor.segment=Rapid
 rayguns.SolarPanel.segment=Solar
+rayguns.ChargeCapacitor.segment=Charging
+
+rayguns.BeamBarrel.segment=Beam
+rayguns.BlasterBarrel.segment=Blaster
+
+death.attack.deathRay.1=%1$s was kicked off this mortal coil by %2$s's death ray
+death.attack.deathRay.2=%1$s's soul was torn asunder by %2$s's death ray.
+death.attack.deathRay.3=%1$s discovered that there is no justice, there is just %2$s's death ray.
+
+death.attack.fortifiedSunlight.1=%1$s died like an ant under %2$s's magnifying glass.
+death.attack.fortifiedSunlight.2=%1$s's day was fatally brightened by %2$s's sunlight ray.
+death.attack.fortifiedSunlight.3=Rays cast from %2$s's sunlight gun hit %1$s at 3.00x10^8m/s.
+
+death.attack.frostRay.1=%1$s should've listened when %2$s said 'Freeze!'
+death.attack.frostRay.2=%1$s was terminally chilled out by %2$s's frost ray.
+death.attack.frostRay.3=%1$s wasn't frosty enough to avoid %2$s's ice ray.
+
+death.attack.heatRay.1=%2$s's heat ray burned %1$s like the sun in the middle of July.
+death.attack.heatRay.2=%1$s was incinerated by %2$s's heat ray. Toasty!
+death.attack.heatRay.3=%1$s was killed by %2$s's Hadoken-wait, no, it's just a heat ray.
+
+death.attack.impulse.1=%1$s received terminal whiplash from %2$s's impulse ray.
+death.attack.impulse.2=%1$s was accelerated to terminal velocity by %2$s's impulse ray.
+death.attack.impulse.3=%2$s yanked on %1$s's chain too hard with an impulse ray.
+
+death.attack.laser.1=%1$s was fatally dazzled by %2$s's laser.
+death.attack.laser.2=%1$s was illuminated by %2$s's flashli - er, laser.
+death.attack.laser.3=%1$s was blinded to death by %2$s's laser, somehow.
+
+death.attack.lifeForce.1=%2$s killed %1$s with kindness - and a life force ray.
+death.attack.lifeForce.2=Saint %2$s raised the Life Force Ray up on high, and shot %1$s with it.
+death.attack.lifeForce.3=The bright light of %2$s's life force ray shone down on %1$s's bloody impurity.
+
+death.attack.lightningRay.1=%1$s rode %2$s's lightning.
+death.attack.lightningRay.2=%1$s was shocked by how accurate %2$s can be with a lightning ray.
+death.attack.lightningRay.3=%1$s is a great conductor - for %2$s's lightning.

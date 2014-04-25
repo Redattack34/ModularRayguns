@@ -28,15 +28,15 @@
 package com.castlebravostudios.rayguns.entities.effects
 
 import com.castlebravostudios.rayguns.entities.BoltRenderer
-
 import com.castlebravostudios.rayguns.entities.Shootable
 import com.castlebravostudios.rayguns.items.misc.RayGun
+import com.castlebravostudios.rayguns.mod.ModularRayguns
+import com.castlebravostudios.rayguns.utils.Extensions.ItemExtensions
 
 import net.minecraft.block.Block
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.item.ItemStack
 import net.minecraft.util.EntityDamageSource
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.common.IPlantable
@@ -44,6 +44,7 @@ import net.minecraftforge.common.IPlantable
 object DeathRayEffect extends BaseEffect {
 
   val effectKey = "DeathRay"
+  val damageSourceKey = "deathRay"
 
   def hitEntity( shootable : Shootable, hit : Entity ) : Boolean = {
     if ( hit.isInstanceOf[EntityLivingBase] ) {
@@ -53,8 +54,7 @@ object DeathRayEffect extends BaseEffect {
         living.heal(4)
       }
       else {
-        hit.attackEntityFrom(
-          new EntityDamageSource("deathRay", shootable.shooter), 10f)
+        hit.attackEntityFrom( getDamageSource( shootable ), 10f)
       }
     }
 
@@ -74,21 +74,21 @@ object DeathRayEffect extends BaseEffect {
 
   private def canEdit( shootable : Shootable, x : Int, y : Int, z : Int, side : Int ) : Boolean = {
     shootable.shooter match {
-      case player : EntityPlayer => player.canPlayerEdit(x, y, z, side, new ItemStack( RayGun ) )
+      case player : EntityPlayer => player.canPlayerEdit(x, y, z, side, RayGun.asStack )
       case _ => false
     }
   }
 
   private val blockMatch : PartialFunction[Block, Int] = {
     case i : IPlantable => 0
-    case b if b == Block.grass => Block.dirt.blockID
-    case b if b == Block.mycelium => Block.dirt.blockID
-    case b if b == Block.leaves => 0
-    case b if b == Block.vine => 0
+    case Block.grass => Block.dirt.blockID
+    case Block.mycelium => Block.dirt.blockID
+    case Block.leaves => 0
+    case Block.vine => 0
   }
 
-  val boltTexture = new ResourceLocation( "rayguns", "textures/bolts/death_ray_bolt.png" )
-  val beamTexture = new ResourceLocation( "rayguns", "textures/beams/death_ray_beam.png" )
-  val chargeTexture = new ResourceLocation( "rayguns", "textures/effects/charge/death_ray_charge.png" )
-  override def lineTexture = BoltRenderer.lineWhiteTexture
+  val boltTexture = ModularRayguns.texture( "textures/bolts/death_ray_bolt.png" )
+  val beamTexture = ModularRayguns.texture( "textures/beams/death_ray_beam.png" )
+  val chargeTexture = ModularRayguns.texture( "textures/effects/charge/death_ray_charge.png" )
+  override def lineTexture : ResourceLocation = BoltRenderer.lineWhiteTexture
 }

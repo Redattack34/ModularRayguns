@@ -27,33 +27,40 @@
 
 package com.castlebravostudios.rayguns.utils
 
-import com.castlebravostudios.rayguns.api.items._
 import com.castlebravostudios.rayguns.api.ModuleRegistry
-import com.castlebravostudios.rayguns.api.BeamRegistry
-import com.castlebravostudios.rayguns.items.lenses.ChargeLens
-import com.castlebravostudios.rayguns.items.lenses.ChargeBeamLens
+import com.castlebravostudios.rayguns.api.ShotRegistry
+import com.castlebravostudios.rayguns.api.items.RaygunLens
+import com.castlebravostudios.rayguns.api.items.RaygunModule
+import com.castlebravostudios.rayguns.api.items.RaygunFrame
+import com.castlebravostudios.rayguns.api.items.RaygunChamber
+import com.castlebravostudios.rayguns.api.items.RaygunAccessory
+import com.castlebravostudios.rayguns.api.items.RaygunBattery
+import com.castlebravostudios.rayguns.items.accessories.ChargeCapacitor
+import com.castlebravostudios.rayguns.api.items.RaygunBarrel
 
-case class GunComponents(body : RaygunBody, chamber : RaygunChamber, battery : RaygunBattery,
-    lens : Option[RaygunLens], accessory : Option[RaygunAccessory] ) {
+case class GunComponents(frame : RaygunFrame, chamber : RaygunChamber, battery : RaygunBattery,
+    barrel : RaygunBarrel, lens : Option[RaygunLens], accessory : Option[RaygunAccessory] ) {
 
-  def components : Seq[RaygunModule] = Seq( body, chamber, battery ) ++ lens ++ accessory
+  def components : Seq[RaygunModule] = Seq( frame, chamber, battery, barrel ) ++ lens ++ accessory
 
-  def getFireEvent( charge : Double ) : FireEvent = lens match {
-    case Some( ChargeLens ) => new ChargeFireEvent( this, charge )
-    case Some( ChargeBeamLens ) => new ChargeFireEvent( this, charge )
-    case _ => new DefaultFireEvent( this )
+  //TODO: Ugly special-case hack. Find a better way to do this.
+  def getFireEvent( charge : Double ) : FireEvent = accessory match {
+    case Some( ChargeCapacitor ) => ChargeFireEvent( this, charge )
+    case _ => DefaultFireEvent( this )
   }
 
   def isValid : Boolean = components.forall( c => c != null && ModuleRegistry.isRegistered(c) )
 }
+
 case class OptionalGunComponents(
-  body : Option[RaygunBody], chamber : Option[RaygunChamber], battery : Option[RaygunBattery],
-  lens : Option[RaygunLens], acc : Option[RaygunAccessory] ) {
+  frame : Option[RaygunFrame], chamber : Option[RaygunChamber], battery : Option[RaygunBattery],
+  barrel : Option[RaygunBarrel], lens : Option[RaygunLens], acc : Option[RaygunAccessory] ) {
 
-  def components : Seq[RaygunModule] = body.toSeq ++ chamber ++ battery ++ lens ++ acc
-
-  def this( comp : GunComponents ) = this( Some( comp.body ),
-      Some( comp.chamber ), Some( comp.battery ), comp.lens, comp.accessory );
+  def components : Seq[RaygunModule] = frame.toSeq ++ chamber ++ battery ++ barrel ++ lens ++ acc
 }
-
+object OptionalGunComponents {
+  def apply( comp : GunComponents ) : OptionalGunComponents =
+    new OptionalGunComponents( Some( comp.frame ), Some( comp.chamber ),
+        Some( comp.battery ), Some( comp.barrel ), comp.lens, comp.accessory );
+}
 

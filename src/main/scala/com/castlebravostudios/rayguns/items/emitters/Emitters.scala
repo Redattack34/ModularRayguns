@@ -104,11 +104,6 @@ object Emitters {
     .setTextureName("rayguns:emitter_cutting_t3")
     .setCreativeTab( ModularRayguns.raygunsTab )
 
-  val shrinkRayEmitter = new Item( Config.emitterShrinkRay )
-    .setUnlocalizedName("rayguns.ShrinkRayEmitter")
-    .setTextureName("rayguns:emitter_shrink_ray")
-    .setCreativeTab( ModularRayguns.raygunsTab )
-
   val matterTransporterEmitter = new Item( Config.emitterMatterTransporter )
     .setUnlocalizedName("rayguns.MatterTransporterEmitter")
     .setTextureName("rayguns:emitter_matter_transporter")

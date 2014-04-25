@@ -31,6 +31,7 @@ import com.castlebravostudios.rayguns.api.items.ItemModule
 import com.castlebravostudios.rayguns.entities.effects.LaserEffect
 import com.castlebravostudios.rayguns.mod.ModularRayguns
 import com.castlebravostudios.rayguns.entities.effects.MatterTransporterEffect
+import com.castlebravostudios.rayguns.items.misc.PrefireEvent
 
 object MatterTransporterChamber extends BaseChamber {
 
@@ -39,7 +40,7 @@ object MatterTransporterChamber extends BaseChamber {
   val shotEffect = MatterTransporterEffect
   val nameSegmentKey = "rayguns.MatterTransporterChamber.segment"
 
-  def createItem( id : Int ) = new ItemModule( id, this )
+  def createItem( id : Int ) : ItemModule = new ItemModule( id, this )
     .setUnlocalizedName("rayguns.MatterTransporterChamber")
     .setTextureName("rayguns:chamber_matter_transporter")
     .setCreativeTab( ModularRayguns.raygunsTab )
@@ -47,7 +48,11 @@ object MatterTransporterChamber extends BaseChamber {
 
   def registerShotHandlers() : Unit = {
     registerSingleShotHandlers()
+    registerPreciseShotHandler()
   }
 
-
+  override def handlePrefireEvent( event : PrefireEvent ) : Unit = {
+    val id = MatterTransporterEffect.getPlacedBlockId( event.player )
+    event.canFire &&= id.isDefined
+  }
 }

@@ -35,7 +35,7 @@ import net.minecraft.item.ItemStack
 
 class GuiBlockSlot( inv: BaseInventoryTileEntity, slot : Int, x : Int, y : Int ) extends Slot( inv, slot, x, y ) {
   override def isItemValid( stack : ItemStack ) : Boolean = inv.isItemValidForSlot( slot, stack )
-  override def onSlotChanged() = {
+  override def onSlotChanged() : Unit = {
     super.onSlotChanged
     inv.onSlotChanged( slot )
   }
@@ -62,7 +62,8 @@ abstract class BaseContainer( inventoryPlayer : InventoryPlayer, entity : BaseIn
     }
   }
 
-  override def canInteractWith( player : EntityPlayer ) = entity.isUseableByPlayer( player )
+  override def canInteractWith( player : EntityPlayer ) : Boolean =
+    entity.isUseableByPlayer( player )
 
   override def transferStackInSlot( player : EntityPlayer, slot : Int ) : ItemStack = {
     val slotObject : Slot = inventorySlots.get( slot ).asInstanceOf[Slot]
@@ -74,8 +75,10 @@ abstract class BaseContainer( inventoryPlayer : InventoryPlayer, entity : BaseIn
     val stackInSlot = slotObject.getStack
     val copyStack = stackInSlot.copy
 
-    def shouldMergeToMainInventory = slot <= lastCustomIndex || slot > lastCustomIndex + 27
-    def doMergeToMainInventory( stack : ItemStack ) =
+    def shouldMergeToMainInventory : Boolean =
+      slot <= lastCustomIndex || slot > lastCustomIndex + 27
+
+    def doMergeToMainInventory( stack : ItemStack ) : Boolean =
       mergeItemStack( stack, lastCustomIndex + 1, lastCustomIndex + 27 + 1, true )
 
     val changed =

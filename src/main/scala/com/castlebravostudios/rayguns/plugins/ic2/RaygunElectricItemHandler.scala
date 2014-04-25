@@ -71,15 +71,15 @@ object RaygunElectricItemHandler extends IElectricItemManager {
     (energyExtracted * ic2PowerMultiplier).toInt
   }
 
-  def getCharge( item : ItemStack ) =
+  def getCharge( item : ItemStack ) : Int =
     ( chargable( item ).getChargeCapacity( item ) * ic2PowerMultiplier ).toInt
-  def canUse( item : ItemStack, amount : Int ) =
+  def canUse( item : ItemStack, amount : Int ) : Boolean =
     ElectricItem.manager.canUse(item, amount)
-  def use( item : ItemStack, amount : Int, entity : EntityLivingBase ) =
+  def use( item : ItemStack, amount : Int, entity : EntityLivingBase ) : Boolean =
     ElectricItem.manager.use( item, amount, entity )
-  def chargeFromArmor( item : ItemStack, entity : EntityLivingBase ) =
+  def chargeFromArmor( item : ItemStack, entity : EntityLivingBase ) : Unit =
     ElectricItem.manager.chargeFromArmor( item, entity )
-  def getToolTip( item : ItemStack ) = null
+  def getToolTip( item : ItemStack ) : String = null
 
   private def chargable( item : ItemStack ) = item.getItem match {
     case chargable : ChargableItem => chargable

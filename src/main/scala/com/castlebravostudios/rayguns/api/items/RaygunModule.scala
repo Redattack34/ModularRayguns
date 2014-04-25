@@ -32,6 +32,13 @@ import com.castlebravostudios.rayguns.items.Items
 import com.castlebravostudios.rayguns.api.ModuleRegistry
 import net.minecraft.creativetab.CreativeTabs
 import com.castlebravostudios.rayguns.mod.ModularRayguns
+import net.minecraft.item.ItemStack
+import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.world.World
+import com.castlebravostudios.rayguns.items.misc.PrefireEvent
+import com.castlebravostudios.rayguns.items.misc.GunTickEvent
+import com.castlebravostudios.rayguns.items.misc.PostfireEvent
+import com.castlebravostudios.rayguns.items.misc.GetFireInformationEvent
 
 trait RaygunModule {
 
@@ -60,16 +67,41 @@ trait RaygunModule {
   def nameSegmentKey : String
 
   /**
-   * Get the item associated with this module, or null if registerItem has not
+   * Get the item associated with this module, or None if registerItem has not
    * been called.
    */
-  def item : ItemModule
+  def item : Option[ItemModule]
 
   /**
    * Create the ItemModule associated with this module and register it with the
    * game under the given ID. If ID is less than or equal to zero, this method
    * should do nothing - this module has been disabled in the configuration file.
-   * After this method is called, item should not return null.
+   * After this method is called, item should not return None.
    */
   def registerItem( id : Int ) : Unit
+
+  /**
+   * Event fired by a raygun to all modules to collect information before preparing
+   * to fire. This is used for calculating the power cost, among other things.
+   */
+  def handleGetFireInformationEvent( event : GetFireInformationEvent ) : Unit = ()
+
+  /**
+   * Event fired by a raygun to all modules it contains just before firing. This
+   * is used for checking power and rejecting the attempt to fire, among other
+   * things.
+   */
+  def handlePrefireEvent( event : PrefireEvent ) : Unit = ()
+
+  /**
+   * Event fired by a raygun to all modules it contains just after firing. This
+   * is used for subtracting power and other things.
+   */
+  def handlePostfireEvent( event : PostfireEvent ) : Unit = ()
+
+  /**
+   * Event fired by a raygun to all modules it contains every server tick while
+   * it's in the player's inventory.
+   */
+  def handleTickEvent( event : GunTickEvent ) : Unit = ()
 }

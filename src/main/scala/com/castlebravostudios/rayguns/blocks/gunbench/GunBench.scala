@@ -27,23 +27,12 @@
 
 package com.castlebravostudios.rayguns.blocks.gunbench
 
-import java.util.Random
-import com.castlebravostudios.rayguns.blocks._
-import net.minecraft.block.BlockContainer
-import net.minecraft.block.material.Material
-import net.minecraft.creativetab.CreativeTabs
-import net.minecraft.entity.item.EntityItem
+import com.castlebravostudios.rayguns.blocks.BaseContainerBlock
+import com.castlebravostudios.rayguns.mod.ModularRayguns
+
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.inventory.IInventory
-import net.minecraft.item.ItemStack
-import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.world.World
-import com.castlebravostudios.rayguns.mod.ModularRayguns
-import com.castlebravostudios.rayguns.blocks.BaseContainerBlock
-import net.minecraft.client.renderer.texture.IconRegister
-import net.minecraft.util.Icon
-import net.minecraft.block.Block
 
 class GunBench(id : Int) extends BaseContainerBlock(id) {
 

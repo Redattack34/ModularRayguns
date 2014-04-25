@@ -27,33 +27,33 @@
 
 package com.castlebravostudios.rayguns.entities.effects
 
-import com.castlebravostudios.rayguns.entities.Shootable
-import com.castlebravostudios.rayguns.entities.BaseBoltEntity
-import net.minecraft.entity.Entity
-import net.minecraft.util.EntityDamageSource
-import net.minecraft.world.World
 import com.castlebravostudios.rayguns.entities.BaseBeamEntity
-import com.castlebravostudios.rayguns.utils.Vector3
-import com.castlebravostudios.rayguns.utils.MidpointDisplacement
-import scala.collection.SortedSet
+import com.castlebravostudios.rayguns.entities.BaseBoltEntity
+import com.castlebravostudios.rayguns.entities.Shootable
 import com.castlebravostudios.rayguns.mod.Config
-import com.castlebravostudios.rayguns.utils.Extensions._
-import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.block.Block
-import net.minecraft.entity.monster.EntityCreeper
 import com.castlebravostudios.rayguns.utils.BlockPos
+import com.castlebravostudios.rayguns.utils.Extensions.WorldExtension
+import com.castlebravostudios.rayguns.utils.MidpointDisplacement
+import com.castlebravostudios.rayguns.utils.Vector3
+import net.minecraft.entity.Entity
+import net.minecraft.entity.monster.EntityCreeper
+import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.util.EntityDamageSource
 import net.minecraft.util.ResourceLocation
+import net.minecraft.world.World
+import com.castlebravostudios.rayguns.mod.ModularRayguns
+import com.google.common.io.ByteArrayDataInput
 
 object LightningEffect extends BaseEffect {
 
   val effectKey = "Lightning"
+  val damageSourceKey = "lightningRay"
 
   def hitEntity( shootable : Shootable, entity : Entity ) : Boolean = {
     if ( entity.isInstanceOf[EntityCreeper] ) return true
 
-    entity.attackEntityFrom(
-      new EntityDamageSource("lightningRay", shootable.shooter), shootable.charge.toFloat * 4.0f )
-      true
+    entity.attackEntityFrom( getDamageSource( shootable ), shootable.charge.toFloat * 4.0f )
+    true
   }
 
   def hitBlock( shootable : Shootable, hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Boolean = {
@@ -87,9 +87,9 @@ object LightningEffect extends BaseEffect {
     bolt
   }
 
-  val beamTexture = new ResourceLocation( "rayguns", "textures/beams/lightning_beam.png" )
+  val beamTexture = ModularRayguns.texture( "textures/beams/lightning_beam.png" )
   val boltTexture = beamTexture
-  val chargeTexture = new ResourceLocation( "rayguns", "textures/effects/charge/lightning_charge.png" )
+  val chargeTexture = ModularRayguns.texture( "textures/effects/charge/lightning_charge.png" )
 }
 
 trait LightningShootable {
@@ -110,5 +110,12 @@ class LightningBoltEntity(world : World) extends BaseBoltEntity(world) with Ligh
   }
 }
 class LightningBeamEntity(world : World) extends BaseBeamEntity(world) with LightningShootable {
-  override def depletionRate = 0.2d
+  override val depletionRate = 0.2d
+
+  override def readSpawnData( in : ByteArrayDataInput ) : Unit = {
+    super.readSpawnData( in )
+
+    this.pointsList = MidpointDisplacement.createPositionList(
+        Vector3( posX, posY, posZ ), end )
+  }
 }

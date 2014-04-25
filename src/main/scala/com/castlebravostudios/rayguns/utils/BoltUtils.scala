@@ -27,69 +27,40 @@
 
 package com.castlebravostudios.rayguns.utils
 
-import net.minecraft.entity.EntityLivingBase
-import net.minecraft.world.World
-import net.minecraft.entity.Entity
-import net.minecraft.util.MathHelper
 import java.util.Random
-import net.minecraft.entity.player.EntityPlayer
+
 import com.castlebravostudios.rayguns.entities.BaseBoltEntity
-import com.castlebravostudios.rayguns.utils.Extensions._
-import net.minecraft.util.Vec3
+import com.castlebravostudios.rayguns.utils.Extensions.WorldExtension
+
+import net.minecraft.entity.EntityLivingBase
+import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.util.MathHelper
+import net.minecraft.world.World
 
 object BoltUtils {
 
   private final val rand = new Random();
 
-  def spawnNormal( world : World, bolt : BaseBoltEntity, shooter : EntityLivingBase ) : Unit = {
+  def spawn( world : World, player : EntityLivingBase, bolt : BaseBoltEntity ) : Unit = {
     if ( world.isOnClient ) return
-    initBolt(bolt, shooter)
-    setMotion(bolt, aimVector( shooter ) )
+    initBolt(bolt, player)
+    setMotion(bolt, aimVector( player, bolt.aimVector ) )
     world.spawnEntityInWorld(bolt)
   }
 
-  def spawnPrecise( world : World, bolt : BaseBoltEntity, shooter : EntityLivingBase ) : Unit = {
-    if ( world.isOnClient ) return
-    initBolt(bolt, shooter)
-    bolt.depletionRate = 0.025d
-    setMotion(bolt, aimVector( shooter ) )
-    world.spawnEntityInWorld(bolt)
+  private def aimVector( shooter: EntityLivingBase, lookVec : Vector3 ) : Vector3 = {
+    if ( shooter.isSneaking && !isCreativeFlying( shooter ) ) lookVec.copy( y = 0 ) else lookVec
   }
-
-  def spawnScatter( world : World, shooter : EntityLivingBase, shots : Int, scatterFactor: Float )( bolt : () => BaseBoltEntity ) : Unit = {
-    if ( world.isOnClient ) return
-    val lookVec = aimVector( shooter )
-    for ( _ <- 0 until shots ) {
-      val shot = bolt()
-      val shotVec = scatter( lookVec, scatterFactor )
-      initBolt( shot, shooter )
-      setMotion( shot, shotVec )
-      world.spawnEntityInWorld( shot )
-    }
-  }
-
-  private def aimVector( shooter : EntityLivingBase ) : Vector3 = {
-    val look = new Vector3( shooter.getLookVec )
-
-    if ( shooter.isSneaking && !isCreativeFlying( shooter ) ) look.copy( y = 0 ) else look
-  }
-
-  private def scatter( vec : Vector3, factor : Float ) : Vector3 =
-    vec.modify( _ + (getClampedGaussian() * factor) )
-      .normalized
-
-  private def getClampedGaussian() : Float =
-    MathHelper.clamp_float(-2.0f, rand.nextGaussian().floatValue, 2.0f)
 
   private def toRadians(yaw: Float): Float = {
     yaw / 180.0F * Math.PI.floatValue
   }
 
-  private def initBolt(bolt: BaseBoltEntity, shooter: net.minecraft.entity.EntityLivingBase): Unit = {
-      bolt.shooter = shooter;
-      bolt.setSize(0.25F, 0.25F);
-      initPositionAngle(bolt, shooter)
-      offsetInFrontOfShooter(bolt)
+  private def initBolt(bolt: BaseBoltEntity, shooter: EntityLivingBase): Unit = {
+    bolt.shooter = shooter;
+    bolt.setSize(0.25F, 0.25F);
+    initPositionAngle(bolt, shooter)
+    offsetInFrontOfShooter(bolt)
   }
 
   /**

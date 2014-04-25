@@ -28,35 +28,41 @@
 package com.castlebravostudios.rayguns.utils
 
 import com.castlebravostudios.rayguns.api.items.RaygunLens
-import com.castlebravostudios.rayguns.api.items.RaygunBody
+import com.castlebravostudios.rayguns.api.items.RaygunFrame
 import com.castlebravostudios.rayguns.api.items.RaygunChamber
-import com.castlebravostudios.rayguns.api.BeamRegistry
+import com.castlebravostudios.rayguns.api.ShotRegistry
 import com.castlebravostudios.rayguns.api.items.RaygunAccessory
 import com.castlebravostudios.rayguns.api.items.RaygunModule
 import com.castlebravostudios.rayguns.api.items.RaygunBattery
+import net.minecraft.util.Vec3
+import com.castlebravostudios.rayguns.api.items.RaygunBarrel
 
 trait FireEvent extends {
   def components : Seq[RaygunModule]
-
-  def powerMultiplier : Double = components.map(_.powerModifier).product
-
-  def isValid : Boolean = BeamRegistry.isValid(this)
+  def isValid : Boolean = ShotRegistry.isValid(this)
 }
-case class DefaultFireEvent(body : RaygunBody, chamber : RaygunChamber, battery : RaygunBattery,
-    lens : Option[RaygunLens], accessory : Option[RaygunAccessory] ) extends FireEvent {
 
-  def components : Seq[RaygunModule] = Seq( body, chamber, battery ) ++ lens ++ accessory
+case class DefaultFireEvent( frame : RaygunFrame, chamber : RaygunChamber, battery : RaygunBattery,
+    barrel : RaygunBarrel, lens : Option[RaygunLens], accessory : Option[RaygunAccessory] ) extends FireEvent {
 
-  def this( comp : GunComponents ) = this( comp.body,
-    comp.chamber, comp.battery, comp.lens, comp.accessory );
+  def components : Seq[RaygunModule] = Seq( frame, chamber, battery, barrel ) ++ lens ++ accessory
 }
-case class ChargeFireEvent( body : RaygunBody, chamber : RaygunChamber, battery : RaygunBattery,
-    lens : Option[RaygunLens], accessory : Option[RaygunAccessory], charge : Double ) extends FireEvent {
+object DefaultFireEvent {
+  def apply( comp : GunComponents ) : DefaultFireEvent =
+    new DefaultFireEvent( comp.frame, comp.chamber, comp.battery, comp.barrel, comp.lens, comp.accessory )
+}
 
-  def this( comp : GunComponents, charge : Double ) = this( comp.body,
-    comp.chamber, comp.battery, comp.lens, comp.accessory, charge );
+case class ChargeFireEvent( frame : RaygunFrame, chamber : RaygunChamber, battery : RaygunBattery,
+    barrel : RaygunBarrel, lens : Option[RaygunLens], accessory : Option[RaygunAccessory], charge : Double ) extends FireEvent {
 
-  override def powerMultiplier : Double = super.powerMultiplier * Math.pow( charge, 0.444444444d );
+  def components : Seq[RaygunModule] = Seq( frame, chamber, battery, barrel ) ++ lens ++ accessory
 
-  def components : Seq[RaygunModule] = Seq( body, chamber, battery ) ++ lens ++ accessory
+  def toDefault : DefaultFireEvent =
+    new DefaultFireEvent( frame, chamber, battery, barrel, lens, accessory )
+}
+object ChargeFireEvent {
+
+  def apply( comp : GunComponents, charge : Double ) : ChargeFireEvent =
+    new ChargeFireEvent( comp.frame, comp.chamber, comp.battery, comp.barrel,
+        comp.lens, comp.accessory, charge );
 }
