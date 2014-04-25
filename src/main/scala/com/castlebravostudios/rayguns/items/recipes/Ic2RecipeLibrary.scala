@@ -35,7 +35,7 @@ import com.castlebravostudios.rayguns.items.Blocks
 import com.castlebravostudios.rayguns.items.accessories._
 import com.castlebravostudios.rayguns.items.barrels._
 import com.castlebravostudios.rayguns.items.batteries._
-import com.castlebravostudios.rayguns.items.bodies._
+import com.castlebravostudios.rayguns.items.frames._
 import com.castlebravostudios.rayguns.items.chambers._
 import com.castlebravostudios.rayguns.items.emitters.Emitters
 import com.castlebravostudios.rayguns.items.lenses._
@@ -48,6 +48,7 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import cpw.mods.fml.common.registry.GameRegistry
 import com.castlebravostudios.rayguns.utils.Logging
+import com.castlebravostudios.rayguns.items.frames.MantisFrame
 
 //scalastyle:on
 
@@ -71,7 +72,7 @@ object Ic2RecipeLibrary extends RecipeLibrary with Logging {
   def registerRecipes() : Unit = {
     registerAccessories()
     registerBatteries()
-    registerBodies()
+    registerFrames()
     registerChambers()
     registerEmitters()
     registerLenses()
@@ -159,9 +160,9 @@ object Ic2RecipeLibrary extends RecipeLibrary with Logging {
         getIc2Item( "glassFiberCableItem" ), getIc2Item( "energyCrystal" ) )
   }
 
-  private def registerBodies() = {
-    def addBodyRecipe( body : RaygunFrame, core : Any ) : Unit = {
-      addModuleShaped( body,
+  private def registerFrames() = {
+    def addFrameRecipe( frame : RaygunFrame, core : Any ) : Unit = {
+      addModuleShaped( frame,
         "IR ",
         " IR",
         " LI",
@@ -169,8 +170,8 @@ object Ic2RecipeLibrary extends RecipeLibrary with Logging {
         ( 'R' -> core ),
         ( 'I' -> Item.ingotIron ) )
     }
-    addBodyRecipe( FireflyBody, Item.dyePowder.asStack( 1, 1 ) )
-    addBodyRecipe( MantisBody, Item.dyePowder.asStack( 1, 2 ) )
+    addFrameRecipe( FireflyFrame, Item.dyePowder.asStack( 1, 1 ) )
+    addFrameRecipe( MantisFrame, Item.dyePowder.asStack( 1, 2 ) )
   }
 
   private def registerChambers() = {

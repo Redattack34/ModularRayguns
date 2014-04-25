@@ -79,7 +79,7 @@ tile.rayguns.LensGrinder.name=Lens Grinder
 
 rayguns.container.grinder=Lens Grinder
 rayguns.container.gunbench=Raygun Workbench
-rayguns.container.gunbench.body=Body:
+rayguns.container.gunbench.frame=Frame:
 rayguns.container.gunbench.lens=Lens:
 rayguns.container.gunbench.acc=Accessory:
 rayguns.container.gunbench.chamber=Chamber:

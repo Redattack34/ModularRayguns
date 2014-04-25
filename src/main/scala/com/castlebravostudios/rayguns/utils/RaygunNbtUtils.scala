@@ -50,7 +50,7 @@ import com.castlebravostudios.rayguns.utils.Extensions.ItemExtensions
 
 object RaygunNbtUtils {
 
-  val BODY_STR = "body"
+  val FRAME_STR = "frame"
   val BATTERY_STR = "battery"
   val CHAMBER_STR = "chamber"
   val BARREL_STR = "barrel"
@@ -61,18 +61,18 @@ object RaygunNbtUtils {
 
   /**
    * Get the components from a stack that contains a RayGun. Returns Some if
-   * all of the components in the stack are valid components and if the body,
+   * all of the components in the stack are valid components and if the frame,
    * chamber and battery are all set. The returned components may or may not
    * form a valid gun.
    */
   def getComponents( item : ItemStack ) : Option[GunComponents] = {
-    for { body <- getComponent(item, BODY_STR)(ModuleRegistry.getBody)
+    for { frame <- getComponent(item, FRAME_STR)(ModuleRegistry.getFrame)
           chamber <- getComponent(item, CHAMBER_STR)(ModuleRegistry.getChamber)
           battery <- getComponent(item, BATTERY_STR)(ModuleRegistry.getBattery)
           barrel <- getComponent(item, BARREL_STR)(ModuleRegistry.getBarrel)
           lens = getComponent(item, LENS_STR)(ModuleRegistry.getLens)
           accessory = getComponent(item, ACC_STR)(ModuleRegistry.getAccessory) }
-      yield GunComponents( body, chamber, battery, barrel, lens, accessory )
+      yield GunComponents( frame, chamber, battery, barrel, lens, accessory )
     }
 
   def getBattery( item : ItemStack ) : Option[RaygunBattery] =
@@ -121,7 +121,7 @@ object RaygunNbtUtils {
       tag.setString(str, item.moduleKey)
 
     val tag = new NBTTagCompound( MODULES_TAG )
-    components.body.foreach( setTag( tag, BODY_STR )(_) )
+    components.frame.foreach( setTag( tag, FRAME_STR )(_) )
     components.chamber.foreach( setTag( tag, CHAMBER_STR )(_) )
     components.battery.foreach( setTag( tag, BATTERY_STR )(_) )
     components.barrel.foreach( setTag( tag, BARREL_STR )(_) )
@@ -142,7 +142,7 @@ object RaygunNbtUtils {
    *
    * {@literal : %1$s} = chamber<br>
    * {@literal : %2$s} = battery<br>
-   * {@literal : %3$s} = body<p>
+   * {@literal : %3$s} = frame<p>
    * {@literal : %4$s} = barrel<p>
    * {@literal : %5$s} = lens, or the empty string if none<br>
    * {@literal : %6$s} = accessory, or the empty string if none<br>
@@ -156,7 +156,7 @@ object RaygunNbtUtils {
       .format(
         translate( components.chamber ),
         translate( components.battery ),
-        translate( components.body ),
+        translate( components.frame ),
         translate( components.barrel ),
         components.lens.map( translate ).getOrElse(""),
         components.accessory.map( translate ).getOrElse("")
@@ -176,12 +176,12 @@ object RaygunNbtUtils {
    * it is invalid.
    */
   def getAllValidComponents( item : ItemStack ) : OptionalGunComponents = {
-    val body =      getComponent(item, BODY_STR)   (ModuleRegistry.getBody)
+    val frame =     getComponent(item, FRAME_STR)   (ModuleRegistry.getFrame)
     val chamber =   getComponent(item, CHAMBER_STR)(ModuleRegistry.getChamber)
     val battery =   getComponent(item, BATTERY_STR)(ModuleRegistry.getBattery)
     val barrel =    getComponent(item, BARREL_STR) (ModuleRegistry.getBarrel)
     val lens =      getComponent(item, LENS_STR)   (ModuleRegistry.getLens)
     val accessory = getComponent(item, ACC_STR)    (ModuleRegistry.getAccessory)
-    OptionalGunComponents( body, chamber, battery, barrel, lens, accessory )
+    OptionalGunComponents( frame, chamber, battery, barrel, lens, accessory )
   }
 }

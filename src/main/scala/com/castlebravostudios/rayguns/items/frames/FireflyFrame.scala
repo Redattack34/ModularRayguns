@@ -32,7 +32,7 @@ import com.castlebravostudios.rayguns.api.items.ItemModule
 import com.castlebravostudios.rayguns.api.items.RaygunFrame
 import com.castlebravostudios.rayguns.mod.ModularRayguns
 
-object FireflyFrames extends BaseRaygunModule with RaygunFrame {
+object FireflyFrame extends BaseRaygunModule with RaygunFrame {
   val moduleKey = "FireflyFrame"
   val powerModifier = 1.0
   val nameSegmentKey = "rayguns.FireflyFrame.segment"

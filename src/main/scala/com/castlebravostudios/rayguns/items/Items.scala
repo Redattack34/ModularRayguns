@@ -30,7 +30,7 @@ package com.castlebravostudios.rayguns.items
 //scalastyle:off underscore.import
 import com.castlebravostudios.rayguns.items.accessories._
 import com.castlebravostudios.rayguns.items.batteries._
-import com.castlebravostudios.rayguns.items.bodies._
+import com.castlebravostudios.rayguns.items.frames._
 import com.castlebravostudios.rayguns.items.barrels._
 import com.castlebravostudios.rayguns.items.chambers._
 import com.castlebravostudios.rayguns.items.emitters._
@@ -41,6 +41,7 @@ import com.castlebravostudios.rayguns.items.chambers.LaserChamber
 import com.castlebravostudios.rayguns.api.ModuleRegistrationHelper
 import com.castlebravostudios.rayguns.mod.Config
 import ModuleRegistrationHelper.registerModule
+import com.castlebravostudios.rayguns.items.frames.MantisFrame
 
 object Items {
 
@@ -50,7 +51,7 @@ object Items {
     registerBatteries()
     registerLenses()
     registerAccessories()
-    registerBodies()
+    registerFrames()
     registerChambers()
     registerBarrels()
   }
@@ -73,9 +74,9 @@ object Items {
     registerModule( MatterTransporterChamber, Config.chamberMatterTransporter )
   }
 
-  private def registerBodies() : Unit = {
-    registerModule( MantisBody, Config.mantisBody )
-    registerModule( FireflyBody, Config.fireflyBody )
+  private def registerFrames() : Unit = {
+    registerModule( MantisFrame, Config.mantisFrame )
+    registerModule( FireflyFrame, Config.fireflyFrame )
   }
 
   private def registerAccessories() : Unit = {

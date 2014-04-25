@@ -78,8 +78,8 @@ object Config extends Logging {
   var solarPanel : Int = _
   var chargeCapacitor : Int = _
 
-  var mantisBody : Int = _
-  var fireflyBody : Int = _
+  var mantisFrame : Int = _
+  var fireflyFrame : Int = _
 
   var gunBench : Int = _
   var lensGrinder : Int = _
@@ -135,7 +135,7 @@ object Config extends Logging {
     loadBatteryItemIds(config)
     loadLensItemIds(config)
     loadAccessoryItemIds(config)
-    loadGunBodyItemIds(config)
+    loadGunFrameItemIds(config)
     loadEmitterItemIds(config)
     loadChamberItemIds(config)
     loadBarrelItemIds(config)
@@ -204,11 +204,11 @@ object Config extends Logging {
     chargeCapacitor = range.getItem( "chargeCapacitor" )
   }
 
-  private def loadGunBodyItemIds( config : Configuration ) : Unit = {
-    val range = new IdRange( config, 5400, "raygun-bodies", "Raygun Body Modules - Set to 0 to disable" )
+  private def loadGunFrameItemIds( config : Configuration ) : Unit = {
+    val range = new IdRange( config, 5400, "raygun-frames", "Raygun Frame Modules - Set to 0 to disable" )
 
-    mantisBody = range.getItem( "mantisBody" )
-    fireflyBody = range.getItem( "fireflyBody" )
+    mantisFrame = range.getItem( "mantisFrame" )
+    fireflyFrame = range.getItem( "fireflyFrame" )
   }
 
   private def loadEmitterItemIds( config : Configuration ) : Unit = {

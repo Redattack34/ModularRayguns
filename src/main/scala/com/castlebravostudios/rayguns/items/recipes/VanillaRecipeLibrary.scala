@@ -35,7 +35,7 @@ import com.castlebravostudios.rayguns.items.Blocks
 import com.castlebravostudios.rayguns.items.accessories._
 import com.castlebravostudios.rayguns.items.barrels._
 import com.castlebravostudios.rayguns.items.batteries._
-import com.castlebravostudios.rayguns.items.bodies._
+import com.castlebravostudios.rayguns.items.frames._
 import com.castlebravostudios.rayguns.items.chambers._
 import com.castlebravostudios.rayguns.items.emitters.Emitters
 import com.castlebravostudios.rayguns.items.lenses._
@@ -57,7 +57,7 @@ object VanillaRecipeLibrary extends RecipeLibrary {
   def registerRecipes() : Unit = {
     registerAccessories()
     registerBatteries()
-    registerBodies()
+    registerFrames()
     registerChambers()
     registerEmitters()
     registerLenses()
@@ -141,9 +141,9 @@ object VanillaRecipeLibrary extends RecipeLibrary {
     addBatteryRecipe( UltimateBattery, AdvancedBattery )
   }
 
-  private def registerBodies() = {
-    def addBodyRecipe( body : RaygunFrame, core : Any ) : Unit = {
-      addModuleShaped( body,
+  private def registerFrames() = {
+    def addFrameRecipe( frame : RaygunFrame, core : Any ) : Unit = {
+      addModuleShaped( frame,
         "IR ",
         " IR",
         " LI",
@@ -151,8 +151,8 @@ object VanillaRecipeLibrary extends RecipeLibrary {
         ( 'R' -> core ),
         ( 'I' -> Item.ingotIron ) )
     }
-    addBodyRecipe( FireflyBody, Item.dyePowder.asStack( 1, 1 ) )
-    addBodyRecipe( MantisBody, Item.dyePowder.asStack( 1, 2 ) )
+    addFrameRecipe( FireflyFrame, Item.dyePowder.asStack( 1, 1 ) )
+    addFrameRecipe( MantisFrame, Item.dyePowder.asStack( 1, 2 ) )
   }
 
   private def registerChambers() = {
