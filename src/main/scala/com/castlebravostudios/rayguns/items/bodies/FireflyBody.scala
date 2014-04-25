@@ -39,7 +39,7 @@ object FireflyBody extends BaseRaygunModule with RaygunBody {
 
   def createItem( id : Int ) : ItemModule = new ItemModule( id, this )
     .setUnlocalizedName("rayguns.FireflyBody")
-    .setTextureName("rayguns:body_firefly")
+    .setTextureName("rayguns:frame_firefly")
     .setCreativeTab( ModularRayguns.raygunsTab )
     .setMaxStackSize(1)
 }

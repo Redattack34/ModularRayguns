@@ -39,7 +39,7 @@ object MantisBody extends BaseRaygunModule with RaygunBody {
 
   def createItem( id : Int ) : ItemModule = new ItemModule( id, this )
     .setUnlocalizedName("rayguns.MantisBody")
-    .setTextureName("rayguns:body_mantis")
+    .setTextureName("rayguns:frame_mantis")
     .setCreativeTab( ModularRayguns.raygunsTab )
     .setMaxStackSize(1)
 }
