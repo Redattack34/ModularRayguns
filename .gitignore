@@ -23,3 +23,4 @@ options.txt
 src/api
 screenshots
 .scalastyle
+asm
