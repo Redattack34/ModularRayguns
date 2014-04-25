@@ -30,7 +30,7 @@ package com.castlebravostudios.rayguns.blocks.gunbench
 import com.castlebravostudios.rayguns.api.items.ItemModule
 import com.castlebravostudios.rayguns.api.items.RaygunAccessory
 import com.castlebravostudios.rayguns.api.items.RaygunBattery
-import com.castlebravostudios.rayguns.api.items.RaygunBody
+import com.castlebravostudios.rayguns.api.items.RaygunFrame
 import com.castlebravostudios.rayguns.api.items.RaygunChamber
 import com.castlebravostudios.rayguns.api.items.RaygunLens
 import com.castlebravostudios.rayguns.api.items.RaygunModule
@@ -119,7 +119,7 @@ class GunBenchTileEntity extends BaseInventoryTileEntity {
     }
   }
 
-  private def body = getModule(BODY_SLOT).asInstanceOf[RaygunBody]
+  private def body = getModule(BODY_SLOT).asInstanceOf[RaygunFrame]
   private def chamber = getModule(CHAMBER_SLOT).asInstanceOf[RaygunChamber]
   private def battery = getModule(BATTERY_SLOT).asInstanceOf[RaygunBattery]
   private def lens = Option( getModule(LENS_SLOT).asInstanceOf[RaygunLens] )
@@ -153,7 +153,7 @@ class GunBenchTileEntity extends BaseInventoryTileEntity {
   }
 
   private def slotMatchesModule( slot : Int, module : RaygunModule ) : Boolean = slot match {
-    case BODY_SLOT => module.isInstanceOf[RaygunBody]
+    case BODY_SLOT => module.isInstanceOf[RaygunFrame]
     case LENS_SLOT => module.isInstanceOf[RaygunLens]
     case CHAMBER_SLOT => module.isInstanceOf[RaygunChamber]
     case BATTERY_SLOT => module.isInstanceOf[RaygunBattery]

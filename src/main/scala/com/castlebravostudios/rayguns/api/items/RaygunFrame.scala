@@ -25,21 +25,6 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.castlebravostudios.rayguns.items.bodies
+package com.castlebravostudios.rayguns.api.items
 
-import com.castlebravostudios.rayguns.api.items.BaseRaygunModule
-import com.castlebravostudios.rayguns.api.items.ItemModule
-import com.castlebravostudios.rayguns.api.items.RaygunBody
-import com.castlebravostudios.rayguns.mod.ModularRayguns
-
-object MantisBody extends BaseRaygunModule with RaygunBody {
-  val moduleKey = "MantisFrame"
-  val powerModifier = 1.0
-  val nameSegmentKey = "rayguns.MantisFrame.segment"
-
-  def createItem( id : Int ) : ItemModule = new ItemModule( id, this )
-    .setUnlocalizedName("rayguns.MantisFrame")
-    .setTextureName("rayguns:frame_mantis")
-    .setCreativeTab( ModularRayguns.raygunsTab )
-    .setMaxStackSize(1)
-}
+trait RaygunFrame extends RaygunModule

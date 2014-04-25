@@ -142,7 +142,7 @@ object VanillaRecipeLibrary extends RecipeLibrary {
   }
 
   private def registerBodies() = {
-    def addBodyRecipe( body : RaygunBody, core : Any ) : Unit = {
+    def addBodyRecipe( body : RaygunFrame, core : Any ) : Unit = {
       addModuleShaped( body,
         "IR ",
         " IR",

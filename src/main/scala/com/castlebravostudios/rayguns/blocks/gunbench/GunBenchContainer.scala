@@ -30,7 +30,7 @@ package com.castlebravostudios.rayguns.blocks.gunbench
 import com.castlebravostudios.rayguns.api.items.ItemModule
 import com.castlebravostudios.rayguns.api.items.RaygunAccessory
 import com.castlebravostudios.rayguns.api.items.RaygunBattery
-import com.castlebravostudios.rayguns.api.items.RaygunBody
+import com.castlebravostudios.rayguns.api.items.RaygunFrame
 import com.castlebravostudios.rayguns.api.items.RaygunChamber
 import com.castlebravostudios.rayguns.api.items.RaygunLens
 import com.castlebravostudios.rayguns.blocks.BaseContainer
@@ -78,7 +78,7 @@ class GunBenchContainer( inventoryPlayer : InventoryPlayer, entity : GunBenchTil
   }
 
   private def slotForModule( item : ItemModule ) = item.module match {
-    case _: RaygunBody => BODY_SLOT
+    case _: RaygunFrame => BODY_SLOT
     case _: RaygunLens => LENS_SLOT
     case _: RaygunChamber => CHAMBER_SLOT
     case _: RaygunBattery => BATTERY_SLOT

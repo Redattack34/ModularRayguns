@@ -25,21 +25,21 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.castlebravostudios.rayguns.items.bodies
+package com.castlebravostudios.rayguns.items.frames
 
 import com.castlebravostudios.rayguns.api.items.BaseRaygunModule
 import com.castlebravostudios.rayguns.api.items.ItemModule
-import com.castlebravostudios.rayguns.api.items.RaygunBody
+import com.castlebravostudios.rayguns.api.items.RaygunFrame
 import com.castlebravostudios.rayguns.mod.ModularRayguns
 
-object FireflyBody extends BaseRaygunModule with RaygunBody {
-  val moduleKey = "FireflyFrame"
+object MantisFrame extends BaseRaygunModule with RaygunFrame {
+  val moduleKey = "MantisFrame"
   val powerModifier = 1.0
-  val nameSegmentKey = "rayguns.FireflyFrame.segment"
+  val nameSegmentKey = "rayguns.MantisFrame.segment"
 
   def createItem( id : Int ) : ItemModule = new ItemModule( id, this )
-    .setUnlocalizedName("rayguns.FireflyFrame")
-    .setTextureName("rayguns:frame_firefly")
+    .setUnlocalizedName("rayguns.MantisFrame")
+    .setTextureName("rayguns:frame_mantis")
     .setCreativeTab( ModularRayguns.raygunsTab )
     .setMaxStackSize(1)
 }

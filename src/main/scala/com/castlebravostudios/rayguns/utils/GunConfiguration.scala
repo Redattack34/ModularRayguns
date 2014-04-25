@@ -31,14 +31,14 @@ import com.castlebravostudios.rayguns.api.ModuleRegistry
 import com.castlebravostudios.rayguns.api.ShotRegistry
 import com.castlebravostudios.rayguns.api.items.RaygunLens
 import com.castlebravostudios.rayguns.api.items.RaygunModule
-import com.castlebravostudios.rayguns.api.items.RaygunBody
+import com.castlebravostudios.rayguns.api.items.RaygunFrame
 import com.castlebravostudios.rayguns.api.items.RaygunChamber
 import com.castlebravostudios.rayguns.api.items.RaygunAccessory
 import com.castlebravostudios.rayguns.api.items.RaygunBattery
 import com.castlebravostudios.rayguns.items.accessories.ChargeCapacitor
 import com.castlebravostudios.rayguns.api.items.RaygunBarrel
 
-case class GunComponents(body : RaygunBody, chamber : RaygunChamber, battery : RaygunBattery,
+case class GunComponents(body : RaygunFrame, chamber : RaygunChamber, battery : RaygunBattery,
     barrel : RaygunBarrel, lens : Option[RaygunLens], accessory : Option[RaygunAccessory] ) {
 
   def components : Seq[RaygunModule] = Seq( body, chamber, battery, barrel ) ++ lens ++ accessory
@@ -53,7 +53,7 @@ case class GunComponents(body : RaygunBody, chamber : RaygunChamber, battery : R
 }
 
 case class OptionalGunComponents(
-  body : Option[RaygunBody], chamber : Option[RaygunChamber], battery : Option[RaygunBattery],
+  body : Option[RaygunFrame], chamber : Option[RaygunChamber], battery : Option[RaygunBattery],
   barrel : Option[RaygunBarrel], lens : Option[RaygunLens], acc : Option[RaygunAccessory] ) {
 
   def components : Seq[RaygunModule] = body.toSeq ++ chamber ++ battery ++ barrel ++ lens ++ acc

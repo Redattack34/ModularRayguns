@@ -28,7 +28,7 @@
 package com.castlebravostudios.rayguns.utils
 
 import com.castlebravostudios.rayguns.api.items.RaygunLens
-import com.castlebravostudios.rayguns.api.items.RaygunBody
+import com.castlebravostudios.rayguns.api.items.RaygunFrame
 import com.castlebravostudios.rayguns.api.items.RaygunChamber
 import com.castlebravostudios.rayguns.api.ShotRegistry
 import com.castlebravostudios.rayguns.api.items.RaygunAccessory
@@ -42,7 +42,7 @@ trait FireEvent extends {
   def isValid : Boolean = ShotRegistry.isValid(this)
 }
 
-case class DefaultFireEvent( body : RaygunBody, chamber : RaygunChamber, battery : RaygunBattery,
+case class DefaultFireEvent( body : RaygunFrame, chamber : RaygunChamber, battery : RaygunBattery,
     barrel : RaygunBarrel, lens : Option[RaygunLens], accessory : Option[RaygunAccessory] ) extends FireEvent {
 
   def components : Seq[RaygunModule] = Seq( body, chamber, battery, barrel ) ++ lens ++ accessory
@@ -52,7 +52,7 @@ object DefaultFireEvent {
     new DefaultFireEvent( comp.body, comp.chamber, comp.battery, comp.barrel, comp.lens, comp.accessory )
 }
 
-case class ChargeFireEvent( body : RaygunBody, chamber : RaygunChamber, battery : RaygunBattery,
+case class ChargeFireEvent( body : RaygunFrame, chamber : RaygunChamber, battery : RaygunBattery,
     barrel : RaygunBarrel, lens : Option[RaygunLens], accessory : Option[RaygunAccessory], charge : Double ) extends FireEvent {
 
   def components : Seq[RaygunModule] = Seq( body, chamber, battery, barrel ) ++ lens ++ accessory
