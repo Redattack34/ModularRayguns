@@ -27,13 +27,16 @@
 
 package com.castlebravostudios.rayguns.blocks.gunbench
 
+import org.lwjgl.opengl.GL11
+import com.castlebravostudios.rayguns.mod.ModularRayguns
 import net.minecraft.client.gui.inventory.GuiContainer
 import net.minecraft.client.resources.I18n
 import net.minecraft.entity.player.InventoryPlayer
 import net.minecraft.util.ResourceLocation
-import org.lwjgl.opengl.GL11
-import com.castlebravostudios.rayguns.mod.ModularRayguns
+import cpw.mods.fml.relauncher.SideOnly
+import cpw.mods.fml.relauncher.Side
 
+@SideOnly(Side.CLIENT)
 class GunBenchGui( playerInv: InventoryPlayer, tileEntity: GunBenchTileEntity )
   extends GuiContainer( new GunBenchContainer( playerInv, tileEntity ) ) {
 

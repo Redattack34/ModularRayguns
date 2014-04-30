@@ -45,6 +45,12 @@ import com.castlebravostudios.rayguns.render.RaygunRender
 import com.castlebravostudios.rayguns.items.misc.RayGun
 import cpw.mods.fml.common.registry.TickRegistry
 import cpw.mods.fml.relauncher.Side
+import com.castlebravostudios.rayguns.blocks.gunbench.GunBenchGui
+import net.minecraft.entity.player.EntityPlayer
+import com.castlebravostudios.rayguns.blocks.lensgrinder.LensGrinderTileEntity
+import com.castlebravostudios.rayguns.blocks.lensgrinder.LensGrinderGui
+import net.minecraft.world.World
+import com.castlebravostudios.rayguns.blocks.gunbench.GunBenchTileEntity
 
 class ClientProxy extends CommonProxy {
 
@@ -71,6 +77,14 @@ class ClientProxy extends CommonProxy {
     if ( textureManager.getTexture( location ) == null ) {
       val simpleTex = new SimpleTexture( location )
       textureManager.loadTexture( location, simpleTex )
+    }
+  }
+
+  override def getClientGuiElement( id : Int, player : EntityPlayer, world : World, x : Int, y : Int, z : Int ) : Object = {
+    world.getBlockTileEntity(x, y, z) match {
+      case gunBench : GunBenchTileEntity => new GunBenchGui( player.inventory, gunBench )
+      case lensGrinder : LensGrinderTileEntity => new LensGrinderGui( player.inventory, lensGrinder )
+      case _ => null
     }
   }
 }
