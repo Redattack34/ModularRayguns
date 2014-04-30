@@ -32,9 +32,11 @@ import net.minecraft.client.gui.inventory.GuiContainer
 import net.minecraft.client.resources.I18n
 import net.minecraft.entity.player.InventoryPlayer
 import com.castlebravostudios.rayguns.mod.ModularRayguns
+import cpw.mods.fml.relauncher.SideOnly
+import cpw.mods.fml.relauncher.Side
 
 
-
+@SideOnly(Side.CLIENT)
 class LensGrinderGui( playerInv: InventoryPlayer, tileEntity: LensGrinderTileEntity )
   extends GuiContainer( new LensGrinderContainer( playerInv, tileEntity ) ) {
 

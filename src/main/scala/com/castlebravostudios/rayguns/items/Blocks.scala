@@ -33,7 +33,6 @@ import com.castlebravostudios.rayguns.blocks.lensgrinder.LensGrinder
 import com.castlebravostudios.rayguns.blocks.lensgrinder.LensGrinderTileEntity
 import com.castlebravostudios.rayguns.blocks.tech.invred.InvisibleRedstone
 import com.castlebravostudios.rayguns.blocks.tech.invred.InvisibleRedstoneTileEntity
-import com.castlebravostudios.rayguns.gui.ModularRaygunsGuiHandler
 import com.castlebravostudios.rayguns.mod.Config
 import com.castlebravostudios.rayguns.mod.ModularRayguns
 
@@ -60,7 +59,5 @@ object Blocks {
     invisibleRedstone = new InvisibleRedstone( Config.invisibleRedstone )
     GameRegistry.registerBlock( invisibleRedstone, classOf[ItemBlock], "invisibleRedstone" );
     GameRegistry.registerTileEntity(classOf[InvisibleRedstoneTileEntity], "invisibleRedstoneEntity" )
-
-    NetworkRegistry.instance().registerGuiHandler(ModularRayguns, new ModularRaygunsGuiHandler)
   }
 }
