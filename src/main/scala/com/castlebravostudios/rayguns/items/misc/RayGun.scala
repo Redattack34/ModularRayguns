@@ -55,6 +55,7 @@ case class GetFireInformationEvent(
     val world : World,
     val gun : ItemStack,
     val components : GunComponents,
+    val itemInUseTicks : Option[Int],
     var cooldownTicks : Int,
     var powerMult : Double,
     var fireEvent : FireEvent )
@@ -67,7 +68,7 @@ case class PrefireEvent(
     val cooldownTicks : Int,
     val powerMult : Double,
     val fireEvent : FireEvent,
-    val isOnStoppedUsing : Boolean,
+    val itemInUseTicks : Option[Int],
     var canFire : Boolean )
 
 case class PostfireEvent(
@@ -117,8 +118,7 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
       return
     }
 
-    val prefireEvent = prefire( player, world, item, components.get,
-        isOnStoppedUsing = true )
+    val prefireEvent = prefire( player, world, item, components.get, Some( itemUseCount ) )
     if ( !prefireEvent.canFire ) return
 
     val creator = ShotRegistry.getFunction( prefireEvent.fireEvent )
@@ -141,8 +141,7 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
       return RaygunNbtUtils.buildBrokenGun( item )
     }
 
-    val prefireEvent = prefire( player, world, item, components.get,
-        isOnStoppedUsing = false )
+    val prefireEvent = prefire( player, world, item, components.get, None )
     if ( !prefireEvent.canFire ) return item
 
     val creator = ShotRegistry.getFunction( prefireEvent.fireEvent )
@@ -154,15 +153,15 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
   }
 
   private def prefire( player : EntityPlayer, world : World, gun : ItemStack,
-      components : GunComponents, isOnStoppedUsing : Boolean ) : PrefireEvent = {
-    val getInfo = GetFireInformationEvent( player, world, gun, components, 10, 1.0d,
+      components : GunComponents, itemInUseTicks : Option[Int] ) : PrefireEvent = {
+    val getInfo = GetFireInformationEvent( player, world, gun, components, itemInUseTicks, 10, 1.0d,
         DefaultFireEvent( components ) );
 
     components.components.foreach( comp => comp.handleGetFireInformationEvent( getInfo ) );
 
     val prefireEvent = PrefireEvent( player, world, gun, components,
         getInfo.cooldownTicks, getInfo.powerMult, getInfo.fireEvent,
-        isOnStoppedUsing, getCooldownTime( gun ) == 0 )
+        itemInUseTicks, getCooldownTime( gun ) == 0 )
     components.components.foreach( comp => comp.handlePrefireEvent( prefireEvent ) )
     prefireEvent
   }

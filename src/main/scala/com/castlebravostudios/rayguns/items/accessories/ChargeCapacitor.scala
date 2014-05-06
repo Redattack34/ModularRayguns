@@ -51,8 +51,8 @@ object ChargeCapacitor extends BaseRaygunModule with RaygunAccessory {
   override def handleGetFireInformationEvent( event : GetFireInformationEvent ) : Unit = {
     super.handleGetFireInformationEvent(event)
 
-    if ( event.player.getItemInUse() eq event.gun ) {
-      val charge = RayGun.getChargePower( event.gun, event.player.getItemInUseCount() )
+    event.itemInUseTicks.foreach { ticks =>
+      val charge = RayGun.getChargePower( event.gun, ticks )
       event.powerMult *= Math.pow( charge, 0.444444444d )
       event.fireEvent = ChargeFireEvent( event.components, charge )
     }
@@ -62,9 +62,9 @@ object ChargeCapacitor extends BaseRaygunModule with RaygunAccessory {
     super.handlePrefireEvent(event)
 
     //Should only be able to fire after charging then releasing.
-    event.canFire &= event.isOnStoppedUsing
+    event.canFire &= event.itemInUseTicks.isDefined
 
-    if ( event.player.getItemInUse() == null ) {
+    if ( event.itemInUseTicks.isEmpty ) {
       event.player.setItemInUse( event.gun, Integer.MAX_VALUE )
     }
   }
