@@ -28,15 +28,13 @@
 package com.castlebravostudios.rayguns.mod
 
 import java.io.File
-import net.minecraftforge.common.Configuration
-import net.minecraftforge.common.Property
+
 import com.castlebravostudios.rayguns.items.recipes.RecipeLibrary
-import com.castlebravostudios.rayguns.items.recipes.VanillaRecipeLibrary
-import com.castlebravostudios.rayguns.items.recipes.Ic2RecipeLibrary
 import com.castlebravostudios.rayguns.items.recipes.ThermalExpansionRecipeLibrary
 import com.castlebravostudios.rayguns.items.recipes.VanillaRecipeLibrary
 import com.castlebravostudios.rayguns.utils.Logging
-import com.castlebravostudios.rayguns.items.recipes.VanillaRecipeLibrary
+
+import net.minecraftforge.common.Configuration
 
 object Config extends Logging {
 
@@ -274,11 +272,9 @@ object Config extends Logging {
   }
 
   def loadRecipes(config: Configuration) : Unit = {
-    val str = config.get( "config-options", "recipeLibrary", "vanilla", "Current allowed values are: vanilla, ic2, thermalExpansion" ).getString();
+    val str = config.get( "config-options", "recipeLibrary", "vanilla", "Current allowed values are: vanilla, thermalExpansion" ).getString();
     str match {
       case "vanilla" => recipeLibrary = VanillaRecipeLibrary
-      case "ic2" if cpw.mods.fml.common.Loader.isModLoaded("IC2") =>
-        recipeLibrary = Ic2RecipeLibrary
       case "thermalExpansion" if cpw.mods.fml.common.Loader.isModLoaded("ThermalExpansion") =>
         recipeLibrary = ThermalExpansionRecipeLibrary
       case _ => {

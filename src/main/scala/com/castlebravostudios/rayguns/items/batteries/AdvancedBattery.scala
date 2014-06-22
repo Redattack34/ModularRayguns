@@ -39,7 +39,6 @@ object AdvancedBattery extends BaseRaygunModule with RaygunBattery {
   val nameSegmentKey = "rayguns.AdvancedBattery.segment"
   val maxCapacity = 3000
   val maxChargePerTick = 4
-  val ic2Tier = 2
 
   def createItem( id : Int ) : ItemModule = new ItemBattery( id, this )
     .setUnlocalizedName("rayguns.AdvancedBattery")
