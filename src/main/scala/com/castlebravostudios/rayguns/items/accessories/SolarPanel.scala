@@ -44,7 +44,7 @@ object SolarPanel extends BaseRaygunModule with RaygunAccessory {
   val powerModifier = 1.0
   val nameSegmentKey = "rayguns.SolarPanel.segment"
 
-  def createItem( id : Int ) : ItemModule = new ItemModule( id, this )
+   def createItem() : ItemModule = new ItemModule( this ) 
     .setUnlocalizedName("rayguns.SolarPanel")
     .setTextureName("rayguns:solar_panel")
     .setCreativeTab( ModularRayguns.raygunsTab )

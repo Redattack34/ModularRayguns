@@ -37,9 +37,9 @@ import com.google.common.io.ByteArrayDataOutput
 import net.minecraft.entity.Entity
 import net.minecraft.entity.IProjectile
 import net.minecraft.nbt.NBTTagCompound
-import net.minecraft.util.EnumMovingObjectType
 import net.minecraft.util.MathHelper
 import net.minecraft.util.MovingObjectPosition
+import net.minecraft.util.MovingObjectPosition.MovingObjectType
 import net.minecraft.world.World
 
 /**
@@ -111,11 +111,11 @@ class BaseBoltEntity( world : World ) extends BaseShootable( world ) with IProje
   def onImpact( pos : MovingObjectPosition ) : Boolean = {
     effect.createImpactParticles( this, posX, posY, posZ )
     val shouldDie = pos.typeOfHit match {
-      case EnumMovingObjectType.ENTITY => {
+      case MovingObjectType.ENTITY => {
         hitEntities += pos.entityHit
         effect.hitEntity( this, pos.entityHit )
       }
-      case EnumMovingObjectType.TILE => {
+      case MovingObjectType.BLOCK => {
         hitBlocks += BlockPos(pos.blockX, pos.blockY, pos.blockZ)
         effect.hitBlock( this, pos.blockX, pos.blockY, pos.blockZ, pos.sideHit )
       }

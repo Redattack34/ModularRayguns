@@ -35,14 +35,14 @@ abstract class BaseRaygunModule extends RaygunModule {
 
   override def item : Option[ItemModule] = this._item
 
-  def registerItem( id : Int ) : Unit = {
-    this._item = Some( createItem( id ) )
+  def registerItem : Unit = {
+    this._item = Some( createItem() )
   }
 
   /**
    * Create an ItemModule with the given ID and configure it as necessary.
    */
-  protected def createItem( id : Int ) : ItemModule
+  protected def createItem() : ItemModule
 
   override def handleGetFireInformationEvent( event : GetFireInformationEvent ) : Unit = {
     event.powerMult *= this.powerModifier

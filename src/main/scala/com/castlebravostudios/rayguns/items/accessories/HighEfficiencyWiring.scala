@@ -37,7 +37,7 @@ object HighEfficiencyWiring extends BaseRaygunModule with RaygunAccessory {
   val powerModifier = 2.0 / 3.0
   val nameSegmentKey = "rayguns.HighEfficiencyWiring.segment"
 
-  def createItem( id : Int ) : ItemModule = new ItemModule( id, this )
+   def createItem() : ItemModule = new ItemModule( this ) 
     .setUnlocalizedName("rayguns.HighEfficiencyWiring")
     .setTextureName("rayguns:high_efficiency_wiring")
     .setCreativeTab( ModularRayguns.raygunsTab )

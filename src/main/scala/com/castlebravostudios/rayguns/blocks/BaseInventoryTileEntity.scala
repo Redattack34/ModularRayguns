@@ -64,7 +64,7 @@ abstract class BaseInventoryTileEntity extends TileEntity with IInventory {
   override def onInventoryChanged : Unit = Unit
 
   override def isUseableByPlayer( player : EntityPlayer ) : Boolean = {
-    val isThis = worldObj.getBlockTileEntity( xCoord, yCoord, zCoord ) == this
+    val isThis = worldObj.getTileEntity( xCoord, yCoord, zCoord ) == this
     val isCloseEnough =  player.getDistanceSq( xCoord + 0.5, yCoord + 0.5, zCoord + 0.5) < 64
     isThis && isCloseEnough
   }
@@ -75,9 +75,9 @@ abstract class BaseInventoryTileEntity extends TileEntity with IInventory {
   override def readFromNBT( tagCompound : NBTTagCompound ) : Unit = {
     super.readFromNBT(tagCompound)
 
-    val tagList = tagCompound.getTagList("Inventory")
+    val tagList = tagCompound.getTagList("Inventory", 10)
     for ( x <- 0 until tagList.tagCount();
-          tag = tagList.tagAt(x).asInstanceOf[NBTTagCompound] ) {
+          tag = tagList.getCompoundTagAt( x ) ) {
       val slot = tag.getByte("Slot")
       if ( slot >= 0 && slot < getSizeInventory ) {
         setInventorySlotContents( slot, ItemStack.loadItemStackFromNBT(tag) )
@@ -101,6 +101,4 @@ abstract class BaseInventoryTileEntity extends TileEntity with IInventory {
 
   def onSlotChanged( slot : Int ) : Unit
   def onPickedUpFrom( slot : Int ) : Unit
-
-
 }

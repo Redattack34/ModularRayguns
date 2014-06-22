@@ -81,7 +81,7 @@ class ClientProxy extends CommonProxy {
   }
 
   override def getClientGuiElement( id : Int, player : EntityPlayer, world : World, x : Int, y : Int, z : Int ) : Object = {
-    world.getBlockTileEntity(x, y, z) match {
+    world.getTileEntity(x, y, z) match {
       case gunBench : GunBenchTileEntity => new GunBenchGui( player.inventory, gunBench )
       case lensGrinder : LensGrinderTileEntity => new LensGrinderGui( player.inventory, lensGrinder )
       case _ => null

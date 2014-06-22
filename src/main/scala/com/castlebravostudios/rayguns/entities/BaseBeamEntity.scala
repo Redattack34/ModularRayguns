@@ -30,7 +30,6 @@ package com.castlebravostudios.rayguns.entities
 import com.castlebravostudios.rayguns.entities.effects.BaseEffect
 import net.minecraft.entity.Entity
 import net.minecraft.nbt.NBTTagCompound
-import net.minecraft.util.EnumMovingObjectType
 import net.minecraft.util.MovingObjectPosition
 import net.minecraft.util.Vec3
 import net.minecraft.world.World
@@ -42,6 +41,7 @@ import com.castlebravostudios.rayguns.api.EffectRegistry
 import com.castlebravostudios.rayguns.utils.Vector3
 import com.castlebravostudios.rayguns.utils.Extensions.WorldExtension
 import net.minecraft.util.MathHelper
+import net.minecraft.util.MovingObjectPosition.MovingObjectType
 
 class BaseBeamEntity(world : World) extends BaseShootable( world ) {
 
@@ -62,8 +62,8 @@ class BaseBeamEntity(world : World) extends BaseShootable( world ) {
 
   def onImpact( pos : MovingObjectPosition ) : Boolean = {
     pos.typeOfHit match {
-      case EnumMovingObjectType.ENTITY => effect.hitEntity( this, pos.entityHit )
-      case EnumMovingObjectType.TILE => effect.hitBlock( this, pos.blockX, pos.blockY, pos.blockZ, pos.sideHit )
+      case MovingObjectType.ENTITY => effect.hitEntity( this, pos.entityHit )
+      case MovingObjectType.BLOCK => effect.hitBlock( this, pos.blockX, pos.blockY, pos.blockZ, pos.sideHit )
     }
   }
 

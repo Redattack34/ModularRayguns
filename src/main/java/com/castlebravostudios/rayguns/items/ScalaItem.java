@@ -39,10 +39,6 @@ import net.minecraft.item.ItemStack;
  */
 public abstract class ScalaItem extends Item {
 
-  public ScalaItem( int id ) {
-    super( id );
-  }
-
   @SuppressWarnings( { "rawtypes", "unchecked", "cast" } )
   @Override
   public void addInformation( ItemStack item,

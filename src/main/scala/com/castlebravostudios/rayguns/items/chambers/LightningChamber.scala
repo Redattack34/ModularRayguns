@@ -47,7 +47,7 @@ object LightningChamber extends BaseChamber {
   val shotEffect = LightningEffect
   val nameSegmentKey = "rayguns.LightningChamber.segment"
 
-  def createItem( id : Int ) : ItemModule = new ItemModule( id, this )
+   def createItem() : ItemModule = new ItemModule( this ) 
     .setUnlocalizedName("rayguns.LightningChamber")
     .setTextureName("rayguns:chamber_lightning")
     .setCreativeTab( ModularRayguns.raygunsTab )
