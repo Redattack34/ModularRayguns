@@ -33,7 +33,6 @@ import com.castlebravostudios.rayguns.items.MoreInformation
 import com.castlebravostudios.rayguns.items.ScalaItem
 import com.castlebravostudios.rayguns.mod.Config
 import com.castlebravostudios.rayguns.mod.ModularRayguns
-import com.castlebravostudios.rayguns.plugins.ic2.IC2ItemPowerConnector
 import com.castlebravostudios.rayguns.plugins.te.RFItemPowerConnector
 import com.castlebravostudios.rayguns.utils.DefaultFireEvent
 import com.castlebravostudios.rayguns.utils.Extensions.ItemStackExtension
@@ -87,7 +86,7 @@ case class GunTickEvent(
     val isSelected : Boolean )
 
 object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
-  with ChargableItem with RFItemPowerConnector with IC2ItemPowerConnector {
+  with ChargableItem with RFItemPowerConnector {
 
   private val maxChargeTime : Double = 3.0d
   private val ticksPerSecond : Int = 20
@@ -239,8 +238,6 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
     RaygunNbtUtils.getBattery( item ).foreach( _.addCharge( item, delta ) )
   def getMaxChargePerTick( item : ItemStack ) : Int =
     RaygunNbtUtils.getBattery( item ).map( _.maxChargePerTick ).getOrElse( 0 )
-  def getIC2Tier( item : ItemStack ) : Int =
-    RaygunNbtUtils.getBattery( item ).map( _.ic2Tier ).getOrElse( Integer.MAX_VALUE )
 
   override def getItemDisplayName( stack : ItemStack ) : String =
     if ( stack.hasDisplayName() ) {

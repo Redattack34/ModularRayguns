@@ -31,13 +31,9 @@ import com.castlebravostudios.rayguns.api.items.BaseRaygunModule
 import com.castlebravostudios.rayguns.api.items.ItemModule
 import com.castlebravostudios.rayguns.api.items.RaygunBattery
 import com.castlebravostudios.rayguns.mod.ModularRayguns
-import com.castlebravostudios.rayguns.plugins.te.RFItemPowerConnector
-import com.castlebravostudios.rayguns.utils.FireEvent
-import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.item.ItemStack
-import com.castlebravostudios.rayguns.plugins.te.RFItemPowerConnector
-import com.castlebravostudios.rayguns.plugins.ic2.IC2ItemPowerConnector
+
 import net.minecraft.client.resources.I18n
+import net.minecraft.item.ItemStack
 
 object InfiniteBattery extends BaseRaygunModule with RaygunBattery {
   val moduleKey = "InfiniteBattery"
