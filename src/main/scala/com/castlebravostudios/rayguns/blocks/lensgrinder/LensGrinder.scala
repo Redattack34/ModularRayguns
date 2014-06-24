@@ -34,7 +34,7 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.world.World
 
-class LensGrinder( id : Int ) extends BaseContainerBlock( id ) {
+class LensGrinder extends BaseContainerBlock {
   setHardness(2.0F)
   setResistance(5.0f)
   setUnlocalizedName("rayguns.LensGrinder")

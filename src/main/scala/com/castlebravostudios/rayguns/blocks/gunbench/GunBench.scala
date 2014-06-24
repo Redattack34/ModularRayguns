@@ -34,7 +34,7 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.world.World
 
-class GunBench(id : Int) extends BaseContainerBlock(id) {
+class GunBench extends BaseContainerBlock {
 
   setHardness(2.0F)
   setResistance(5.0f)

@@ -28,26 +28,29 @@
 package com.castlebravostudios.rayguns.render
 
 import scala.util.Random
+
 import org.lwjgl.opengl.GL11
+
 import com.castlebravostudios.rayguns.items.misc.RayGun
-import cpw.mods.fml.common.ITickHandler
+import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
+
+import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.ItemRenderer
+import net.minecraft.client.renderer.OpenGlHelper
 import net.minecraft.client.renderer.RenderBlocks
 import net.minecraft.client.renderer.Tessellator
 import net.minecraft.entity.EntityLivingBase
+import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 import net.minecraftforge.client.IItemRenderer
 import net.minecraftforge.client.IItemRenderer.ItemRenderType
 import net.minecraftforge.client.IItemRenderer.ItemRendererHelper
-import java.util.EnumSet
-import cpw.mods.fml.common.TickType
-import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.client.Minecraft
-import net.minecraft.util.ResourceLocation
-import net.minecraft.client.renderer.OpenGlHelper
-import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
 
-object RaygunRender extends IItemRenderer with ITickHandler {
+import cpw.mods.fml.common.eventhandler.SubscribeEvent
+import cpw.mods.fml.common.gameevent.TickEvent
+import cpw.mods.fml.common.gameevent.TickEvent.RenderTickEvent
+
+object RaygunRender extends IItemRenderer {
 
   private var partialTickTime : Float = 0.0f
 
@@ -132,13 +135,12 @@ object RaygunRender extends IItemRenderer with ITickHandler {
 
   }
 
-  def tickStart( tickType : EnumSet[TickType], tickData : Object* ) : Unit = {
-    partialTickTime = tickData(0).asInstanceOf[Float]
+  @SubscribeEvent
+  def onRenderTick( event : RenderTickEvent ) : Unit = {
+    if ( event.phase == TickEvent.Phase.START ) {
+      partialTickTime = event.renderTickTime
+    }
   }
-
-  def tickEnd( tickType : EnumSet[TickType], tickData : Object* ) : Unit = ()
-
-  def ticks() : EnumSet[TickType] = EnumSet.of( TickType.RENDER )
 
   def getLabel() : String = "RaygunRenderer"
 

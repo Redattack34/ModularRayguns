@@ -51,11 +51,10 @@ class CuttingEffect( val key : String, val harvestLevel : Int, val powerMultipli
 
   def hitBlock( shootable : Shootable,  hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Boolean = {
     val worldObj = shootable.worldObj
-    val blockId = worldObj.getBlockId(hitX, hitY, hitZ)
-    val block = Block.blocksList(blockId)
+    val block = worldObj.getBlock(hitX, hitY, hitZ)
     val meta = worldObj.getBlockMetadata(hitX, hitY, hitZ)
 
-    val particleStr = s"tilecrack_${blockId}_${meta}"
+    val particleStr = s"blockcrack_${Block.getIdFromBlock(block)}_${meta}"
     for ( k <- 0 until 10 ) {
       worldObj.spawnParticle(particleStr, hitX, hitY, hitZ, 0.0D, 0.0D, 0.0D);
     }
@@ -67,7 +66,7 @@ class CuttingEffect( val key : String, val harvestLevel : Int, val powerMultipli
         case pl : EntityPlayer => pl
         case _ => null
       }
-        if ( block.removeBlockByPlayer(worldObj, player, hitX, hitY, hitZ) ) {
+        if ( block.removedByPlayer(worldObj, player, hitX, hitY, hitZ) ) {
           block.onBlockDestroyedByPlayer(worldObj, hitX, hitY, hitZ, meta)
         }
         block.harvestBlock(worldObj, player, hitX, hitY, hitZ, meta)
@@ -87,7 +86,7 @@ class CuttingEffect( val key : String, val harvestLevel : Int, val powerMultipli
     val pickCanHarvest = pick.canHarvestBlock(block) ||
       ItemPickaxe.blocksEffectiveAgainst.contains(block)
 
-    val shovelCanHarvest = ItemSpade.blocksEffectiveAgainst.contains( block )
+    val shovelCanHarvest = ItemSpade.field_150916_c.contains( block )
 
     val hardness = block.getBlockHardness(shootable.worldObj, x, y, z)
     if ( hardness == -1.0f ) {

@@ -133,6 +133,6 @@ object Items {
    * VM to load (and thus register for me) the Objects.
    */
   private def registerItem( item : Any ) : Unit = {
-    item.hashCode()
+    item.hashCode().failCompilation()
   }
 }

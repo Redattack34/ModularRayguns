@@ -78,7 +78,7 @@ trait RaygunModule {
    * should do nothing - this module has been disabled in the configuration file.
    * After this method is called, item should not return None.
    */
-  def registerItem( id : Int ) : Unit
+  def registerItem( ) : Unit
 
   /**
    * Event fired by a raygun to all modules to collect information before preparing
