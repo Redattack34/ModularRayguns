@@ -42,7 +42,7 @@ trait MoreInformation extends ScalaItem {
       getAdditionalInfo(item, player).foreach( strings.add(_) )
     }
     else {
-      strings.add( I18n.getString("rayguns.moreinfo") )
+      strings.add( I18n.format("rayguns.moreinfo") )
     }
   }
 

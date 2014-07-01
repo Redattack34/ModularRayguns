@@ -97,8 +97,8 @@ trait RecipeLibrary {
     LensGrinderRecipeRegistry.register( ticks, result, recipe : _ * )
 
   protected def addSmelting( input : Block, output : ItemStack, expMult : Float ): Unit =
-    GameRegistry.addSmelting(input.blockID, output, expMult)
+    GameRegistry.addSmelting(input, output, expMult)
 
   protected def addSmelting( input : Item, output : ItemStack, expMult : Float ): Unit =
-    GameRegistry.addSmelting(input.itemID, output, expMult)
+    GameRegistry.addSmelting(input, output, expMult)
 }

@@ -32,7 +32,7 @@ import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 import net.minecraft.item.Item
 
-object GlowstoneDustedGlass extends Item( Config.glowstoneDustedGlass ) {
+object GlowstoneDustedGlass extends Item {
 
   setCreativeTab(ModularRayguns.raygunsTab)
   setUnlocalizedName("rayguns.GlowstoneDustedGlass")

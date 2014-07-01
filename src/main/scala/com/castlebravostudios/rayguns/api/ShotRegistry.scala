@@ -116,7 +116,7 @@ object ShotRegistry extends Logging {
           case bolt : BaseBoltEntity => BoltUtils.spawn( world, player, bolt )
           case beam : BaseBeamEntity => BeamUtils.spawn( world, player, beam )
           case _ => {
-            severe( s"Unknown shot type ($shot, $event) - register your own handler." )
+            error( s"Unknown shot type ($shot, $event) - register your own handler." )
           }
         }
       }

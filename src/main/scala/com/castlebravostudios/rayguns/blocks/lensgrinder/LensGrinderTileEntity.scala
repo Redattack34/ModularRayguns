@@ -31,6 +31,8 @@ import com.castlebravostudios.rayguns.api.LensGrinderRecipe
 import com.castlebravostudios.rayguns.api.LensGrinderRecipeRegistry
 import com.castlebravostudios.rayguns.blocks.BaseInventoryTileEntity
 import com.castlebravostudios.rayguns.blocks.PoweredBlock
+import com.castlebravostudios.rayguns.plugins.te.RFBlockPowerConnector
+
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.inventory.Container
 import net.minecraft.inventory.IInventory
@@ -38,15 +40,14 @@ import net.minecraft.inventory.InventoryCrafting
 import net.minecraft.item.ItemStack
 import net.minecraft.item.crafting.ShapedRecipes
 import net.minecraft.nbt.NBTTagCompound
-import com.castlebravostudios.rayguns.plugins.te.RFBlockPowerConnector
-import net.minecraft.network.packet.Packet132TileEntityData
-import net.minecraft.network.INetworkManager
-import net.minecraft.network.packet.Packet
-import LensGrinderTileEntity.OUTPUT_SLOT
+import net.minecraft.network.NetworkManager
+import net.minecraft.network.Packet
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity
 
 class LensGrinderTileEntity extends BaseInventoryTileEntity with PoweredBlock
   with RFBlockPowerConnector {
 
+  import LensGrinderTileEntity.OUTPUT_SLOT
 
   private[this] val input = new InventoryCrafting( new DummyContainer(), 3, 3 )
   private[this] var output : ItemStack = null
@@ -148,7 +149,7 @@ class LensGrinderTileEntity extends BaseInventoryTileEntity with PoweredBlock
         if ( output == null ) true
         else {
           val recipeOutput = r.recipe.getRecipeOutput
-          output.itemID == recipeOutput.itemID &&
+          output == recipeOutput &&
             output.stackSize + recipeOutput.stackSize <= output.getMaxStackSize
         }
 
@@ -178,11 +179,11 @@ class LensGrinderTileEntity extends BaseInventoryTileEntity with PoweredBlock
   override def getDescriptionPacket() : Packet = {
     val tag = new NBTTagCompound
     writeToNBT(tag)
-    new Packet132TileEntityData( xCoord, yCoord, zCoord, 0, tag )
+    new S35PacketUpdateTileEntity( xCoord, yCoord, zCoord, 0, tag )
   }
 
-  override def onDataPacket( net : INetworkManager, packet : Packet132TileEntityData ) : Unit = {
-    readFromNBT( packet.data )
+  override def onDataPacket( net : NetworkManager, packet : S35PacketUpdateTileEntity ) : Unit = {
+    readFromNBT( packet.func_148857_g() )
   }
 
   val getInventoryStackLimit = 64

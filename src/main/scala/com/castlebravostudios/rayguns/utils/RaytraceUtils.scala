@@ -99,7 +99,7 @@ object RaytraceUtils {
       pos <- blocks( start, end )
       BlockPos(x, y, z) = pos
       if (!world.isAirBlock(x, y, z) )
-      block = Block.blocksList( world.getBlockId(x, y, z) )
+      block = world.getBlock(x, y, z)
       meta = world.getBlockMetadata(x, y, z)
       if ( f( block, meta, pos ) )
     } yield (block, meta, pos)

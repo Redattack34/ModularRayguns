@@ -35,7 +35,7 @@ import net.minecraft.block.Block
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 
-object Tier1GainMedium extends Item( Config.tier1GainMedium ) {
+object Tier1GainMedium extends Item {
 
   setCreativeTab(ModularRayguns.raygunsTab)
   setUnlocalizedName("rayguns.Tier1GainMedium")

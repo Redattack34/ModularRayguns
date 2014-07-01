@@ -38,9 +38,9 @@ class GunBench extends BaseContainerBlock {
 
   setHardness(2.0F)
   setResistance(5.0f)
-  setUnlocalizedName("rayguns.GunBench")
+  setBlockName("rayguns.GunBench")
   setCreativeTab(ModularRayguns.raygunsTab)
-  setTextureName("rayguns:gun_bench")
+  setBlockTextureName("rayguns:gun_bench")
 
   def openGui( player : EntityPlayer, world : World, x : Int, y : Int, z : Int ) : Unit =
     player.openGui(ModularRayguns, 0, world, x, y, z)

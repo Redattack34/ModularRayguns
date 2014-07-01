@@ -27,13 +27,9 @@
 
 package com.castlebravostudios.rayguns.mod
 
-import java.util.logging.Logger
 import com.castlebravostudios.rayguns.blocks.TileEntities
 import com.castlebravostudios.rayguns.entities.Entities
 import com.castlebravostudios.rayguns.entities.effects.Effects
-import com.castlebravostudios.rayguns.items.Blocks
-import com.castlebravostudios.rayguns.items.Items
-import com.castlebravostudios.rayguns.items.frames.FireflyFrame
 import com.castlebravostudios.rayguns.utils.Extensions.ItemExtensions
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.item.ItemStack
@@ -44,11 +40,13 @@ import cpw.mods.fml.common.SidedProxy
 import cpw.mods.fml.common.event.FMLInitializationEvent
 import cpw.mods.fml.common.event.FMLPostInitializationEvent
 import cpw.mods.fml.common.event.FMLPreInitializationEvent
-import cpw.mods.fml.common.network.NetworkMod
 import cpw.mods.fml.common.network.NetworkRegistry
+import org.apache.logging.log4j.Logger
+import com.castlebravostudios.rayguns.items.RaygunsItems
+import com.castlebravostudios.rayguns.items.RaygunsBlocks
+import com.castlebravostudios.rayguns.items.frames.FireflyFrame
 
 @Mod(modid="mod_ModularRayguns", version="1.0-alpha2", modLanguage="scala", useMetadata=true)
-@NetworkMod(clientSideRequired=true, serverSideRequired=true)
 object ModularRayguns {
 
   private var _logger : Logger = _
@@ -69,12 +67,12 @@ object ModularRayguns {
 
   @EventHandler
   def load( event : FMLInitializationEvent ) : Unit = {
-    Items.registerItems
-    Blocks.registerBlocks
+    RaygunsItems.registerItems
+    RaygunsBlocks.registerBlocks
     Entities.registerEntities
     TileEntities.registerTileEntities
     Effects.registerEffects
-    NetworkRegistry.instance().registerGuiHandler(ModularRayguns, proxy)
+    NetworkRegistry.INSTANCE.registerGuiHandler(ModularRayguns, proxy)
 
     Config.recipeLibrary.registerRecipes()
 

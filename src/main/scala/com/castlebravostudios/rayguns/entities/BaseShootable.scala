@@ -73,7 +73,7 @@ abstract class BaseShootable( world : World ) extends Entity( world )
     e match {
       case Some(effect) => this.effect = effect
       case None => {
-        severe( s"Unknown effect key: $key" )
+        error( s"Unknown effect key: $key" )
         setDead()
       }
     }

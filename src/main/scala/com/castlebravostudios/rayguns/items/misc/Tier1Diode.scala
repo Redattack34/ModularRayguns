@@ -35,7 +35,7 @@ import net.minecraft.block.Block
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 
-object Tier1Diode extends Item( Config.tier1Diode ) {
+object Tier1Diode extends Item {
 
   setCreativeTab(ModularRayguns.raygunsTab)
   setUnlocalizedName("rayguns.Tier1Diode")

@@ -100,7 +100,7 @@ class GunBenchTileEntity extends BaseInventoryTileEntity {
 
   private def copyCustomName( from : ItemStack, to : ItemStack ) : Unit = {
     if ( from != null && to != null && from.hasDisplayName() ) {
-      to.setItemName( from.getDisplayName() )
+      to.setStackDisplayName( from.getDisplayName() )
     }
   }
 
@@ -129,7 +129,7 @@ class GunBenchTileEntity extends BaseInventoryTileEntity {
   private def getModule( slot : Int ) : RaygunModule = {
     val stack = inv(slot)
     if ( stack == null ) null else {
-      val item = Item.itemsList(stack.itemID)
+      val item = stack.getItem
       item match {
         case i : ItemModule => i.module
         case _ => null

@@ -48,14 +48,14 @@ class GunBenchGui( playerInv: InventoryPlayer, tileEntity: GunBenchTileEntity )
   this.ySize = 185
 
   override def drawGuiContainerForegroundLayer( param1 : Int, param2 : Int ) : Unit = {
-    fontRendererObj.drawString(I18n.getString("rayguns.container.gunbench"), 8, 6, color)
-    fontRendererObj.drawString(I18n.getString("rayguns.container.gunbench.frame"), 8, 23, color )
-    fontRendererObj.drawString(I18n.getString("rayguns.container.gunbench.lens"), 8, 40, color )
-    fontRendererObj.drawString(I18n.getString("rayguns.container.gunbench.chamber"), 65, 23, color )
-    fontRendererObj.drawString(I18n.getString("rayguns.container.gunbench.battery"), 65, 40, color )
-    fontRendererObj.drawString(I18n.getString("rayguns.container.gunbench.acc"), 8, 59, color )
-    fontRendererObj.drawString(I18n.getString("rayguns.container.gunbench.barrel"), 8, 76, color )
-    fontRendererObj.drawString(I18n.getString("container.inventory"), 8, ySize - 96, color)
+    fontRendererObj.drawString(I18n.format("rayguns.container.gunbench"), 8, 6, color)
+    fontRendererObj.drawString(I18n.format("rayguns.container.gunbench.frame"), 8, 23, color )
+    fontRendererObj.drawString(I18n.format("rayguns.container.gunbench.lens"), 8, 40, color )
+    fontRendererObj.drawString(I18n.format("rayguns.container.gunbench.chamber"), 65, 23, color )
+    fontRendererObj.drawString(I18n.format("rayguns.container.gunbench.battery"), 65, 40, color )
+    fontRendererObj.drawString(I18n.format("rayguns.container.gunbench.acc"), 8, 59, color )
+    fontRendererObj.drawString(I18n.format("rayguns.container.gunbench.barrel"), 8, 76, color )
+    fontRendererObj.drawString(I18n.format("container.inventory"), 8, ySize - 96, color)
   }
 
   override def drawGuiContainerBackgroundLayer(par1 : Float, par2 : Int, par3: Int ) : Unit = {

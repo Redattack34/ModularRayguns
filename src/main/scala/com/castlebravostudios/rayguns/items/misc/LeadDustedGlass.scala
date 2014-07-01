@@ -32,7 +32,7 @@ import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 import net.minecraft.item.Item
 
-object LeadDustedGlass extends Item( Config.leadDustedGlass ) {
+object LeadDustedGlass extends Item {
 
   setCreativeTab(ModularRayguns.raygunsTab)
   setUnlocalizedName("rayguns.LeadDustedGlass")

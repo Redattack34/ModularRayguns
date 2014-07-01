@@ -66,7 +66,7 @@ object EnderEffect extends BaseEffect {
     val start = worldObj.getWorldVec3Pool().getVecFromPool(entity.posX, entity.posY, entity.posZ)
     val end = worldObj.getWorldVec3Pool().getVecFromPool(x, y, z)
     val hit = RaytraceUtils.rayTraceBlocks(worldObj, start, end){
-      (b, m, p) => b.blockMaterial.blocksMovement() }.headOption
+      (b, m, p) => b.getMaterial().blocksMovement() }.headOption
 
     hit match {
       case Some( mop ) => adjustCoords( mop.blockX, mop.blockY, mop.blockZ, mop.sideHit )

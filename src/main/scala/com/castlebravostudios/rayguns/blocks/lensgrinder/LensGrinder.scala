@@ -37,9 +37,9 @@ import net.minecraft.world.World
 class LensGrinder extends BaseContainerBlock {
   setHardness(2.0F)
   setResistance(5.0f)
-  setUnlocalizedName("rayguns.LensGrinder")
+  setBlockName("rayguns.LensGrinder")
   setCreativeTab(ModularRayguns.raygunsTab)
-  setTextureName("rayguns:lens_grinder")
+  setBlockTextureName("rayguns:lens_grinder")
 
   def openGui( player : EntityPlayer, world : World, x : Int, y : Int, z : Int ) : Unit =
     player.openGui(ModularRayguns, 1, world, x, y, z)

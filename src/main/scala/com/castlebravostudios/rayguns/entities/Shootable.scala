@@ -46,7 +46,7 @@ trait Shootable extends Entity with IThrowableEntity {
 
   def shooter_=( shooter : Entity ) : Unit = {
     _shooter = shooter
-    if ( shooter != null ) shooterName = shooter.getEntityName
+    if ( shooter != null ) shooterName = shooter.getCommandSenderName()
   }
 
   def shooter : Entity = {

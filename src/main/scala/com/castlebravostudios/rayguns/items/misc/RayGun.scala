@@ -43,11 +43,11 @@ import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
-import net.minecraft.util.Icon
 import net.minecraft.world.World
 import com.castlebravostudios.rayguns.utils.Vector3
 import net.minecraft.util.EntityDamageSource
 import com.castlebravostudios.rayguns.utils.RandomDamageSource
+import net.minecraft.util.IIcon
 
 case class GetFireInformationEvent(
     val player : EntityPlayer,
@@ -85,7 +85,7 @@ case class GunTickEvent(
     val components : GunComponents,
     val isSelected : Boolean )
 
-object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
+object RayGun extends ScalaItem with MoreInformation
   with ChargableItem with RFItemPowerConnector {
 
   private val maxChargeTime : Double = 3.0d
@@ -217,7 +217,7 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
   override def requiresMultipleRenderPasses() : Boolean = true
   override def getRenderPasses(metadata : Int) : Int = 1
 
-  override def getIcon( item : ItemStack, pass : Int ) : Icon = {
+  override def getIcon( item : ItemStack, pass : Int ) : IIcon = {
     val frameIcon = for {
       components <- RaygunNbtUtils.getComponents( item )
       frameItem <- components.frame.item

@@ -169,7 +169,7 @@ object Config extends Logging {
       case "thermalExpansion" if cpw.mods.fml.common.Loader.isModLoaded("ThermalExpansion") =>
         recipeLibrary = ThermalExpansionRecipeLibrary
       case _ => {
-        severe( "Either the recipe library is set to an unknown value, or the " +
+        error( "Either the recipe library is set to an unknown value, or the " +
             "selected library requires a mod that is not installed. Defaulting to vanilla recipes." )
         recipeLibrary = VanillaRecipeLibrary
       }

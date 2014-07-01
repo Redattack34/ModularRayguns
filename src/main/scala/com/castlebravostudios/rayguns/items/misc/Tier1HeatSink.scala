@@ -35,7 +35,7 @@ import net.minecraft.block.Block
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 
-object Tier1HeatSink extends Item( Config.tier1HeatSink ) {
+object Tier1HeatSink extends Item {
 
   setCreativeTab(ModularRayguns.raygunsTab)
   setUnlocalizedName("rayguns.Tier1HeatSink")

@@ -43,6 +43,7 @@ import net.minecraft.util.ResourceLocation
 import net.minecraft.world.World
 import com.castlebravostudios.rayguns.mod.ModularRayguns
 import com.google.common.io.ByteArrayDataInput
+import com.castlebravostudios.rayguns.items.RaygunsBlocks
 
 object LightningEffect extends BaseEffect {
 
@@ -63,7 +64,7 @@ object LightningEffect extends BaseEffect {
     if ( !shooter.isInstanceOf[EntityPlayer] ||
          shooter.asInstanceOf[EntityPlayer].canPlayerEdit(x, y, z, side, null) ) {
       if ( worldObj.isAirBlock(x, y, z) ) {
-        worldObj.setBlock(x, y, z, Config.invisibleRedstone, side, 3)
+        worldObj.setBlock(x, y, z, RaygunsBlocks.invisibleRedstone, side, 3)
       }
     }
     true

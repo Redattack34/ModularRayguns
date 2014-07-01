@@ -82,7 +82,7 @@ object RaygunNbtUtils {
     for {
       module <- getAllValidComponents( item ).components
       item <- module.item
-    } yield I18n.getString( item.getUnlocalizedName() + ".name" )
+    } yield I18n.format( item.getUnlocalizedName() + ".name" )
 
   private def getComponent[T <: RaygunModule](item : ItemStack, key: String )(f : String => Option[T]) : Option[T] = {
     for { name <- getModuleName( item, key )
@@ -120,7 +120,7 @@ object RaygunNbtUtils {
     def setTag( tag : NBTTagCompound, str : String )( item : RaygunModule ) : Unit =
       tag.setString(str, item.moduleKey)
 
-    val tag = new NBTTagCompound( MODULES_TAG )
+    val tag = new NBTTagCompound( )
     components.frame.foreach( setTag( tag, FRAME_STR )(_) )
     components.chamber.foreach( setTag( tag, CHAMBER_STR )(_) )
     components.battery.foreach( setTag( tag, BATTERY_STR )(_) )
@@ -150,9 +150,9 @@ object RaygunNbtUtils {
    * Note that not all of the replacements are used in the default en_US language file.
    */
   def getRaygunName( components : GunComponents ) : String = {
-    def translate( opt : RaygunModule) : String = I18n.getString( opt.nameSegmentKey )
+    def translate( opt : RaygunModule) : String = I18n.format( opt.nameSegmentKey )
 
-    I18n.getString("rayguns.RaygunNamePattern")
+    I18n.format("rayguns.RaygunNamePattern")
       .format(
         translate( components.chamber ),
         translate( components.battery ),

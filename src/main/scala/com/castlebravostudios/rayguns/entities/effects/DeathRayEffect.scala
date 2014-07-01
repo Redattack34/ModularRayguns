@@ -32,7 +32,6 @@ import com.castlebravostudios.rayguns.entities.Shootable
 import com.castlebravostudios.rayguns.items.misc.RayGun
 import com.castlebravostudios.rayguns.mod.ModularRayguns
 import com.castlebravostudios.rayguns.utils.Extensions.ItemExtensions
-
 import net.minecraft.block.Block
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
@@ -40,6 +39,7 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.EntityDamageSource
 import net.minecraft.util.ResourceLocation
 import net.minecraftforge.common.IPlantable
+import net.minecraft.init.Blocks
 
 object DeathRayEffect extends BaseEffect {
 
@@ -63,10 +63,9 @@ object DeathRayEffect extends BaseEffect {
 
   def hitBlock( shootable : Shootable, hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Boolean = {
     val worldObj = shootable.worldObj
-    val blockId = worldObj.getBlockId(hitX, hitY, hitZ)
-    val block = Block.blocksList(blockId)
+    val block = worldObj.getBlock(hitX, hitY, hitZ)
     if ( canEdit(  shootable, hitX, hitY, hitZ, side ) && blockMatch.isDefinedAt( block ) ) {
-      worldObj.setBlock(hitX, hitY, hitZ, blockMatch( block ))
+      worldObj.setBlock(hitX, hitY, hitZ, blockMatch( block ) )
     }
 
     false
@@ -79,12 +78,12 @@ object DeathRayEffect extends BaseEffect {
     }
   }
 
-  private val blockMatch : PartialFunction[Block, Int] = {
-    case i : IPlantable => 0
-    case Block.grass => Block.dirt.blockID
-    case Block.mycelium => Block.dirt.blockID
-    case Block.leaves => 0
-    case Block.vine => 0
+  private val blockMatch : PartialFunction[Block, Block] = {
+    case i : IPlantable => Blocks.air
+    case Blocks.grass => Blocks.dirt
+    case Blocks.mycelium => Blocks.dirt
+    case Blocks.leaves => Blocks.air
+    case Blocks.vine => Blocks.air
   }
 
   val boltTexture = ModularRayguns.texture( "textures/bolts/death_ray_bolt.png" )

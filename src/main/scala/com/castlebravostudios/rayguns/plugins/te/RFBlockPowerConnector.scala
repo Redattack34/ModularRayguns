@@ -31,7 +31,7 @@ import cofh.api.energy.IEnergyHandler
 import com.castlebravostudios.rayguns.blocks.PoweredBlock
 import cpw.mods.fml.common.Optional
 import com.castlebravostudios.rayguns.mod.Config
-import net.minecraftforge.common.ForgeDirection
+import net.minecraftforge.common.util.ForgeDirection
 
 @Optional.Interface(iface="cofh.api.energy.IEnergyHandler", modid="CoFHCore", striprefs=true)
 trait RFBlockPowerConnector extends IEnergyHandler {

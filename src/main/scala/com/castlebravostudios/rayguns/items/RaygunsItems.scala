@@ -43,7 +43,7 @@ import com.castlebravostudios.rayguns.mod.Config
 import ModuleRegistrationHelper.registerModule
 import com.castlebravostudios.rayguns.items.frames.MantisFrame
 
-object Items {
+object RaygunsItems {
 
   def registerItems : Unit = {
     registerMisc()
@@ -127,11 +127,6 @@ object Items {
     registerModule( BlasterBarrel, Config.barrelBlaster )
   }
 
-  /**
-   * Since items are Objects, and therefore instantiated when first loaded,
-   * I don't actually have to register them anywhere. This merely forces the
-   * VM to load (and thus register for me) the Objects.
-   */
   private def registerItem( item : Any ) : Unit = {
     item.hashCode().failCompilation()
   }

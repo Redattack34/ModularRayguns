@@ -29,21 +29,21 @@ package com.castlebravostudios.rayguns.utils
 
 import net.minecraft.util.EntityDamageSourceIndirect
 import java.util.Random
-import net.minecraft.util.ChatMessageComponent
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.Entity
+import net.minecraft.util.IChatComponent
+import net.minecraft.util.ChatComponentTranslation
 
 class RandomDamageSource( damageType : String, direct : Entity, indirect : Entity )
   extends EntityDamageSourceIndirect( damageType, direct, indirect ) {
 
-  override def getDeathMessage( victim : EntityLivingBase ) : ChatMessageComponent = {
+  override def getDeathMessage( victim : EntityLivingBase ) : IChatComponent = {
     val key = s"death.attack.$damageType.${RandomDamageSource.random}"
-    val sourceName = if ( this.getEntity() == null ) this.getSourceOfDamage().getTranslatedEntityName()
-        else this.getEntity().getTranslatedEntityName
-    val victimName = victim.getTranslatedEntityName
+    val sourceName = if ( this.getEntity() == null ) this.getSourceOfDamage().getCommandSenderName()
+        else this.getEntity().getCommandSenderName
+    val victimName = victim.getCommandSenderName
 
-    ChatMessageComponent.createFromTranslationWithSubstitutions( key,
-        sourceName, victimName )
+    new ChatComponentTranslation( key, sourceName, victimName )
   }
 }
 object RandomDamageSource {

@@ -61,7 +61,7 @@ abstract class BaseInventoryTileEntity extends TileEntity with IInventory {
     stack
   }
 
-  override def onInventoryChanged : Unit = Unit
+  override def onInventoryChanged() : Unit = Unit
 
   override def isUseableByPlayer( player : EntityPlayer ) : Boolean = {
     val isThis = worldObj.getTileEntity( xCoord, yCoord, zCoord ) == this

@@ -29,7 +29,6 @@ package com.castlebravostudios.rayguns.entities.effects
 
 import com.castlebravostudios.rayguns.entities.Shootable
 import com.castlebravostudios.rayguns.utils.Extensions._
-
 import net.minecraft.block.Block
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
@@ -37,6 +36,7 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemPickaxe
 import net.minecraft.item.ItemSpade
 import net.minecraft.util.ResourceLocation
+import net.minecraft.init.Items
 
 class CuttingEffect( val key : String, val harvestLevel : Int, val powerMultiplier : Float ) extends BaseEffect {
   implicit class ShootableExtension(val shootable : Shootable) {
@@ -78,15 +78,20 @@ class CuttingEffect( val key : String, val harvestLevel : Int, val powerMultipli
 
   def canBreakBlock( shootable : Shootable, x : Int, y : Int, z : Int, block : Block ) : Boolean = {
     val pick = harvestLevel match {
-      case 0 => Item.pickaxeWood
-      case 1 => Item.pickaxeStone
-      case 2 => Item.pickaxeIron
-      case 3 => Item.pickaxeDiamond
+      case 0 => Items.wooden_pickaxe
+      case 1 => Items.stone_pickaxe
+      case 2 => Items.iron_pickaxe
+      case 3 => Items.diamond_pickaxe
     }
-    val pickCanHarvest = pick.canHarvestBlock(block) ||
-      ItemPickaxe.blocksEffectiveAgainst.contains(block)
+    val pickCanHarvest = pick.canHarvestBlock(block, pick.asStack(1) )
 
-    val shovelCanHarvest = ItemSpade.field_150916_c.contains( block )
+    val shovel = harvestLevel match {
+      case 0 => Items.wooden_shovel
+      case 1 => Items.stone_shovel
+      case 2 => Items.iron_shovel
+      case 3 => Items.diamond_shovel
+    }
+    val shovelCanHarvest = shovel.canHarvestBlock(block, shovel.asStack( 1 ) )
 
     val hardness = block.getBlockHardness(shootable.worldObj, x, y, z)
     if ( hardness == -1.0f ) {
