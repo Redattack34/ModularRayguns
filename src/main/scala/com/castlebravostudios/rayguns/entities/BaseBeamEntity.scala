@@ -65,6 +65,7 @@ class BaseBeamEntity(world : World) extends BaseShootable( world ) {
     pos.typeOfHit match {
       case MovingObjectType.ENTITY => effect.hitEntity( this, pos.entityHit )
       case MovingObjectType.BLOCK => effect.hitBlock( this, pos.blockX, pos.blockY, pos.blockZ, pos.sideHit )
+      case MovingObjectType.MISS => true
     }
   }
 

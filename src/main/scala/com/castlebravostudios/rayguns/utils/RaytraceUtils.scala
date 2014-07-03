@@ -123,7 +123,7 @@ object RaytraceUtils {
    * intersect with.
    */
   private def reachableEntities( world : World, owner : Entity, start : Vector3, end : Vector3 ) : Seq[Entity] = {
-    var aabb = AxisAlignedBB.getAABBPool.getAABB(start.x, start.y, start.z,
+    var aabb = AxisAlignedBB.getBoundingBox(start.x, start.y, start.z,
         start.x, start.y, start.z);
     val diffLength = end.subtract(start).length * 1.1
     aabb = aabb.expand(diffLength, diffLength, diffLength)

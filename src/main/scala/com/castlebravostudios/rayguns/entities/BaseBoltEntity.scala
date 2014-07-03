@@ -118,6 +118,7 @@ class BaseBoltEntity( world : World ) extends BaseShootable( world ) with IProje
         hitBlocks += BlockPos(pos.blockX, pos.blockY, pos.blockZ)
         effect.hitBlock( this, pos.blockX, pos.blockY, pos.blockZ, pos.sideHit )
       }
+      case MovingObjectType.MISS => true
     }
 
     if ( shouldDie ) setDead
