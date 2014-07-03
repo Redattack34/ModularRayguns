@@ -37,7 +37,7 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.block.Block
 import net.minecraft.item.crafting.ShapelessRecipes
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters.seqAsJavaListConverter
 
 trait RecipeLibrary {
 
@@ -90,7 +90,7 @@ trait RecipeLibrary {
       }
       case _ => throw new IllegalArgumentException( "Invalid shapeless recipe." );
     }
-    GameRegistry.addRecipe( new ShapelessRecipes( output, stacks ) )
+    GameRegistry.addRecipe( new ShapelessRecipes( output, stacks.asJava ) )
   }
 
   protected def addLensGrinder( ticks : Short, result : ItemStack, recipe : Any* ): Unit =

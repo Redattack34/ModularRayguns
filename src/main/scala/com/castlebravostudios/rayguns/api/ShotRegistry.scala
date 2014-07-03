@@ -83,7 +83,7 @@ object ShotRegistry extends Logging {
    * Returns true if there is a shot modifier or shot creator that can handle
    * the given event.
    */
-  def hasShotCreator( event :  FireEvent ) = getShotCreator( event ).isDefined
+  def hasShotCreator( event :  FireEvent ) : Boolean = getShotCreator( event ).isDefined
 
   /**
    * Get the shot modifier or shot creator that can handle the given event,
@@ -100,7 +100,7 @@ object ShotRegistry extends Logging {
    * Returns true if there is a shot handler that can handle the given event.
    * Not to be confused with hasShotCreator.
    */
-  def isValid( event : FireEvent ) = getShotHandler( event ).isDefined
+  def isValid( event : FireEvent ) : Boolean = getShotHandler( event ).isDefined
 
   def getShotHandler( event : FireEvent ) : Option[ShotHandler] =
     handlers.find( _.isDefinedAt( event) )

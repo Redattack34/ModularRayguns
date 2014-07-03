@@ -99,7 +99,7 @@ object FrostRayEffect extends BaseEffect {
   override def collidesWithLiquids(shootable : Shootable) : Boolean = true
 
   override def createImpactParticles( shootable : Shootable, hitX : Double, hitY : Double, hitZ : Double ) : Unit = {
-    for ( _ <- 0 until 4 ) {
+    for { _ <- 0 until 4 } {
       shootable.worldObj.spawnParticle("snowballpoof", hitX, hitY, hitZ, 0.0D, 0.0D, 0.0D);
     }
   }

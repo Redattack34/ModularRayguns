@@ -37,7 +37,7 @@ object PreciseLens extends BaseRaygunModule with RaygunLens {
   val powerModifier = 1.5
   val nameSegmentKey = "rayguns.PreciseLens.segment"
 
-   def createItem() : ItemModule = new ItemModule( this ) 
+   def createItem() : ItemModule = new ItemModule( this )
     .setUnlocalizedName("rayguns.PreciseLens")
     .setTextureName("rayguns:lens_precise")
     .setCreativeTab( ModularRayguns.raygunsTab )

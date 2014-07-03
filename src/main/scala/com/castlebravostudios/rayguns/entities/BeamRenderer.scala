@@ -69,7 +69,7 @@ class BeamRenderer extends Render {
 
     GL11.glColor4f( 1.0f, 1.0f, 1.0f, 1.0f )
 
-    for ( _ <- 0 until 3 ) {
+    for { _ <- 0 until 3 } {
       tes.startDrawingQuads();
       tes.addVertexWithUV(-1.0D, 0.0D, 0.0D, 0, 0);
       tes.addVertexWithUV(-1.0D, 0.0D, e.length, 0, 1);

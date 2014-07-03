@@ -44,7 +44,7 @@ object SolarPanel extends BaseRaygunModule with RaygunAccessory {
   val powerModifier = 1.0
   val nameSegmentKey = "rayguns.SolarPanel.segment"
 
-   def createItem() : ItemModule = new ItemModule( this ) 
+   def createItem() : ItemModule = new ItemModule( this )
     .setUnlocalizedName("rayguns.SolarPanel")
     .setTextureName("rayguns:solar_panel")
     .setCreativeTab( ModularRayguns.raygunsTab )
@@ -53,7 +53,7 @@ object SolarPanel extends BaseRaygunModule with RaygunAccessory {
   private[this] val entityMap = WeakHashMap[Entity, Boolean]()
   private[this] val random = new Random()
 
-  override def handleTickEvent( event : GunTickEvent ) {
+  override def handleTickEvent( event : GunTickEvent ) : Unit = {
     if ( canSeeTheSun( event.world, event.player ) && event.world.getWorldTime() % 10 == 0 ) {
       event.components.battery.addCharge( event.gun, 1 )
     }

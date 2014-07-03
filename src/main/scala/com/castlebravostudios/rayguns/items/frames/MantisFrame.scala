@@ -37,7 +37,7 @@ object MantisFrame extends BaseRaygunModule with RaygunFrame {
   val powerModifier = 1.0
   val nameSegmentKey = "rayguns.MantisFrame.segment"
 
-   def createItem() : ItemModule = new ItemModule( this ) 
+   def createItem() : ItemModule = new ItemModule( this )
     .setUnlocalizedName("rayguns.MantisFrame")
     .setTextureName("rayguns:frame_mantis")
     .setCreativeTab( ModularRayguns.raygunsTab )

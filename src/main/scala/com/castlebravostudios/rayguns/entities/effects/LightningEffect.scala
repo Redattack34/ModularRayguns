@@ -72,7 +72,7 @@ object LightningEffect extends BaseEffect {
   }
 
   override def createImpactParticles( shootable : Shootable, hitX : Double, hitY : Double, hitZ : Double ) : Unit = {
-    for ( _ <- 0 until 4 ) {
+    for { _ <- 0 until 4 } {
       shootable.worldObj.spawnParticle("smoke", hitX, hitY, hitZ, 0.0D, 0.0D, 0.0D);
     }
   }

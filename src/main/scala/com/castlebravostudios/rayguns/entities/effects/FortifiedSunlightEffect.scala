@@ -68,7 +68,7 @@ object FortifiedSunlightEffect extends BaseEffect {
   override def createImpactParticles( shootable : Shootable, hitX : Double, hitY : Double, hitZ : Double ) : Unit = {
     def randVel : Double = shootable.random.nextGaussian() * 0.02D
     def randPos( x : Double ) : Double = x + ( shootable.random.nextFloat().doubleValue() - 0.5)
-    for ( _ <- 0 until 4 ) {
+    for { _ <- 0 until 4 } {
       shootable.worldObj.spawnParticle("happyVillager",
         randPos( hitX ), randPos( hitY ), randPos( hitZ ), randVel, randVel, randVel);
     }

@@ -29,26 +29,22 @@ package com.castlebravostudios.rayguns.items.recipes
 
 //scalastyle:off underscore.import
 
-import com.castlebravostudios.rayguns.api.LensGrinderRecipeRegistry
 import com.castlebravostudios.rayguns.api.items._
 import com.castlebravostudios.rayguns.items.RaygunsBlocks
 import com.castlebravostudios.rayguns.items.accessories._
 import com.castlebravostudios.rayguns.items.barrels._
 import com.castlebravostudios.rayguns.items.batteries._
-import com.castlebravostudios.rayguns.items.frames._
 import com.castlebravostudios.rayguns.items.chambers._
 import com.castlebravostudios.rayguns.items.emitters.Emitters
+import com.castlebravostudios.rayguns.items.frames._
 import com.castlebravostudios.rayguns.items.lenses._
 import com.castlebravostudios.rayguns.items.misc._
-import com.castlebravostudios.rayguns.utils.Extensions.ItemExtensions
 import com.castlebravostudios.rayguns.utils.Extensions.BlockExtensions
-import com.castlebravostudios.rayguns.utils.ScalaShapedRecipeFactory
-import net.minecraft.block.Block
-import net.minecraft.item.Item
-import net.minecraft.item.ItemStack
-import cpw.mods.fml.common.registry.GameRegistry
-import net.minecraft.init.Items
+import com.castlebravostudios.rayguns.utils.Extensions.ItemExtensions
+
 import net.minecraft.init.Blocks
+import net.minecraft.init.Items
+import net.minecraft.item.Item
 
 //scalastyle:on
 

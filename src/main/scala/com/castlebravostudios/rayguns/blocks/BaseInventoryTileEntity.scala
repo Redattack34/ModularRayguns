@@ -76,8 +76,8 @@ abstract class BaseInventoryTileEntity extends TileEntity with IInventory {
     super.readFromNBT(tagCompound)
 
     val tagList = tagCompound.getTagList("Inventory", 10)
-    for ( x <- 0 until tagList.tagCount();
-          tag = tagList.getCompoundTagAt( x ) ) {
+    for { x <- 0 until tagList.tagCount();
+          tag = tagList.getCompoundTagAt( x ) } {
       val slot = tag.getByte("Slot")
       if ( slot >= 0 && slot < getSizeInventory ) {
         setInventorySlotContents( slot, ItemStack.loadItemStackFromNBT(tag) )
@@ -85,7 +85,7 @@ abstract class BaseInventoryTileEntity extends TileEntity with IInventory {
     }
   }
 
-  override def writeToNBT( tagCompound : NBTTagCompound ) {
+  override def writeToNBT( tagCompound : NBTTagCompound ) : Unit = {
     super.writeToNBT(tagCompound)
 
     val itemList = new NBTTagList

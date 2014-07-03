@@ -38,7 +38,7 @@ object LifeForceChamber extends BaseChamber {
   val shotEffect = LifeForceEffect
   val nameSegmentKey = "rayguns.LifeForceChamber.segment"
 
-   def createItem() : ItemModule = new ItemModule( this ) 
+   def createItem() : ItemModule = new ItemModule( this )
     .setUnlocalizedName("rayguns.LifeForceChamber")
     .setTextureName("rayguns:chamber_life_force")
     .setCreativeTab( ModularRayguns.raygunsTab )

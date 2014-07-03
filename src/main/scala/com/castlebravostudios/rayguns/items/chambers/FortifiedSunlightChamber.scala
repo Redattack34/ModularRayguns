@@ -37,7 +37,7 @@ object FortifiedSunlightChamber extends BaseChamber {
   val shotEffect = FortifiedSunlightEffect
   val nameSegmentKey = "rayguns.FortifiedSunlightChamber.segment"
 
-   def createItem() : ItemModule = new ItemModule( this ) 
+   def createItem() : ItemModule = new ItemModule( this )
     .setUnlocalizedName("rayguns.FortifiedSunlightChamber")
     .setTextureName("rayguns:chamber_fortified_sunlight")
     .setCreativeTab( ModularRayguns.raygunsTab )

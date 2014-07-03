@@ -114,7 +114,7 @@ class GunBenchTileEntity extends BaseInventoryTileEntity {
 
   def onPickedUpFrom( slot : Int ) : Unit = {
     if ( slot == OUTPUT_SLOT ) {
-      for ( slot <- 0 until getSizeInventory ) setInventorySlotContents(slot, null)
+      for { slot <- 0 until getSizeInventory } setInventorySlotContents(slot, null)
     }
   }
 

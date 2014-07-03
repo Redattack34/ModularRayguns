@@ -38,7 +38,7 @@ object HeatRayChamber extends BaseChamber {
   val shotEffect = HeatRayEffect
   val nameSegmentKey = "rayguns.HeatRayChamber.segment"
 
-   def createItem() : ItemModule = new ItemModule( this ) 
+   def createItem() : ItemModule = new ItemModule( this )
     .setUnlocalizedName("rayguns.HeatRayChamber")
     .setTextureName("rayguns:chamber_heat_ray")
     .setCreativeTab( ModularRayguns.raygunsTab )

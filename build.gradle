@@ -9,13 +9,16 @@ buildscript {
             name = "sonatype"
             url = "https://oss.sonatype.org/content/repositories/snapshots/"
         }
+        maven { url "http://dl.bintray.com/releashaus/release" }
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+        classpath "org.github.mansur.scalastyle:gradle-scalastyle-plugin_2.10:0.4.1"
     }
 }
 
 apply plugin: 'scala'
+apply plugin: 'scalaStyle'
 apply plugin: 'forge'
 
 dependencies {
@@ -27,8 +30,17 @@ version = "1.0-alpha3"
 group= "com.castlebravostudios.rayguns"
 archivesBaseName = "ModularRayguns"
 
+check.dependsOn{ scalaStyle }
+
 minecraft {
 	version = "1.7.2-10.12.2.1121"
+}
+
+scalaStyle {
+    configLocation = "scalastyle_config.xml"
+    includeTestSourceDirectory = true
+    source = "src/main/scala"
+    testSource = "src/test/scala"
 }
 
 processResources

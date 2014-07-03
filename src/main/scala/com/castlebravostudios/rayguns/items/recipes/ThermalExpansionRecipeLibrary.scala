@@ -27,6 +27,8 @@
 
 package com.castlebravostudios.rayguns.items.recipes
 
+//scalastyle:off underscore.import
+
 import com.castlebravostudios.rayguns.api.items._
 import com.castlebravostudios.rayguns.items.RaygunsBlocks
 import com.castlebravostudios.rayguns.items.accessories._

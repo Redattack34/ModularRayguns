@@ -77,7 +77,7 @@ class BaseBoltEntity( world : World ) extends BaseShootable( world ) with IProje
 
     if (this.isInWater())
     {
-        for ( _ <- 0 until 4 )
+        for { _ <- 0 until 4 }
         {
             val f4 = 0.25F
             this.worldObj.spawnParticle("bubble",
@@ -125,7 +125,7 @@ class BaseBoltEntity( world : World ) extends BaseShootable( world ) with IProje
     shouldDie
   }
 
-  override def setDead() {
+  override def setDead() : Unit = {
     effect match {
       case e : TriggerOnDeath => e.triggerAt(this, posX, posY, posZ)
       case _ => ()

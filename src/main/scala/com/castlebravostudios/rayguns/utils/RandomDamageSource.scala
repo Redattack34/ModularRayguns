@@ -37,6 +37,7 @@ import net.minecraft.util.ChatComponentTranslation
 class RandomDamageSource( damageType : String, direct : Entity, indirect : Entity )
   extends EntityDamageSourceIndirect( damageType, direct, indirect ) {
 
+  //scalastyle:off method.name
   override def func_151519_b( victim : EntityLivingBase ) : IChatComponent = {
     val key = s"death.attack.$damageType.${RandomDamageSource.random}"
     val sourceName = if ( this.getEntity() == null ) this.getSourceOfDamage().getCommandSenderName()

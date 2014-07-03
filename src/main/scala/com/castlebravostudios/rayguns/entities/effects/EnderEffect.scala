@@ -56,7 +56,7 @@ object EnderEffect extends BaseEffect {
   def hitBlock( shootable : Shootable, hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Boolean = true
 
   override def createImpactParticles( shootable : Shootable, hitX : Double, hitY : Double, hitZ : Double ) : Unit = {
-    for ( _ <- 0 until 16 ) {
+    for { _ <- 0 until 16 } {
         shootable.worldObj.spawnParticle("portal", hitX, hitY, hitZ,
             shootable.random.nextGaussian(), 0.0D, shootable.random.nextGaussian());
     }

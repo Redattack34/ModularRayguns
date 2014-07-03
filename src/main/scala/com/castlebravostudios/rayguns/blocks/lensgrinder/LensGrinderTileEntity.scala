@@ -47,7 +47,6 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity
 class LensGrinderTileEntity extends BaseInventoryTileEntity with PoweredBlock
   with RFBlockPowerConnector {
 
-  import LensGrinderTileEntity.OUTPUT_SLOT
 
   private[this] val input = new InventoryCrafting( new DummyContainer(), 3, 3 )
   private[this] var output : ItemStack = null
@@ -63,9 +62,9 @@ class LensGrinderTileEntity extends BaseInventoryTileEntity with PoweredBlock
 
   override def getSizeInventory : Int = 10
   override def getStackInSlot( slot : Int ) : ItemStack =
-    if ( slot == OUTPUT_SLOT ) output else input.getStackInSlot( slot )
+    if ( slot == LensGrinderTileEntity.OUTPUT_SLOT ) output else input.getStackInSlot( slot )
   override def setInventorySlotContents( slot : Int, stack : ItemStack ) : Unit = {
-    if ( slot == OUTPUT_SLOT ) {
+    if ( slot == LensGrinderTileEntity.OUTPUT_SLOT ) {
       output = stack
       if ( stack != null && stack.stackSize > getInventoryStackLimit ) {
         stack.stackSize = getInventoryStackLimit
@@ -130,7 +129,7 @@ class LensGrinderTileEntity extends BaseInventoryTileEntity with PoweredBlock
   }
 
   private def subtractInput( recipe : ShapedRecipes ) : Unit = {
-    for ( slot <- 0 until input.getSizeInventory() ) {
+    for { slot <- 0 until input.getSizeInventory() } {
       input.decrStackSize(slot, 1)
     }
   }
@@ -192,7 +191,7 @@ class LensGrinderTileEntity extends BaseInventoryTileEntity with PoweredBlock
   override def hasCustomInventoryName : Boolean = false
 
   override def isItemValidForSlot( slot : Int, item : ItemStack ) : Boolean =
-    slot != OUTPUT_SLOT
+    slot != LensGrinderTileEntity.OUTPUT_SLOT
 
   private class DummyContainer extends Container {
     def canInteractWith( player : EntityPlayer ) : Boolean = false

@@ -28,20 +28,21 @@
 package com.castlebravostudios.rayguns.entities.effects
 
 import com.castlebravostudios.rayguns.entities.Shootable
-import com.castlebravostudios.rayguns.utils.Extensions._
+import com.castlebravostudios.rayguns.utils.Extensions.BlockExtensions
+import com.castlebravostudios.rayguns.utils.Extensions.ItemExtensions
+import com.castlebravostudios.rayguns.utils.Extensions.WorldExtension
+
 import net.minecraft.block.Block
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.item.Item
-import net.minecraft.item.ItemPickaxe
-import net.minecraft.item.ItemSpade
-import net.minecraft.util.ResourceLocation
 import net.minecraft.init.Items
+import net.minecraft.item.Item
+import net.minecraft.util.ResourceLocation
 
 class CuttingEffect( val key : String, val harvestLevel : Int, val powerMultiplier : Float ) extends BaseEffect {
   implicit class ShootableExtension(val shootable : Shootable) {
     def harvestPower( ) : Float = shootable.charge.toFloat * powerMultiplier
-    def setHarvestPower( power : Float ) = {
+    def setHarvestPower( power : Float ) : Unit = {
       shootable.charge = power / powerMultiplier
     }
   }
@@ -55,7 +56,7 @@ class CuttingEffect( val key : String, val harvestLevel : Int, val powerMultipli
     val meta = worldObj.getBlockMetadata(hitX, hitY, hitZ)
 
     val particleStr = s"blockcrack_${Block.getIdFromBlock(block)}_${meta}"
-    for ( k <- 0 until 10 ) {
+    for { k <- 0 until 10 } {
       worldObj.spawnParticle(particleStr, hitX, hitY, hitZ, 0.0D, 0.0D, 0.0D);
     }
 
@@ -76,21 +77,11 @@ class CuttingEffect( val key : String, val harvestLevel : Int, val powerMultipli
     else true
   }
 
-  def canBreakBlock( shootable : Shootable, x : Int, y : Int, z : Int, block : Block ) : Boolean = {
-    val pick = harvestLevel match {
-      case 0 => Items.wooden_pickaxe
-      case 1 => Items.stone_pickaxe
-      case 2 => Items.iron_pickaxe
-      case 3 => Items.diamond_pickaxe
-    }
+  def canBreakBlock( shootable : Shootable, x : Int, y : Int, z : Int, block : Block ): Boolean = {
+    val pick = pickForHarvestLevel
     val pickCanHarvest = pick.canHarvestBlock(block, pick.asStack(1) )
 
-    val shovel = harvestLevel match {
-      case 0 => Items.wooden_shovel
-      case 1 => Items.stone_shovel
-      case 2 => Items.iron_shovel
-      case 3 => Items.diamond_shovel
-    }
+    val shovel = shovelForHarvestLevel
     val shovelCanHarvest = shovel.canHarvestBlock(block, shovel.asStack( 1 ) )
 
     val hardness = block.getBlockHardness(shootable.worldObj, x, y, z)
@@ -99,6 +90,24 @@ class CuttingEffect( val key : String, val harvestLevel : Int, val powerMultipli
     }
 
     hardness <= shootable.harvestPower && ( pickCanHarvest || shovelCanHarvest )
+  }
+
+  private def shovelForHarvestLevel: Item = {
+    harvestLevel match {
+      case 0 => Items.wooden_shovel
+      case 1 => Items.stone_shovel
+      case 2 => Items.iron_shovel
+      case 3 => Items.diamond_shovel
+    }
+  }
+
+  private def pickForHarvestLevel: Item = {
+    harvestLevel match {
+      case 0 => Items.wooden_pickaxe
+      case 1 => Items.stone_pickaxe
+      case 2 => Items.iron_pickaxe
+      case 3 => Items.diamond_pickaxe
+    }
   }
 
   def effectKey : String = key
