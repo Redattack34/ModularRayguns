@@ -101,11 +101,11 @@ class LensGrinderTileEntity extends BaseInventoryTileEntity with PoweredBlock
 
       if (this.remainingTime == 0) {
         this.completeGrinding()
-        this.onInventoryChanged()
+        this.markDirty()
       }
       else if (!this.canGrind()) {
         this.remainingTime = 0
-        this.onInventoryChanged()
+        this.markDirty()
       }
 
       if ( remainingTime % 20 == 0 ) {
@@ -188,8 +188,8 @@ class LensGrinderTileEntity extends BaseInventoryTileEntity with PoweredBlock
 
   val getInventoryStackLimit = 64
 
-  override def getInvName : String = "rayguns.lensGrinderEntity"
-  override def isInvNameLocalized : Boolean = false
+  override def getInventoryName : String = "rayguns.lensGrinderEntity"
+  override def hasCustomInventoryName : Boolean = false
 
   override def isItemValidForSlot( slot : Int, item : ItemStack ) : Boolean =
     slot != OUTPUT_SLOT

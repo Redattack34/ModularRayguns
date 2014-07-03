@@ -44,5 +44,5 @@ class LensGrinder extends BaseContainerBlock {
   def openGui( player : EntityPlayer, world : World, x : Int, y : Int, z : Int ) : Unit =
     player.openGui(ModularRayguns, 1, world, x, y, z)
 
-  override def createNewTileEntity( world : World ) : TileEntity = new LensGrinderTileEntity()
+  override def createNewTileEntity( world : World, var2: Int ) : TileEntity = new LensGrinderTileEntity()
 }

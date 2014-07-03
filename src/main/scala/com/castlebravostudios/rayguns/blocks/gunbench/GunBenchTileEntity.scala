@@ -29,21 +29,20 @@ package com.castlebravostudios.rayguns.blocks.gunbench
 
 import com.castlebravostudios.rayguns.api.items.ItemModule
 import com.castlebravostudios.rayguns.api.items.RaygunAccessory
+import com.castlebravostudios.rayguns.api.items.RaygunBarrel
 import com.castlebravostudios.rayguns.api.items.RaygunBattery
-import com.castlebravostudios.rayguns.api.items.RaygunFrame
 import com.castlebravostudios.rayguns.api.items.RaygunChamber
+import com.castlebravostudios.rayguns.api.items.RaygunFrame
 import com.castlebravostudios.rayguns.api.items.RaygunLens
 import com.castlebravostudios.rayguns.api.items.RaygunModule
 import com.castlebravostudios.rayguns.blocks.BaseInventoryTileEntity
 import com.castlebravostudios.rayguns.items.misc.BrokenGun
 import com.castlebravostudios.rayguns.items.misc.RayGun
+import com.castlebravostudios.rayguns.utils.Extensions.ItemExtensions
 import com.castlebravostudios.rayguns.utils.GunComponents
 import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
-import net.minecraft.item.Item
+
 import net.minecraft.item.ItemStack
-import com.castlebravostudios.rayguns.api.items.RaygunModule
-import com.castlebravostudios.rayguns.api.items.RaygunBarrel
-import com.castlebravostudios.rayguns.utils.Extensions.ItemExtensions
 
 class GunBenchTileEntity extends BaseInventoryTileEntity {
   private[this] val inv = Array.fill[ItemStack](7)(null)
@@ -139,8 +138,8 @@ class GunBenchTileEntity extends BaseInventoryTileEntity {
 
   override def getInventoryStackLimit() : Int = 1
 
-  override def getInvName : String = "rayguns.gunBenchEntity"
-  override def isInvNameLocalized : Boolean = false
+  override def getInventoryName : String = "rayguns.gunBenchEntity"
+  override def hasCustomInventoryName : Boolean = false
   override def isItemValidForSlot(slot : Int, stack : ItemStack) : Boolean ={
     val item = stack.getItem
     val module = item match {

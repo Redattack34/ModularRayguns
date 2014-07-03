@@ -27,32 +27,29 @@
 
 package com.castlebravostudios.rayguns.items.recipes
 
-//scalastyle:off underscore.import
-
-import com.castlebravostudios.rayguns.api.LensGrinderRecipeRegistry
 import com.castlebravostudios.rayguns.api.items._
+import com.castlebravostudios.rayguns.items.RaygunsBlocks
 import com.castlebravostudios.rayguns.items.accessories._
 import com.castlebravostudios.rayguns.items.barrels._
 import com.castlebravostudios.rayguns.items.batteries._
-import com.castlebravostudios.rayguns.items.frames._
 import com.castlebravostudios.rayguns.items.chambers._
 import com.castlebravostudios.rayguns.items.emitters.Emitters
+import com.castlebravostudios.rayguns.items.frames._
 import com.castlebravostudios.rayguns.items.lenses._
 import com.castlebravostudios.rayguns.items.misc._
-import com.castlebravostudios.rayguns.utils.Extensions.ItemExtensions
 import com.castlebravostudios.rayguns.utils.Extensions.BlockExtensions
-import com.castlebravostudios.rayguns.utils.ScalaShapedRecipeFactory
-import net.minecraft.block.Block
-import cpw.mods.fml.common.registry.GameRegistry
-import net.minecraft.nbt.NBTTagCompound
-import cpw.mods.fml.common.event.FMLInterModComms
-import net.minecraftforge.fluids.FluidStack
-import net.minecraftforge.fluids.FluidRegistry
-import net.minecraft.init.Items
+import com.castlebravostudios.rayguns.utils.Extensions.ItemExtensions
+
 import net.minecraft.init.Blocks
-import net.minecraft.item.ItemStack
+import net.minecraft.init.Items
 import net.minecraft.item.Item
-import com.castlebravostudios.rayguns.items.RaygunsBlocks
+import net.minecraft.item.ItemStack
+import net.minecraft.nbt.NBTTagCompound
+import net.minecraftforge.fluids.FluidRegistry
+import net.minecraftforge.fluids.FluidStack
+
+import cpw.mods.fml.common.event.FMLInterModComms
+import cpw.mods.fml.common.registry.GameRegistry
 
 //scalastyle:on
 
@@ -109,25 +106,25 @@ object ThermalExpansionRecipeLibrary extends RecipeLibrary {
     registerMisc()
   }
 
-  def getIngredientItems : Seq[Item] = Seq(
-    OpticalGlass,
-    RedstoneDopedGlass,
-    GlowstoneDopedGlass,
-    Tier1Diode,
-    Tier2Diode,
-    Tier3Diode,
-    Tier1HeatSink,
-    Tier2HeatSink,
-    Tier3HeatSink,
-    Tier1ChamberCasing,
-    Tier2ChamberCasing,
-    Tier3ChamberCasing,
-    RadiantDust,
-    RadiantDopedGlass,
-    Shutter,
-    Tier1GainMedium,
-    Tier2GainMedium,
-    Tier3GainMedium
+  def getIngredientItems : Seq[(Item, String)] = Seq(
+    ( OpticalGlass, "opticalGlass" ),
+    ( RedstoneDopedGlass, "redstoneGlass" ),
+    ( GlowstoneDopedGlass, "glowstoneGlass" ),
+    ( Tier1Diode, "tier1Diode" ),
+    ( Tier2Diode, "tier2Diode" ),
+    ( Tier3Diode, "tier3Diode" ),
+    ( Tier1HeatSink, "tier1HeatSink" ),
+    ( Tier2HeatSink, "tier2HeatSink" ),
+    ( Tier3HeatSink, "tier3HeatSink" ),
+    ( Tier1ChamberCasing, "tier1Casing" ),
+    ( Tier2ChamberCasing, "tier2Casing" ),
+    ( Tier3ChamberCasing, "Tier3Casing" ),
+    ( RadiantDust, "radiantDust" ),
+    ( RadiantDopedGlass, "radiantGlass" ),
+    ( Shutter, "shutter" ),
+    ( Tier1GainMedium, "tier1GainMedium" ),
+    ( Tier2GainMedium, "tier2GainMedium" ),
+    ( Tier3GainMedium, "tier3GainMedium" )
   )
 
   private def registerAccessories() = {

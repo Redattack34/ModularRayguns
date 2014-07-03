@@ -28,12 +28,10 @@
 package com.castlebravostudios.rayguns.entities
 
 import scala.annotation.tailrec
-
 import com.castlebravostudios.rayguns.utils.BlockPos
 import com.castlebravostudios.rayguns.utils.RaytraceUtils
 import com.google.common.io.ByteArrayDataInput
 import com.google.common.io.ByteArrayDataOutput
-
 import net.minecraft.entity.Entity
 import net.minecraft.entity.IProjectile
 import net.minecraft.nbt.NBTTagCompound
@@ -41,6 +39,7 @@ import net.minecraft.util.MathHelper
 import net.minecraft.util.MovingObjectPosition
 import net.minecraft.util.MovingObjectPosition.MovingObjectType
 import net.minecraft.world.World
+import io.netty.buffer.ByteBuf
 
 /**
  * Base class for beam entities. Most of this code is a poor translation
@@ -143,12 +142,12 @@ class BaseBoltEntity( world : World ) extends BaseShootable( world ) with IProje
     depletionRate = tag.getDouble("depletionRate")
   }
 
-  override def writeSpawnData( out : ByteArrayDataOutput ) : Unit = {
+  override def writeSpawnData( out : ByteBuf ) : Unit = {
     super.writeSpawnData(out)
     out.writeDouble( depletionRate )
   }
 
-  override def readSpawnData( in : ByteArrayDataInput ) : Unit = {
+  override def readSpawnData( in : ByteBuf ) : Unit = {
     super.readSpawnData(in)
     depletionRate = in.readDouble()
   }

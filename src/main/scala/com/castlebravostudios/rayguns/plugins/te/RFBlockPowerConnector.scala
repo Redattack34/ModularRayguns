@@ -56,7 +56,7 @@ trait RFBlockPowerConnector extends IEnergyHandler {
   def extractEnergy( from : ForgeDirection, maxExtract : Int, simulate : Boolean ) : Int = 0
 
   @Optional.Method( modid = "CoFHCore" )
-  def canInterface( from : ForgeDirection ) : Boolean = true
+  def canConnectEnergy( from : ForgeDirection ) : Boolean = true
 
   @Optional.Method( modid = "CoFHCore" )
   def getEnergyStored( from : ForgeDirection ) : Int = ( chargeStored * rfPowerMultiplier ).toInt

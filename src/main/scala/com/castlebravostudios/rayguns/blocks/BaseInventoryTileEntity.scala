@@ -61,7 +61,7 @@ abstract class BaseInventoryTileEntity extends TileEntity with IInventory {
     stack
   }
 
-  override def onInventoryChanged() : Unit = Unit
+  override def markDirty() : Unit = Unit
 
   override def isUseableByPlayer( player : EntityPlayer ) : Boolean = {
     val isThis = worldObj.getTileEntity( xCoord, yCoord, zCoord ) == this
@@ -69,8 +69,8 @@ abstract class BaseInventoryTileEntity extends TileEntity with IInventory {
     isThis && isCloseEnough
   }
 
-  override def openChest : Unit = Unit
-  override def closeChest : Unit = Unit
+  override def openInventory : Unit = Unit
+  override def closeInventory : Unit = Unit
 
   override def readFromNBT( tagCompound : NBTTagCompound ) : Unit = {
     super.readFromNBT(tagCompound)

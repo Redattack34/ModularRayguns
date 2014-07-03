@@ -31,23 +31,19 @@ import com.castlebravostudios.rayguns.api.ShotRegistry
 import com.castlebravostudios.rayguns.items.ChargableItem
 import com.castlebravostudios.rayguns.items.MoreInformation
 import com.castlebravostudios.rayguns.items.ScalaItem
-import com.castlebravostudios.rayguns.mod.Config
 import com.castlebravostudios.rayguns.mod.ModularRayguns
 import com.castlebravostudios.rayguns.plugins.te.RFItemPowerConnector
 import com.castlebravostudios.rayguns.utils.DefaultFireEvent
 import com.castlebravostudios.rayguns.utils.Extensions.ItemStackExtension
-import com.castlebravostudios.rayguns.utils.Extensions.WorldExtension
 import com.castlebravostudios.rayguns.utils.FireEvent
 import com.castlebravostudios.rayguns.utils.GunComponents
 import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
+
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
-import net.minecraft.world.World
-import com.castlebravostudios.rayguns.utils.Vector3
-import net.minecraft.util.EntityDamageSource
-import com.castlebravostudios.rayguns.utils.RandomDamageSource
 import net.minecraft.util.IIcon
+import net.minecraft.world.World
 
 case class GetFireInformationEvent(
     val player : EntityPlayer,
@@ -239,7 +235,7 @@ object RayGun extends ScalaItem with MoreInformation
   def getMaxChargePerTick( item : ItemStack ) : Int =
     RaygunNbtUtils.getBattery( item ).map( _.maxChargePerTick ).getOrElse( 0 )
 
-  override def getItemDisplayName( stack : ItemStack ) : String =
+  override def getItemStackDisplayName( stack : ItemStack ) : String =
     if ( stack.hasDisplayName() ) {
       stack.getTagCompoundSafe.getCompoundTag("display").getString( "display" )
     }

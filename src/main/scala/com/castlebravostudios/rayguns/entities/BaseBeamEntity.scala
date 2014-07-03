@@ -42,6 +42,7 @@ import com.castlebravostudios.rayguns.utils.Vector3
 import com.castlebravostudios.rayguns.utils.Extensions.WorldExtension
 import net.minecraft.util.MathHelper
 import net.minecraft.util.MovingObjectPosition.MovingObjectType
+import io.netty.buffer.ByteBuf
 
 class BaseBeamEntity(world : World) extends BaseShootable( world ) {
 
@@ -86,7 +87,7 @@ class BaseBeamEntity(world : World) extends BaseShootable( world ) {
     maxRange = tag.getInteger("maxRange")
   }
 
-  override def writeSpawnData( out : ByteArrayDataOutput ) : Unit = {
+  override def writeSpawnData( out : ByteBuf ) : Unit = {
     super.writeSpawnData(out)
     out.writeInt( maxRange )
 
@@ -102,7 +103,7 @@ class BaseBeamEntity(world : World) extends BaseShootable( world ) {
     out.writeFloat( end.z.toFloat )
   }
 
-  override def readSpawnData( in : ByteArrayDataInput ) : Unit = {
+  override def readSpawnData( in : ByteBuf ) : Unit = {
     super.readSpawnData(in)
     maxRange = in.readInt()
 

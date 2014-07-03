@@ -43,7 +43,7 @@ trait RecipeLibrary {
 
   def registerRecipes() : Unit
 
-  def getIngredientItems() : Seq[Item]
+  def getIngredientItems() : Seq[(Item, String)]
 
   protected def addModuleShaped( module : RaygunModule, params : Any* ) : Unit = {
     val modules = findModules( module, params :_* )

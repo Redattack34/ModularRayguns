@@ -82,7 +82,7 @@ class NEIModularRaygunsConfig extends IConfigureNEI {
     range.add(RaygunsBlocks.gunBench)
     range.add(RaygunsBlocks.lensGrinder)
 
-    Config.recipeLibrary.getIngredientItems().foreach( range.add )
+    Config.recipeLibrary.getIngredientItems().map( _._1 ).foreach( range.add )
 
     range
   }

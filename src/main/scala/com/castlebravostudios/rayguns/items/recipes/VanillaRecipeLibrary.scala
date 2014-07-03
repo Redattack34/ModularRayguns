@@ -71,28 +71,28 @@ object VanillaRecipeLibrary extends RecipeLibrary {
     registerMisc()
   }
 
-  def getIngredientItems : Seq[Item] = Seq(
-    OpticalGlass,
-    RedstoneDustedGlass,
-    GlowstoneDustedGlass,
-    RedstoneDopedGlass,
-    GlowstoneDopedGlass,
-    Tier1Diode,
-    Tier2Diode,
-    Tier3Diode,
-    Tier1HeatSink,
-    Tier2HeatSink,
-    Tier3HeatSink,
-    Tier1ChamberCasing,
-    Tier2ChamberCasing,
-    Tier3ChamberCasing,
-    RadiantDust,
-    RadiantDustedGlass,
-    RadiantDopedGlass,
-    Shutter,
-    Tier1GainMedium,
-    Tier2GainMedium,
-    Tier3GainMedium
+  def getIngredientItems : Seq[(Item, String)] = Seq(
+    ( OpticalGlass, "opticalGlass" ),
+    ( RedstoneDopedGlass, "redstoneGlass" ),
+    ( GlowstoneDopedGlass, "glowstoneGlass" ),
+    ( Tier1Diode, "tier1Diode" ),
+    ( Tier2Diode, "tier2Diode" ),
+    ( Tier3Diode, "tier3Diode" ),
+    ( Tier1HeatSink, "tier1HeatSink" ),
+    ( Tier2HeatSink, "tier2HeatSink" ),
+    ( Tier3HeatSink, "tier3HeatSink" ),
+    ( Tier1ChamberCasing, "tier1Casing" ),
+    ( Tier2ChamberCasing, "tier2Casing" ),
+    ( Tier3ChamberCasing, "Tier3Casing" ),
+    ( RadiantDust, "radiantDust" ),
+    ( RadiantDopedGlass, "radiantGlass" ),
+    ( Shutter, "shutter" ),
+    ( Tier1GainMedium, "tier1GainMedium" ),
+    ( Tier2GainMedium, "tier2GainMedium" ),
+    ( Tier3GainMedium, "tier3GainMedium" ),
+    ( RedstoneDustedGlass, "redstoneDustedGlass" ),
+    ( GlowstoneDustedGlass, "glowstoneDustedGlass" ),
+    ( RadiantDustedGlass, "radiantDustedGlass" )
   )
 
   private def registerAccessories() = {

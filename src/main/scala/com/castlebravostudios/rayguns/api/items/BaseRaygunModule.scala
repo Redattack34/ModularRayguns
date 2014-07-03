@@ -28,6 +28,7 @@
 package com.castlebravostudios.rayguns.api.items
 
 import com.castlebravostudios.rayguns.items.misc.GetFireInformationEvent
+import cpw.mods.fml.common.registry.GameRegistry
 
 abstract class BaseRaygunModule extends RaygunModule {
 
@@ -37,6 +38,7 @@ abstract class BaseRaygunModule extends RaygunModule {
 
   def registerItem : Unit = {
     this._item = Some( createItem() )
+    GameRegistry.registerItem( this._item.get, this.moduleKey )
   }
 
   /**

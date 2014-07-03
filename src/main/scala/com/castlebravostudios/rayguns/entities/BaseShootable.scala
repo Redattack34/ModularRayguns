@@ -38,6 +38,8 @@ import net.minecraft.world.World
 import javax.swing.plaf.nimbus.Effect
 import java.util.Random
 import com.castlebravostudios.rayguns.utils.Logging
+import io.netty.buffer.ByteBuf
+import com.google.common.base.Charsets
 
 abstract class BaseShootable( world : World ) extends Entity( world )
   with Shootable with IEntityAdditionalSpawnData with Logging {
@@ -57,14 +59,19 @@ abstract class BaseShootable( world : World ) extends Entity( world )
     initEffect( key )
   }
 
-  def writeSpawnData( out : ByteArrayDataOutput ) : Unit = {
+  def writeSpawnData( out : ByteBuf ) : Unit = {
     out.writeDouble( charge )
-    out.writeUTF( effect.effectKey )
+
+    val bytes = effect.effectKey.getBytes(Charsets.UTF_8)
+    out.writeInt( bytes.length )
+    out.writeBytes( bytes )
   }
 
-  def readSpawnData( in : ByteArrayDataInput ) : Unit = {
+  def readSpawnData( in : ByteBuf ) : Unit = {
     charge = in.readDouble()
-    val key = in.readUTF()
+
+    val byteCount = in.readInt()
+    val key = in.readBytes( byteCount ).toString( Charsets.UTF_8 )
     initEffect( key )
   }
 

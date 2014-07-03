@@ -45,6 +45,7 @@ import org.apache.logging.log4j.Logger
 import com.castlebravostudios.rayguns.items.RaygunsItems
 import com.castlebravostudios.rayguns.items.RaygunsBlocks
 import com.castlebravostudios.rayguns.items.frames.FireflyFrame
+import net.minecraft.item.Item
 
 @Mod(modid="mod_ModularRayguns", version="1.0-alpha2", modLanguage="scala", useMetadata=true)
 object ModularRayguns {
@@ -81,8 +82,8 @@ object ModularRayguns {
   }
 
   val raygunsTab  = new CreativeTabs("tabRayguns") {
-    override def getIconItemStack : ItemStack =
-      FireflyFrame.item.get.asStack
+    override def getTabIconItem : Item =
+      FireflyFrame.item.get
   }
 
   def texture( path : String ) : ResourceLocation =

@@ -42,6 +42,8 @@ import com.castlebravostudios.rayguns.api.ModuleRegistrationHelper
 import com.castlebravostudios.rayguns.mod.Config
 import ModuleRegistrationHelper.registerModule
 import com.castlebravostudios.rayguns.items.frames.MantisFrame
+import cpw.mods.fml.common.registry.GameRegistry
+import GameRegistry.registerItem
 
 object RaygunsItems {
 
@@ -99,35 +101,31 @@ object RaygunsItems {
   }
 
   private def registerEmitters() : Unit = {
-    registerItem( Emitters.laserEmitter )
-    registerItem( Emitters.heatRayEmitter )
-    registerItem( Emitters.lifeForceEmitter )
-    registerItem( Emitters.frostRayEmitter )
-    registerItem( Emitters.fortifiedSunlightEmitter )
-    registerItem( Emitters.explosiveEmitter )
-    registerItem( Emitters.deathRayEmitter )
-    registerItem( Emitters.enderEmitter )
-    registerItem( Emitters.lightningEmitter )
-    registerItem( Emitters.impulseEmitter )
-    registerItem( Emitters.tractorEmitter )
-    registerItem( Emitters.tier1CuttingEmitter )
-    registerItem( Emitters.tier2CuttingEmitter )
-    registerItem( Emitters.tier3CuttingEmitter )
-    registerItem( Emitters.matterTransporterEmitter )
+    registerItem( Emitters.laserEmitter, "laserEmitter" )
+    registerItem( Emitters.heatRayEmitter, "heatRayEmitter" )
+    registerItem( Emitters.lifeForceEmitter, "lifeForceEmitter" )
+    registerItem( Emitters.frostRayEmitter, "frostRayEmitter" )
+    registerItem( Emitters.fortifiedSunlightEmitter, "fortifiedSunlightEmitter" )
+    registerItem( Emitters.explosiveEmitter, "explosiveEmitter" )
+    registerItem( Emitters.deathRayEmitter, "deathRayEmitter" )
+    registerItem( Emitters.enderEmitter, "enderEmitter" )
+    registerItem( Emitters.lightningEmitter, "lightningEmitter" )
+    registerItem( Emitters.impulseEmitter, "impulseEmitter" )
+    registerItem( Emitters.tractorEmitter, "tractorEmitter" )
+    registerItem( Emitters.tier1CuttingEmitter, "tier1CuttingEmitter" )
+    registerItem( Emitters.tier2CuttingEmitter, "tier2CuttingEmitter" )
+    registerItem( Emitters.tier3CuttingEmitter, "tier3CuttingEmitter" )
+    registerItem( Emitters.matterTransporterEmitter, "matterTransporterEmitter" )
   }
 
   private def registerMisc() : Unit = {
-    registerItem( RayGun )
-    registerItem( BrokenGun )
-    Config.recipeLibrary.getIngredientItems().foreach( registerItem )
+    registerItem( RayGun, "rayGun" )
+    registerItem( BrokenGun, "brokenRayGun" )
+    Config.recipeLibrary.getIngredientItems().foreach{ case (item, name) => registerItem( item, name ) }
   }
 
   private def registerBarrels() : Unit = {
     registerModule( BeamBarrel, Config.barrelBeam )
     registerModule( BlasterBarrel, Config.barrelBlaster )
-  }
-
-  private def registerItem( item : Any ) : Unit = {
-    item.hashCode().failCompilation()
   }
 }
