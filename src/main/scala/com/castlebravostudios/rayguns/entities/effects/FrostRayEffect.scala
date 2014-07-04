@@ -92,7 +92,7 @@ object FrostRayEffect extends BaseEffect {
       worldObj.setBlock(hitX, hitY, hitZ, frozenBlock)
     }
     else if ( material.blocksMovement && worldObj.isAirBlock(hitX, hitY + 1, hitZ) ) {
-      worldObj.setBlock( hitX, hitY + 1, hitZ, Blocks.snow )
+      worldObj.setBlock( hitX, hitY + 1, hitZ, Blocks.snow_layer )
     }
   }
 
