@@ -152,8 +152,7 @@ object RaygunNbtUtils {
   def getRaygunName( components : GunComponents ) : String = {
     def translate( opt : RaygunModule) : String = I18n.format( opt.nameSegmentKey )
 
-    I18n.format("rayguns.RaygunNamePattern")
-      .format(
+    I18n.format("rayguns.RaygunNamePattern",
         translate( components.chamber ),
         translate( components.battery ),
         translate( components.frame ),
