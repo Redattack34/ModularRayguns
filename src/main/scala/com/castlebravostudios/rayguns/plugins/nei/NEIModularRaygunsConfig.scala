@@ -29,7 +29,6 @@ package com.castlebravostudios.rayguns.plugins.nei
 
 //scalastyle:off underscore.import
 import com.castlebravostudios.rayguns.api.items.RaygunModule
-import com.castlebravostudios.rayguns.items.Blocks
 import com.castlebravostudios.rayguns.items.accessories._
 import com.castlebravostudios.rayguns.items.batteries._
 import com.castlebravostudios.rayguns.items.frames._
@@ -46,26 +45,28 @@ import cpw.mods.fml.common.Mod
 import com.castlebravostudios.rayguns.blocks.lensgrinder.LensGrinderGui
 import codechicken.nei.recipe.DefaultOverlayHandler
 import com.castlebravostudios.rayguns.plugins.nei.NEIModularRaygunsConfig.recipeKey
-import com.castlebravostudios.rayguns.items.misc.Tier1Diode
 import com.castlebravostudios.rayguns.mod.Config
-import com.castlebravostudios.rayguns.items.frames.MantisFrame
+import com.castlebravostudios.rayguns.utils.Extensions.BlockExtensions
+import com.castlebravostudios.rayguns.utils.Extensions.ItemExtensions
+import com.castlebravostudios.rayguns.items.RaygunsBlocks
+import net.minecraft.init.Blocks
 //scalastyle:on
 
 class NEIModularRaygunsConfig extends IConfigureNEI {
 
   def loadConfig() : Unit = {
-    API.hideItem( Blocks.invisibleRedstone.blockID )
-    API.hideItem( RayGun.itemID )
-    API.hideItem( BrokenGun.itemID )
+    API.hideItem( RaygunsBlocks.invisibleRedstone.asStack )
+    API.hideItem( RayGun.asStack )
+    API.hideItem( BrokenGun.asStack )
 
-    API.addSetRange("Modular Rayguns", mainItemRange)
+/*    API.addSetRange("Modular Rayguns", mainItemRange)
     API.addSetRange("Modular Rayguns.Accessories", accessoryItemRange)
     API.addSetRange("Modular Rayguns.Barrels", barrelItemRange)
     API.addSetRange("Modular Rayguns.Batteries", batteryItemRange)
     API.addSetRange("Modular Rayguns.Frames", frameItemRange)
     API.addSetRange("Modular Rayguns.Chambers", chamberItemRange)
     API.addSetRange("Modular Rayguns.Emitters", emitterItemRange)
-    API.addSetRange("Modular Rayguns.Lenses", lensItemRange)
+    API.addSetRange("Modular Rayguns.Lenses", lensItemRange)*/
 
     API.registerRecipeHandler( new NEILensGrinderRecipeManager )
     API.registerUsageHandler( new NEILensGrinderRecipeManager )
@@ -78,10 +79,10 @@ class NEIModularRaygunsConfig extends IConfigureNEI {
 
   private def mainItemRange: MultiItemRange = {
     val range = new MultiItemRange()
-    range.add(Blocks.gunBench)
-    range.add(Blocks.lensGrinder)
+    range.add(RaygunsBlocks.gunBench)
+    range.add(RaygunsBlocks.lensGrinder)
 
-    Config.recipeLibrary.getIngredientItems().foreach( range.add )
+    Config.recipeLibrary.getIngredientItems().map( _._1 ).foreach( range.add )
 
     range
   }

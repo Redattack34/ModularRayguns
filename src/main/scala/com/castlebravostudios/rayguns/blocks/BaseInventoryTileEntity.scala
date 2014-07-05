@@ -61,23 +61,23 @@ abstract class BaseInventoryTileEntity extends TileEntity with IInventory {
     stack
   }
 
-  override def onInventoryChanged : Unit = Unit
+  override def markDirty() : Unit = Unit
 
   override def isUseableByPlayer( player : EntityPlayer ) : Boolean = {
-    val isThis = worldObj.getBlockTileEntity( xCoord, yCoord, zCoord ) == this
+    val isThis = worldObj.getTileEntity( xCoord, yCoord, zCoord ) == this
     val isCloseEnough =  player.getDistanceSq( xCoord + 0.5, yCoord + 0.5, zCoord + 0.5) < 64
     isThis && isCloseEnough
   }
 
-  override def openChest : Unit = Unit
-  override def closeChest : Unit = Unit
+  override def openInventory : Unit = Unit
+  override def closeInventory : Unit = Unit
 
   override def readFromNBT( tagCompound : NBTTagCompound ) : Unit = {
     super.readFromNBT(tagCompound)
 
-    val tagList = tagCompound.getTagList("Inventory")
-    for ( x <- 0 until tagList.tagCount();
-          tag = tagList.tagAt(x).asInstanceOf[NBTTagCompound] ) {
+    val tagList = tagCompound.getTagList("Inventory", 10)
+    for { x <- 0 until tagList.tagCount();
+          tag = tagList.getCompoundTagAt( x ) } {
       val slot = tag.getByte("Slot")
       if ( slot >= 0 && slot < getSizeInventory ) {
         setInventorySlotContents( slot, ItemStack.loadItemStackFromNBT(tag) )
@@ -85,7 +85,7 @@ abstract class BaseInventoryTileEntity extends TileEntity with IInventory {
     }
   }
 
-  override def writeToNBT( tagCompound : NBTTagCompound ) {
+  override def writeToNBT( tagCompound : NBTTagCompound ) : Unit = {
     super.writeToNBT(tagCompound)
 
     val itemList = new NBTTagList
@@ -101,6 +101,4 @@ abstract class BaseInventoryTileEntity extends TileEntity with IInventory {
 
   def onSlotChanged( slot : Int ) : Unit
   def onPickedUpFrom( slot : Int ) : Unit
-
-
 }

@@ -38,7 +38,7 @@ import com.castlebravostudios.rayguns.api.items.ItemModule
 import com.castlebravostudios.rayguns.plugins.te.RFItemPowerConnector
 import com.castlebravostudios.rayguns.items.ChargableItem
 
-class ItemBattery( id : Int, val battery : RaygunBattery ) extends ItemModule( id, battery ) with MoreInformation
+class ItemBattery( val battery : RaygunBattery ) extends ItemModule( battery ) with MoreInformation
   with ChargableItem with RFItemPowerConnector {
 
   override def getAdditionalInfo(item : ItemStack, player : EntityPlayer) : Iterable[String] =

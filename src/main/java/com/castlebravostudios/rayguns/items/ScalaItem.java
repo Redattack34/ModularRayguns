@@ -39,11 +39,7 @@ import net.minecraft.item.ItemStack;
  */
 public abstract class ScalaItem extends Item {
 
-  public ScalaItem( int id ) {
-    super( id );
-  }
-
-  @SuppressWarnings( { "rawtypes", "unchecked", "cast" } )
+  @SuppressWarnings( { "cast" } )
   @Override
   public void addInformation( ItemStack item,
       EntityPlayer player, List strings, boolean advancedTooltips ) {

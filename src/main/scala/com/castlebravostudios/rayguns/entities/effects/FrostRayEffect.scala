@@ -38,6 +38,7 @@ import net.minecraft.util.EntityDamageSource
 import net.minecraft.util.ResourceLocation
 import net.minecraft.world.World
 import com.castlebravostudios.rayguns.mod.ModularRayguns
+import net.minecraft.init.Blocks
 
 
 object FrostRayEffect extends BaseEffect {
@@ -79,26 +80,26 @@ object FrostRayEffect extends BaseEffect {
   }
 
   private def tryFreezeBlock( worldObj : World, hitX: Int, hitY: Int, hitZ: Int  ): AnyVal = {
-    val material = worldObj.getBlockMaterial(hitX, hitY, hitZ)
+    val material = worldObj.getBlock(hitX, hitY, hitZ).getMaterial
     val metadata = worldObj.getBlockMetadata(hitX, hitY, hitZ)
     val frozenBlock =
-      if ( material == Material.water ) Block.ice
-      else if ( material == Material.lava && metadata == 0 ) Block.obsidian
-      else if ( material == Material.lava && metadata <= 4 ) Block.cobblestone
+      if ( material == Material.water ) Blocks.ice
+      else if ( material == Material.lava && metadata == 0 ) Blocks.obsidian
+      else if ( material == Material.lava && metadata <= 4 ) Blocks.cobblestone
       else null
 
     if ( frozenBlock != null ) {
-      worldObj.setBlock(hitX, hitY, hitZ, frozenBlock.blockID)
+      worldObj.setBlock(hitX, hitY, hitZ, frozenBlock)
     }
     else if ( material.blocksMovement && worldObj.isAirBlock(hitX, hitY + 1, hitZ) ) {
-      worldObj.setBlock( hitX, hitY + 1, hitZ, Block.snow.blockID )
+      worldObj.setBlock( hitX, hitY + 1, hitZ, Blocks.snow_layer )
     }
   }
 
   override def collidesWithLiquids(shootable : Shootable) : Boolean = true
 
   override def createImpactParticles( shootable : Shootable, hitX : Double, hitY : Double, hitZ : Double ) : Unit = {
-    for ( _ <- 0 until 4 ) {
+    for { _ <- 0 until 4 } {
       shootable.worldObj.spawnParticle("snowballpoof", hitX, hitY, hitZ, 0.0D, 0.0D, 0.0D);
     }
   }

@@ -34,15 +34,14 @@ import com.castlebravostudios.rayguns.mod.ModularRayguns
 import com.castlebravostudios.rayguns.utils.Extensions.ItemExtensions
 import com.google.common.io.ByteArrayDataInput
 import com.google.common.io.ByteArrayDataOutput
-
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.Item
 import net.minecraft.item.ItemBlock
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.world.World
-
 import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData
+import io.netty.buffer.ByteBuf
 
 object MatterTransporterEffect extends BaseEffect {
 
@@ -50,10 +49,9 @@ object MatterTransporterEffect extends BaseEffect {
   val damageSourceKey = ""
 
   def hitBlock( shootable: Shootable, hitX: Int, hitY: Int, hitZ: Int, side: Int ) : Boolean = {
-    val itemId = shootable.asInstanceOf[MatterTransporterShootable].itemId
-    if ( itemId == 0 ) return true
+    val item = shootable.asInstanceOf[MatterTransporterShootable].item
+    if ( item == null ) return true
 
-    val item = Item.itemsList(itemId)
     item.onItemUse( item.asStack, shootable.shooter.asInstanceOf[EntityPlayer], shootable.worldObj,
         hitX, hitY, hitZ, side, hitX + 0.5f, hitY + 0.5f, hitZ + 0.5f)
   }
@@ -62,14 +60,14 @@ object MatterTransporterEffect extends BaseEffect {
 
   override def createBeamEntity( world : World, player : EntityPlayer ) : MatterTransporterBeamEntity = {
     val beam = new MatterTransporterBeamEntity( world )
-    beam.itemId = deductTransportedItem( player )
+    beam.item = deductTransportedItem( player )
     beam.effect = this
     beam
   }
 
   override def createBoltEntity( world : World, player : EntityPlayer ) : MatterTransporterBoltEntity = {
     val bolt = new MatterTransporterBoltEntity( world )
-    bolt.itemId = deductTransportedItem( player )
+    bolt.item = deductTransportedItem( player )
     bolt.effect = this
     bolt
   }
@@ -78,7 +76,7 @@ object MatterTransporterEffect extends BaseEffect {
   val beamTexture = ModularRayguns.texture( "textures/beams/matter_transporter_beam.png" )
   val chargeTexture = ModularRayguns.texture( "textures/effects/charge/matter_transporter_charge.png" )
 
-  def getPlacedBlockId( player : EntityPlayer ) : Option[Int] = {
+  def getPlacedBlockId( player : EntityPlayer ) : Option[Item] = {
     val currentSlot = player.inventory.currentItem
     val itemSlot = ( currentSlot + 1 ) % 8
 
@@ -87,52 +85,52 @@ object MatterTransporterEffect extends BaseEffect {
     val item = stack.getItem()
     if ( !item.isInstanceOf[ItemBlock] ) return None
 
-    Some( item.itemID )
+    Some( item )
   }
 
-  private def deductTransportedItem( player: EntityPlayer ) : Int = {
+  private def deductTransportedItem( player: EntityPlayer ) : Item = {
     val currentSlot = player.inventory.currentItem
     val itemSlot = ( currentSlot + 1 ) % 8
 
     val stack = player.inventory.getStackInSlot( itemSlot )
-    if ( stack == null ) return 0
+    if ( stack == null ) return null
     val item = stack.getItem()
-    if ( !item.isInstanceOf[ItemBlock] ) return 0
+    if ( !item.isInstanceOf[ItemBlock] ) return null
 
     stack.stackSize -= 1
     if ( stack.stackSize > 0 ) player.inventory.setInventorySlotContents( itemSlot, stack.copy )
     else player.inventory.setInventorySlotContents( itemSlot, null )
 
-    item.itemID
+    item
   }
 }
 
 trait MatterTransporterShootable extends Shootable with IEntityAdditionalSpawnData {
-  var itemId : Int = _
+  var item : Item = _
 
   abstract override def onEntityUpdate() : Unit = {
     super.onEntityUpdate()
-    if ( itemId == 0 ) this.setDead()
+    if ( item == null ) this.setDead()
   }
 
   abstract override def writeEntityToNBT( tag : NBTTagCompound ) : Unit = {
     super.writeEntityToNBT(tag)
-    tag.setInteger("ItemId", itemId)
+    tag.setInteger("ItemId", Item.getIdFromItem(item) )
   }
 
   abstract override def readEntityFromNBT( tag : NBTTagCompound ) : Unit = {
     super.readEntityFromNBT(tag)
-    itemId = tag.getInteger("ItemId")
+    item = Item.getItemById( tag.getInteger("ItemId") )
   }
 
-  abstract override def writeSpawnData( out : ByteArrayDataOutput ) : Unit = {
+  abstract override def writeSpawnData( out : ByteBuf ) : Unit = {
     super.writeSpawnData(out)
-    out.writeInt(itemId)
+    out.writeInt( Item.getIdFromItem(item) )
   }
 
-  abstract override def readSpawnData( in : ByteArrayDataInput ) : Unit = {
+  abstract override def readSpawnData( in : ByteBuf ) : Unit = {
     super.readSpawnData(in)
-    itemId = in.readInt()
+    item = Item.getItemById( in.readInt() )
   }
 }
 class MatterTransporterBoltEntity(world : World) extends BaseBoltEntity(world) with MatterTransporterShootable

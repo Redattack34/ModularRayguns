@@ -47,7 +47,7 @@ object LaserEffect extends BaseEffect {
   def hitBlock( shootable : Shootable, hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Boolean = true
 
   override def createImpactParticles( shootable : Shootable, hitX : Double, hitY : Double, hitZ : Double ): Unit = {
-    for ( _ <- 0 until 4) spawnParticle(shootable, hitX, hitY, hitZ)
+    for { _ <- 0 until 4 } spawnParticle(shootable, hitX, hitY, hitZ)
   }
 
   private def spawnParticle(shootable: Shootable, hitX: Double, hitY: Double, hitZ: Double): Unit = {

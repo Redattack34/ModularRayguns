@@ -37,13 +37,13 @@ import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.block.Block
 import net.minecraft.item.crafting.ShapelessRecipes
-import scala.collection.JavaConversions._
+import scala.collection.JavaConverters.seqAsJavaListConverter
 
 trait RecipeLibrary {
 
   def registerRecipes() : Unit
 
-  def getIngredientItems() : Seq[Item]
+  def getIngredientItems() : Seq[(Item, String)]
 
   protected def addModuleShaped( module : RaygunModule, params : Any* ) : Unit = {
     val modules = findModules( module, params :_* )
@@ -90,15 +90,15 @@ trait RecipeLibrary {
       }
       case _ => throw new IllegalArgumentException( "Invalid shapeless recipe." );
     }
-    GameRegistry.addRecipe( new ShapelessRecipes( output, stacks ) )
+    GameRegistry.addRecipe( new ShapelessRecipes( output, stacks.asJava ) )
   }
 
   protected def addLensGrinder( ticks : Short, result : ItemStack, recipe : Any* ): Unit =
     LensGrinderRecipeRegistry.register( ticks, result, recipe : _ * )
 
   protected def addSmelting( input : Block, output : ItemStack, expMult : Float ): Unit =
-    GameRegistry.addSmelting(input.blockID, output, expMult)
+    GameRegistry.addSmelting(input, output, expMult)
 
   protected def addSmelting( input : Item, output : ItemStack, expMult : Float ): Unit =
-    GameRegistry.addSmelting(input.itemID, output, expMult)
+    GameRegistry.addSmelting(input, output, expMult)
 }

@@ -38,7 +38,7 @@ object BeamBarrel extends BaseRaygunModule with RaygunBarrel {
   val powerModifier = 1.2d;
   val nameSegmentKey = "rayguns.BeamBarrel.segment"
 
-  def createItem( id : Int ) : ItemModule = new ItemModule( id, this )
+  def createItem : ItemModule = new ItemModule( this )
     .setUnlocalizedName("rayguns.BeamBarrel")
     .setTextureName("rayguns:barrel_beam")
     .setCreativeTab( ModularRayguns.raygunsTab )

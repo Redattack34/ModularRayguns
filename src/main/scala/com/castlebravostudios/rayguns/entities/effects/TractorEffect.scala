@@ -42,6 +42,7 @@ import net.minecraft.world.World
 import net.minecraft.tileentity.TileEntityPiston
 import net.minecraft.util.ResourceLocation
 import com.castlebravostudios.rayguns.mod.ModularRayguns
+import net.minecraft.init.Blocks
 
 object TractorEffect extends BaseEffect {
 
@@ -68,32 +69,30 @@ object TractorEffect extends BaseEffect {
     true
   }
 
-  private def canPullBlock( worldObj : World, block : BlockPos, offset : BlockPos ) : Boolean = {
-    val BlockPos( x, y, z ) = block
-    val blockId = worldObj.getBlockId( x, y, z )
+  private def canPullBlock( worldObj : World, pos : BlockPos, offset : BlockPos ) : Boolean = {
+    val BlockPos( x, y, z ) = pos
+    val block = worldObj.getBlock( x, y, z )
     val meta = worldObj.getBlockMetadata( x, y, z )
-    val blockObj = Block.blocksList(blockId)
 
-    if ( worldObj.isAirBlock(x, y, z) || blockObj.getMobilityFlag() == 1 ) true
-    else if ( blockId == Block.obsidian.blockID ) false
-    else if ( blockObj.getBlockHardness(worldObj, x, y, z ) == -1.0f ) false
-    else if ( blockObj.getMobilityFlag() == 2 ) false
-    else if ( worldObj.blockHasTileEntity( x, y, z ) ) false
+    if ( worldObj.isAirBlock(x, y, z) || block.getMobilityFlag() == 1 ) true
+    else if ( block == Blocks.obsidian) false
+    else if ( block.getBlockHardness(worldObj, x, y, z ) == -1.0f ) false
+    else if ( block.getMobilityFlag() == 2 ) false
+    else if ( worldObj.getTileEntity( x, y, z ) != null ) false
     else true
   }
 
-  private def doPushBlocks( worldObj : World, block : BlockPos, offset : BlockPos, side : Int ) : Unit = {
-    val BlockPos( x, y, z ) = block
-    val blockId = worldObj.getBlockId( x, y, z )
+  private def doPushBlocks( worldObj : World, pos : BlockPos, offset : BlockPos, side : Int ) : Unit = {
+    val BlockPos( x, y, z ) = pos
+    val block = worldObj.getBlock( x, y, z )
     val meta = worldObj.getBlockMetadata( x, y, z )
-    val blockObj = Block.blocksList(blockId)
 
-    if ( worldObj.isAirBlock(x, y, z) || blockObj.getMobilityFlag() == 1 ) return;
+    if ( worldObj.isAirBlock(x, y, z) || block.getMobilityFlag() == 1 ) return;
 
     worldObj.setBlockToAir(x, y, z)
-    val BlockPos( x2, y2, z2 ) = block.add(offset)
-    worldObj.setBlock(x2, y2, z2, Block.pistonMoving.blockID)
-    worldObj.setBlockTileEntity(x2, y2, z2, new TileEntityPiston( blockId, meta, side, true, false ) )
+    val BlockPos( x2, y2, z2 ) = pos.add(offset)
+    worldObj.setBlock(x2, y2, z2, Blocks.piston_extension)
+    worldObj.setTileEntity(x2, y2, z2, new TileEntityPiston( block, meta, side, true, false ) )
   }
 
   protected def impulseVector( shootable : Shootable ) : Vector3 = {

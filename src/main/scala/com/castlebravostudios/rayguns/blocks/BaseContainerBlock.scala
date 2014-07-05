@@ -38,14 +38,15 @@ import net.minecraft.block.material.Material
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.item.ItemStack
 import net.minecraft.block.material.MapColor
+import net.minecraft.block.Block
 
-abstract class BaseContainerBlock(id : Int) extends BlockContainer(id, new Material(MapColor.ironColor)) {
+abstract class BaseContainerBlock extends BlockContainer(new Material(MapColor.ironColor)) {
 
   //scalastyle:off parameter.number
   override def onBlockActivated(world : World, x : Int, y : Int, z : Int, player : EntityPlayer,
     metadata : Int, par7 : Float, par8 : Float, par9 : Float ) : Boolean = {
 
-    val entity = world.getBlockTileEntity( x, y, z );
+    val entity = world.getTileEntity( x, y, z );
     if ( entity == null || player.isSneaking() ) {
       return false
     }
@@ -55,15 +56,15 @@ abstract class BaseContainerBlock(id : Int) extends BlockContainer(id, new Mater
   }
   //scalastyle:off
 
-  override def breakBlock( world : World, x : Int, y : Int, z : Int, par5 : Int, par6 : Int ) : Unit = {
+  override def breakBlock( world : World, x : Int, y : Int, z : Int, block : Block, par6 : Int ) : Unit = {
     dropItems( world, x, y, z )
-    super.breakBlock(world, x, y, z, par5, par6);
+    super.breakBlock(world, x, y, z, block, par6);
   }
 
   private def dropItems( world : World, x : Int, y : Int, z : Int ) : Unit = {
     val rand = new Random()
 
-    val tileEntity = world.getBlockTileEntity(x, y, z)
+    val tileEntity = world.getTileEntity(x, y, z)
     if ( !tileEntity.isInstanceOf[IInventory]) { return }
     val inv = tileEntity.asInstanceOf[IInventory]
 
@@ -76,7 +77,7 @@ abstract class BaseContainerBlock(id : Int) extends BlockContainer(id, new Mater
 
       val entityItem = new EntityItem(world,
                       x + rx, y + ry, z + rz,
-                      new ItemStack(item.itemID, item.stackSize, item.getItemDamage()));
+                      new ItemStack(item.getItem(), item.stackSize, item.getItemDamage()));
 
       if (item.hasTagCompound()) {
               entityItem.getEntityItem().setTagCompound(item.getTagCompound().copy().asInstanceOf[NBTTagCompound]);

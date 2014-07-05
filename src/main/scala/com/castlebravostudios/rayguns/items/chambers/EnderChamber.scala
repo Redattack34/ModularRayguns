@@ -37,7 +37,7 @@ object EnderChamber extends BaseChamber {
   val shotEffect = EnderEffect
   val nameSegmentKey = "rayguns.EnderChamber.segment"
 
-  def createItem( id : Int ) : ItemModule = new ItemModule( id, this )
+   def createItem() : ItemModule = new ItemModule( this )
     .setUnlocalizedName("rayguns.EnderChamber")
     .setTextureName("rayguns:chamber_ender")
     .setCreativeTab( ModularRayguns.raygunsTab )

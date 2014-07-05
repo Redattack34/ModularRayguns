@@ -40,7 +40,7 @@ object BasicBattery extends BaseRaygunModule with RaygunBattery {
   val maxCapacity = 1000
   val maxChargePerTick = 2
 
-  def createItem( id : Int ) : ItemModule = new ItemBattery( id, this )
+  def createItem( ) : ItemModule = new ItemBattery( this )
     .setUnlocalizedName("rayguns.BasicBattery")
     .setTextureName("rayguns:battery_basic")
     .setCreativeTab( ModularRayguns.raygunsTab )

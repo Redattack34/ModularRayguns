@@ -27,18 +27,10 @@
 
 package com.castlebravostudios.rayguns.api.items
 
-import net.minecraft.item.Item
-import com.castlebravostudios.rayguns.items.Items
-import com.castlebravostudios.rayguns.api.ModuleRegistry
-import net.minecraft.creativetab.CreativeTabs
-import com.castlebravostudios.rayguns.mod.ModularRayguns
-import net.minecraft.item.ItemStack
-import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.world.World
-import com.castlebravostudios.rayguns.items.misc.PrefireEvent
+import com.castlebravostudios.rayguns.items.misc.GetFireInformationEvent
 import com.castlebravostudios.rayguns.items.misc.GunTickEvent
 import com.castlebravostudios.rayguns.items.misc.PostfireEvent
-import com.castlebravostudios.rayguns.items.misc.GetFireInformationEvent
+import com.castlebravostudios.rayguns.items.misc.PrefireEvent
 
 trait RaygunModule {
 
@@ -78,7 +70,7 @@ trait RaygunModule {
    * should do nothing - this module has been disabled in the configuration file.
    * After this method is called, item should not return None.
    */
-  def registerItem( id : Int ) : Unit
+  def registerItem( ) : Unit
 
   /**
    * Event fired by a raygun to all modules to collect information before preparing

@@ -41,7 +41,7 @@ class CommonProxy extends IGuiHandler {
   def loadTextures() : Unit = ()
 
   override def getServerGuiElement( id : Int, player : EntityPlayer, world: World, x : Int, y : Int, z : Int ) : Object = {
-    world.getBlockTileEntity(x, y, z) match {
+    world.getTileEntity(x, y, z) match {
       case gunBench : GunBenchTileEntity => new GunBenchContainer( player.inventory, gunBench )
       case lensGrinder : LensGrinderTileEntity => new LensGrinderContainer( player.inventory, lensGrinder )
       case _ => null

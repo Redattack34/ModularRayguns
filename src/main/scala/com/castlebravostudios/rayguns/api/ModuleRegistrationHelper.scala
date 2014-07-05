@@ -41,10 +41,10 @@ object ModuleRegistrationHelper {
    * If the module is a chamber, registers the beam handlers.
    * If ID is less than or equal to zero, does nothing (to allow modules to be disabled).
    */
-  def registerModule( module : RaygunModule, id : Int ) : Unit = {
-    if ( id <= 0 ) { return; }
+  def registerModule( module : RaygunModule, enabled : Boolean ) : Unit = {
+    if ( !enabled ) { return; }
 
-    module.registerItem(id)
+    module.registerItem( )
     ModuleRegistry.registerModule(module)
 
     module match {

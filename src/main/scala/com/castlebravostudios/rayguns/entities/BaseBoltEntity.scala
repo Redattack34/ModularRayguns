@@ -28,19 +28,18 @@
 package com.castlebravostudios.rayguns.entities
 
 import scala.annotation.tailrec
-
 import com.castlebravostudios.rayguns.utils.BlockPos
 import com.castlebravostudios.rayguns.utils.RaytraceUtils
 import com.google.common.io.ByteArrayDataInput
 import com.google.common.io.ByteArrayDataOutput
-
 import net.minecraft.entity.Entity
 import net.minecraft.entity.IProjectile
 import net.minecraft.nbt.NBTTagCompound
-import net.minecraft.util.EnumMovingObjectType
 import net.minecraft.util.MathHelper
 import net.minecraft.util.MovingObjectPosition
+import net.minecraft.util.MovingObjectPosition.MovingObjectType
 import net.minecraft.world.World
+import io.netty.buffer.ByteBuf
 
 /**
  * Base class for beam entities. Most of this code is a poor translation
@@ -78,7 +77,7 @@ class BaseBoltEntity( world : World ) extends BaseShootable( world ) with IProje
 
     if (this.isInWater())
     {
-        for ( _ <- 0 until 4 )
+        for { _ <- 0 until 4 }
         {
             val f4 = 0.25F
             this.worldObj.spawnParticle("bubble",
@@ -111,21 +110,22 @@ class BaseBoltEntity( world : World ) extends BaseShootable( world ) with IProje
   def onImpact( pos : MovingObjectPosition ) : Boolean = {
     effect.createImpactParticles( this, posX, posY, posZ )
     val shouldDie = pos.typeOfHit match {
-      case EnumMovingObjectType.ENTITY => {
+      case MovingObjectType.ENTITY => {
         hitEntities += pos.entityHit
         effect.hitEntity( this, pos.entityHit )
       }
-      case EnumMovingObjectType.TILE => {
+      case MovingObjectType.BLOCK => {
         hitBlocks += BlockPos(pos.blockX, pos.blockY, pos.blockZ)
         effect.hitBlock( this, pos.blockX, pos.blockY, pos.blockZ, pos.sideHit )
       }
+      case MovingObjectType.MISS => true
     }
 
     if ( shouldDie ) setDead
     shouldDie
   }
 
-  override def setDead() {
+  override def setDead() : Unit = {
     effect match {
       case e : TriggerOnDeath => e.triggerAt(this, posX, posY, posZ)
       case _ => ()
@@ -143,12 +143,12 @@ class BaseBoltEntity( world : World ) extends BaseShootable( world ) with IProje
     depletionRate = tag.getDouble("depletionRate")
   }
 
-  override def writeSpawnData( out : ByteArrayDataOutput ) : Unit = {
+  override def writeSpawnData( out : ByteBuf ) : Unit = {
     super.writeSpawnData(out)
     out.writeDouble( depletionRate )
   }
 
-  override def readSpawnData( in : ByteArrayDataInput ) : Unit = {
+  override def readSpawnData( in : ByteBuf ) : Unit = {
     super.readSpawnData(in)
     depletionRate = in.readDouble()
   }

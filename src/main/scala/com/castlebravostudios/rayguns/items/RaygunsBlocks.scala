@@ -41,22 +41,22 @@ import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.block.Block
 import net.minecraft.item.ItemBlock
 
-object Blocks {
+object RaygunsBlocks {
 
   var gunBench : Block = _
   var lensGrinder : Block = _
   var invisibleRedstone : Block = _
 
   def registerBlocks : Unit = {
-    gunBench = new GunBench( Config.gunBench )
+    gunBench = new GunBench
     GameRegistry.registerBlock(gunBench, classOf[ItemBlock], "gunBench")
     GameRegistry.registerTileEntity(classOf[GunBenchTileEntity], "gunBenchEntity")
 
-    lensGrinder = new LensGrinder( Config.lensGrinder )
+    lensGrinder = new LensGrinder
     GameRegistry.registerBlock(lensGrinder, classOf[ItemBlock], "lensGrinder")
     GameRegistry.registerTileEntity(classOf[LensGrinderTileEntity], "lensGrinderEntity")
 
-    invisibleRedstone = new InvisibleRedstone( Config.invisibleRedstone )
+    invisibleRedstone = new InvisibleRedstone
     GameRegistry.registerBlock( invisibleRedstone, classOf[ItemBlock], "invisibleRedstone" );
     GameRegistry.registerTileEntity(classOf[InvisibleRedstoneTileEntity], "invisibleRedstoneEntity" )
   }

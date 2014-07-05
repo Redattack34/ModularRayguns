@@ -30,13 +30,13 @@ package com.castlebravostudios.rayguns.entities.effects
 import com.castlebravostudios.rayguns.entities.Shootable
 import com.castlebravostudios.rayguns.mod.ModularRayguns
 import com.castlebravostudios.rayguns.utils.Extensions.ItemExtensions
-
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.Item
 import net.minecraft.item.ItemDye
 import net.minecraft.util.EntityDamageSource
+import net.minecraft.init.Items
 
 object FortifiedSunlightEffect extends BaseEffect {
 
@@ -59,7 +59,7 @@ object FortifiedSunlightEffect extends BaseEffect {
 
   def hitBlock( shootable : Shootable, hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Boolean = {
     if ( shootable.charge > 2.5 && shootable.shooter.isInstanceOf[EntityPlayer] ) {
-      ItemDye.applyBonemeal( Item.dyePowder.asStack( 1, 0 ), shootable.worldObj,
+      ItemDye.applyBonemeal( Items.dye.asStack(1, 0), shootable.worldObj,
           hitX, hitY, hitZ, shootable.shooter.asInstanceOf[EntityPlayer])
     }
     true
@@ -68,7 +68,7 @@ object FortifiedSunlightEffect extends BaseEffect {
   override def createImpactParticles( shootable : Shootable, hitX : Double, hitY : Double, hitZ : Double ) : Unit = {
     def randVel : Double = shootable.random.nextGaussian() * 0.02D
     def randPos( x : Double ) : Double = x + ( shootable.random.nextFloat().doubleValue() - 0.5)
-    for ( _ <- 0 until 4 ) {
+    for { _ <- 0 until 4 } {
       shootable.worldObj.spawnParticle("happyVillager",
         randPos( hitX ), randPos( hitY ), randPos( hitZ ), randVel, randVel, randVel);
     }

@@ -34,77 +34,77 @@ import net.minecraft.item.Item
 
 object Emitters {
 
-  val laserEmitter = new Item( Config.emitterLaser )
+  val laserEmitter = new Item( )
     .setUnlocalizedName("rayguns.LaserEmitter")
     .setTextureName("rayguns:emitter_laser")
     .setCreativeTab( ModularRayguns.raygunsTab )
 
-  val heatRayEmitter = new Item( Config.emitterHeatRay )
+  val heatRayEmitter = new Item( )
     .setUnlocalizedName("rayguns.HeatRayEmitter")
     .setTextureName("rayguns:emitter_heat_ray")
     .setCreativeTab( ModularRayguns.raygunsTab )
 
-  val frostRayEmitter = new Item( Config.emitterFrostRay )
+  val frostRayEmitter = new Item( )
     .setUnlocalizedName("rayguns.FrostRayEmitter")
     .setTextureName("rayguns:emitter_frost_ray")
     .setCreativeTab( ModularRayguns.raygunsTab )
 
-  val lifeForceEmitter = new Item( Config.emitterLifeForce )
+  val lifeForceEmitter = new Item( )
     .setUnlocalizedName("rayguns.LifeForceEmitter")
     .setTextureName("rayguns:emitter_life_force")
     .setCreativeTab( ModularRayguns.raygunsTab )
 
-  val fortifiedSunlightEmitter = new Item( Config.emitterFortifiedSunlight )
+  val fortifiedSunlightEmitter = new Item( )
     .setUnlocalizedName("rayguns.FortifiedSunlightEmitter")
     .setTextureName("rayguns:emitter_fortified_sunlight")
     .setCreativeTab( ModularRayguns.raygunsTab )
 
-  val explosiveEmitter = new Item( Config.emitterExplosive )
+  val explosiveEmitter = new Item( )
     .setUnlocalizedName("rayguns.ExplosiveEmitter")
     .setTextureName("rayguns:emitter_explosive")
     .setCreativeTab( ModularRayguns.raygunsTab )
 
-  val deathRayEmitter = new Item( Config.emitterDeathRay )
+  val deathRayEmitter = new Item( )
     .setUnlocalizedName("rayguns.DeathRayEmitter")
     .setTextureName("rayguns:emitter_death_ray")
     .setCreativeTab( ModularRayguns.raygunsTab )
 
-  val enderEmitter = new Item( Config.emitterEnder )
+  val enderEmitter = new Item( )
     .setUnlocalizedName("rayguns.EnderEmitter")
     .setTextureName("rayguns:emitter_ender")
     .setCreativeTab( ModularRayguns.raygunsTab )
 
-  val lightningEmitter = new Item( Config.emitterLightning )
+  val lightningEmitter = new Item( )
     .setUnlocalizedName("rayguns.LightningEmitter")
     .setTextureName("rayguns:emitter_lightning")
     .setCreativeTab( ModularRayguns.raygunsTab )
 
-  val impulseEmitter = new Item( Config.emitterImpulse )
+  val impulseEmitter = new Item( )
     .setUnlocalizedName("rayguns.ImpulseEmitter")
     .setTextureName("rayguns:emitter_impulse")
     .setCreativeTab( ModularRayguns.raygunsTab )
 
-  val tractorEmitter = new Item( Config.emitterTractor )
+  val tractorEmitter = new Item( )
     .setUnlocalizedName("rayguns.TractorEmitter")
     .setTextureName("rayguns:emitter_tractor")
     .setCreativeTab( ModularRayguns.raygunsTab )
 
-  val tier1CuttingEmitter = new Item( Config.emitterTier1Cutting )
+  val tier1CuttingEmitter = new Item( )
     .setUnlocalizedName("rayguns.Tier1CuttingEmitter")
     .setTextureName("rayguns:emitter_cutting_t1")
     .setCreativeTab( ModularRayguns.raygunsTab )
 
-  val tier2CuttingEmitter = new Item( Config.emitterTier2Cutting )
+  val tier2CuttingEmitter = new Item( )
     .setUnlocalizedName("rayguns.Tier2CuttingEmitter")
     .setTextureName("rayguns:emitter_cutting_t2")
     .setCreativeTab( ModularRayguns.raygunsTab )
 
-  val tier3CuttingEmitter = new Item( Config.emitterTier3Cutting )
+  val tier3CuttingEmitter = new Item( )
     .setUnlocalizedName("rayguns.Tier3CuttingEmitter")
     .setTextureName("rayguns:emitter_cutting_t3")
     .setCreativeTab( ModularRayguns.raygunsTab )
 
-  val matterTransporterEmitter = new Item( Config.emitterMatterTransporter )
+  val matterTransporterEmitter = new Item( )
     .setUnlocalizedName("rayguns.MatterTransporterEmitter")
     .setTextureName("rayguns:emitter_matter_transporter")
     .setCreativeTab( ModularRayguns.raygunsTab )

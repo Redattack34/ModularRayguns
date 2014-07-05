@@ -104,13 +104,13 @@ abstract class BaseChamber extends BaseRaygunModule with RaygunChamber {
 
   def registerPreciseShotHandler( ) : Unit = {
     ShotRegistry.registerModifier( ShotModifier{ case ev : DefaultFireEvent => ev.copy( lens = None ) }{
-      case ChargeFireEvent(_, ch, _, BlasterBarrel, Some(PreciseLens), _, charge) if (ch eq this) => { (f) =>
+      case DefaultFireEvent(_, ch, _, BlasterBarrel, Some(PreciseLens), _) if (ch eq this) => { (f) =>
         f().map{ shot =>
           shot.asInstanceOf[BaseBoltEntity].depletionRate = 0.025d
           shot
         }
       }
-      case ChargeFireEvent(_, ch, _, BeamBarrel, Some(PreciseLens), _, charge) if (ch eq this) => { (f) =>
+      case DefaultFireEvent(_, ch, _, BeamBarrel, Some(PreciseLens), _) if (ch eq this) => { (f) =>
         f().map{ shot =>
           shot.asInstanceOf[BaseBeamEntity].maxRange = 40
           shot

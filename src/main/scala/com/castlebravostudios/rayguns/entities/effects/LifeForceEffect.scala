@@ -59,7 +59,7 @@ object LifeForceEffect extends BaseEffect {
   def hitBlock( shootable : Shootable, hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Boolean = true
 
   override def createImpactParticles( shootable : Shootable, hitX : Double, hitY : Double, hitZ : Double ) : Unit = {
-    for ( _ <- 0 until 4 ) {
+    for { _ <- 0 until 4 } {
       shootable.worldObj.spawnParticle("cloud", hitX, hitY, hitZ, 0.0D, 0.0D, 0.0D);
     }
   }

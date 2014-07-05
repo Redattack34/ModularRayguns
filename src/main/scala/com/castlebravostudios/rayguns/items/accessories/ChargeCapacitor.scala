@@ -42,7 +42,7 @@ object ChargeCapacitor extends BaseRaygunModule with RaygunAccessory {
   val powerModifier = 1.0
   val nameSegmentKey = "rayguns.ChargeCapacitor.segment"
 
-  def createItem( id : Int ) : ItemModule = new ItemModule( id, this )
+   def createItem() : ItemModule = new ItemModule( this )
     .setUnlocalizedName("rayguns.ChargeCapacitor")
     .setTextureName("rayguns:charge_capacitor")
     .setCreativeTab( ModularRayguns.raygunsTab )

@@ -27,6 +27,12 @@
 
 package com.castlebravostudios.rayguns.mod
 
+import com.castlebravostudios.rayguns.api.EffectRegistry
+import com.castlebravostudios.rayguns.blocks.gunbench.GunBenchGui
+import com.castlebravostudios.rayguns.blocks.gunbench.GunBenchTileEntity
+import com.castlebravostudios.rayguns.blocks.lensgrinder.LensGrinderGui
+import com.castlebravostudios.rayguns.blocks.lensgrinder.LensGrinderTileEntity
+
 import com.castlebravostudios.rayguns.entities.BaseBeamEntity
 import com.castlebravostudios.rayguns.entities.BaseBoltEntity
 import com.castlebravostudios.rayguns.entities.BeamRenderer
@@ -35,22 +41,18 @@ import com.castlebravostudios.rayguns.entities.LightningBeamRenderer
 import com.castlebravostudios.rayguns.entities.LightningBoltRenderer
 import com.castlebravostudios.rayguns.entities.effects.LightningBeamEntity
 import com.castlebravostudios.rayguns.entities.effects.LightningBoltEntity
-import cpw.mods.fml.client.registry.RenderingRegistry
-import com.castlebravostudios.rayguns.api.EffectRegistry
-import net.minecraft.util.ResourceLocation
+import com.castlebravostudios.rayguns.items.misc.RayGun
+import com.castlebravostudios.rayguns.render.RaygunRender
+
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.texture.SimpleTexture
-import net.minecraftforge.client.MinecraftForgeClient
-import com.castlebravostudios.rayguns.render.RaygunRender
-import com.castlebravostudios.rayguns.items.misc.RayGun
-import cpw.mods.fml.common.registry.TickRegistry
-import cpw.mods.fml.relauncher.Side
-import com.castlebravostudios.rayguns.blocks.gunbench.GunBenchGui
 import net.minecraft.entity.player.EntityPlayer
-import com.castlebravostudios.rayguns.blocks.lensgrinder.LensGrinderTileEntity
-import com.castlebravostudios.rayguns.blocks.lensgrinder.LensGrinderGui
+import net.minecraft.util.ResourceLocation
 import net.minecraft.world.World
-import com.castlebravostudios.rayguns.blocks.gunbench.GunBenchTileEntity
+import net.minecraftforge.client.MinecraftForgeClient
+
+import cpw.mods.fml.client.registry.RenderingRegistry
+import cpw.mods.fml.common.FMLCommonHandler
 
 class ClientProxy extends CommonProxy {
 
@@ -60,8 +62,8 @@ class ClientProxy extends CommonProxy {
     RenderingRegistry.registerEntityRenderingHandler(classOf[LightningBoltEntity], new LightningBoltRenderer)
     RenderingRegistry.registerEntityRenderingHandler(classOf[LightningBeamEntity], new LightningBeamRenderer)
 
-    MinecraftForgeClient.registerItemRenderer(RayGun.itemID, RaygunRender)
-    TickRegistry.registerTickHandler(RaygunRender, Side.CLIENT)
+    MinecraftForgeClient.registerItemRenderer(RayGun, RaygunRender)
+    FMLCommonHandler.instance().bus().register(RaygunRender);
   }
 
   override def loadTextures() : Unit = {
@@ -81,7 +83,7 @@ class ClientProxy extends CommonProxy {
   }
 
   override def getClientGuiElement( id : Int, player : EntityPlayer, world : World, x : Int, y : Int, z : Int ) : Object = {
-    world.getBlockTileEntity(x, y, z) match {
+    world.getTileEntity(x, y, z) match {
       case gunBench : GunBenchTileEntity => new GunBenchGui( player.inventory, gunBench )
       case lensGrinder : LensGrinderTileEntity => new LensGrinderGui( player.inventory, lensGrinder )
       case _ => null
