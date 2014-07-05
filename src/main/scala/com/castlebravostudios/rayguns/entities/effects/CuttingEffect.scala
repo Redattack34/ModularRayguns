@@ -60,7 +60,7 @@ class CuttingEffect( val key : String, val harvestLevel : Int, val powerMultipli
       worldObj.spawnParticle(particleStr, hitX, hitY, hitZ, 0.0D, 0.0D, 0.0D);
     }
 
-    if ( !canBreakBlock( shootable, hitX, hitY, hitZ, block ) ) { return true }
+    if ( !canBreakBlock( shootable, hitX, hitY, hitZ, block, meta ) ) { return true }
     else if ( shootable.worldObj.isOnServer ) {
       shootable.setHarvestPower( shootable.harvestPower - block.getBlockHardness(worldObj, hitX, hitY, hitZ) )
       val player = shootable.shooter match {
@@ -77,12 +77,12 @@ class CuttingEffect( val key : String, val harvestLevel : Int, val powerMultipli
     else true
   }
 
-  def canBreakBlock( shootable : Shootable, x : Int, y : Int, z : Int, block : Block ): Boolean = {
+  private def canBreakBlock( shootable : Shootable, x : Int, y : Int, z : Int, block : Block, metadata : Int ): Boolean = {
     val pick = pickForHarvestLevel
-    val pickCanHarvest = pick.canHarvestBlock(block, pick.asStack(1) )
+    val pickCanHarvest = pick.getDigSpeed( pick.asStack(1), block, metadata ) > 1.0
 
     val shovel = shovelForHarvestLevel
-    val shovelCanHarvest = shovel.canHarvestBlock(block, shovel.asStack( 1 ) )
+    val shovelCanHarvest = shovel.getDigSpeed( shovel.asStack( 1 ), block, metadata ) > 1.0
 
     val hardness = block.getBlockHardness(shootable.worldObj, x, y, z)
     if ( hardness == -1.0f ) {
