@@ -330,7 +330,7 @@ object VanillaRecipeLibrary extends RecipeLibrary {
         "WCW",
         "GGG",
         'W' -> wire,
-        'G' -> Blocks.glass_pane,
+        'G' -> "paneGlassColorless",
         'C' -> core )
     }
     addDiode( 300, Tier1Diode, "ingotIron", "blockRedstone" )
