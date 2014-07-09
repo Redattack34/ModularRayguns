@@ -32,17 +32,18 @@ import com.castlebravostudios.rayguns.api.LensGrinderRecipeRegistry
 import com.castlebravostudios.rayguns.blocks.BaseInventoryTileEntity
 import com.castlebravostudios.rayguns.blocks.PoweredBlock
 import com.castlebravostudios.rayguns.plugins.te.RFBlockPowerConnector
-
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.inventory.Container
 import net.minecraft.inventory.IInventory
 import net.minecraft.inventory.InventoryCrafting
 import net.minecraft.item.ItemStack
-import net.minecraft.item.crafting.ShapedRecipes
 import net.minecraft.nbt.NBTTagCompound
 import net.minecraft.network.NetworkManager
 import net.minecraft.network.Packet
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity
+import net.minecraftforge.oredict.ShapedOreRecipe
+
+
 
 class LensGrinderTileEntity extends BaseInventoryTileEntity with PoweredBlock
   with RFBlockPowerConnector {
@@ -128,13 +129,13 @@ class LensGrinderTileEntity extends BaseInventoryTileEntity with PoweredBlock
     updateRecipe()
   }
 
-  private def subtractInput( recipe : ShapedRecipes ) : Unit = {
+  private def subtractInput( recipe : ShapedOreRecipe ) : Unit = {
     for { slot <- 0 until input.getSizeInventory() } {
       input.decrStackSize(slot, 1)
     }
   }
 
-  private def addOutput( recipe : ShapedRecipes ) : Unit = {
+  private def addOutput( recipe : ShapedOreRecipe ) : Unit = {
     val result = recipe.getRecipeOutput()
     if ( output == null ) output = result
     else output.stackSize += result.stackSize

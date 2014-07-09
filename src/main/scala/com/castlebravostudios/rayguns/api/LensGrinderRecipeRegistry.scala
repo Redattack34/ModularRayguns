@@ -33,9 +33,10 @@ import net.minecraft.item.Item
 import net.minecraft.block.Block
 import net.minecraft.inventory.InventoryCrafting
 import com.castlebravostudios.rayguns.utils.ScalaShapedRecipeFactory
+import net.minecraftforge.oredict.ShapedOreRecipe
 
 
-case class LensGrinderRecipe( recipe : ShapedRecipes, ticks : Short )
+case class LensGrinderRecipe( recipe : ShapedOreRecipe, ticks : Short )
 object LensGrinderRecipeRegistry {
 
   private var _recipes = Seq[LensGrinderRecipe]()
@@ -45,8 +46,8 @@ object LensGrinderRecipeRegistry {
     _recipes.find( recipe => recipe.recipe.matches( i, null ) )
 
   def register( ticks : Short, result : ItemStack, recipe : Any* ) : Unit =
-    register( ScalaShapedRecipeFactory.shaped( result, recipe:_* ), ticks )
-  def register( recipe : ShapedRecipes, ticks: Short ) : Unit =
+    register( ScalaShapedRecipeFactory.shapedOre( result, recipe:_* ), ticks )
+  def register( recipe : ShapedOreRecipe, ticks: Short ) : Unit =
     register( LensGrinderRecipe( recipe, ticks ) )
   def register( recipe : LensGrinderRecipe ) : Unit = _recipes = recipe +: _recipes
 }
