@@ -25,29 +25,20 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.castlebravostudios.rayguns.api
+package com.castlebravostudios.rayguns.utils;
 
-import net.minecraft.item.crafting.ShapedRecipes
-import net.minecraft.item.ItemStack
-import net.minecraft.item.Item
-import net.minecraft.block.Block
-import net.minecraft.inventory.InventoryCrafting
-import com.castlebravostudios.rayguns.utils.ScalaShapedRecipeFactory
-import net.minecraftforge.oredict.ShapedOreRecipe
+import java.util.List;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.ShapedOreRecipe;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
 
+public class ScalaRecipeVarargWorkaround {
 
-case class LensGrinderRecipe( recipe : ShapedOreRecipe, ticks : Short )
-object LensGrinderRecipeRegistry {
+  public static ShapedOreRecipe createShaped( ItemStack output, List<?> recipe ) {
+    return new ShapedOreRecipe( output, recipe.toArray( ) );
+  }
 
-  private var _recipes = Seq[LensGrinderRecipe]()
-
-  def recipes : Seq[LensGrinderRecipe] = _recipes
-  def getRecipe( i : InventoryCrafting ) : Option[LensGrinderRecipe] =
-    _recipes.find( recipe => recipe.recipe.matches( i, null ) )
-
-  def register( ticks : Short, result : ItemStack, recipe : Any* ) : Unit =
-    register( ScalaShapedRecipeFactory.shapedOre( result, recipe:_* ), ticks )
-  def register( recipe : ShapedOreRecipe, ticks: Short ) : Unit =
-    register( LensGrinderRecipe( recipe, ticks ) )
-  def register( recipe : LensGrinderRecipe ) : Unit = _recipes = recipe +: _recipes
+  public static ShapelessOreRecipe createShapeless( ItemStack output, List<?> recipe ) {
+    return new ShapelessOreRecipe( output, recipe.toArray( ) );
+  }
 }

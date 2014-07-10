@@ -30,12 +30,13 @@ package com.castlebravostudios.rayguns.plugins.nei
 import com.castlebravostudios.rayguns.api.LensGrinderRecipe
 import com.castlebravostudios.rayguns.api.LensGrinderRecipeRegistry
 import com.castlebravostudios.rayguns.blocks.lensgrinder.LensGrinderGui
-
 import codechicken.nei.NEIServerUtils
-
 import codechicken.nei.recipe.ShapedRecipeHandler
 import codechicken.nei.recipe.TemplateRecipeHandler.RecipeTransferRect
 import net.minecraft.item.ItemStack
+import scala.collection.JavaConverters.asScalaBufferConverter
+import cpw.mods.fml.relauncher.ReflectionHelper
+import net.minecraftforge.oredict.ShapedOreRecipe
 
 class NEILensGrinderRecipeManager extends ShapedRecipeHandler {
 
@@ -58,7 +59,12 @@ class NEILensGrinderRecipeManager extends ShapedRecipeHandler {
   override def loadUsageRecipes( ingredient : ItemStack ) : Unit = {
     for {
       recipe <- LensGrinderRecipeRegistry.recipes
-      if ( recipe.recipe.recipeItems.exists( stack =>
+      val inputs = recipe.recipe.getInput().flatMap {
+        case ls : java.util.List[ItemStack] => ls.asScala
+        case ls : Array[ItemStack] => ls
+        case l : ItemStack => l :: Nil
+      }
+      if ( inputs.exists( stack =>
         NEIServerUtils.areStacksSameTypeCrafting( stack, ingredient ) ) )
     } this.arecipes.add( getShape( recipe ) )
   }
@@ -85,7 +91,13 @@ class NEILensGrinderRecipeManager extends ShapedRecipeHandler {
   override def getOverlayIdentifier() : String =
     NEIModularRaygunsConfig.recipeKey
 
-  private def getShape(recipe: LensGrinderRecipe) : CachedShapedRecipe = {
-    new CachedShapedRecipe( recipe.recipe )
+  private def getShape(recipe: LensGrinderRecipe): CachedShapedRecipe = {
+    val oreRecipe = recipe.recipe
+
+    val width : Integer = ReflectionHelper.getPrivateValue(classOf[ShapedOreRecipe], oreRecipe, "width")
+    val height : Integer = ReflectionHelper.getPrivateValue(classOf[ShapedOreRecipe], oreRecipe, "height")
+
+    new CachedShapedRecipe( width, height,
+        oreRecipe.getInput(), oreRecipe.getRecipeOutput() )
   }
 }

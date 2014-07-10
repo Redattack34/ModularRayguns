@@ -27,11 +27,18 @@
 
 package com.castlebravostudios.rayguns.utils
 
+import scala.collection.JavaConverters.seqAsJavaListConverter
+
+import com.castlebravostudios.rayguns.api.items.RaygunModule
+import com.castlebravostudios.rayguns.api.items.RaygunModule
+import com.castlebravostudios.rayguns.utils.Extensions.BlockExtensions
+import com.castlebravostudios.rayguns.utils.Extensions.ItemExtensions
+
+import net.minecraft.block.Block
+import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
 import net.minecraft.item.crafting.ShapedRecipes
-import net.minecraft.item.Item
-import net.minecraft.block.Block
-import com.castlebravostudios.rayguns.api.items.RaygunModule
+import net.minecraftforge.oredict.ShapedOreRecipe
 
 /**
  * A factory for ShapedRecipes which handles Scala varargs better than the default.
@@ -41,13 +48,28 @@ import com.castlebravostudios.rayguns.api.items.RaygunModule
  */
 object ScalaShapedRecipeFactory {
 
-  def apply( result : ItemStack, recipe : Any* ) : ShapedRecipes = {
+  def shaped( result : ItemStack, recipe : Any* ) : ShapedRecipes = {
     val (strings, mappings) = separateRecipe( List( recipe:_* ) )
     val (width : Int, height : Int) = dimensions( strings )
     val map : Map[Char, ItemStack] = parseMappings( mappings )
 
     val items = Array( strings.mkString.toList.map( c => map.get(c).orNull ):_* )
     new ShapedRecipes( width, height, items, result )
+  }
+
+  def shapedOre( result : ItemStack, recipe : Any* ) : ShapedOreRecipe = {
+    val flattened = recipe.flatMap{
+      case ( c : Any, i : Any ) => Seq( c, i )
+      case ( x : Any ) => Seq( x )
+    }
+    val mapped = flattened.map{
+      case i : Item => i.asStack
+      case b : Block => b.asStack
+      case m : RaygunModule => m.item.get.asStack
+      case x : Any => x
+    }
+
+    ScalaRecipeVarargWorkaround.createShaped( result, mapped.asJava )
   }
 
   private def separateRecipe( recipe : List[Any] ) : ( List[String], List[Any] ) = recipe match {
@@ -63,19 +85,19 @@ object ScalaShapedRecipeFactory {
     ( strings.map(_.length).max, strings.length )
 
   private def parseMappings( mappings : List[Any] ) : Map[Char, ItemStack] = mappings match {
-    case ( c : Char ) :: ( i : Item ) :: tail => parseMappings( tail ) + ( c -> new ItemStack( i ) )
-    case ( c : Char ) :: ( i : Block ) :: tail => parseMappings( tail ) + ( c -> new ItemStack( i ) )
+    case ( c : Char ) :: ( i : Item ) :: tail => parseMappings( tail ) + ( c -> i.asStack )
+    case ( c : Char ) :: ( i : Block ) :: tail => parseMappings( tail ) + ( c -> i.asStack )
     case ( c : Char ) :: ( i : ItemStack ) :: tail => parseMappings( tail ) + ( c -> i )
     case ( c : Char ) :: ( i : RaygunModule ) :: tail => {
       require( i.item.isDefined )
-      parseMappings( tail ) + ( c -> new ItemStack( i.item.get ) )
+      parseMappings( tail ) + ( c -> i.item.get.asStack )
     }
-    case ( c : Char, i : Item ) :: tail => parseMappings( tail ) + ( c -> new ItemStack( i ) )
-    case ( c : Char, i : Block ) :: tail => parseMappings( tail ) + ( c -> new ItemStack( i ) )
+    case ( c : Char, i : Item ) :: tail => parseMappings( tail ) + ( c -> i.asStack )
+    case ( c : Char, i : Block ) :: tail => parseMappings( tail ) + ( c -> i.asStack )
     case ( c : Char, i : ItemStack ) :: tail => parseMappings( tail ) + ( c -> i )
     case ( c : Char, i : RaygunModule ) :: tail => {
       require( i.item.isDefined )
-      parseMappings( tail ) + ( c -> new ItemStack( i.item.get ) )
+      parseMappings( tail ) + ( c -> i.item.get.asStack )
     }
     case _ => Map()
   }
