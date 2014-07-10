@@ -137,7 +137,7 @@ class LensGrinderTileEntity extends BaseInventoryTileEntity with PoweredBlock
 
   private def addOutput( recipe : ShapedOreRecipe ) : Unit = {
     val result = recipe.getRecipeOutput()
-    if ( output == null ) output = result
+    if ( output == null ) output = result.copy
     else output.stackSize += result.stackSize
   }
 
