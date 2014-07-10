@@ -41,10 +41,10 @@ import com.castlebravostudios.rayguns.items.lenses._
 import com.castlebravostudios.rayguns.items.misc._
 import com.castlebravostudios.rayguns.utils.Extensions.BlockExtensions
 import com.castlebravostudios.rayguns.utils.Extensions.ItemExtensions
-
 import net.minecraft.init.Blocks
 import net.minecraft.init.Items
 import net.minecraft.item.Item
+import net.minecraft.item.ItemStack
 
 //scalastyle:on
 
@@ -88,7 +88,10 @@ object VanillaRecipeLibrary extends RecipeLibrary {
     ( Tier3GainMedium, "tier3GainMedium" ),
     ( RedstoneDustedGlass, "redstoneDustedGlass" ),
     ( GlowstoneDustedGlass, "glowstoneDustedGlass" ),
-    ( RadiantDustedGlass, "radiantDustedGlass" )
+    ( RadiantDustedGlass, "radiantDustedGlass" ),
+    ( Tier1EmptyChamber, "tier1EmptyChamber" ),
+    ( Tier2EmptyChamber, "tier2EmptyChamber" ),
+    ( Tier3EmptyChamber, "tier3EmptyChamber" )
   )
 
   private def registerAccessories() = {
@@ -152,7 +155,7 @@ object VanillaRecipeLibrary extends RecipeLibrary {
   }
 
   private def registerChambers() = {
-    def registerChamber( chamber : RaygunChamber, emitter : Item, medium : Item, diode : Item, casing : Item ) : Unit = {
+    def registerChamber( chamber : RaygunChamber, emitter : Item, medium : Item, diode : Item, casing : Item, emptyChamber : Item ) : Unit = {
       addModuleShapedOre( chamber,
         "CDC",
         "MME",
@@ -161,13 +164,15 @@ object VanillaRecipeLibrary extends RecipeLibrary {
         ( 'C' -> casing ),
         ( 'M' -> medium ),
         ( 'E' -> emitter ) )
+
+      addModuleShapelessOre( chamber, emitter, emptyChamber )
     }
     def registerT1Chamber( chamber : RaygunChamber, emitter : Item ) : Unit =
-      registerChamber( chamber, emitter, Tier1GainMedium, Tier1Diode, Tier1ChamberCasing )
+      registerChamber( chamber, emitter, Tier1GainMedium, Tier1Diode, Tier1ChamberCasing, Tier1EmptyChamber )
     def registerT2Chamber( chamber : RaygunChamber, emitter : Item ) : Unit =
-      registerChamber( chamber, emitter, Tier2GainMedium, Tier2Diode, Tier2ChamberCasing )
+      registerChamber( chamber, emitter, Tier2GainMedium, Tier2Diode, Tier2ChamberCasing, Tier2EmptyChamber )
     def registerT3Chamber( chamber : RaygunChamber, emitter : Item ) : Unit =
-      registerChamber( chamber, emitter, Tier3GainMedium, Tier3Diode, Tier3ChamberCasing )
+      registerChamber( chamber, emitter, Tier3GainMedium, Tier3Diode, Tier3ChamberCasing, Tier3EmptyChamber )
 
     registerT1Chamber( Tier1CuttingChamber, Emitters.tier1CuttingEmitter)
     registerT1Chamber( HeatRayChamber, Emitters.heatRayEmitter)
@@ -295,6 +300,19 @@ object VanillaRecipeLibrary extends RecipeLibrary {
       'R' -> "dustRedstone",
       'I' -> "ingotIron",
       'B' -> Blocks.stone_button )
+
+    def registerEmptyChamber( chamber : ItemStack, medium : Item, diode : Item, casing : Item ) : Unit = {
+      addShapedOre( chamber,
+        "CDC",
+        "MM ",
+        "CDC",
+        ( 'D' -> diode ),
+        ( 'C' -> casing ),
+        ( 'M' -> medium ) )
+    }
+    registerEmptyChamber( Tier1EmptyChamber.asStack, Tier1GainMedium, Tier1Diode, Tier1ChamberCasing )
+    registerEmptyChamber( Tier2EmptyChamber.asStack, Tier2GainMedium, Tier2Diode, Tier2ChamberCasing )
+    registerEmptyChamber( Tier3EmptyChamber.asStack, Tier3GainMedium, Tier3Diode, Tier3ChamberCasing )
   }
 
   private def registerCasings() : Unit = {

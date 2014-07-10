@@ -73,6 +73,17 @@ trait RecipeLibrary {
         module.item.get.asStack, params:_* ) );
   }
 
+  protected def addModuleShapelessOre( module : RaygunModule, params : Any* ) : Unit = {
+    val modules = findModules( module, params :_* )
+
+    //Skip modules where the module or a recipe ingredient has been disabled.
+    if ( modules.exists( _.item.isEmpty ) ) {
+      return
+    }
+
+    addShapelessOre(module.item.get.asStack, params :_* )
+  }
+
   protected def addModuleLensGrinder( time : Short, module : RaygunModule, params : Any* ): Unit = {
     val modules = findModules( module, params :_* )
 
@@ -122,7 +133,7 @@ trait RecipeLibrary {
         module.item.get.asStack
       }
       case str : String => str
-      case _ => throw new IllegalArgumentException( "Invalid shapeless recipe." );
+      case k => throw new IllegalArgumentException( s"Invalid shapeless recipe. Unknown type: $k" );
     }
     GameRegistry.addRecipe( ScalaRecipeVarargWorkaround.createShapeless( output, stacks.asJava ) )
   }

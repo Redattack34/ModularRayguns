@@ -29,6 +29,9 @@ item.rayguns.Tier1CuttingChamber.name=Cutting Beam Chamber Mk. 1
 item.rayguns.Tier2CuttingChamber.name=Cutting Beam Chamber Mk. 2
 item.rayguns.Tier3CuttingChamber.name=Cutting Beam Chamber Mk. 3
 item.rayguns.MatterTransporterChamber.name=Matter Transporter Beam Chamber
+item.rayguns.Tier1EmptyChamber.name=Empty Basic Beam Chamber
+item.rayguns.Tier2EmptyChamber.name=Empty Advanced Beam Chamber
+item.rayguns.Tier3EmptyChamber.name=Empty Ultimate Beam Chamber
 
 item.rayguns.ExplosiveEmitter.name=Explosive Emitter
 item.rayguns.FortifiedSunlightEmitter.name=Fortified Sunlight Emitter

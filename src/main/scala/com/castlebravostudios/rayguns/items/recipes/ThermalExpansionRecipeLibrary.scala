@@ -126,7 +126,10 @@ object ThermalExpansionRecipeLibrary extends RecipeLibrary {
     ( Shutter, "shutter" ),
     ( Tier1GainMedium, "tier1GainMedium" ),
     ( Tier2GainMedium, "tier2GainMedium" ),
-    ( Tier3GainMedium, "tier3GainMedium" )
+    ( Tier3GainMedium, "tier3GainMedium" ),
+    ( Tier1EmptyChamber, "tier1EmptyChamber" ),
+    ( Tier2EmptyChamber, "tier2EmptyChamber" ),
+    ( Tier3EmptyChamber, "tier3EmptyChamber" )
   )
 
   private def registerAccessories() = {
@@ -192,7 +195,7 @@ object ThermalExpansionRecipeLibrary extends RecipeLibrary {
   }
 
   private def registerChambers() = {
-    def registerChamber( chamber : RaygunChamber, emitter : Item, medium : Item, diode : Item, casing : Item ) : Unit = {
+    def registerChamber( chamber : RaygunChamber, emitter : Item, medium : Item, diode : Item, casing : Item, emptyChamber : Item ) : Unit = {
       addModuleShapedOre( chamber,
         "CDC",
         "MME",
@@ -201,13 +204,15 @@ object ThermalExpansionRecipeLibrary extends RecipeLibrary {
         ( 'C' -> casing ),
         ( 'M' -> medium ),
         ( 'E' -> emitter ) )
+
+      addModuleShapelessOre( chamber, emitter, emptyChamber )
     }
     def registerT1Chamber( chamber : RaygunChamber, emitter : Item ) : Unit =
-      registerChamber( chamber, emitter, Tier1GainMedium, Tier1Diode, Tier1ChamberCasing )
+      registerChamber( chamber, emitter, Tier1GainMedium, Tier1Diode, Tier1ChamberCasing, Tier1EmptyChamber )
     def registerT2Chamber( chamber : RaygunChamber, emitter : Item ) : Unit =
-      registerChamber( chamber, emitter, Tier2GainMedium, Tier2Diode, Tier2ChamberCasing )
+      registerChamber( chamber, emitter, Tier2GainMedium, Tier2Diode, Tier2ChamberCasing, Tier2EmptyChamber )
     def registerT3Chamber( chamber : RaygunChamber, emitter : Item ) : Unit =
-      registerChamber( chamber, emitter, Tier3GainMedium, Tier3Diode, Tier3ChamberCasing )
+      registerChamber( chamber, emitter, Tier3GainMedium, Tier3Diode, Tier3ChamberCasing, Tier3EmptyChamber )
 
     registerT1Chamber( Tier1CuttingChamber, Emitters.tier1CuttingEmitter)
     registerT1Chamber( HeatRayChamber, Emitters.heatRayEmitter)
@@ -332,6 +337,19 @@ object ThermalExpansionRecipeLibrary extends RecipeLibrary {
       'P' -> getTEItem( "pneumaticServo" ),
       'T' -> getTEItem( "gearTin" ),
       'I' -> "ingotIron" )
+
+    def registerEmptyChamber( chamber : ItemStack, medium : Item, diode : Item, casing : Item ) : Unit = {
+      addShapedOre( chamber,
+        "CDC",
+        "MM ",
+        "CDC",
+        ( 'D' -> diode ),
+        ( 'C' -> casing ),
+        ( 'M' -> medium ) )
+    }
+    registerEmptyChamber( Tier1EmptyChamber.asStack, Tier1GainMedium, Tier1Diode, Tier1ChamberCasing )
+    registerEmptyChamber( Tier2EmptyChamber.asStack, Tier2GainMedium, Tier2Diode, Tier2ChamberCasing )
+    registerEmptyChamber( Tier3EmptyChamber.asStack, Tier3GainMedium, Tier3Diode, Tier3ChamberCasing )
   }
 
   private def registerCasings() : Unit = {
