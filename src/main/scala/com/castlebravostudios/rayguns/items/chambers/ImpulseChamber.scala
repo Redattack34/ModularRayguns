@@ -30,6 +30,8 @@ package com.castlebravostudios.rayguns.items.chambers
 import com.castlebravostudios.rayguns.api.items.ItemModule
 import com.castlebravostudios.rayguns.entities.effects.ImpulseEffect
 import com.castlebravostudios.rayguns.mod.ModularRayguns
+import com.castlebravostudios.rayguns.items.emitters.Emitters
+import com.castlebravostudios.rayguns.items.misc.Tier2EmptyChamber
 
 object ImpulseChamber extends BaseChamber {
   val moduleKey = "ImpulseChamber"
@@ -37,7 +39,8 @@ object ImpulseChamber extends BaseChamber {
   val shotEffect = ImpulseEffect
   val nameSegmentKey = "rayguns.ImpulseChamber.segment"
 
-   def createItem() : ItemModule = new ItemModule( this )
+   def createItem() : ItemModule = new ItemChamber( this,
+       Emitters.impulseEmitter, Tier2EmptyChamber )
     .setUnlocalizedName("rayguns.ImpulseChamber")
     .setTextureName("rayguns:chamber_impulse")
     .setCreativeTab( ModularRayguns.raygunsTab )

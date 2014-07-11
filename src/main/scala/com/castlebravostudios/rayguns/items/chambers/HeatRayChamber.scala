@@ -30,7 +30,8 @@ package com.castlebravostudios.rayguns.items.chambers
 import com.castlebravostudios.rayguns.api.items.ItemModule
 import com.castlebravostudios.rayguns.entities.effects.HeatRayEffect
 import com.castlebravostudios.rayguns.mod.ModularRayguns
-
+import com.castlebravostudios.rayguns.items.emitters.Emitters
+import com.castlebravostudios.rayguns.items.misc.Tier1EmptyChamber
 
 object HeatRayChamber extends BaseChamber {
   val moduleKey = "HeatRayChamber"
@@ -38,7 +39,8 @@ object HeatRayChamber extends BaseChamber {
   val shotEffect = HeatRayEffect
   val nameSegmentKey = "rayguns.HeatRayChamber.segment"
 
-   def createItem() : ItemModule = new ItemModule( this )
+   def createItem() : ItemModule = new ItemChamber( this,
+       Emitters.heatRayEmitter, Tier1EmptyChamber )
     .setUnlocalizedName("rayguns.HeatRayChamber")
     .setTextureName("rayguns:chamber_heat_ray")
     .setCreativeTab( ModularRayguns.raygunsTab )

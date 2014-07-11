@@ -30,6 +30,10 @@ package com.castlebravostudios.rayguns.items.chambers
 import com.castlebravostudios.rayguns.api.items.ItemModule
 import com.castlebravostudios.rayguns.entities.effects.CuttingEffect
 import com.castlebravostudios.rayguns.mod.ModularRayguns
+import com.castlebravostudios.rayguns.items.emitters.Emitters
+import com.castlebravostudios.rayguns.items.misc.Tier1EmptyChamber
+import com.castlebravostudios.rayguns.items.misc.Tier3EmptyChamber
+import com.castlebravostudios.rayguns.items.misc.Tier2EmptyChamber
 
 object Tier1CuttingChamber extends BaseChamber {
   val moduleKey = "Tier1CuttingChamber"
@@ -37,7 +41,8 @@ object Tier1CuttingChamber extends BaseChamber {
   val shotEffect = new CuttingEffect( "Tier1Cutting", 1, 3.0f )
   val nameSegmentKey = "rayguns.Tier1CuttingChamber.segment"
 
-   def createItem() : ItemModule = new ItemModule( this )
+   def createItem() : ItemModule = new ItemChamber( this,
+       Emitters.tier1CuttingEmitter, Tier1EmptyChamber )
     .setUnlocalizedName("rayguns.Tier1CuttingChamber")
     .setTextureName("rayguns:chamber_cutting_t1")
     .setCreativeTab( ModularRayguns.raygunsTab )
@@ -56,7 +61,8 @@ object Tier2CuttingChamber extends BaseChamber {
   val shotEffect = new CuttingEffect( "Tier2Cutting", 2, 4.5f )
   val nameSegmentKey = "rayguns.Tier2CuttingChamber.segment"
 
-   def createItem() : ItemModule = new ItemModule( this )
+   def createItem() : ItemModule = new ItemChamber( this,
+       Emitters.tier2CuttingEmitter, Tier2EmptyChamber )
     .setUnlocalizedName("rayguns.Tier2CuttingChamber")
     .setTextureName("rayguns:chamber_cutting_t2")
     .setCreativeTab( ModularRayguns.raygunsTab )
@@ -75,7 +81,8 @@ object Tier3CuttingChamber extends BaseChamber {
   val shotEffect = new CuttingEffect( "Tier3Cutting", 3, 6.0f )
   val nameSegmentKey = "rayguns.Tier3CuttingChamber.segment"
 
-   def createItem() : ItemModule = new ItemModule( this )
+   def createItem() : ItemModule = new ItemChamber( this,
+       Emitters.tier3CuttingEmitter, Tier3EmptyChamber )
     .setUnlocalizedName("rayguns.Tier3CuttingChamber")
     .setTextureName("rayguns:chamber_cutting_t3")
     .setCreativeTab( ModularRayguns.raygunsTab )
