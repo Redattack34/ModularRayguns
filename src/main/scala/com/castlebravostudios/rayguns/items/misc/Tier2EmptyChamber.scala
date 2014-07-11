@@ -25,37 +25,19 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.castlebravostudios.rayguns.items.chambers
+package com.castlebravostudios.rayguns.items.misc
 
-import com.castlebravostudios.rayguns.api.items.ItemModule
-import com.castlebravostudios.rayguns.entities.effects.LaserEffect
+import com.castlebravostudios.rayguns.api.LensGrinderRecipeRegistry
+import com.castlebravostudios.rayguns.mod.Config
 import com.castlebravostudios.rayguns.mod.ModularRayguns
-import com.castlebravostudios.rayguns.entities.effects.MatterTransporterEffect
-import com.castlebravostudios.rayguns.items.misc.PrefireEvent
-import com.castlebravostudios.rayguns.items.emitters.Emitters
-import com.castlebravostudios.rayguns.items.misc.Tier2EmptyChamber
 
-object MatterTransporterChamber extends BaseChamber {
+import net.minecraft.block.Block
+import net.minecraft.item.Item
+import net.minecraft.item.ItemStack
 
-  val moduleKey = "MatterTransporterChamber"
-  val powerModifier = 2.0
-  val shotEffect = MatterTransporterEffect
-  val nameSegmentKey = "rayguns.MatterTransporterChamber.segment"
+object Tier2EmptyChamber extends Item {
 
-   def createItem() : ItemModule = new ItemChamber( this,
-       Emitters.matterTransporterEmitter, Tier2EmptyChamber )
-    .setUnlocalizedName("rayguns.MatterTransporterChamber")
-    .setTextureName("rayguns:chamber_matter_transporter")
-    .setCreativeTab( ModularRayguns.raygunsTab )
-    .setMaxStackSize(1)
-
-  def registerShotHandlers() : Unit = {
-    registerSingleShotHandlers()
-    registerPreciseShotHandler()
-  }
-
-  override def handlePrefireEvent( event : PrefireEvent ) : Unit = {
-    val id = MatterTransporterEffect.getPlacedBlockId( event.player )
-    event.canFire &&= id.isDefined
-  }
+  setCreativeTab(ModularRayguns.raygunsTab)
+  setUnlocalizedName("rayguns.Tier2EmptyChamber")
+  setTextureName("rayguns:chamber_empty_t2")
 }

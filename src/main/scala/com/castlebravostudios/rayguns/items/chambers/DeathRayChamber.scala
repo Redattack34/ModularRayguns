@@ -30,6 +30,8 @@ package com.castlebravostudios.rayguns.items.chambers
 import com.castlebravostudios.rayguns.api.items.ItemModule
 import com.castlebravostudios.rayguns.entities.effects.DeathRayEffect
 import com.castlebravostudios.rayguns.mod.ModularRayguns
+import com.castlebravostudios.rayguns.items.emitters.Emitters
+import com.castlebravostudios.rayguns.items.misc.Tier3EmptyChamber
 
 object DeathRayChamber extends BaseChamber {
   val moduleKey = "DeathRayChamber"
@@ -37,7 +39,8 @@ object DeathRayChamber extends BaseChamber {
   val shotEffect = DeathRayEffect
   val nameSegmentKey = "rayguns.DeathRayChamber.segment"
 
-   def createItem() : ItemModule = new ItemModule( this )
+   def createItem() : ItemModule = new ItemChamber( this,
+       Emitters.deathRayEmitter, Tier3EmptyChamber )
     .setUnlocalizedName("rayguns.DeathRayChamber")
     .setTextureName("rayguns:chamber_death_ray")
     .setCreativeTab( ModularRayguns.raygunsTab )

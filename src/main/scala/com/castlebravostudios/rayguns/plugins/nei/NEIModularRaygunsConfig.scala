@@ -28,28 +28,24 @@
 package com.castlebravostudios.rayguns.plugins.nei
 
 //scalastyle:off underscore.import
-import com.castlebravostudios.rayguns.api.items.RaygunModule
+
+import com.castlebravostudios.rayguns.blocks.lensgrinder.LensGrinderGui
+import com.castlebravostudios.rayguns.items.RaygunsBlocks
 import com.castlebravostudios.rayguns.items.accessories._
+import com.castlebravostudios.rayguns.items.barrels._
 import com.castlebravostudios.rayguns.items.batteries._
-import com.castlebravostudios.rayguns.items.frames._
 import com.castlebravostudios.rayguns.items.chambers._
-import com.castlebravostudios.rayguns.items.emitters.Emitters
+import com.castlebravostudios.rayguns.items.frames._
 import com.castlebravostudios.rayguns.items.lenses._
 import com.castlebravostudios.rayguns.items.misc._
-import com.castlebravostudios.rayguns.items.barrels._
 import com.castlebravostudios.rayguns.mod.ModularRayguns
-import codechicken.nei.MultiItemRange
-import codechicken.nei.api.API
-import codechicken.nei.api.IConfigureNEI
-import cpw.mods.fml.common.Mod
-import com.castlebravostudios.rayguns.blocks.lensgrinder.LensGrinderGui
-import codechicken.nei.recipe.DefaultOverlayHandler
-import com.castlebravostudios.rayguns.plugins.nei.NEIModularRaygunsConfig.recipeKey
-import com.castlebravostudios.rayguns.mod.Config
 import com.castlebravostudios.rayguns.utils.Extensions.BlockExtensions
 import com.castlebravostudios.rayguns.utils.Extensions.ItemExtensions
-import com.castlebravostudios.rayguns.items.RaygunsBlocks
-import net.minecraft.init.Blocks
+
+import codechicken.nei.api.API
+import codechicken.nei.api.IConfigureNEI
+import codechicken.nei.recipe.DefaultOverlayHandler
+import cpw.mods.fml.common.Mod
 //scalastyle:on
 
 class NEIModularRaygunsConfig extends IConfigureNEI {
@@ -70,13 +66,14 @@ class NEIModularRaygunsConfig extends IConfigureNEI {
 
     API.registerRecipeHandler( new NEILensGrinderRecipeManager )
     API.registerUsageHandler( new NEILensGrinderRecipeManager )
-    API.registerGuiOverlay( classOf[LensGrinderGui], recipeKey )
-    API.registerGuiOverlayHandler( classOf[LensGrinderGui], new DefaultOverlayHandler, recipeKey )
+    API.registerGuiOverlay( classOf[LensGrinderGui], NEIModularRaygunsConfig.recipeKey )
+    API.registerGuiOverlayHandler( classOf[LensGrinderGui],
+        new DefaultOverlayHandler, NEIModularRaygunsConfig.recipeKey )
   }
 
   def getName : String = ModularRayguns.getClass().getAnnotation(classOf[Mod]).name()
   def getVersion : String = ModularRayguns.getClass().getAnnotation(classOf[Mod]).version()
-
+/*
   private def mainItemRange: MultiItemRange = {
     val range = new MultiItemRange()
     range.add(RaygunsBlocks.gunBench)
@@ -173,7 +170,7 @@ class NEIModularRaygunsConfig extends IConfigureNEI {
   }
 
   private def addModule( range: MultiItemRange, module : RaygunModule ) =
-    module.item.foreach( range.add )
+    module.item.foreach( range.add ) */
 }
 object NEIModularRaygunsConfig {
   val recipeKey = "LensGrinder"

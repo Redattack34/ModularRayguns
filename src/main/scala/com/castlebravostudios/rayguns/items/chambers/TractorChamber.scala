@@ -30,6 +30,8 @@ package com.castlebravostudios.rayguns.items.chambers
 import com.castlebravostudios.rayguns.api.items.ItemModule
 import com.castlebravostudios.rayguns.entities.effects.TractorEffect
 import com.castlebravostudios.rayguns.mod.ModularRayguns
+import com.castlebravostudios.rayguns.items.emitters.Emitters
+import com.castlebravostudios.rayguns.items.misc.Tier2EmptyChamber
 
 object TractorChamber extends BaseChamber {
   val moduleKey = "TractorChamber"
@@ -37,7 +39,8 @@ object TractorChamber extends BaseChamber {
   val shotEffect = TractorEffect
   val nameSegmentKey = "rayguns.TractorChamber.segment"
 
-   def createItem() : ItemModule = new ItemModule( this )
+   def createItem() : ItemModule = new ItemChamber( this,
+       Emitters.tractorEmitter, Tier2EmptyChamber )
     .setUnlocalizedName("rayguns.TractorChamber")
     .setTextureName("rayguns:chamber_tractor")
     .setCreativeTab( ModularRayguns.raygunsTab )

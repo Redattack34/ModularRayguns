@@ -28,34 +28,19 @@
 package com.castlebravostudios.rayguns.items.chambers
 
 import com.castlebravostudios.rayguns.api.items.ItemModule
-import com.castlebravostudios.rayguns.entities.effects.LaserEffect
-import com.castlebravostudios.rayguns.mod.ModularRayguns
-import com.castlebravostudios.rayguns.entities.effects.MatterTransporterEffect
-import com.castlebravostudios.rayguns.items.misc.PrefireEvent
-import com.castlebravostudios.rayguns.items.emitters.Emitters
-import com.castlebravostudios.rayguns.items.misc.Tier2EmptyChamber
+import com.castlebravostudios.rayguns.api.items.RaygunModule
+import net.minecraft.item.Item
+import net.minecraft.item.ItemStack
+import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.world.World
+import com.castlebravostudios.rayguns.utils.Extensions.ItemExtensions
 
-object MatterTransporterChamber extends BaseChamber {
+class ItemChamber( module : RaygunModule, emitter: Item, emptyChamber : Item ) extends ItemModule( module ) {
 
-  val moduleKey = "MatterTransporterChamber"
-  val powerModifier = 2.0
-  val shotEffect = MatterTransporterEffect
-  val nameSegmentKey = "rayguns.MatterTransporterChamber.segment"
+  override def onItemRightClick(item : ItemStack, world : World, player : EntityPlayer ) : ItemStack = {
+    if ( !player.isSneaking() ) return item
 
-   def createItem() : ItemModule = new ItemChamber( this,
-       Emitters.matterTransporterEmitter, Tier2EmptyChamber )
-    .setUnlocalizedName("rayguns.MatterTransporterChamber")
-    .setTextureName("rayguns:chamber_matter_transporter")
-    .setCreativeTab( ModularRayguns.raygunsTab )
-    .setMaxStackSize(1)
-
-  def registerShotHandlers() : Unit = {
-    registerSingleShotHandlers()
-    registerPreciseShotHandler()
-  }
-
-  override def handlePrefireEvent( event : PrefireEvent ) : Unit = {
-    val id = MatterTransporterEffect.getPlacedBlockId( event.player )
-    event.canFire &&= id.isDefined
+    val success = player.inventory.addItemStackToInventory( emitter.asStack )
+    if ( success ) emptyChamber.asStack else item
   }
 }
