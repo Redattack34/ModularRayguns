@@ -133,7 +133,7 @@ trait RecipeLibrary {
         module.item.get.asStack
       }
       case str : String => str
-      case k => throw new IllegalArgumentException( s"Invalid shapeless recipe. Unknown type: $k" );
+      case k : Any => throw new IllegalArgumentException( s"Invalid shapeless recipe. Unknown type: $k" );
     }
     GameRegistry.addRecipe( ScalaRecipeVarargWorkaround.createShapeless( output, stacks.asJava ) )
   }

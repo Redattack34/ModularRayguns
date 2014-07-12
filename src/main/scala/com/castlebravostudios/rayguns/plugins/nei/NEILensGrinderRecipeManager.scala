@@ -59,8 +59,8 @@ class NEILensGrinderRecipeManager extends ShapedRecipeHandler {
   override def loadUsageRecipes( ingredient : ItemStack ) : Unit = {
     for {
       recipe <- LensGrinderRecipeRegistry.recipes
-      val inputs = recipe.recipe.getInput().flatMap {
-        case ls : java.util.List[ItemStack] => ls.asScala
+      inputs = recipe.recipe.getInput().flatMap {
+        case ls : java.util.List[_] => ls.asInstanceOf[java.util.List[ItemStack]].asScala
         case ls : Array[ItemStack] => ls
         case l : ItemStack => l :: Nil
       }
