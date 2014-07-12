@@ -22,8 +22,8 @@ apply plugin: 'scalaStyle'
 apply plugin: 'forge'
 
 dependencies {
-    compile files('libs/CodeChickenCore-1.7.2-1.0.0-dev.jar')
-    compile files('libs/NotEnoughItems-1.7.2-1.0.1-dev.jar')
+    compile files('custom_libs/CodeChickenCore-1.7.2-1.0.0-dev.jar')
+    compile files('custom_libs/NotEnoughItems-1.7.2-1.0.1-dev.jar')
 }
 
 version = "1.0-alpha3"

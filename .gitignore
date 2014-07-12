@@ -24,6 +24,6 @@ src/api
 screenshots
 .scalastyle
 asm
-libs
+custom_libs
 run
 logs
