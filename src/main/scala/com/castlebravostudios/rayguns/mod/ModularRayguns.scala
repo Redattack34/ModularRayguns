@@ -46,6 +46,7 @@ import com.castlebravostudios.rayguns.items.RaygunsItems
 import com.castlebravostudios.rayguns.items.RaygunsBlocks
 import com.castlebravostudios.rayguns.items.frames.FireflyFrame
 import net.minecraft.item.Item
+import cpw.mods.fml.common.event.FMLInterModComms
 
 @Mod(modid="mod_ModularRayguns", version="1.0-alpha2", modLanguage="scala", useMetadata=true)
 object ModularRayguns {
@@ -79,6 +80,9 @@ object ModularRayguns {
 
     proxy.registerRenderers()
     proxy.loadTextures()
+
+    FMLInterModComms.sendMessage("Waila", "register",
+        "com.castlebravostudios.rayguns.plugins.waila.RaygunsWailaModule.register" )
   }
 
   val raygunsTab  = new CreativeTabs("tabRayguns") {

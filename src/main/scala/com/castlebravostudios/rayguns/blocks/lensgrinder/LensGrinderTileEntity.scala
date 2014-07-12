@@ -54,7 +54,7 @@ class LensGrinderTileEntity extends BaseInventoryTileEntity with PoweredBlock
 
   private[this] var remainingTime = 0
 
-  private[this] var recipe : Option[LensGrinderRecipe] = None
+  var recipe : Option[LensGrinderRecipe] = None
 
   var chargeStored : Int = 0
   val chargeCapacity : Int = 10
