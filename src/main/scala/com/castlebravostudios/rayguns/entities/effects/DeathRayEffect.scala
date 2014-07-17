@@ -86,6 +86,8 @@ object DeathRayEffect extends BaseEffect {
     case Blocks.vine => Blocks.air
   }
 
+  override def subtractsColor = true
+
   val boltTexture = ModularRayguns.texture( "textures/bolts/death_ray_bolt.png" )
   val beamTexture = ModularRayguns.texture( "textures/beams/death_ray_beam.png" )
   val chargeTexture = ModularRayguns.texture( "textures/effects/charge/death_ray_charge.png" )

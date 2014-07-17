@@ -136,4 +136,6 @@ trait BaseEffect {
 
   def getDamageSource( shootable : Shootable ) : DamageSource =
     new RandomDamageSource( damageSourceKey, shootable, shootable.shooter )
+
+  def subtractsColor : Boolean = false
 }

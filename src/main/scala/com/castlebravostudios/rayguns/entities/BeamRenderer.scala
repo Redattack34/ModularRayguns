@@ -54,12 +54,10 @@ class BeamRenderer extends Render {
     GL11.glScalef(0.025f * e.charge.toFloat, 0.025f * e.charge.toFloat, 1.0f)
     GL11.glDisable(GL11.GL_LIGHTING)
     GL11.glEnable(GL11.GL_BLEND);
-    if ( e.effect == DeathRayEffect ) {
-      GL11.glBlendFunc(GL11.GL_ZERO, GL11.GL_ONE_MINUS_SRC_ALPHA);
+    if ( e.effect.subtractsColor ) {
+      GL14.glBlendEquation( GL14.GL_FUNC_REVERSE_SUBTRACT)
     }
-    else {
-      GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
-    }
+    GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
     GL11.glDepthMask(false);
     OpenGlHelper.setActiveTexture(OpenGlHelper.lightmapTexUnit)
     GL11.glDisable(GL11.GL_TEXTURE_2D)
@@ -90,6 +88,7 @@ class BeamRenderer extends Render {
     GL11.glDepthMask(true);
     GL11.glDisable(GL11.GL_BLEND)
     GL11.glEnable(GL11.GL_LIGHTING)
+    GL14.glBlendEquation( GL14.GL_FUNC_ADD )
   }
 
   def getEntityTexture( e : Entity ) : ResourceLocation = e match {
