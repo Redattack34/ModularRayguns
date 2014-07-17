@@ -37,8 +37,7 @@ import net.minecraft.client.renderer.entity.Render
 import net.minecraft.entity.Entity
 import net.minecraft.util.ResourceLocation
 import com.castlebravostudios.rayguns.mod.ModularRayguns
-
-
+import org.lwjgl.opengl.GL14
 
 class LightningBeamRenderer extends Render {
 
@@ -55,14 +54,11 @@ class LightningBeamRenderer extends Render {
     GL11.glPushMatrix();
 
     GL11.glDisable(GL11.GL_LIGHTING)
-    GL11.glDisable(GL11.GL_CULL_FACE)
     GL11.glEnable(GL11.GL_BLEND);
     if ( flash && e.renderCount % 3 == 0 ) {
-      GL11.glBlendFunc(GL11.GL_ZERO, GL11.GL_ONE_MINUS_SRC_ALPHA);
+      GL14.glBlendEquation( GL14.GL_FUNC_REVERSE_SUBTRACT)
     }
-    else {
-      GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
-    }
+    GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
     GL11.glDepthMask(false);
     OpenGlHelper.setActiveTexture(OpenGlHelper.lightmapTexUnit)
     GL11.glDisable(GL11.GL_TEXTURE_2D)
@@ -80,22 +76,32 @@ class LightningBeamRenderer extends Render {
       tes.addVertexWithUV( end.x - thickness, end.y, end.z, 0, 1);
       tes.addVertexWithUV( end.x + thickness, end.y, end.z, 1, 1);
       tes.addVertexWithUV( start.x + thickness, start.y, start.z, 1, 0);
+
+      tes.addVertexWithUV( start.x + thickness, start.y, start.z, 1, 0);
+      tes.addVertexWithUV( end.x + thickness, end.y, end.z, 1, 1);
+      tes.addVertexWithUV( end.x - thickness, end.y, end.z, 0, 1);
+      tes.addVertexWithUV( start.x - thickness, start.y, start.z, 0, 0);
+
       tes.addVertexWithUV( start.x, start.y - thickness, start.z, 0, 0);
       tes.addVertexWithUV( end.x, end.y - thickness, end.z, 0, 1);
       tes.addVertexWithUV( end.x, end.y + thickness, end.z, 1, 1);
       tes.addVertexWithUV( start.x, start.y + thickness, start.z, 1, 0);
+
+      tes.addVertexWithUV( start.x, start.y + thickness, start.z, 1, 0);
+      tes.addVertexWithUV( end.x, end.y + thickness, end.z, 1, 1);
+      tes.addVertexWithUV( end.x, end.y - thickness, end.z, 0, 1);
+      tes.addVertexWithUV( start.x, start.y - thickness, start.z, 0, 0);
     }
     tes.draw();
 
     OpenGlHelper.setActiveTexture(OpenGlHelper.lightmapTexUnit)
     GL11.glEnable(GL11.GL_TEXTURE_2D)
     OpenGlHelper.setActiveTexture(OpenGlHelper.defaultTexUnit)
-    GL11.glColor4f( 1.0f, 1.0f, 1.0f, 1.0f )
     GL11.glDepthMask(true);
     GL11.glDisable(GL11.GL_BLEND)
-    GL11.glEnable(GL11.GL_CULL_FACE)
     GL11.glEnable(GL11.GL_LIGHTING)
     GL11.glPopMatrix()
+    GL14.glBlendEquation( GL14.GL_FUNC_ADD )
 
     e.renderCount += 1
   }
