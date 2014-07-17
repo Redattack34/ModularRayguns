@@ -89,8 +89,8 @@ object LightningEffect extends BaseEffect {
     bolt
   }
 
-  val beamTexture = ModularRayguns.texture( "textures/beams/lightning_beam.png" )
-  val boltTexture = beamTexture
+  val beamGlowTexture = ModularRayguns.texture( "textures/beams/beam_glow_lightning.png" )
+  val boltTexture = beamGlowTexture
   val chargeTexture = ModularRayguns.texture( "textures/effects/charge/lightning_charge.png" )
 }
 

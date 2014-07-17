@@ -81,6 +81,6 @@ object HeatRayEffect extends BaseEffect {
   }
 
   val boltTexture = ModularRayguns.texture( "textures/bolts/heat_bolt.png" )
-  val beamTexture = ModularRayguns.texture( "textures/beams/heat_beam.png" )
+  val beamGlowTexture = ModularRayguns.texture( "textures/beams/beam_glow_heat.png" )
   val chargeTexture = ModularRayguns.texture( "textures/effects/charge/heat_charge.png" )
 }

@@ -55,6 +55,6 @@ object LaserEffect extends BaseEffect {
   }
 
   val boltTexture = ModularRayguns.texture( "textures/bolts/laser_bolt.png" )
-  val beamTexture = ModularRayguns.texture( "textures/beams/laser_beam.png" )
+  val beamGlowTexture = ModularRayguns.texture( "textures/beams/beam_glow_laser.png" )
   val chargeTexture = ModularRayguns.texture( "textures/effects/charge/laser_charge.png" )
 }

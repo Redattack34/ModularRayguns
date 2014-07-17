@@ -102,6 +102,6 @@ object ImpulseEffect extends BaseEffect {
   }
 
   val boltTexture = ModularRayguns.texture( "textures/bolts/impulse_bolt.png" )
-  val beamTexture = ModularRayguns.texture( "textures/beams/impulse_beam.png" )
+  val beamGlowTexture = ModularRayguns.texture( "textures/beams/beam_glow_impulse.png" )
   val chargeTexture = ModularRayguns.texture( "textures/effects/charge/impulse_charge.png" )
 }

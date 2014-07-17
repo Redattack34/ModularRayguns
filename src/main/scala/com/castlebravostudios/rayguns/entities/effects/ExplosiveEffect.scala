@@ -62,6 +62,6 @@ object ExplosiveEffect extends BaseEffect with TriggerOnDeath {
     }
 
   val boltTexture = ModularRayguns.texture( "textures/bolts/explosive_bolt.png" )
-  val beamTexture = ModularRayguns.texture( "textures/beams/explosive_beam.png" )
+  val beamGlowTexture = ModularRayguns.texture( "textures/beams/beam_glow_explosive.png" )
   val chargeTexture = ModularRayguns.texture( "textures/effects/charge/explosive_charge.png" )
 }

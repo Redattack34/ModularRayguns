@@ -73,7 +73,7 @@ object MatterTransporterEffect extends BaseEffect {
   }
 
   val boltTexture = ModularRayguns.texture( "textures/bolts/matter_transporter_bolt.png" )
-  val beamTexture = ModularRayguns.texture( "textures/beams/matter_transporter_beam.png" )
+  val beamGlowTexture = ModularRayguns.texture( "textures/beams/beam_glow_matter_transporter.png" )
   val chargeTexture = ModularRayguns.texture( "textures/effects/charge/matter_transporter_charge.png" )
 
   def getPlacedBlockId( player : EntityPlayer ) : Option[Item] = {
