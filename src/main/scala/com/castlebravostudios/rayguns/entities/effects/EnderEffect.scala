@@ -114,5 +114,6 @@ object EnderEffect extends BaseEffect {
 
   val boltTexture = ModularRayguns.texture( "textures/bolts/ender_bolt.png" )
   val beamGlowTexture = ModularRayguns.texture( "textures/beams/beam_glow_ender.png" )
+  val beamCoreTexture = ModularRayguns.texture( "textures/beams/beam_core_ender.png" )
   val chargeTexture = ModularRayguns.texture( "textures/effects/charge/ender_charge.png" )
 }

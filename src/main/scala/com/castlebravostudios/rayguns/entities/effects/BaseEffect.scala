@@ -120,6 +120,7 @@ trait BaseEffect {
   def boltTexture : ResourceLocation
 
   def beamGlowTexture : ResourceLocation
+  def beamCoreTexture : ResourceLocation
 
   def lineTexture : ResourceLocation = BoltRenderer.lineBlackTexture
   def chargeTexture : ResourceLocation
@@ -140,4 +141,5 @@ trait BaseEffect {
     new RandomDamageSource( damageSourceKey, shootable, shootable.shooter )
 
   def glowSubtractsColor : Boolean = false
+  def coreSubtractsColor : Boolean = false
 }

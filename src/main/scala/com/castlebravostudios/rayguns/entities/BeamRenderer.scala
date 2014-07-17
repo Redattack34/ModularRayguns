@@ -54,7 +54,7 @@ class BeamRenderer extends Render {
     GL11.glTranslated(x, y, z)
     GL11.glRotatef(180 + e.rotationYaw, 0.0f, 1.0f, 0.0f)
     GL11.glRotatef(180 - e.rotationPitch, 1.0f, 0.0f, 0.0f)
-    GL11.glScalef(0.025f * e.charge.toFloat, 0.025f * e.charge.toFloat, 1.0f)
+    GL11.glScalef(0.05f * e.charge.toFloat, 0.05f * e.charge.toFloat, 1.0f)
     GL11.glDisable(GL11.GL_LIGHTING)
     GL11.glEnable(GL11.GL_BLEND);
     GL11.glDepthMask(false);
@@ -62,7 +62,8 @@ class BeamRenderer extends Render {
     GL11.glDisable(GL11.GL_TEXTURE_2D)
     OpenGlHelper.setActiveTexture(OpenGlHelper.defaultTexUnit)
 
-    drawGlow(e)
+    drawGlow( e )
+    drawCore( e )
 
     GL11.glPopMatrix()
     OpenGlHelper.setActiveTexture(OpenGlHelper.lightmapTexUnit)
@@ -88,6 +89,23 @@ class BeamRenderer extends Render {
     GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ZERO);
     GL14.glBlendEquation( GL14.GL_FUNC_ADD )
   }
+
+  private def drawCore(e: BaseBeamEntity): Unit = {
+    this.bindTexture( e.effect.beamCoreTexture );
+    if ( e.effect.coreSubtractsColor ) {
+      GL14.glBlendEquation( GL14.GL_FUNC_REVERSE_SUBTRACT)
+    }
+    GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
+    val tes = Tessellator.instance
+    tes.startDrawingQuads();
+    drawQuad( 1.0, 0.0, e.length )
+    drawQuad( half, root3Over2, e.length )
+    drawQuad( half, -root3Over2, e.length )
+    tes.draw();
+    GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ZERO);
+    GL14.glBlendEquation( GL14.GL_FUNC_ADD )
+  }
+
 
   private def drawQuad( x : Double, y : Double, length : Double ): Unit = {
     val tes = Tessellator.instance
