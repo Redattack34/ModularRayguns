@@ -39,11 +39,14 @@ import org.lwjgl.opengl.GL14
 
 class BeamRenderer extends Render {
 
+  private[this] val half = 1.0d / 2.0d
+  private[this] val root3Over2 = Math.sqrt( 3.0d ) / 2.0d
+
   def doRender( e : Entity, x : Double, y : Double, z : Double, yaw : Float, partialTickTime : Float) : Unit = {
     doRender( e.asInstanceOf[BaseBeamEntity], x, y, z, yaw, partialTickTime )
   }
 
-  private def doRender( e : BaseBeamEntity, x : Double, y : Double, z : Double, yaw : Float, partialTickTime : Float) : Unit = {
+  private def doRender( e : BaseBeamEntity, x : Double, y : Double, z : Double, yaw : Float, partialTickTime : Float): Unit = {
 
     this.bindEntityTexture(e);
     GL11.glPushMatrix();
@@ -65,21 +68,11 @@ class BeamRenderer extends Render {
 
     val tes = Tessellator.instance
 
-    for { _ <- 0 until 3 } {
-      tes.startDrawingQuads();
-      tes.addVertexWithUV(-1.0D, 0.0D, 0.0D, 0, 0);
-      tes.addVertexWithUV(-1.0D, 0.0D, e.length, 0, 1);
-      tes.addVertexWithUV(1.0D, 0.0D, e.length, 1, 1);
-      tes.addVertexWithUV(1.0D, 0.0D, 0.0D, 1, 0);
-
-      tes.addVertexWithUV(1.0D, 0.0D, 0.0D, 1, 0);
-      tes.addVertexWithUV(1.0D, 0.0D, e.length, 1, 1);
-      tes.addVertexWithUV(-1.0D, 0.0D, e.length, 0, 1);
-      tes.addVertexWithUV(-1.0D, 0.0D, 0.0D, 0, 0);
-
-      tes.draw();
-      GL11.glRotatef(66.0f, 0.0f, 0.0f, 1.0f)
-    }
+    tes.startDrawingQuads();
+    drawQuad( 1.0, 0.0, e.length )
+    drawQuad( half, root3Over2, e.length )
+    drawQuad( half, -root3Over2, e.length )
+    tes.draw();
 
     GL11.glPopMatrix()
     OpenGlHelper.setActiveTexture(OpenGlHelper.lightmapTexUnit)
@@ -89,6 +82,19 @@ class BeamRenderer extends Render {
     GL11.glDisable(GL11.GL_BLEND)
     GL11.glEnable(GL11.GL_LIGHTING)
     GL14.glBlendEquation( GL14.GL_FUNC_ADD )
+  }
+
+  private def drawQuad( x : Double, y : Double, length : Double ): Unit = {
+    val tes = Tessellator.instance
+    tes.addVertexWithUV(-x, y, 0.0D, 0, 0);
+    tes.addVertexWithUV(-x, y, length, 0, 1);
+    tes.addVertexWithUV(x, -y, length, 1, 1);
+    tes.addVertexWithUV(x, -y, 0.0D, 1, 0);
+
+    tes.addVertexWithUV(x, -y, 0.0D, 1, 0);
+    tes.addVertexWithUV(x, -y, length, 1, 1);
+    tes.addVertexWithUV(-x, y, length, 0, 1);
+    tes.addVertexWithUV(-x, y, 0.0D, 0, 0);
   }
 
   def getEntityTexture( e : Entity ) : ResourceLocation = e match {
