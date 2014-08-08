@@ -64,6 +64,7 @@ class BeamRenderer extends Render {
 
     drawGlow( e )
     drawCore( e )
+    drawNoise( e )
 
     GL11.glPopMatrix()
     OpenGlHelper.setActiveTexture(OpenGlHelper.lightmapTexUnit)
@@ -106,17 +107,33 @@ class BeamRenderer extends Render {
     GL14.glBlendEquation( GL14.GL_FUNC_ADD )
   }
 
+  private def drawNoise(e: BaseBeamEntity ): Unit = {
+    this.bindTexture( e.effect.beamNoiseTexture )
+    if ( e.effect.noiseSubtractsColor ) {
+      GL14.glBlendEquation( GL14.GL_FUNC_REVERSE_SUBTRACT)
+    }
+    GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE)
 
-  private def drawQuad( x : Double, y : Double, length : Double ): Unit = {
+    val tes = Tessellator.instance
+    tes.startDrawingQuads()
+    drawQuad( 1.0, 0.0, e.length, e.charge * 100 )
+    drawQuad( half, root3Over2, e.length, e.charge * 100 )
+    drawQuad( half, -root3Over2, e.length, e.charge * 100 )
+    tes.draw()
+    GL11.glBlendFunc(GL11.GL_ONE, GL11.GL_ZERO)
+    GL14.glBlendEquation( GL14.GL_FUNC_ADD )
+  }
+
+  private def drawQuad( x : Double, y : Double, length : Double, texOffset : Double = 0.0 ): Unit = {
     val tes = Tessellator.instance
     tes.addVertexWithUV(-x, y, 0.0D, 0, 0)
-    tes.addVertexWithUV(-x, y, length, 0, length)
-    tes.addVertexWithUV(x, -y, length, 1, length)
+    tes.addVertexWithUV(-x, y, length, 0, length + texOffset )
+    tes.addVertexWithUV(x, -y, length, 1, length + texOffset )
     tes.addVertexWithUV(x, -y, 0.0D, 1, 0)
 
     tes.addVertexWithUV(x, -y, 0.0D, 1, 0)
-    tes.addVertexWithUV(x, -y, length, 1, length)
-    tes.addVertexWithUV(-x, y, length, 0, length)
+    tes.addVertexWithUV(x, -y, length, 1, length + texOffset )
+    tes.addVertexWithUV(-x, y, length, 0, length + texOffset )
     tes.addVertexWithUV(-x, y, 0.0D, 0, 0)
   }
 

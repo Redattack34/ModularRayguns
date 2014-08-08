@@ -116,5 +116,6 @@ class CuttingEffect( val key : String, val harvestLevel : Int, val powerMultipli
   val boltTexture = new ResourceLocation( "rayguns", s"textures/bolts/cutting_bolt_t${harvestLevel}.png" )
   val beamGlowTexture = new ResourceLocation( "rayguns", s"textures/beams/beam_glow_cutting_t${harvestLevel}.png" )
   val beamCoreTexture = new ResourceLocation( "rayguns", s"textures/beams/beam_core_cutting_t${harvestLevel}.png" )
+  val beamNoiseTexture = new ResourceLocation( "rayguns", s"textures/beams/beam_noise_cutting_t${harvestLevel}.png" )
   val chargeTexture = new ResourceLocation( "rayguns", s"textures/effects/charge/cutting_charge_t${harvestLevel}.png" )
 }

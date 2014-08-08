@@ -66,5 +66,6 @@ object LifeForceEffect extends BaseEffect {
   val boltTexture = ModularRayguns.texture( "textures/bolts/life_bolt.png" )
   val beamGlowTexture = ModularRayguns.texture( "textures/beams/beam_glow_life.png" )
   val beamCoreTexture = ModularRayguns.texture( "textures/beams/beam_core_life.png" )
+  val beamNoiseTexture = ModularRayguns.texture( "textures/beams/beam_noise_life.png" )
   val chargeTexture = ModularRayguns.texture( "textures/effects/charge/life_charge.png" )
 }

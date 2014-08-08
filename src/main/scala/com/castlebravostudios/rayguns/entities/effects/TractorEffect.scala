@@ -105,5 +105,6 @@ object TractorEffect extends BaseEffect {
   val boltTexture = ModularRayguns.texture( "textures/bolts/tractor_bolt.png" )
   val beamGlowTexture = ModularRayguns.texture( "textures/beams/beam_glow_tractor.png" )
   val beamCoreTexture = ModularRayguns.texture( "textures/beams/beam_core_tractor.png" )
+  val beamNoiseTexture = ModularRayguns.texture( "textures/beams/beam_noise_tractor.png" )
   val chargeTexture = ModularRayguns.texture( "textures/effects/charge/tractor_charge.png" )
 }

@@ -121,6 +121,7 @@ trait BaseEffect {
 
   def beamGlowTexture : ResourceLocation
   def beamCoreTexture : ResourceLocation
+  def beamNoiseTexture : ResourceLocation
 
   def lineTexture : ResourceLocation = BoltRenderer.lineBlackTexture
   def chargeTexture : ResourceLocation
@@ -142,4 +143,5 @@ trait BaseEffect {
 
   def glowSubtractsColor : Boolean = false
   def coreSubtractsColor : Boolean = false
+  def noiseSubtractsColor : Boolean = false
 }
