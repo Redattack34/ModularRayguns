@@ -46,7 +46,7 @@ import io.netty.buffer.ByteBuf
 
 class BaseBeamEntity(world : World) extends BaseShootable( world ) {
 
-  def depletionRate : Double = 0.000000003d
+  def depletionRate : Double = 0.000003d
   var length : Double = 0
 
   var maxRange : Int = 20
