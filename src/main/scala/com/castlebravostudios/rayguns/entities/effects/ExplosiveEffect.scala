@@ -36,7 +36,7 @@ import net.minecraft.entity.item.EntityTNTPrimed
 import net.minecraft.util.ResourceLocation
 import com.castlebravostudios.rayguns.mod.ModularRayguns
 
-object ExplosiveEffect extends BaseEffect with TriggerOnDeath {
+object ExplosiveEffect extends BaseEffect with TriggerOnDeath with SimpleTextures {
 
   val effectKey = "Explosive"
   val damageSourceKey = ""
@@ -61,9 +61,5 @@ object ExplosiveEffect extends BaseEffect with TriggerOnDeath {
       shootable.worldObj.newExplosion(new FakeTNTPrimed( shootable ), x, y, z, 3.0f, false, true)
     }
 
-  val boltTexture = ModularRayguns.texture( "textures/bolts/explosive_bolt.png" )
-  val beamGlowTexture = ModularRayguns.texture( "textures/beams/beam_glow_explosive.png" )
-  val beamCoreTexture = ModularRayguns.texture( "textures/beams/beam_core_explosive.png" )
-  val beamNoiseTexture = ModularRayguns.texture( "textures/beams/beam_noise_explosive.png" )
-  val chargeTexture = ModularRayguns.texture( "textures/effects/charge/explosive_charge.png" )
+  override def textureName : String = "explosive"
 }

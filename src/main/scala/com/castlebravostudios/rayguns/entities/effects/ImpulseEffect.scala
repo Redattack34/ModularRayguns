@@ -41,7 +41,7 @@ import net.minecraft.world.World
 import com.castlebravostudios.rayguns.mod.ModularRayguns
 import net.minecraft.init.Blocks
 
-object ImpulseEffect extends BaseEffect {
+object ImpulseEffect extends BaseEffect with SimpleTextures {
 
   val effectKey = "Impulse"
   val damageSourceKey = "impulse"
@@ -101,9 +101,5 @@ object ImpulseEffect extends BaseEffect {
     Vector3( x, y, z )
   }
 
-  val boltTexture = ModularRayguns.texture( "textures/bolts/impulse_bolt.png" )
-  val beamGlowTexture = ModularRayguns.texture( "textures/beams/beam_glow_impulse.png" )
-  val beamCoreTexture = ModularRayguns.texture( "textures/beams/beam_core_impulse.png" )
-  val beamNoiseTexture = ModularRayguns.texture( "textures/beams/beam_noise_impulse.png" )
-  val chargeTexture = ModularRayguns.texture( "textures/effects/charge/impulse_charge.png" )
+  override def textureName : String = "impulse"
 }

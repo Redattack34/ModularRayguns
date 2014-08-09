@@ -41,7 +41,7 @@ import net.minecraft.util.ResourceLocation
 import net.minecraftforge.common.IPlantable
 import net.minecraft.init.Blocks
 
-object DeathRayEffect extends BaseEffect {
+object DeathRayEffect extends BaseEffect with SimpleTextures {
 
   val effectKey = "DeathRay"
   val damageSourceKey = "deathRay"
@@ -89,10 +89,7 @@ object DeathRayEffect extends BaseEffect {
   override def glowSubtractsColor = true
   override def coreSubtractsColor = true
 
-  val boltTexture = ModularRayguns.texture( "textures/bolts/death_ray_bolt.png" )
-  val beamGlowTexture = ModularRayguns.texture( "textures/beams/beam_glow_death_ray.png" )
-  val beamCoreTexture = ModularRayguns.texture( "textures/beams/beam_core_death_ray.png" )
-  val beamNoiseTexture = ModularRayguns.texture( "textures/beams/beam_noise_death_ray.png" )
-  val chargeTexture = ModularRayguns.texture( "textures/effects/charge/death_ray_charge.png" )
   override def lineTexture : ResourceLocation = BoltRenderer.lineWhiteTexture
+
+  override def textureName : String = "death_ray"
 }

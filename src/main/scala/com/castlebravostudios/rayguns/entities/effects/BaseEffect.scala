@@ -33,7 +33,6 @@ import com.castlebravostudios.rayguns.entities.BoltRenderer
 import com.castlebravostudios.rayguns.entities.Shootable
 import com.castlebravostudios.rayguns.utils.BlockPos
 import com.castlebravostudios.rayguns.utils.RandomDamageSource
-
 import net.minecraft.block.Block
 import net.minecraft.block.BlockLiquid
 import net.minecraft.entity.Entity
@@ -42,6 +41,7 @@ import net.minecraft.util.DamageSource
 import net.minecraft.util.ResourceLocation
 import net.minecraft.world.World
 import net.minecraftforge.fluids.IFluidBlock
+import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 trait BaseEffect {
 
@@ -117,13 +117,12 @@ trait BaseEffect {
   def adjustCoords( x : Int, y : Int, z : Int, side : Int ) : BlockPos =
     BlockPos( x, y, z ).add( hitOffset( side ) )
 
-  def boltTexture : ResourceLocation
+  def lineTexture : ResourceLocation = BoltRenderer.lineBlackTexture
 
+  def boltTexture : ResourceLocation
   def beamGlowTexture : ResourceLocation
   def beamCoreTexture : ResourceLocation
   def beamNoiseTexture : ResourceLocation
-
-  def lineTexture : ResourceLocation = BoltRenderer.lineBlackTexture
   def chargeTexture : ResourceLocation
 
   def createBeamEntity( world : World, player : EntityPlayer ) : BaseBeamEntity = {

@@ -46,7 +46,7 @@ import com.google.common.io.ByteArrayDataInput
 import com.castlebravostudios.rayguns.items.RaygunsBlocks
 import io.netty.buffer.ByteBuf
 
-object LightningEffect extends BaseEffect {
+object LightningEffect extends BaseEffect with SimpleTextures {
 
   val effectKey = "Lightning"
   val damageSourceKey = "lightningRay"
@@ -89,11 +89,8 @@ object LightningEffect extends BaseEffect {
     bolt
   }
 
-  val beamGlowTexture = ModularRayguns.texture( "textures/beams/beam_glow_lightning.png" )
-  val beamCoreTexture = ModularRayguns.texture( "textures/beams/beam_core_lightning.png" )
-  val beamNoiseTexture = ModularRayguns.texture( "textures/beams/beam_noise_lightning.png" )
-  val boltTexture = beamGlowTexture
-  val chargeTexture = ModularRayguns.texture( "textures/effects/charge/lightning_charge.png" )
+  def textureName : String = "lightning"
+  override val boltTexture = beamGlowTexture
 }
 
 trait LightningShootable {

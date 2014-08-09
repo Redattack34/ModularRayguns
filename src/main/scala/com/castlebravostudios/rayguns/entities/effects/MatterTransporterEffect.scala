@@ -43,7 +43,7 @@ import net.minecraft.world.World
 import cpw.mods.fml.common.registry.IEntityAdditionalSpawnData
 import io.netty.buffer.ByteBuf
 
-object MatterTransporterEffect extends BaseEffect {
+object MatterTransporterEffect extends BaseEffect with SimpleTextures {
 
   val effectKey: String = "MatterTransporterEffect"
   val damageSourceKey = ""
@@ -72,11 +72,7 @@ object MatterTransporterEffect extends BaseEffect {
     bolt
   }
 
-  val boltTexture = ModularRayguns.texture( "textures/bolts/matter_transporter_bolt.png" )
-  val beamGlowTexture = ModularRayguns.texture( "textures/beams/beam_glow_matter_transporter.png" )
-  val beamCoreTexture = ModularRayguns.texture( "textures/beams/beam_core_matter_transporter.png" )
-  val beamNoiseTexture = ModularRayguns.texture( "textures/beams/beam_noise_matter_transporter.png" )
-  val chargeTexture = ModularRayguns.texture( "textures/effects/charge/matter_transporter_charge.png" )
+  def textureName : String = "matter_transporter"
 
   def getPlacedBlockId( player : EntityPlayer ) : Option[Item] = {
     val currentSlot = player.inventory.currentItem

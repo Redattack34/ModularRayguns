@@ -39,7 +39,8 @@ import net.minecraft.init.Items
 import net.minecraft.item.Item
 import net.minecraft.util.ResourceLocation
 
-class CuttingEffect( val key : String, val harvestLevel : Int, val powerMultiplier : Float ) extends BaseEffect {
+class CuttingEffect( val key : String, val harvestLevel : Int, val powerMultiplier : Float )
+  extends BaseEffect with SimpleTextures {
   implicit class ShootableExtension(val shootable : Shootable) {
     def harvestPower( ) : Float = shootable.charge.toFloat * powerMultiplier
     def setHarvestPower( power : Float ) : Unit = {
@@ -113,9 +114,5 @@ class CuttingEffect( val key : String, val harvestLevel : Int, val powerMultipli
   def effectKey : String = key
   val damageSourceKey = ""
 
-  val boltTexture = new ResourceLocation( "rayguns", s"textures/bolts/cutting_bolt_t${harvestLevel}.png" )
-  val beamGlowTexture = new ResourceLocation( "rayguns", s"textures/beams/beam_glow_cutting_t${harvestLevel}.png" )
-  val beamCoreTexture = new ResourceLocation( "rayguns", s"textures/beams/beam_core_cutting_t${harvestLevel}.png" )
-  val beamNoiseTexture = new ResourceLocation( "rayguns", s"textures/beams/beam_noise_cutting_t${harvestLevel}.png" )
-  val chargeTexture = new ResourceLocation( "rayguns", s"textures/effects/charge/cutting_charge_t${harvestLevel}.png" )
+  override def textureName : String = s"cutting_t${harvestLevel}"
 }

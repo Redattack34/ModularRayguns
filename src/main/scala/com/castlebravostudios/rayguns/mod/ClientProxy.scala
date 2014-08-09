@@ -70,6 +70,7 @@ class ClientProxy extends CommonProxy {
     EffectRegistry.allRegisteredEffects foreach { effect =>
       loadTexture( effect.beamGlowTexture )
       loadTexture( effect.beamCoreTexture )
+      loadTexture( effect.beamNoiseTexture )
       loadTexture( effect.boltTexture )
       loadTexture( effect.lineTexture )
     }

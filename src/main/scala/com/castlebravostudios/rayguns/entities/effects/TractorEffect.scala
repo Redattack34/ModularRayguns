@@ -44,7 +44,7 @@ import net.minecraft.util.ResourceLocation
 import com.castlebravostudios.rayguns.mod.ModularRayguns
 import net.minecraft.init.Blocks
 
-object TractorEffect extends BaseEffect {
+object TractorEffect extends BaseEffect with SimpleTextures {
 
   val effectKey = "Tractor"
   val damageSourceKey = "impulse"
@@ -102,9 +102,5 @@ object TractorEffect extends BaseEffect {
     Vector3( x, y, z )
   }
 
-  val boltTexture = ModularRayguns.texture( "textures/bolts/tractor_bolt.png" )
-  val beamGlowTexture = ModularRayguns.texture( "textures/beams/beam_glow_tractor.png" )
-  val beamCoreTexture = ModularRayguns.texture( "textures/beams/beam_core_tractor.png" )
-  val beamNoiseTexture = ModularRayguns.texture( "textures/beams/beam_noise_tractor.png" )
-  val chargeTexture = ModularRayguns.texture( "textures/effects/charge/tractor_charge.png" )
+  def textureName : String = "tractor"
 }
