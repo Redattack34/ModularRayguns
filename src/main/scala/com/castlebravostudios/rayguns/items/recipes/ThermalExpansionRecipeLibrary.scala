@@ -29,28 +29,29 @@ package com.castlebravostudios.rayguns.items.recipes
 
 //scalastyle:off underscore.import
 
-import com.castlebravostudios.rayguns.api.LensGrinderRecipeRegistry
 import com.castlebravostudios.rayguns.api.items._
-import com.castlebravostudios.rayguns.items.Blocks
+import com.castlebravostudios.rayguns.items.RaygunsBlocks
 import com.castlebravostudios.rayguns.items.accessories._
 import com.castlebravostudios.rayguns.items.barrels._
 import com.castlebravostudios.rayguns.items.batteries._
-import com.castlebravostudios.rayguns.items.frames._
 import com.castlebravostudios.rayguns.items.chambers._
 import com.castlebravostudios.rayguns.items.emitters.Emitters
+import com.castlebravostudios.rayguns.items.frames._
 import com.castlebravostudios.rayguns.items.lenses._
 import com.castlebravostudios.rayguns.items.misc._
-import com.castlebravostudios.rayguns.utils.Extensions.ItemExtensions
 import com.castlebravostudios.rayguns.utils.Extensions.BlockExtensions
-import com.castlebravostudios.rayguns.utils.ScalaShapedRecipeFactory
-import net.minecraft.block.Block
+import com.castlebravostudios.rayguns.utils.Extensions.ItemExtensions
+
+import net.minecraft.init.Blocks
+import net.minecraft.init.Items
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
-import cpw.mods.fml.common.registry.GameRegistry
 import net.minecraft.nbt.NBTTagCompound
-import cpw.mods.fml.common.event.FMLInterModComms
-import net.minecraftforge.fluids.FluidStack
 import net.minecraftforge.fluids.FluidRegistry
+import net.minecraftforge.fluids.FluidStack
+
+import cpw.mods.fml.common.event.FMLInterModComms
+import cpw.mods.fml.common.registry.GameRegistry
 
 //scalastyle:on
 
@@ -66,9 +67,9 @@ object ThermalExpansionRecipeLibrary extends RecipeLibrary {
       output : ItemStack, fluid : FluidStack, reversible : Boolean = false ) : Unit = {
     val toSend = new NBTTagCompound();
     toSend.setInteger( "energy", energyCost );
-    toSend.setCompoundTag( "input", new NBTTagCompound( ) );
-    toSend.setCompoundTag( "output", new NBTTagCompound( ) );
-    toSend.setCompoundTag( "fluid", new NBTTagCompound( ) );
+    toSend.setTag( "input", new NBTTagCompound( ) );
+    toSend.setTag( "output", new NBTTagCompound( ) );
+    toSend.setTag( "fluid", new NBTTagCompound( ) );
 
     input.writeToNBT( toSend.getCompoundTag( "input" ) );
     output.writeToNBT( toSend.getCompoundTag( "output" ) );
@@ -80,9 +81,9 @@ object ThermalExpansionRecipeLibrary extends RecipeLibrary {
   private def addInductionSmelterRecipe( energyCost : Int, primaryInput : ItemStack, secondaryInput : ItemStack, output : ItemStack ) : Unit = {
     val toSend = new NBTTagCompound();
     toSend.setInteger("energy", energyCost);
-    toSend.setCompoundTag("primaryInput", new NBTTagCompound());
-    toSend.setCompoundTag("secondaryInput", new NBTTagCompound());
-    toSend.setCompoundTag("primaryOutput", new NBTTagCompound());
+    toSend.setTag("primaryInput", new NBTTagCompound());
+    toSend.setTag("secondaryInput", new NBTTagCompound());
+    toSend.setTag("primaryOutput", new NBTTagCompound());
 
     primaryInput.writeToNBT(toSend.getCompoundTag("primaryInput"));
     secondaryInput.writeToNBT(toSend.getCompoundTag("secondaryInput"));
@@ -107,67 +108,70 @@ object ThermalExpansionRecipeLibrary extends RecipeLibrary {
     registerMisc()
   }
 
-  def getIngredientItems : Seq[Item] = Seq(
-    OpticalGlass,
-    RedstoneDopedGlass,
-    GlowstoneDopedGlass,
-    Tier1Diode,
-    Tier2Diode,
-    Tier3Diode,
-    Tier1HeatSink,
-    Tier2HeatSink,
-    Tier3HeatSink,
-    Tier1ChamberCasing,
-    Tier2ChamberCasing,
-    Tier3ChamberCasing,
-    RadiantDust,
-    RadiantDopedGlass,
-    Shutter,
-    Tier1GainMedium,
-    Tier2GainMedium,
-    Tier3GainMedium
+  def getIngredientItems : Seq[(Item, String)] = Seq(
+    ( OpticalGlass, "opticalGlass" ),
+    ( RedstoneDopedGlass, "redstoneGlass" ),
+    ( GlowstoneDopedGlass, "glowstoneGlass" ),
+    ( Tier1Diode, "tier1Diode" ),
+    ( Tier2Diode, "tier2Diode" ),
+    ( Tier3Diode, "tier3Diode" ),
+    ( Tier1HeatSink, "tier1HeatSink" ),
+    ( Tier2HeatSink, "tier2HeatSink" ),
+    ( Tier3HeatSink, "tier3HeatSink" ),
+    ( Tier1ChamberCasing, "tier1Casing" ),
+    ( Tier2ChamberCasing, "tier2Casing" ),
+    ( Tier3ChamberCasing, "Tier3Casing" ),
+    ( RadiantDust, "radiantDust" ),
+    ( RadiantDopedGlass, "radiantGlass" ),
+    ( Shutter, "shutter" ),
+    ( Tier1GainMedium, "tier1GainMedium" ),
+    ( Tier2GainMedium, "tier2GainMedium" ),
+    ( Tier3GainMedium, "tier3GainMedium" ),
+    ( Tier1EmptyChamber, "tier1EmptyChamber" ),
+    ( Tier2EmptyChamber, "tier2EmptyChamber" ),
+    ( Tier3EmptyChamber, "tier3EmptyChamber" )
   )
 
   private def registerAccessories() = {
-    addModuleShaped( HighEfficiencyWiring,
+    addModuleShapedOre( HighEfficiencyWiring,
       "CCC",
       "III",
       "CCC",
       ( 'C' -> getTEItem( "dustBlizz" ) ),
-      ( 'I' -> getTEItem( "ingotElectrum" ) ) )
-    addModuleShaped( RefireCapacitor,
+      ( 'I' -> "ingotElectrum" ) )
+    addModuleShapedOre( RefireCapacitor,
       "LPL",
       "LPL",
       " C ",
       ( 'C' -> getTEItem( "powerCoilElectrum" ) ),
       ( 'L' -> getTEItem( "conduitEnergyBasic" ) ),
-      ( 'P' -> Item.paper ) )
-    addModuleShaped( SolarPanel,
+      ( 'P' -> Items.paper ) )
+    addModuleShapedOre( SolarPanel,
       "GGG",
       "III",
       "RCR",
-      ( 'I' -> Item.ingotIron ),
+      ( 'I' -> "ingotIron" ),
       ( 'R' -> getTEItem( "conduitEnergyBasic" ) ),
-      ( 'G' -> Block.glass ),
+      ( 'G' -> "blockGlass" ),
       ( 'C' -> getTEItem( "powerCoilSilver" ) ) )
-    addModuleShaped( ChargeCapacitor,
+    addModuleShapedOre( ChargeCapacitor,
       "GLG",
       "GLG",
       "BRB",
-      ( 'G' -> Item.ingotGold ),
-      ( 'L' -> Block.glass ),
+      ( 'G' -> "ingotGold" ),
+      ( 'L' -> "blockGlass" ),
       ( 'B' -> BasicBattery ),
       ( 'R' -> getTEItem( "powerCoilElectrum" ) ) )
   }
 
   private def registerBatteries() = {
     def addBatteryRecipe( battery : RaygunBattery, core : Any ) : Unit = {
-      addModuleShaped( battery,
+      addModuleShapedOre( battery,
         "IGI",
         "IRI",
         "IRI",
         ( 'G' -> getTEItem( "powerCoilElectrum" ) ),
-        ( 'I' -> Item.ingotIron ),
+        ( 'I' -> "ingotIron" ),
         ( 'R' -> core ) )
     }
 
@@ -178,21 +182,21 @@ object ThermalExpansionRecipeLibrary extends RecipeLibrary {
 
   private def registerFrames() = {
     def addFrameRecipe( frame : RaygunFrame, core : Any ) : Unit = {
-      addModuleShaped( frame,
+      addModuleShapedOre( frame,
         "IR ",
         " IR",
         " LI",
-        ( 'L' -> Block.lever ),
+        ( 'L' -> Blocks.lever ),
         ( 'R' -> core ),
-        ( 'I' -> Item.ingotIron ) )
+        ( 'I' -> "ingotIron" ) )
     }
-    addFrameRecipe( FireflyFrame, Item.dyePowder.asStack( 1, 1 ) )
-    addFrameRecipe( MantisFrame, Item.dyePowder.asStack( 1, 2 ) )
+    addFrameRecipe( FireflyFrame, "dyeRed" )
+    addFrameRecipe( MantisFrame, "dyeGreen" )
   }
 
   private def registerChambers() = {
-    def registerChamber( chamber : RaygunChamber, emitter : Item, medium : Item, diode : Item, casing : Item ) : Unit = {
-      addModuleShaped( chamber,
+    def registerChamber( chamber : RaygunChamber, emitter : Item, medium : Item, diode : Item, casing : Item, emptyChamber : Item ) : Unit = {
+      addModuleShapedOre( chamber,
         "CDC",
         "MME",
         "CDC",
@@ -200,13 +204,15 @@ object ThermalExpansionRecipeLibrary extends RecipeLibrary {
         ( 'C' -> casing ),
         ( 'M' -> medium ),
         ( 'E' -> emitter ) )
+
+      addModuleShapelessOre( chamber, emitter, emptyChamber )
     }
     def registerT1Chamber( chamber : RaygunChamber, emitter : Item ) : Unit =
-      registerChamber( chamber, emitter, Tier1GainMedium, Tier1Diode, Tier1ChamberCasing )
+      registerChamber( chamber, emitter, Tier1GainMedium, Tier1Diode, Tier1ChamberCasing, Tier1EmptyChamber )
     def registerT2Chamber( chamber : RaygunChamber, emitter : Item ) : Unit =
-      registerChamber( chamber, emitter, Tier2GainMedium, Tier2Diode, Tier2ChamberCasing )
+      registerChamber( chamber, emitter, Tier2GainMedium, Tier2Diode, Tier2ChamberCasing, Tier2EmptyChamber )
     def registerT3Chamber( chamber : RaygunChamber, emitter : Item ) : Unit =
-      registerChamber( chamber, emitter, Tier3GainMedium, Tier3Diode, Tier3ChamberCasing )
+      registerChamber( chamber, emitter, Tier3GainMedium, Tier3Diode, Tier3ChamberCasing, Tier3EmptyChamber )
 
     registerT1Chamber( Tier1CuttingChamber, Emitters.tier1CuttingEmitter)
     registerT1Chamber( HeatRayChamber, Emitters.heatRayEmitter)
@@ -229,11 +235,11 @@ object ThermalExpansionRecipeLibrary extends RecipeLibrary {
 
   private def registerEmitters() = {
     def registerEmitter( emitter : Item, core : AnyRef, top : AnyRef, right : AnyRef, bottom : AnyRef, left : AnyRef ) : Unit = {
-      addShaped( emitter.asStack,
+      addShapedOre( emitter.asStack,
         "ITI",
         "LDR",
         "IBI",
-        'I' -> Item.ingotIron,
+        'I' -> "ingotIron",
         'D' -> core,
         'T' -> top,
         'R' -> right,
@@ -247,24 +253,24 @@ object ThermalExpansionRecipeLibrary extends RecipeLibrary {
     def registerT3Emitter( emitter : Item, top : AnyRef, right : AnyRef, bottom : AnyRef, left : AnyRef ) : Unit =
       registerEmitter( emitter, Tier3Diode, top, right, bottom, left )
 
-    registerT1Emitter( Emitters.laserEmitter, Item.redstone, Item.redstone, Item.redstone, Item.redstone )
-    registerT1Emitter( Emitters.heatRayEmitter, Item.coal, Item.bucketLava, Item.coal, Item.bucketLava )
-    registerT1Emitter( Emitters.lightningEmitter, Block.blockIron, Block.blockRedstone, Block.blockIron, Block.blockRedstone )
-    registerT1Emitter( Emitters.tier1CuttingEmitter, Item.pickaxeStone, Item.shovelStone, Item.pickaxeStone, Item.shovelStone )
+    registerT1Emitter( Emitters.laserEmitter, "dustRedstone", "dustRedstone", "dustRedstone", "dustRedstone" )
+    registerT1Emitter( Emitters.heatRayEmitter, Items.coal, Items.lava_bucket, Items.coal, Items.lava_bucket )
+    registerT1Emitter( Emitters.lightningEmitter, "blockIron", "blockRedstone", "blockIron", "blockRedstone" )
+    registerT1Emitter( Emitters.tier1CuttingEmitter, Items.stone_pickaxe, Items.stone_shovel, Items.stone_pickaxe, Items.stone_shovel )
 
-    registerT2Emitter( Emitters.frostRayEmitter, Block.ice, Block.blockSnow, Block.ice, Block.blockSnow )
-    registerT2Emitter( Emitters.lifeForceEmitter, Item.speckledMelon, Item.ghastTear, Item.speckledMelon, Item.ghastTear )
-    registerT2Emitter( Emitters.fortifiedSunlightEmitter, Block.wood, Block.wood, Block.wood, Block.wood )
-    registerT2Emitter( Emitters.enderEmitter, Item.enderPearl, Item.enderPearl, Item.enderPearl, Item.enderPearl )
-    registerT2Emitter( Emitters.impulseEmitter, Block.pistonBase, Block.pistonBase, Block.pistonBase, Block.pistonBase )
-    registerT2Emitter( Emitters.tractorEmitter, Block.pistonStickyBase, Block.pistonStickyBase, Block.pistonStickyBase, Block.pistonStickyBase )
-    registerT2Emitter( Emitters.matterTransporterEmitter, Item.enderPearl, Block.pistonBase, Item.enderPearl, Block.pistonBase )
-    registerT2Emitter( Emitters.tier2CuttingEmitter, Item.pickaxeIron, Item.shovelIron, Item.pickaxeIron, Item.shovelIron )
+    registerT2Emitter( Emitters.frostRayEmitter, Blocks.ice, Blocks.snow, Blocks.ice, Blocks.snow )
+    registerT2Emitter( Emitters.lifeForceEmitter, Items.speckled_melon, Items.ghast_tear, Items.speckled_melon, Items.ghast_tear )
+    registerT2Emitter( Emitters.fortifiedSunlightEmitter, "woodLog", "woodLog", "woodLog", "woodLog" )
+    registerT2Emitter( Emitters.enderEmitter, Items.ender_pearl, Items.ender_pearl, Items.ender_pearl, Items.ender_pearl )
+    registerT2Emitter( Emitters.impulseEmitter, Blocks.piston, Blocks.piston, Blocks.piston, Blocks.piston )
+    registerT2Emitter( Emitters.tractorEmitter, Blocks.sticky_piston, Blocks.sticky_piston, Blocks.sticky_piston, Blocks.sticky_piston )
+    registerT2Emitter( Emitters.matterTransporterEmitter, Items.ender_pearl, Blocks.piston, Items.ender_pearl, Blocks.piston )
+    registerT2Emitter( Emitters.tier2CuttingEmitter, Items.iron_pickaxe, Items.iron_shovel, Items.iron_pickaxe, Items.iron_shovel )
 
-    val witherSkull = Item.skull.asStack( 1, 1 )
+    val witherSkull = Items.skull.asStack( 1, 1 )
     registerT3Emitter( Emitters.deathRayEmitter, witherSkull, witherSkull, witherSkull, witherSkull )
-    registerT3Emitter( Emitters.explosiveEmitter, Block.tnt, Block.tnt, Block.tnt, Block.tnt )
-    registerT3Emitter( Emitters.tier3CuttingEmitter, Item.pickaxeDiamond, Item.shovelDiamond, Item.pickaxeDiamond, Item.shovelDiamond )
+    registerT3Emitter( Emitters.explosiveEmitter, Blocks.tnt, Blocks.tnt, Blocks.tnt, Blocks.tnt )
+    registerT3Emitter( Emitters.tier3CuttingEmitter, Items.diamond_pickaxe, Items.diamond_shovel, Items.diamond_pickaxe, Items.diamond_shovel )
   }
 
   private def registerLenses() = {
@@ -273,88 +279,101 @@ object ThermalExpansionRecipeLibrary extends RecipeLibrary {
       "GGG",
       "IGI",
       ( 'G' -> OpticalGlass ),
-      ( 'I' -> Item.ingotIron ) )
+      ( 'I' -> "ingotIron" ) )
 
     addModuleLensGrinder( 1200, WideLens,
       "IGI",
       "GEG",
       "IGI",
       ( 'G' -> OpticalGlass ),
-      ( 'I' -> Item.ingotIron ),
-      ( 'E' -> Item.emerald ) )
+      ( 'I' -> "ingotIron" ),
+      ( 'E' -> "gemEmerald" ) )
   }
 
   private def registerBarrels() = {
-    addModuleShaped( BeamBarrel,
+    addModuleShapedOre( BeamBarrel,
       "GI ",
       "IDI",
       " IG",
-      ( 'G' -> Block.glass ),
-      ( 'I' -> Item.ingotIron ),
+      ( 'G' -> "blockGlass" ),
+      ( 'I' -> "ingotIron" ),
       ( 'D' -> Tier2Diode ) )
 
-    addModuleShaped( BlasterBarrel,
+    addModuleShapedOre( BlasterBarrel,
       "GI ",
       "ISI",
       " IG",
-      ( 'G' -> Block.glass ),
-      ( 'I' -> Item.ingotIron ),
+      ( 'G' -> "blockGlass" ),
+      ( 'I' -> "ingotIron" ),
       ( 'S' -> Shutter ) )
   }
 
   private def registerMisc() = {
-    addShaped( Blocks.gunBench.asStack,
+    addShapedOre( RaygunsBlocks.gunBench.asStack,
       "II",
       "BB",
-      'I' -> Item.ingotIron,
-      'B' -> Block.workbench )
+      'I' -> "ingotIron",
+      'B' -> Blocks.crafting_table )
 
-    addShaped( Blocks.lensGrinder.asStack,
+    addShapedOre( RaygunsBlocks.lensGrinder.asStack,
       "SSS",
       "FMF",
       "CRC",
-      ( 'S' -> Block.sand ),
-      ( 'F' -> Item.flint ),
+      ( 'S' -> Blocks.sand ),
+      ( 'F' -> Items.flint ),
       ( 'M' -> getTEItem( "machineFrame" ) ),
-      ( 'C' -> getTEItem( "ingotCopper" ) ),
+      ( 'C' -> "ingotCopper" ),
       ( 'R' -> getTEItem( "powerCoilGold" ) ) )
 
     addInductionSmelterRecipe(800, getTEItem( "dustLead" ),
-        Block.glass.asStack, OpticalGlass.asStack( 3 ) )
+        Blocks.glass.asStack, OpticalGlass.asStack( 3 ) )
 
-    addFluidTransposerRecipe( 800, Item.redstone.asStack,
+    addFluidTransposerRecipe( 800, Items.redstone.asStack,
       RadiantDust.asStack, getFluidStack( "glowstone", 500 ), false );
 
-    addShaped( Shutter.asStack,
+    addShapedOre( Shutter.asStack,
       "PT",
       "I ",
       'P' -> getTEItem( "pneumaticServo" ),
       'T' -> getTEItem( "gearTin" ),
-      'I' -> Item.ingotIron )
+      'I' -> "ingotIron" )
+
+    def registerEmptyChamber( chamber : ItemStack, medium : Item, diode : Item, casing : Item ) : Unit = {
+      addShapedOre( chamber,
+        "CDC",
+        "MM ",
+        "CDC",
+        ( 'D' -> diode ),
+        ( 'C' -> casing ),
+        ( 'M' -> medium ) )
+    }
+    registerEmptyChamber( Tier1EmptyChamber.asStack, Tier1GainMedium, Tier1Diode, Tier1ChamberCasing )
+    registerEmptyChamber( Tier2EmptyChamber.asStack, Tier2GainMedium, Tier2Diode, Tier2ChamberCasing )
+    registerEmptyChamber( Tier3EmptyChamber.asStack, Tier3GainMedium, Tier3Diode, Tier3ChamberCasing )
   }
 
   private def registerCasings() : Unit = {
     def addCasing( casing : Item, metal : Any, heatSink : Item ) : Unit = {
-      addShaped( casing.asStack,
+      addShapedOre( casing.asStack,
         "MSM",
         'M' -> metal,
         'S' -> heatSink )
     }
-    addCasing( Tier1ChamberCasing, getTEItem( "ingotTin" ), Tier1HeatSink )
-    addCasing( Tier2ChamberCasing, getTEItem( "ingotInvar" ), Tier2HeatSink )
+    addCasing( Tier1ChamberCasing, "ingotTin", Tier1HeatSink )
+    addCasing( Tier2ChamberCasing, "ingotInvar", Tier2HeatSink )
     addCasing( Tier3ChamberCasing, getTEItem( "glassHardened" ), Tier3HeatSink )
   }
 
   private def registerHeatSinks() : Unit = {
     def addHeatSink( heatSink : Item, core : Any ) : Unit = {
-      addShaped( heatSink.asStack,
+      addShapedOre( heatSink.asStack,
         "ICI",
         "ICI",
         "ICI",
-        'I' -> getTEItem( "ingotInvar" ),
+        'I' -> "ingotInvar",
         'C' -> core )
     }
-    addHeatSink( Tier1HeatSink, Item.bucketWater )
+    addHeatSink( Tier1HeatSink, Items.water_bucket )
     addHeatSink( Tier2HeatSink, getTEItem( "dustBlizz" ) )
     addHeatSink( Tier3HeatSink, getTEItem( "bucketCryotheum" ) )
   }
@@ -366,17 +385,17 @@ object ThermalExpansionRecipeLibrary extends RecipeLibrary {
         "WCW",
         "GGG",
         'W' -> wire,
-        'G' -> Block.thinGlass,
+        'G' -> "paneGlassColorless",
         'C' -> core )
     }
-    addDiode( 300, Tier1Diode, getTEItem( "ingotElectrum" ), Block.blockRedstone )
-    addDiode( 450, Tier2Diode, getTEItem( "ingotElectrum" ), Block.glowStone )
-    addDiode( 600, Tier3Diode, getTEItem( "ingotElectrum" ), Item.netherStar )
+    addDiode( 300, Tier1Diode, "ingotElectrum", "blockRedstone" )
+    addDiode( 450, Tier2Diode, "ingotElectrum", Blocks.glowstone )
+    addDiode( 600, Tier3Diode, "ingotElectrum", Items.nether_star )
   }
 
   private def registerDopedGlass() : Unit = {
-    addInductionSmelterRecipe(800, Item.redstone.asStack, OpticalGlass.asStack, RedstoneDopedGlass.asStack )
-    addInductionSmelterRecipe(800, Item.glowstone.asStack, OpticalGlass.asStack, GlowstoneDopedGlass.asStack )
+    addInductionSmelterRecipe(800, Items.redstone.asStack, OpticalGlass.asStack, RedstoneDopedGlass.asStack )
+    addInductionSmelterRecipe(800, Items.glowstone_dust.asStack, OpticalGlass.asStack, GlowstoneDopedGlass.asStack )
     addInductionSmelterRecipe(800, RadiantDust.asStack, OpticalGlass.asStack, RadiantDopedGlass.asStack )
   }
 
@@ -386,7 +405,7 @@ object ThermalExpansionRecipeLibrary extends RecipeLibrary {
           "GGG",
           "MGM",
           "GGG",
-          ('M' -> Item.ingotGold ),
+          ('M' -> "ingotGold" ),
           ('G' -> glass ) )
     }
     addGainMediumRecipe( Tier3GainMedium, 1200, RadiantDopedGlass )

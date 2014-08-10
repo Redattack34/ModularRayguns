@@ -39,8 +39,9 @@ import net.minecraft.util.MathHelper
 import net.minecraft.util.ResourceLocation
 import net.minecraft.world.World
 import com.castlebravostudios.rayguns.mod.ModularRayguns
+import net.minecraft.init.Blocks
 
-object ImpulseEffect extends BaseEffect {
+object ImpulseEffect extends BaseEffect with SimpleTextures {
 
   val effectKey = "Impulse"
   val damageSourceKey = "impulse"
@@ -65,34 +66,32 @@ object ImpulseEffect extends BaseEffect {
     true
   }
 
-  private def canPushBlocks( worldObj : World, block : BlockPos, offset : BlockPos, steps : Int ) : Boolean = {
-    val BlockPos( x, y, z ) = block
-    val blockId = worldObj.getBlockId( x, y, z )
+  private def canPushBlocks( worldObj : World, pos : BlockPos, offset : BlockPos, steps : Int ) : Boolean = {
+    val BlockPos( x, y, z ) = pos
+    val block = worldObj.getBlock( x, y, z )
     val meta = worldObj.getBlockMetadata( x, y, z )
-    val blockObj = Block.blocksList(blockId)
 
     if ( steps < 0 ) false
-    else if ( worldObj.isAirBlock(x, y, z) || blockObj.getMobilityFlag() == 1 ) true
-    else if ( blockId == Block.obsidian.blockID ) false
-    else if ( blockObj.getBlockHardness(worldObj, x, y, z ) == -1.0f ) false
-    else if ( blockObj.getMobilityFlag() == 2 ) false
-    else if ( worldObj.blockHasTileEntity( x, y, z ) ) false
-    else canPushBlocks( worldObj, block.add( offset ), offset, steps - 1 )
+    else if ( worldObj.isAirBlock(x, y, z) || block.getMobilityFlag() == 1 ) true
+    else if ( block == Blocks.obsidian ) false
+    else if ( block.getBlockHardness(worldObj, x, y, z ) == -1.0f ) false
+    else if ( block.getMobilityFlag() == 2 ) false
+    else if ( worldObj.getTileEntity( x, y, z ) != null ) false
+    else canPushBlocks( worldObj, pos.add( offset ), offset, steps - 1 )
   }
 
-  private def doPushBlocks( worldObj : World, block : BlockPos, offset : BlockPos, side : Int ) : Unit = {
-    val BlockPos( x, y, z ) = block
-    val blockId = worldObj.getBlockId( x, y, z )
+  private def doPushBlocks( worldObj : World, pos : BlockPos, offset : BlockPos, side : Int ) : Unit = {
+    val BlockPos( x, y, z ) = pos
+    val block = worldObj.getBlock( x, y, z )
     val meta = worldObj.getBlockMetadata( x, y, z )
-    val blockObj = Block.blocksList(blockId)
 
-    if ( worldObj.isAirBlock(x, y, z) || blockObj.getMobilityFlag() == 1 ) return;
-    doPushBlocks( worldObj, block.add( offset ), offset, side )
+    if ( worldObj.isAirBlock(x, y, z) || block.getMobilityFlag() == 1 ) return;
+    doPushBlocks( worldObj, pos.add( offset ), offset, side )
 
     worldObj.setBlockToAir(x, y, z)
-    val BlockPos( x2, y2, z2 ) = block.add(offset)
-    worldObj.setBlock(x2, y2, z2, Block.pistonMoving.blockID)
-    worldObj.setBlockTileEntity(x2, y2, z2, new TileEntityPiston( blockId, meta, side, true, false ) )
+    val BlockPos( x2, y2, z2 ) = pos.add(offset)
+    worldObj.setBlock(x2, y2, z2, Blocks.piston_extension )
+    worldObj.setTileEntity(x2, y2, z2, new TileEntityPiston( block, meta, side, true, false ) )
   }
 
   protected def impulseVector( shootable : Shootable ) : Vector3 = {
@@ -102,7 +101,5 @@ object ImpulseEffect extends BaseEffect {
     Vector3( x, y, z )
   }
 
-  val boltTexture = ModularRayguns.texture( "textures/bolts/impulse_bolt.png" )
-  val beamTexture = ModularRayguns.texture( "textures/beams/impulse_beam.png" )
-  val chargeTexture = ModularRayguns.texture( "textures/effects/charge/impulse_charge.png" )
+  override def textureName : String = "impulse"
 }

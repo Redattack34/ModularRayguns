@@ -32,9 +32,11 @@ import net.minecraft.client.gui.inventory.GuiContainer
 import net.minecraft.client.resources.I18n
 import net.minecraft.entity.player.InventoryPlayer
 import com.castlebravostudios.rayguns.mod.ModularRayguns
+import cpw.mods.fml.relauncher.SideOnly
+import cpw.mods.fml.relauncher.Side
 
 
-
+@SideOnly(Side.CLIENT)
 class LensGrinderGui( playerInv: InventoryPlayer, tileEntity: LensGrinderTileEntity )
   extends GuiContainer( new LensGrinderContainer( playerInv, tileEntity ) ) {
 
@@ -44,8 +46,8 @@ class LensGrinderGui( playerInv: InventoryPlayer, tileEntity: LensGrinderTileEnt
   private[this] val color = 0x404040
 
   override def drawGuiContainerForegroundLayer( param1 : Int, param2 : Int ) : Unit = {
-    fontRenderer.drawString(I18n.getString("rayguns.container.grinder"), 8, 6, color)
-    fontRenderer.drawString(I18n.getString("container.inventory"), 8, ySize - 96, color)
+    fontRendererObj.drawString(I18n.format("rayguns.container.grinder"), 8, 6, color)
+    fontRendererObj.drawString(I18n.format("container.inventory"), 8, ySize - 96, color)
   }
 
   override def drawGuiContainerBackgroundLayer(par1 : Float, par2 : Int, par3: Int ) : Unit = {

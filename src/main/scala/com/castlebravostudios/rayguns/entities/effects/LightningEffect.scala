@@ -43,8 +43,10 @@ import net.minecraft.util.ResourceLocation
 import net.minecraft.world.World
 import com.castlebravostudios.rayguns.mod.ModularRayguns
 import com.google.common.io.ByteArrayDataInput
+import com.castlebravostudios.rayguns.items.RaygunsBlocks
+import io.netty.buffer.ByteBuf
 
-object LightningEffect extends BaseEffect {
+object LightningEffect extends BaseEffect with SimpleTextures {
 
   val effectKey = "Lightning"
   val damageSourceKey = "lightningRay"
@@ -63,14 +65,14 @@ object LightningEffect extends BaseEffect {
     if ( !shooter.isInstanceOf[EntityPlayer] ||
          shooter.asInstanceOf[EntityPlayer].canPlayerEdit(x, y, z, side, null) ) {
       if ( worldObj.isAirBlock(x, y, z) ) {
-        worldObj.setBlock(x, y, z, Config.invisibleRedstone, side, 3)
+        worldObj.setBlock(x, y, z, RaygunsBlocks.invisibleRedstone, side, 3)
       }
     }
     true
   }
 
   override def createImpactParticles( shootable : Shootable, hitX : Double, hitY : Double, hitZ : Double ) : Unit = {
-    for ( _ <- 0 until 4 ) {
+    for { _ <- 0 until 4 } {
       shootable.worldObj.spawnParticle("smoke", hitX, hitY, hitZ, 0.0D, 0.0D, 0.0D);
     }
   }
@@ -87,9 +89,8 @@ object LightningEffect extends BaseEffect {
     bolt
   }
 
-  val beamTexture = ModularRayguns.texture( "textures/beams/lightning_beam.png" )
-  val boltTexture = beamTexture
-  val chargeTexture = ModularRayguns.texture( "textures/effects/charge/lightning_charge.png" )
+  def textureName : String = "lightning"
+  override val boltTexture = beamGlowTexture
 }
 
 trait LightningShootable {
@@ -112,7 +113,7 @@ class LightningBoltEntity(world : World) extends BaseBoltEntity(world) with Ligh
 class LightningBeamEntity(world : World) extends BaseBeamEntity(world) with LightningShootable {
   override val depletionRate = 0.2d
 
-  override def readSpawnData( in : ByteArrayDataInput ) : Unit = {
+  override def readSpawnData( in : ByteBuf ) : Unit = {
     super.readSpawnData( in )
 
     this.pointsList = MidpointDisplacement.createPositionList(

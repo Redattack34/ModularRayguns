@@ -31,9 +31,6 @@ import com.castlebravostudios.rayguns.api.items.BaseRaygunModule
 import com.castlebravostudios.rayguns.api.items.ItemModule
 import com.castlebravostudios.rayguns.api.items.RaygunBattery
 import com.castlebravostudios.rayguns.mod.ModularRayguns
-import com.castlebravostudios.rayguns.plugins.te.RFItemPowerConnector
-import com.castlebravostudios.rayguns.plugins.te.RFItemPowerConnector
-import com.castlebravostudios.rayguns.plugins.ic2.IC2ItemPowerConnector
 
 object AdvancedBattery extends BaseRaygunModule with RaygunBattery {
 
@@ -42,9 +39,8 @@ object AdvancedBattery extends BaseRaygunModule with RaygunBattery {
   val nameSegmentKey = "rayguns.AdvancedBattery.segment"
   val maxCapacity = 3000
   val maxChargePerTick = 4
-  val ic2Tier = 2
 
-  def createItem( id : Int ) : ItemModule = new ItemBattery( id, this )
+  def createItem : ItemModule = new ItemBattery( this )
     .setUnlocalizedName("rayguns.AdvancedBattery")
     .setTextureName("rayguns:battery_advanced")
     .setCreativeTab( ModularRayguns.raygunsTab )

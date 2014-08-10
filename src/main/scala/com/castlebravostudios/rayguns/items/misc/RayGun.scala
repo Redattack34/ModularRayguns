@@ -31,30 +31,26 @@ import com.castlebravostudios.rayguns.api.ShotRegistry
 import com.castlebravostudios.rayguns.items.ChargableItem
 import com.castlebravostudios.rayguns.items.MoreInformation
 import com.castlebravostudios.rayguns.items.ScalaItem
-import com.castlebravostudios.rayguns.mod.Config
 import com.castlebravostudios.rayguns.mod.ModularRayguns
-import com.castlebravostudios.rayguns.plugins.ic2.IC2ItemPowerConnector
 import com.castlebravostudios.rayguns.plugins.te.RFItemPowerConnector
 import com.castlebravostudios.rayguns.utils.DefaultFireEvent
 import com.castlebravostudios.rayguns.utils.Extensions.ItemStackExtension
-import com.castlebravostudios.rayguns.utils.Extensions.WorldExtension
 import com.castlebravostudios.rayguns.utils.FireEvent
 import com.castlebravostudios.rayguns.utils.GunComponents
 import com.castlebravostudios.rayguns.utils.RaygunNbtUtils
+
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
-import net.minecraft.util.Icon
+import net.minecraft.util.IIcon
 import net.minecraft.world.World
-import com.castlebravostudios.rayguns.utils.Vector3
-import net.minecraft.util.EntityDamageSource
-import com.castlebravostudios.rayguns.utils.RandomDamageSource
 
 case class GetFireInformationEvent(
     val player : EntityPlayer,
     val world : World,
     val gun : ItemStack,
     val components : GunComponents,
+    val itemInUseTicks : Option[Int],
     var cooldownTicks : Int,
     var powerMult : Double,
     var fireEvent : FireEvent )
@@ -67,7 +63,7 @@ case class PrefireEvent(
     val cooldownTicks : Int,
     val powerMult : Double,
     val fireEvent : FireEvent,
-    val isOnStoppedUsing : Boolean,
+    val itemInUseTicks : Option[Int],
     var canFire : Boolean )
 
 case class PostfireEvent(
@@ -85,8 +81,8 @@ case class GunTickEvent(
     val components : GunComponents,
     val isSelected : Boolean )
 
-object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
-  with ChargableItem with RFItemPowerConnector with IC2ItemPowerConnector {
+object RayGun extends ScalaItem with MoreInformation
+  with ChargableItem with RFItemPowerConnector {
 
   private val maxChargeTime : Double = 3.0d
   private val ticksPerSecond : Int = 20
@@ -117,8 +113,7 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
       return
     }
 
-    val prefireEvent = prefire( player, world, item, components.get,
-        isOnStoppedUsing = true )
+    val prefireEvent = prefire( player, world, item, components.get, Some( itemUseCount ) )
     if ( !prefireEvent.canFire ) return
 
     val creator = ShotRegistry.getFunction( prefireEvent.fireEvent )
@@ -141,8 +136,7 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
       return RaygunNbtUtils.buildBrokenGun( item )
     }
 
-    val prefireEvent = prefire( player, world, item, components.get,
-        isOnStoppedUsing = false )
+    val prefireEvent = prefire( player, world, item, components.get, None )
     if ( !prefireEvent.canFire ) return item
 
     val creator = ShotRegistry.getFunction( prefireEvent.fireEvent )
@@ -154,15 +148,15 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
   }
 
   private def prefire( player : EntityPlayer, world : World, gun : ItemStack,
-      components : GunComponents, isOnStoppedUsing : Boolean ) : PrefireEvent = {
-    val getInfo = GetFireInformationEvent( player, world, gun, components, 10, 1.0d,
+      components : GunComponents, itemInUseTicks : Option[Int] ) : PrefireEvent = {
+    val getInfo = GetFireInformationEvent( player, world, gun, components, itemInUseTicks, 10, 1.0d,
         DefaultFireEvent( components ) );
 
     components.components.foreach( comp => comp.handleGetFireInformationEvent( getInfo ) );
 
     val prefireEvent = PrefireEvent( player, world, gun, components,
         getInfo.cooldownTicks, getInfo.powerMult, getInfo.fireEvent,
-        isOnStoppedUsing, getCooldownTime( gun ) == 0 )
+        itemInUseTicks, getCooldownTime( gun ) == 0 )
     components.components.foreach( comp => comp.handlePrefireEvent( prefireEvent ) )
     prefireEvent
   }
@@ -219,7 +213,7 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
   override def requiresMultipleRenderPasses() : Boolean = true
   override def getRenderPasses(metadata : Int) : Int = 1
 
-  override def getIcon( item : ItemStack, pass : Int ) : Icon = {
+  override def getIcon( item : ItemStack, pass : Int ) : IIcon = {
     val frameIcon = for {
       components <- RaygunNbtUtils.getComponents( item )
       frameItem <- components.frame.item
@@ -240,10 +234,8 @@ object RayGun extends ScalaItem( Config.rayGun ) with MoreInformation
     RaygunNbtUtils.getBattery( item ).foreach( _.addCharge( item, delta ) )
   def getMaxChargePerTick( item : ItemStack ) : Int =
     RaygunNbtUtils.getBattery( item ).map( _.maxChargePerTick ).getOrElse( 0 )
-  def getIC2Tier( item : ItemStack ) : Int =
-    RaygunNbtUtils.getBattery( item ).map( _.ic2Tier ).getOrElse( Integer.MAX_VALUE )
 
-  override def getItemDisplayName( stack : ItemStack ) : String =
+  override def getItemStackDisplayName( stack : ItemStack ) : String =
     if ( stack.hasDisplayName() ) {
       stack.getTagCompoundSafe.getCompoundTag("display").getString( "display" )
     }

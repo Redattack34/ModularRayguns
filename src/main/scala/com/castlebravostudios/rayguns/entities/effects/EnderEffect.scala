@@ -41,7 +41,7 @@ import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.entity.living.EnderTeleportEvent
 import com.castlebravostudios.rayguns.mod.ModularRayguns
 
-object EnderEffect extends BaseEffect {
+object EnderEffect extends BaseEffect with SimpleTextures {
 
   val effectKey = "Ender"
   val damageSourceKey = ""
@@ -56,7 +56,7 @@ object EnderEffect extends BaseEffect {
   def hitBlock( shootable : Shootable, hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Boolean = true
 
   override def createImpactParticles( shootable : Shootable, hitX : Double, hitY : Double, hitZ : Double ) : Unit = {
-    for ( _ <- 0 until 16 ) {
+    for { _ <- 0 until 16 } {
         shootable.worldObj.spawnParticle("portal", hitX, hitY, hitZ,
             shootable.random.nextGaussian(), 0.0D, shootable.random.nextGaussian());
     }
@@ -66,7 +66,7 @@ object EnderEffect extends BaseEffect {
     val start = worldObj.getWorldVec3Pool().getVecFromPool(entity.posX, entity.posY, entity.posZ)
     val end = worldObj.getWorldVec3Pool().getVecFromPool(x, y, z)
     val hit = RaytraceUtils.rayTraceBlocks(worldObj, start, end){
-      (b, m, p) => b.blockMaterial.blocksMovement() }.headOption
+      (b, m, p) => b.getMaterial().blocksMovement() }.headOption
 
     hit match {
       case Some( mop ) => adjustCoords( mop.blockX, mop.blockY, mop.blockZ, mop.sideHit )
@@ -112,7 +112,5 @@ object EnderEffect extends BaseEffect {
     }
   }
 
-  val boltTexture = ModularRayguns.texture( "textures/bolts/ender_bolt.png" )
-  val beamTexture = ModularRayguns.texture( "textures/beams/ender_beam.png" )
-  val chargeTexture = ModularRayguns.texture( "textures/effects/charge/ender_charge.png" )
+  override def textureName : String = "ender"
 }

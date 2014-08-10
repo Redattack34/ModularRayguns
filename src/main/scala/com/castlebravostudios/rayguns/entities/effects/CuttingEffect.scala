@@ -28,20 +28,22 @@
 package com.castlebravostudios.rayguns.entities.effects
 
 import com.castlebravostudios.rayguns.entities.Shootable
-import com.castlebravostudios.rayguns.utils.Extensions._
+import com.castlebravostudios.rayguns.utils.Extensions.BlockExtensions
+import com.castlebravostudios.rayguns.utils.Extensions.ItemExtensions
+import com.castlebravostudios.rayguns.utils.Extensions.WorldExtension
 
 import net.minecraft.block.Block
 import net.minecraft.entity.Entity
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.init.Items
 import net.minecraft.item.Item
-import net.minecraft.item.ItemPickaxe
-import net.minecraft.item.ItemSpade
 import net.minecraft.util.ResourceLocation
 
-class CuttingEffect( val key : String, val harvestLevel : Int, val powerMultiplier : Float ) extends BaseEffect {
+class CuttingEffect( val key : String, val harvestLevel : Int, val powerMultiplier : Float )
+  extends BaseEffect with SimpleTextures {
   implicit class ShootableExtension(val shootable : Shootable) {
     def harvestPower( ) : Float = shootable.charge.toFloat * powerMultiplier
-    def setHarvestPower( power : Float ) = {
+    def setHarvestPower( power : Float ) : Unit = {
       shootable.charge = power / powerMultiplier
     }
   }
@@ -51,23 +53,22 @@ class CuttingEffect( val key : String, val harvestLevel : Int, val powerMultipli
 
   def hitBlock( shootable : Shootable,  hitX : Int, hitY : Int, hitZ : Int, side : Int ) : Boolean = {
     val worldObj = shootable.worldObj
-    val blockId = worldObj.getBlockId(hitX, hitY, hitZ)
-    val block = Block.blocksList(blockId)
+    val block = worldObj.getBlock(hitX, hitY, hitZ)
     val meta = worldObj.getBlockMetadata(hitX, hitY, hitZ)
 
-    val particleStr = s"tilecrack_${blockId}_${meta}"
-    for ( k <- 0 until 10 ) {
+    val particleStr = s"blockcrack_${Block.getIdFromBlock(block)}_${meta}"
+    for { k <- 0 until 10 } {
       worldObj.spawnParticle(particleStr, hitX, hitY, hitZ, 0.0D, 0.0D, 0.0D);
     }
 
-    if ( !canBreakBlock( shootable, hitX, hitY, hitZ, block ) ) { return true }
+    if ( !canBreakBlock( shootable, hitX, hitY, hitZ, block, meta ) ) { return true }
     else if ( shootable.worldObj.isOnServer ) {
       shootable.setHarvestPower( shootable.harvestPower - block.getBlockHardness(worldObj, hitX, hitY, hitZ) )
       val player = shootable.shooter match {
         case pl : EntityPlayer => pl
         case _ => null
       }
-        if ( block.removeBlockByPlayer(worldObj, player, hitX, hitY, hitZ) ) {
+        if ( block.removedByPlayer(worldObj, player, hitX, hitY, hitZ) ) {
           block.onBlockDestroyedByPlayer(worldObj, hitX, hitY, hitZ, meta)
         }
         block.harvestBlock(worldObj, player, hitX, hitY, hitZ, meta)
@@ -77,17 +78,12 @@ class CuttingEffect( val key : String, val harvestLevel : Int, val powerMultipli
     else true
   }
 
-  def canBreakBlock( shootable : Shootable, x : Int, y : Int, z : Int, block : Block ) : Boolean = {
-    val pick = harvestLevel match {
-      case 0 => Item.pickaxeWood
-      case 1 => Item.pickaxeStone
-      case 2 => Item.pickaxeIron
-      case 3 => Item.pickaxeDiamond
-    }
-    val pickCanHarvest = pick.canHarvestBlock(block) ||
-      ItemPickaxe.blocksEffectiveAgainst.contains(block)
+  private def canBreakBlock( shootable : Shootable, x : Int, y : Int, z : Int, block : Block, metadata : Int ): Boolean = {
+    val pick = pickForHarvestLevel
+    val pickCanHarvest = pick.getDigSpeed( pick.asStack(1), block, metadata ) > 1.0
 
-    val shovelCanHarvest = ItemSpade.blocksEffectiveAgainst.contains( block )
+    val shovel = shovelForHarvestLevel
+    val shovelCanHarvest = shovel.getDigSpeed( shovel.asStack( 1 ), block, metadata ) > 1.0
 
     val hardness = block.getBlockHardness(shootable.worldObj, x, y, z)
     if ( hardness == -1.0f ) {
@@ -97,10 +93,26 @@ class CuttingEffect( val key : String, val harvestLevel : Int, val powerMultipli
     hardness <= shootable.harvestPower && ( pickCanHarvest || shovelCanHarvest )
   }
 
+  private def shovelForHarvestLevel: Item = {
+    harvestLevel match {
+      case 0 => Items.wooden_shovel
+      case 1 => Items.stone_shovel
+      case 2 => Items.iron_shovel
+      case 3 => Items.diamond_shovel
+    }
+  }
+
+  private def pickForHarvestLevel: Item = {
+    harvestLevel match {
+      case 0 => Items.wooden_pickaxe
+      case 1 => Items.stone_pickaxe
+      case 2 => Items.iron_pickaxe
+      case 3 => Items.diamond_pickaxe
+    }
+  }
+
   def effectKey : String = key
   val damageSourceKey = ""
 
-  val boltTexture = new ResourceLocation( "rayguns", s"textures/bolts/cutting_bolt_t${harvestLevel}.png" )
-  val beamTexture = new ResourceLocation( "rayguns", s"textures/beams/cutting_beam_t${harvestLevel}.png" )
-  val chargeTexture = new ResourceLocation( "rayguns", s"textures/effects/charge/cutting_charge_t${harvestLevel}.png" )
+  override def textureName : String = s"cutting_t${harvestLevel}"
 }

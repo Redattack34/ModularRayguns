@@ -30,6 +30,8 @@ package com.castlebravostudios.rayguns.items.chambers
 import com.castlebravostudios.rayguns.api.items.ItemModule
 import com.castlebravostudios.rayguns.entities.effects.LifeForceEffect
 import com.castlebravostudios.rayguns.mod.ModularRayguns
+import com.castlebravostudios.rayguns.items.emitters.Emitters
+import com.castlebravostudios.rayguns.items.misc.Tier2EmptyChamber
 
 
 object LifeForceChamber extends BaseChamber {
@@ -38,7 +40,8 @@ object LifeForceChamber extends BaseChamber {
   val shotEffect = LifeForceEffect
   val nameSegmentKey = "rayguns.LifeForceChamber.segment"
 
-  def createItem( id : Int ) : ItemModule = new ItemModule( id, this )
+   def createItem() : ItemModule = new ItemChamber( this,
+       Emitters.lifeForceEmitter, Tier2EmptyChamber )
     .setUnlocalizedName("rayguns.LifeForceChamber")
     .setTextureName("rayguns:chamber_life_force")
     .setCreativeTab( ModularRayguns.raygunsTab )

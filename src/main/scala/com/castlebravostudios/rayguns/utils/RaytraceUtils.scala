@@ -51,7 +51,7 @@ object RaytraceUtils {
    * http://www.cse.yorku.ca/~amana/research/grid.pdf
    */
   //scalastyle:off cyclomatic.complexity
-  def blocks( start : Vector3, end : Vector3 ) : Stream[BlockPos] = {
+  private def blocks( start : Vector3, end : Vector3 ) : Stream[BlockPos] = {
     val BlockPos(x, y, z) = start.toBlockPos
     val endPos = end.toBlockPos
     val diff = end.subtract(start)
@@ -94,12 +94,12 @@ object RaytraceUtils {
    * Get all non-air blocks that could potentially intersect the line segment
    * between start and end which match f.
    */
-  def blocksHit( world : World, start : Vector3, end : Vector3 )( f : (Block, Int, BlockPos) => Boolean ) : Stream[(Block, Int, BlockPos)]=
+  private def blocksHit( world : World, start : Vector3, end : Vector3 )( f : (Block, Int, BlockPos) => Boolean ) : Stream[(Block, Int, BlockPos)]=
     for {
       pos <- blocks( start, end )
       BlockPos(x, y, z) = pos
       if (!world.isAirBlock(x, y, z) )
-      block = Block.blocksList( world.getBlockId(x, y, z) )
+      block = world.getBlock(x, y, z)
       meta = world.getBlockMetadata(x, y, z)
       if ( f( block, meta, pos ) )
     } yield (block, meta, pos)
@@ -122,17 +122,17 @@ object RaytraceUtils {
    * Find all entities that a line segment between start and end could possibly
    * intersect with.
    */
-  def reachableEntities( world : World, owner : Entity, start : Vec3, end : Vec3 ) : Seq[Entity] = {
-    var aabb = AxisAlignedBB.getAABBPool.getAABB(start.xCoord, start.yCoord, start.zCoord,
-        start.xCoord, start.yCoord, start.zCoord);
-    val diffLength = end.subtract(start).lengthVector() * 1.1
+  private def reachableEntities( world : World, owner : Entity, start : Vector3, end : Vector3 ) : Seq[Entity] = {
+    var aabb = AxisAlignedBB.getBoundingBox(start.x, start.y, start.z,
+        start.x, start.y, start.z);
+    val diffLength = end.subtract(start).length * 1.1
     aabb = aabb.expand(diffLength, diffLength, diffLength)
     world.getEntitiesWithinAABBExcludingEntity(owner, aabb)
       .asInstanceOf[java.util.List[Entity]]
       .asScala.toSeq
   }
 
-  def collidableEntities( world : World, owner : Entity, start : Vec3, end : Vec3 )( f : Entity => Boolean ) : Seq[Entity] =
+  private def collidableEntities( world : World, owner : Entity, start : Vector3, end : Vector3 )( f : Entity => Boolean ) : Seq[Entity] =
     for {
       e <- reachableEntities( world, owner, start, end )
       if ( e != null )
@@ -141,7 +141,7 @@ object RaytraceUtils {
       if ( f(e) )
     } yield e
 
-  def collide( target : Entity, start : Vec3, end : Vec3 ) : MOP = {
+  private def collide( target : Entity, start : Vec3, end : Vec3 ) : MOP = {
     val border = target.getCollisionBorderSize()
     val box = target.boundingBox.expand(border, border, border)
     val intercept = box.calculateIntercept(start, end)
@@ -161,7 +161,7 @@ object RaytraceUtils {
    */
   def rayTraceEntities( world : World, owner : Entity, start : Vec3, end : Vec3 )( f : Entity => Boolean ) : List[MOP] = {
     val collisions = for {
-      entity <- collidableEntities(world, owner, start, end)(f)
+      entity <- collidableEntities(world, owner, Vector3( start ), Vector3( end ) )(f)
       mop = collide( entity, start, end )
       if ( mop != null )
     } yield mop
@@ -205,17 +205,10 @@ object RaytraceUtils {
   }
 
   def getPlayerTarget( world : World, player : EntityLivingBase, aim : Vector3, distance : Double ) : Vector3 = {
-    val playerPos = getPlayerPosition(world, player)
-    val lookVector = aim.mult( distance ).add( Vector3( playerPos.xCoord, playerPos.yCoord, playerPos.zCoord ) )
+    val playerPos = Vector3( getPlayerPosition(world, player) )
+    val lookVector = aim.mult( distance ).add( playerPos )
 
-    if ( player.isSneaking() ) lookVector.copy( y = playerPos.yCoord )
+    if ( player.isSneaking() ) lookVector.copy( y = playerPos.y )
     else lookVector
-  }
-
-  private def vecMult( vec : Vec3, factor : Double ) : Vec3 = {
-    vec.xCoord *= factor
-    vec.yCoord *= factor
-    vec.zCoord *= factor
-    vec
   }
 }

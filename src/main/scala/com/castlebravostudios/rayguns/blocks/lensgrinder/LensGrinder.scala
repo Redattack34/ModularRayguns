@@ -34,15 +34,15 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.tileentity.TileEntity
 import net.minecraft.world.World
 
-class LensGrinder( id : Int ) extends BaseContainerBlock( id ) {
+class LensGrinder extends BaseContainerBlock {
   setHardness(2.0F)
   setResistance(5.0f)
-  setUnlocalizedName("rayguns.LensGrinder")
+  setBlockName("rayguns.LensGrinder")
   setCreativeTab(ModularRayguns.raygunsTab)
-  setTextureName("rayguns:lens_grinder")
+  setBlockTextureName("rayguns:lens_grinder")
 
   def openGui( player : EntityPlayer, world : World, x : Int, y : Int, z : Int ) : Unit =
     player.openGui(ModularRayguns, 1, world, x, y, z)
 
-  override def createNewTileEntity( world : World ) : TileEntity = new LensGrinderTileEntity()
+  override def createNewTileEntity( world : World, var2: Int ) : TileEntity = new LensGrinderTileEntity()
 }

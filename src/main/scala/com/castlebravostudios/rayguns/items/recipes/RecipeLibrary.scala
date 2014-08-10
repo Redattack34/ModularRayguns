@@ -27,23 +27,27 @@
 
 package com.castlebravostudios.rayguns.items.recipes
 
+import scala.collection.JavaConverters.seqAsJavaListConverter
+
 import com.castlebravostudios.rayguns.api.LensGrinderRecipeRegistry
 import com.castlebravostudios.rayguns.api.items.RaygunModule
-import com.castlebravostudios.rayguns.utils.Extensions.ItemExtensions
 import com.castlebravostudios.rayguns.utils.Extensions.BlockExtensions
+import com.castlebravostudios.rayguns.utils.Extensions.ItemExtensions
 import com.castlebravostudios.rayguns.utils.ScalaShapedRecipeFactory
-import cpw.mods.fml.common.registry.GameRegistry
+import com.castlebravostudios.rayguns.utils.ScalaRecipeVarargWorkaround
+
+import net.minecraft.block.Block
 import net.minecraft.item.Item
 import net.minecraft.item.ItemStack
-import net.minecraft.block.Block
 import net.minecraft.item.crafting.ShapelessRecipes
-import scala.collection.JavaConversions._
+
+import cpw.mods.fml.common.registry.GameRegistry
 
 trait RecipeLibrary {
 
   def registerRecipes() : Unit
 
-  def getIngredientItems() : Seq[Item]
+  def getIngredientItems() : Seq[(Item, String)]
 
   protected def addModuleShaped( module : RaygunModule, params : Any* ) : Unit = {
     val modules = findModules( module, params :_* )
@@ -53,8 +57,31 @@ trait RecipeLibrary {
       return
     }
 
-    GameRegistry.addRecipe( ScalaShapedRecipeFactory(
+    GameRegistry.addRecipe( ScalaShapedRecipeFactory.shaped(
         module.item.get.asStack, params:_* ) );
+  }
+
+  protected def addModuleShapedOre( module : RaygunModule, params : Any* ) : Unit = {
+    val modules = findModules( module, params :_* )
+
+    //Skip modules where the module or a recipe ingredient has been disabled.
+    if ( modules.exists( _.item.isEmpty ) ) {
+      return
+    }
+
+    GameRegistry.addRecipe( ScalaShapedRecipeFactory.shapedOre(
+        module.item.get.asStack, params:_* ) );
+  }
+
+  protected def addModuleShapelessOre( module : RaygunModule, params : Any* ) : Unit = {
+    val modules = findModules( module, params :_* )
+
+    //Skip modules where the module or a recipe ingredient has been disabled.
+    if ( modules.exists( _.item.isEmpty ) ) {
+      return
+    }
+
+    addShapelessOre(module.item.get.asStack, params :_* )
   }
 
   protected def addModuleLensGrinder( time : Short, module : RaygunModule, params : Any* ): Unit = {
@@ -77,7 +104,10 @@ trait RecipeLibrary {
   }
 
   protected def addShaped( output : ItemStack, recipe : Any* ) : Unit =
-    GameRegistry.addRecipe( ScalaShapedRecipeFactory( output, recipe :_* ) )
+    GameRegistry.addRecipe( ScalaShapedRecipeFactory.shaped( output, recipe :_* ) )
+
+  protected def addShapedOre( output : ItemStack, recipe : Any* ) : Unit =
+    GameRegistry.addRecipe( ScalaShapedRecipeFactory.shapedOre( output, recipe :_* ) )
 
   protected def addShapeless( output : ItemStack, recipe : Any* ) : Unit = {
     val stacks = recipe.map{
@@ -90,15 +120,30 @@ trait RecipeLibrary {
       }
       case _ => throw new IllegalArgumentException( "Invalid shapeless recipe." );
     }
-    GameRegistry.addRecipe( new ShapelessRecipes( output, stacks ) )
+    GameRegistry.addRecipe( new ShapelessRecipes( output, stacks.asJava ) )
+  }
+
+  protected def addShapelessOre( output : ItemStack, recipe : Any* ) : Unit = {
+    val stacks = recipe.map{
+      case item : Item => item.asStack
+      case block : Block => block.asStack
+      case stack : ItemStack => stack.copy
+      case module : RaygunModule => {
+        require( module.item.isDefined )
+        module.item.get.asStack
+      }
+      case str : String => str
+      case k : Any => throw new IllegalArgumentException( s"Invalid shapeless recipe. Unknown type: $k" );
+    }
+    GameRegistry.addRecipe( ScalaRecipeVarargWorkaround.createShapeless( output, stacks.asJava ) )
   }
 
   protected def addLensGrinder( ticks : Short, result : ItemStack, recipe : Any* ): Unit =
     LensGrinderRecipeRegistry.register( ticks, result, recipe : _ * )
 
   protected def addSmelting( input : Block, output : ItemStack, expMult : Float ): Unit =
-    GameRegistry.addSmelting(input.blockID, output, expMult)
+    GameRegistry.addSmelting(input, output, expMult)
 
   protected def addSmelting( input : Item, output : ItemStack, expMult : Float ): Unit =
-    GameRegistry.addSmelting(input.itemID, output, expMult)
+    GameRegistry.addSmelting(input, output, expMult)
 }

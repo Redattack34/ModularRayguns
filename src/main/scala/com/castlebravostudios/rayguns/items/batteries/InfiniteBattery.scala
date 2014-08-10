@@ -31,13 +31,9 @@ import com.castlebravostudios.rayguns.api.items.BaseRaygunModule
 import com.castlebravostudios.rayguns.api.items.ItemModule
 import com.castlebravostudios.rayguns.api.items.RaygunBattery
 import com.castlebravostudios.rayguns.mod.ModularRayguns
-import com.castlebravostudios.rayguns.plugins.te.RFItemPowerConnector
-import com.castlebravostudios.rayguns.utils.FireEvent
-import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.item.ItemStack
-import com.castlebravostudios.rayguns.plugins.te.RFItemPowerConnector
-import com.castlebravostudios.rayguns.plugins.ic2.IC2ItemPowerConnector
+
 import net.minecraft.client.resources.I18n
+import net.minecraft.item.ItemStack
 
 object InfiniteBattery extends BaseRaygunModule with RaygunBattery {
   val moduleKey = "InfiniteBattery"
@@ -45,9 +41,8 @@ object InfiniteBattery extends BaseRaygunModule with RaygunBattery {
   val nameSegmentKey = "rayguns.InfiniteBattery.segment"
   val maxCapacity = Integer.MAX_VALUE
   val maxChargePerTick = 16
-  val ic2Tier = 4
 
-  def createItem( id : Int ) : ItemModule = new ItemBattery( id, this )
+  def createItem( ) : ItemModule = new ItemBattery( this )
     .setUnlocalizedName("rayguns.InfiniteBattery")
     .setTextureName("rayguns:battery_infinite")
     .setCreativeTab( ModularRayguns.raygunsTab )
@@ -56,5 +51,5 @@ object InfiniteBattery extends BaseRaygunModule with RaygunBattery {
   override def getChargeDepleted( item : ItemStack ) : Int = 0
   override def setChargeDepleted( item : ItemStack, depleted : Int ) : Unit = ()
   override def addCharge( item : ItemStack, delta : Int ) : Unit = ()
-  override def getChargeString( item : ItemStack ) : String = I18n.getString("rayguns.infinityCharge")
+  override def getChargeString( item : ItemStack ) : String = I18n.format("rayguns.infinityCharge")
 }

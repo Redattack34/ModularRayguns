@@ -45,7 +45,6 @@ trait RaygunBattery extends RaygunModule {
 
   def maxCapacity : Int
   def maxChargePerTick : Int
-  def ic2Tier : Int
 
   override def handlePrefireEvent( event : PrefireEvent ) : Unit = {
     val powerDrain = powerBase * event.powerMult

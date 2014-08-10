@@ -27,30 +27,29 @@
 
 package com.castlebravostudios.rayguns.mod
 
-import java.util.logging.Logger
-
 import com.castlebravostudios.rayguns.blocks.TileEntities
 import com.castlebravostudios.rayguns.entities.Entities
 import com.castlebravostudios.rayguns.entities.effects.Effects
-import com.castlebravostudios.rayguns.items.Blocks
-import com.castlebravostudios.rayguns.items.Items
-import com.castlebravostudios.rayguns.items.frames.FireflyFrame
 import com.castlebravostudios.rayguns.utils.Extensions.ItemExtensions
-
 import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.item.ItemStack
 import net.minecraft.util.ResourceLocation
-
 import cpw.mods.fml.common.Mod
 import cpw.mods.fml.common.Mod.EventHandler
 import cpw.mods.fml.common.SidedProxy
 import cpw.mods.fml.common.event.FMLInitializationEvent
 import cpw.mods.fml.common.event.FMLPostInitializationEvent
 import cpw.mods.fml.common.event.FMLPreInitializationEvent
-import cpw.mods.fml.common.network.NetworkMod
+import cpw.mods.fml.common.network.NetworkRegistry
+import org.apache.logging.log4j.Logger
+import com.castlebravostudios.rayguns.items.RaygunsItems
+import com.castlebravostudios.rayguns.items.RaygunsBlocks
+import com.castlebravostudios.rayguns.items.frames.FireflyFrame
+import net.minecraft.item.Item
+import cpw.mods.fml.common.event.FMLInterModComms
+import net.minecraft.nbt.NBTTagCompound
 
 @Mod(modid="mod_ModularRayguns", version="1.0-alpha2", modLanguage="scala", useMetadata=true)
-@NetworkMod(clientSideRequired=true, serverSideRequired=true)
 object ModularRayguns {
 
   private var _logger : Logger = _
@@ -71,21 +70,32 @@ object ModularRayguns {
 
   @EventHandler
   def load( event : FMLInitializationEvent ) : Unit = {
-    Items.registerItems
-    Blocks.registerBlocks
+    RaygunsItems.registerItems
+    RaygunsBlocks.registerBlocks
     Entities.registerEntities
     TileEntities.registerTileEntities
     Effects.registerEffects
+    NetworkRegistry.INSTANCE.registerGuiHandler(ModularRayguns, proxy)
 
     Config.recipeLibrary.registerRecipes()
 
     proxy.registerRenderers()
     proxy.loadTextures()
+
+    FMLInterModComms.sendMessage("Waila", "register",
+        "com.castlebravostudios.rayguns.plugins.waila.RaygunsWailaModule.register" )
+
+    val guideMessage = new NBTTagCompound
+    guideMessage.setString("name", "Modular Rayguns")
+    guideMessage.setString("location", "rayguns:doc/ModularRayguns.md")
+
+    FMLInterModComms.sendMessage("mod_TheGuide", "RegisterIndexFile",
+        guideMessage )
   }
 
   val raygunsTab  = new CreativeTabs("tabRayguns") {
-    override def getIconItemStack : ItemStack =
-      FireflyFrame.item.get.asStack
+    override def getTabIconItem : Item =
+      FireflyFrame.item.get
   }
 
   def texture( path : String ) : ResourceLocation =

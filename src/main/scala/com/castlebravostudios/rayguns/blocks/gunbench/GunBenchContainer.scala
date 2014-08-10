@@ -65,7 +65,7 @@ class GunBenchContainer( inventoryPlayer : InventoryPlayer, entity : GunBenchTil
   val lastCustomIndex = OUTPUT_SLOT
 
   protected override def transferStackToCustomSlots( player : EntityPlayer, slot : Int, stackInSlot: ItemStack ) : Boolean = {
-    val targetSlot = Item.itemsList(stackInSlot.itemID) match {
+    val targetSlot = stackInSlot.getItem() match {
       case RayGun => OUTPUT_SLOT
       case item : ItemModule => slotForModule( item )
       case _ => return false

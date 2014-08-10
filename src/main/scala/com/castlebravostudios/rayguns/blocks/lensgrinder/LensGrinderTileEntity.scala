@@ -31,22 +31,22 @@ import com.castlebravostudios.rayguns.api.LensGrinderRecipe
 import com.castlebravostudios.rayguns.api.LensGrinderRecipeRegistry
 import com.castlebravostudios.rayguns.blocks.BaseInventoryTileEntity
 import com.castlebravostudios.rayguns.blocks.PoweredBlock
+import com.castlebravostudios.rayguns.plugins.te.RFBlockPowerConnector
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.inventory.Container
 import net.minecraft.inventory.IInventory
 import net.minecraft.inventory.InventoryCrafting
 import net.minecraft.item.ItemStack
-import net.minecraft.item.crafting.ShapedRecipes
 import net.minecraft.nbt.NBTTagCompound
-import com.castlebravostudios.rayguns.plugins.te.RFBlockPowerConnector
-import com.castlebravostudios.rayguns.plugins.ic2.IC2BlockPowerConnector
-import net.minecraft.network.packet.Packet132TileEntityData
-import net.minecraft.network.INetworkManager
-import net.minecraft.network.packet.Packet
-import LensGrinderTileEntity.OUTPUT_SLOT
+import net.minecraft.network.NetworkManager
+import net.minecraft.network.Packet
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity
+import net.minecraftforge.oredict.ShapedOreRecipe
+
+
 
 class LensGrinderTileEntity extends BaseInventoryTileEntity with PoweredBlock
-  with RFBlockPowerConnector with IC2BlockPowerConnector {
+  with RFBlockPowerConnector {
 
 
   private[this] val input = new InventoryCrafting( new DummyContainer(), 3, 3 )
@@ -54,7 +54,7 @@ class LensGrinderTileEntity extends BaseInventoryTileEntity with PoweredBlock
 
   private[this] var remainingTime = 0
 
-  private[this] var recipe : Option[LensGrinderRecipe] = None
+  var recipe : Option[LensGrinderRecipe] = None
 
   var chargeStored : Int = 0
   val chargeCapacity : Int = 10
@@ -63,9 +63,9 @@ class LensGrinderTileEntity extends BaseInventoryTileEntity with PoweredBlock
 
   override def getSizeInventory : Int = 10
   override def getStackInSlot( slot : Int ) : ItemStack =
-    if ( slot == OUTPUT_SLOT ) output else input.getStackInSlot( slot )
+    if ( slot == LensGrinderTileEntity.OUTPUT_SLOT ) output else input.getStackInSlot( slot )
   override def setInventorySlotContents( slot : Int, stack : ItemStack ) : Unit = {
-    if ( slot == OUTPUT_SLOT ) {
+    if ( slot == LensGrinderTileEntity.OUTPUT_SLOT ) {
       output = stack
       if ( stack != null && stack.stackSize > getInventoryStackLimit ) {
         stack.stackSize = getInventoryStackLimit
@@ -101,11 +101,11 @@ class LensGrinderTileEntity extends BaseInventoryTileEntity with PoweredBlock
 
       if (this.remainingTime == 0) {
         this.completeGrinding()
-        this.onInventoryChanged()
+        this.markDirty()
       }
       else if (!this.canGrind()) {
         this.remainingTime = 0
-        this.onInventoryChanged()
+        this.markDirty()
       }
 
       if ( remainingTime % 20 == 0 ) {
@@ -129,15 +129,15 @@ class LensGrinderTileEntity extends BaseInventoryTileEntity with PoweredBlock
     updateRecipe()
   }
 
-  private def subtractInput( recipe : ShapedRecipes ) : Unit = {
-    for ( slot <- 0 until input.getSizeInventory() ) {
+  private def subtractInput( recipe : ShapedOreRecipe ) : Unit = {
+    for { slot <- 0 until input.getSizeInventory() } {
       input.decrStackSize(slot, 1)
     }
   }
 
-  private def addOutput( recipe : ShapedRecipes ) : Unit = {
+  private def addOutput( recipe : ShapedOreRecipe ) : Unit = {
     val result = recipe.getRecipeOutput()
-    if ( output == null ) output = result
+    if ( output == null ) output = result.copy
     else output.stackSize += result.stackSize
   }
 
@@ -149,7 +149,7 @@ class LensGrinderTileEntity extends BaseInventoryTileEntity with PoweredBlock
         if ( output == null ) true
         else {
           val recipeOutput = r.recipe.getRecipeOutput
-          output.itemID == recipeOutput.itemID &&
+          output == recipeOutput &&
             output.stackSize + recipeOutput.stackSize <= output.getMaxStackSize
         }
 
@@ -179,20 +179,20 @@ class LensGrinderTileEntity extends BaseInventoryTileEntity with PoweredBlock
   override def getDescriptionPacket() : Packet = {
     val tag = new NBTTagCompound
     writeToNBT(tag)
-    new Packet132TileEntityData( xCoord, yCoord, zCoord, 0, tag )
+    new S35PacketUpdateTileEntity( xCoord, yCoord, zCoord, 0, tag )
   }
 
-  override def onDataPacket( net : INetworkManager, packet : Packet132TileEntityData ) : Unit = {
-    readFromNBT( packet.data )
+  override def onDataPacket( net : NetworkManager, packet : S35PacketUpdateTileEntity ) : Unit = {
+    readFromNBT( packet.func_148857_g() )
   }
 
   val getInventoryStackLimit = 64
 
-  override def getInvName : String = "rayguns.lensGrinderEntity"
-  override def isInvNameLocalized : Boolean = false
+  override def getInventoryName : String = "rayguns.lensGrinderEntity"
+  override def hasCustomInventoryName : Boolean = false
 
   override def isItemValidForSlot( slot : Int, item : ItemStack ) : Boolean =
-    slot != OUTPUT_SLOT
+    slot != LensGrinderTileEntity.OUTPUT_SLOT
 
   private class DummyContainer extends Container {
     def canInteractWith( player : EntityPlayer ) : Boolean = false

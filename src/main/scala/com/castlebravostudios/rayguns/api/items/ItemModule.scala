@@ -27,13 +27,15 @@
 
 package com.castlebravostudios.rayguns.api.items
 
-import net.minecraft.item.Item
-import net.minecraft.creativetab.CreativeTabs
 import com.castlebravostudios.rayguns.items.ScalaItem
-import net.minecraft.item.ItemStack
+
+import net.minecraft.creativetab.CreativeTabs
 import net.minecraft.entity.player.EntityPlayer
 
-class ItemModule( id : Int, val module : RaygunModule ) extends ScalaItem( id ) {
+import net.minecraft.item.Item
+import net.minecraft.item.ItemStack
+
+class ItemModule( val module : RaygunModule ) extends ScalaItem {
 
   //Override the setters to return ItemModule for easier chaining in the modules.
   override def setContainerItem( item : Item ) : ItemModule = { super.setContainerItem(item); this }

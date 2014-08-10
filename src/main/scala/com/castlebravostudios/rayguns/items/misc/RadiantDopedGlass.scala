@@ -32,7 +32,7 @@ import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 import net.minecraft.item.Item
 
-object RadiantDopedGlass extends Item( Config.radiantDopedGlass ) {
+object RadiantDopedGlass extends Item {
 
   setCreativeTab(ModularRayguns.raygunsTab)
   setUnlocalizedName("rayguns.RadiantDopedGlass")

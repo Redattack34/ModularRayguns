@@ -28,56 +28,50 @@
 package com.castlebravostudios.rayguns.utils
 
 import com.castlebravostudios.rayguns.mod.ModularRayguns
-import java.util.logging.Level
+import org.apache.logging.log4j.Level
 
 trait Logging {
 
   private val logger = ModularRayguns.logger
 
-  protected def severe( message : => String ) =
-    log( Level.SEVERE, message )
+  protected def error( message : => String ) =
+    log( Level.ERROR, message )
 
   protected def warning( message : => String ) =
-    log( Level.WARNING, message )
+    log( Level.WARN, message )
 
   protected def info( message : => String ) =
     log( Level.INFO, message )
 
-  protected def fine( message : => String ) =
-    log( Level.FINE, message )
+  protected def debug( message : => String ) =
+    log( Level.DEBUG, message )
 
-  protected def finer( message : => String ) =
-    log( Level.FINER, message )
+  protected def trace( message : => String ) =
+    log( Level.TRACE, message )
 
-  protected def finest( message : => String ) =
-    log( Level.FINEST, message )
-
-  protected def severe( message : => String, t : Throwable ) =
-    log( Level.SEVERE, message, t )
+  protected def error( message : => String, t : Throwable ) =
+    log( Level.ERROR, message, t )
 
   protected def warning( message : => String, t : Throwable ) =
-    log( Level.WARNING, message, t )
+    log( Level.WARN, message, t )
 
   protected def info( message : => String, t : Throwable ) =
     log( Level.INFO, message, t )
 
-  protected def fine( message : => String, t : Throwable ) =
-    log( Level.FINE, message, t )
+  protected def debug( message : => String, t : Throwable ) =
+    log( Level.DEBUG, message, t )
 
-  protected def finer( message : => String, t : Throwable ) =
-    log( Level.FINER, message, t )
-
-  protected def finest( message : => String, t : Throwable ) =
-    log( Level.FINEST, message, t )
+  protected def trace( message : => String, t : Throwable ) =
+    log( Level.TRACE, message, t )
 
   private def log( level : Level, message : => String ) = {
-    if ( logger.isLoggable( level ) ) {
+    if ( logger.isEnabled(level) ) {
       logger.log( level, message )
     }
   }
 
   private def log( level : Level, message : => String, t : Throwable ) = {
-    if ( logger.isLoggable(level) ) {
+    if ( logger.isEnabled(level) ) {
       logger.log( level, message, t )
     }
   }

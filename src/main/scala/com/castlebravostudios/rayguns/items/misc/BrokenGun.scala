@@ -37,7 +37,7 @@ import com.castlebravostudios.rayguns.utils.RaygunNbtUtils.getBattery
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.item.ItemStack
 
-object BrokenGun extends ScalaItem( Config.brokenGun ) with MoreInformation {
+object BrokenGun extends ScalaItem with MoreInformation {
 
   setMaxStackSize(1)
   setCreativeTab(ModularRayguns.raygunsTab)

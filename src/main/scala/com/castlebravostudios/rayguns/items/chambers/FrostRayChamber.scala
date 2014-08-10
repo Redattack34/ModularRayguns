@@ -30,7 +30,8 @@ package com.castlebravostudios.rayguns.items.chambers
 import com.castlebravostudios.rayguns.api.items.ItemModule
 import com.castlebravostudios.rayguns.entities.effects.FrostRayEffect
 import com.castlebravostudios.rayguns.mod.ModularRayguns
-
+import com.castlebravostudios.rayguns.items.emitters.Emitters
+import com.castlebravostudios.rayguns.items.misc.Tier2EmptyChamber
 
 object FrostRayChamber extends BaseChamber {
   val moduleKey = "FrostRayChamber"
@@ -38,7 +39,8 @@ object FrostRayChamber extends BaseChamber {
   val shotEffect = FrostRayEffect
   val nameSegmentKey = "rayguns.FrostRayChamber.segment"
 
-  def createItem( id : Int ) : ItemModule = new ItemModule( id, this )
+   def createItem() : ItemModule = new ItemChamber( this,
+       Emitters.frostRayEmitter, Tier2EmptyChamber )
     .setUnlocalizedName("rayguns.FrostRayChamber")
     .setTextureName("rayguns:chamber_frost_ray")
     .setCreativeTab( ModularRayguns.raygunsTab )

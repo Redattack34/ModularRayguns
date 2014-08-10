@@ -56,7 +56,7 @@ abstract class BaseContainer( inventoryPlayer : InventoryPlayer, entity : BaseIn
           (84 + i * 18) + offsetY ) )
     }
 
-    for ( i <- 0 until 9 ) {
+    for { i <- 0 until 9 } {
       addSlotToContainer( new Slot( inventoryPlayer, i,
           (8 + i * 18) + offsetX, 142 + offsetY ) )
     }

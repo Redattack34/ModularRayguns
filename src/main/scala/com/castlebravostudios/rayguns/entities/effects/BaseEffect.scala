@@ -32,16 +32,16 @@ import com.castlebravostudios.rayguns.entities.BaseBoltEntity
 import com.castlebravostudios.rayguns.entities.BoltRenderer
 import com.castlebravostudios.rayguns.entities.Shootable
 import com.castlebravostudios.rayguns.utils.BlockPos
+import com.castlebravostudios.rayguns.utils.RandomDamageSource
 import net.minecraft.block.Block
-import net.minecraft.block.BlockFluid
+import net.minecraft.block.BlockLiquid
 import net.minecraft.entity.Entity
+import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.util.DamageSource
 import net.minecraft.util.ResourceLocation
 import net.minecraft.world.World
 import net.minecraftforge.fluids.IFluidBlock
-import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.util.EntityDamageSourceIndirect
-import net.minecraft.util.DamageSource
-import com.castlebravostudios.rayguns.utils.RandomDamageSource
+import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 trait BaseEffect {
 
@@ -80,7 +80,7 @@ trait BaseEffect {
   def createImpactParticles( shootable : Shootable, hitX : Double, hitY : Double, hitZ : Double ) : Unit = ()
 
   def canCollideWithBlock( shootable : Shootable, b : Block, metadata : Int, pos : BlockPos ) : Boolean =
-    if ( b.isInstanceOf[BlockFluid] || b.isInstanceOf[IFluidBlock] ) collidesWithLiquids(shootable)
+    if ( b.isInstanceOf[BlockLiquid] || b.isInstanceOf[IFluidBlock] ) collidesWithLiquids(shootable)
     else true
 
   def canCollideWithEntity( shootable : Shootable, entity : Entity ) : Boolean =
@@ -117,9 +117,14 @@ trait BaseEffect {
   def adjustCoords( x : Int, y : Int, z : Int, side : Int ) : BlockPos =
     BlockPos( x, y, z ).add( hitOffset( side ) )
 
-  def boltTexture : ResourceLocation
-  def beamTexture : ResourceLocation
   def lineTexture : ResourceLocation = BoltRenderer.lineBlackTexture
+
+  def boltTexture : ResourceLocation
+  def beamGlowTexture : ResourceLocation
+  def beamCoreTexture : ResourceLocation
+  def beamStartGlowTexture : ResourceLocation
+  def beamStartCoreTexture : ResourceLocation
+  def beamNoiseTexture : ResourceLocation
   def chargeTexture : ResourceLocation
 
   def createBeamEntity( world : World, player : EntityPlayer ) : BaseBeamEntity = {
@@ -136,4 +141,8 @@ trait BaseEffect {
 
   def getDamageSource( shootable : Shootable ) : DamageSource =
     new RandomDamageSource( damageSourceKey, shootable, shootable.shooter )
+
+  def glowSubtractsColor : Boolean = false
+  def coreSubtractsColor : Boolean = false
+  def noiseSubtractsColor : Boolean = false
 }

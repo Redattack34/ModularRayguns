@@ -28,97 +28,48 @@
 package com.castlebravostudios.rayguns.mod
 
 import java.io.File
-import net.minecraftforge.common.Configuration
-import net.minecraftforge.common.Property
 import com.castlebravostudios.rayguns.items.recipes.RecipeLibrary
-import com.castlebravostudios.rayguns.items.recipes.VanillaRecipeLibrary
-import com.castlebravostudios.rayguns.items.recipes.Ic2RecipeLibrary
 import com.castlebravostudios.rayguns.items.recipes.ThermalExpansionRecipeLibrary
 import com.castlebravostudios.rayguns.items.recipes.VanillaRecipeLibrary
 import com.castlebravostudios.rayguns.utils.Logging
-import com.castlebravostudios.rayguns.items.recipes.VanillaRecipeLibrary
+import net.minecraftforge.common.config.Configuration
 
 object Config extends Logging {
 
-  var rayGun : Int = _
-  var brokenGun : Int = _
-  var opticalGlass : Int = _
-  var redstoneDustedGlass : Int = _
-  var glowstoneDustedGlass : Int = _
-  var redstoneDopedGlass : Int = _
-  var glowstoneDopedGlass : Int = _
-  var tier1Diode : Int = _
-  var tier2Diode : Int = _
-  var tier3Diode : Int = _
-  var tier1HeatSink : Int = _
-  var tier2HeatSink : Int = _
-  var tier3HeatSink : Int = _
-  var tier1Casing: Int = _
-  var tier2Casing: Int = _
-  var tier3Casing: Int = _
-  var radiantDust: Int = _
-  var radiantDustedGlass : Int = _
-  var radiantDopedGlass : Int = _
-  var shutter : Int = _
-  var tier1GainMedium: Int = _
-  var tier2GainMedium: Int = _
-  var tier3GainMedium: Int = _
-  var leadDustedGlass : Int = _
+  var basicBattery : Boolean = _
+  var advancedBattery : Boolean = _
+  var ultimateBattery : Boolean = _
+  var infiniteBattery : Boolean = _
 
-  var basicBattery : Int = _
-  var advancedBattery : Int = _
-  var ultimateBattery : Int = _
-  var infiniteBattery : Int = _
+  var preciseLens : Boolean = _
+  var wideLens : Boolean = _
 
-  var preciseLens : Int = _
-  var wideLens : Int = _
+  var highEfficiencyWiring : Boolean = _
+  var refireCapacitor : Boolean = _
+  var solarPanel : Boolean = _
+  var chargeCapacitor : Boolean = _
 
-  var highEfficiencyWiring : Int = _
-  var refireCapacitor : Int = _
-  var solarPanel : Int = _
-  var chargeCapacitor : Int = _
+  var mantisFrame : Boolean = _
+  var fireflyFrame : Boolean = _
 
-  var mantisFrame : Int = _
-  var fireflyFrame : Int = _
+  var chamberLaser : Boolean = _
+  var chamberHeatRay : Boolean = _
+  var chamberLifeForce : Boolean = _
+  var chamberFrostRay : Boolean = _
+  var chamberFortifiedSunlight : Boolean = _
+  var chamberExplosive : Boolean = _
+  var chamberDeathRay : Boolean = _
+  var chamberEnder : Boolean = _
+  var chamberLightning : Boolean = _
+  var chamberImpulse : Boolean = _
+  var chamberTractor : Boolean = _
+  var chamberCuttingTier1 : Boolean = _
+  var chamberCuttingTier2 : Boolean = _
+  var chamberCuttingTier3 : Boolean = _
+  var chamberMatterTransporter : Boolean = _
 
-  var gunBench : Int = _
-  var lensGrinder : Int = _
-  var invisibleRedstone : Int = _
-
-  var emitterLaser : Int = _
-  var emitterHeatRay : Int = _
-  var emitterLifeForce : Int = _
-  var emitterFrostRay : Int = _
-  var emitterFortifiedSunlight : Int = _
-  var emitterExplosive : Int = _
-  var emitterDeathRay : Int = _
-  var emitterEnder : Int = _
-  var emitterLightning : Int = _
-  var emitterImpulse : Int = _
-  var emitterTractor : Int = _
-  var emitterTier1Cutting : Int = _
-  var emitterTier2Cutting : Int = _
-  var emitterTier3Cutting : Int = _
-  var emitterMatterTransporter : Int = _
-
-  var chamberLaser : Int = _
-  var chamberHeatRay : Int = _
-  var chamberLifeForce : Int = _
-  var chamberFrostRay : Int = _
-  var chamberFortifiedSunlight : Int = _
-  var chamberExplosive : Int = _
-  var chamberDeathRay : Int = _
-  var chamberEnder : Int = _
-  var chamberLightning : Int = _
-  var chamberImpulse : Int = _
-  var chamberTractor : Int = _
-  var chamberCuttingTier1 : Int = _
-  var chamberCuttingTier2 : Int = _
-  var chamberCuttingTier3 : Int = _
-  var chamberMatterTransporter : Int = _
-
-  var barrelBeam : Int = _
-  var barrelBlaster : Int = _
+  var barrelBeam : Boolean = _
+  var barrelBlaster : Boolean = _
 
   var minLightningDetail : Double = _
   var lightningFlash : Boolean = _
@@ -131,15 +82,12 @@ object Config extends Logging {
     val config = new Configuration( file )
     config.load()
 
-    loadMiscItemIds( config )
     loadBatteryItemIds(config)
     loadLensItemIds(config)
     loadAccessoryItemIds(config)
     loadGunFrameItemIds(config)
-    loadEmitterItemIds(config)
     loadChamberItemIds(config)
     loadBarrelItemIds(config)
-    loadBlockIds( config )
     loadConfigOptions( config )
     loadRecipes( config )
 
@@ -148,114 +96,63 @@ object Config extends Logging {
     }
   }
 
-  //scalastyle:off magic.number
-
-  private def loadMiscItemIds( config : Configuration ) : Unit = {
-    val range = new IdRange( config, 5000, "misc-items", "Crafting components and other items" )
-
-    rayGun = range.getItem( "rayGun" )
-    brokenGun = range.getItem( "brokenGun" )
-    opticalGlass = range.getItem( "opticalGlass" )
-    redstoneDustedGlass = range.getItem( "redstoneDustedGlass" )
-    glowstoneDustedGlass = range.getItem( "glowstoneDustedGlass" )
-    redstoneDopedGlass = range.getItem( "redstoneDopedGlass" )
-    glowstoneDopedGlass = range.getItem( "glowstoneDopedGlass" )
-    tier1Diode = range.getItem( "basicDiode" )
-    tier2Diode = range.getItem( "advancedDiode" )
-    tier3Diode = range.getItem( "ultimateDiode" )
-    tier1HeatSink = range.getItem( "basicHeatSink" )
-    tier2HeatSink = range.getItem( "advancedHeatSink" )
-    tier3HeatSink = range.getItem( "ultimateHeatSink" )
-    tier1Casing = range.getItem( "basicCasing" )
-    tier2Casing = range.getItem( "advancedCasing" )
-    tier3Casing = range.getItem( "ultimateCasing" )
-    radiantDust = range.getItem( "radiantDust" )
-    radiantDustedGlass = range.getItem( "radiantDustedGlass" )
-    radiantDopedGlass = range.getItem( "radiantDopedGlass" )
-    shutter = range.getItem( "shutter" )
-    tier1GainMedium = range.getItem( "basicGainMedium" )
-    tier2GainMedium = range.getItem( "advancedGainMedium" )
-    tier3GainMedium = range.getItem( "ultimateGainMedium" )
-    leadDustedGlass = range.getItem( "leadDustedGlass" )
-  }
-
   private def loadBatteryItemIds( config : Configuration ) : Unit = {
-    val range = new IdRange( config, 5100, "batteries", "Battery Modules - Set to 0 to disable" )
+    val range = new Category( config, "batteries", "Battery Modules - Set to false to disable" )
 
-    basicBattery = range.getItem( "basicBattery" )
-    advancedBattery = range.getItem( "advancedBattery" )
-    ultimateBattery = range.getItem( "ultimateBattery" )
-    infiniteBattery = range.getItem( "infiniteBattery" )
+    basicBattery = range.getItemEnabled( "basicBattery" )
+    advancedBattery = range.getItemEnabled( "advancedBattery" )
+    ultimateBattery = range.getItemEnabled( "ultimateBattery" )
+    infiniteBattery = range.getItemEnabled( "infiniteBattery" )
   }
 
   private def loadLensItemIds( config : Configuration ) : Unit = {
-    val range = new IdRange( config, 5200, "lenses", "Lens Modules - Set to 0 to disable" )
+    val range = new Category( config, "lenses", "Lens Modules - Set to false to disable" )
 
-    preciseLens = range.getItem( "preciseLens" )
-    wideLens = range.getItem( "wideLens" )
+    preciseLens = range.getItemEnabled( "preciseLens" )
+    wideLens = range.getItemEnabled( "wideLens" )
   }
 
   private def loadAccessoryItemIds( config : Configuration ) : Unit = {
-    val range = new IdRange( config, 5300, "accessories", "Accessory Modules - Set to 0 to disable" )
+    val range = new Category( config, "accessories", "Accessory Modules - Set to false to disable" )
 
-    highEfficiencyWiring = range.getItem( "highEfficiencyWiring" )
-    refireCapacitor = range.getItem( "refireCapacitor" )
-    solarPanel = range.getItem( "solarPanel" )
-    chargeCapacitor = range.getItem( "chargeCapacitor" )
+    highEfficiencyWiring = range.getItemEnabled( "highEfficiencyWiring" )
+    refireCapacitor = range.getItemEnabled( "refireCapacitor" )
+    solarPanel = range.getItemEnabled( "solarPanel" )
+    chargeCapacitor = range.getItemEnabled( "chargeCapacitor" )
   }
 
   private def loadGunFrameItemIds( config : Configuration ) : Unit = {
-    val range = new IdRange( config, 5400, "raygun-frames", "Raygun Frame Modules - Set to 0 to disable" )
+    val range = new Category( config, "raygun-frames", "Raygun Frame Modules - Set to false to disable" )
 
-    mantisFrame = range.getItem( "mantisFrame" )
-    fireflyFrame = range.getItem( "fireflyFrame" )
-  }
-
-  private def loadEmitterItemIds( config : Configuration ) : Unit = {
-    val range = new IdRange( config, 5500, "emitters", "Raygun Beam Emitters" )
-
-    emitterLaser = range.getItem( "emitterLaser" )
-    emitterHeatRay = range.getItem( "emitterHeatRay" )
-    emitterLifeForce = range.getItem( "emitterLifeForce" )
-    emitterFrostRay = range.getItem( "emitterFrostRay" )
-    emitterFortifiedSunlight = range.getItem( "emitterFortifiedSunlight" )
-    emitterExplosive = range.getItem( "emitterExplosive" )
-    emitterDeathRay = range.getItem( "emitterDeathRay" )
-    emitterEnder = range.getItem( "emitterEnder" )
-    emitterLightning = range.getItem( "emitterLightning" )
-    emitterImpulse = range.getItem( "emitterImpulse" )
-    emitterTractor = range.getItem( "emitterTractor" )
-    emitterTier1Cutting = range.getItem( "emitterTier1Cutting" )
-    emitterTier2Cutting = range.getItem( "emitterTier2Cutting" )
-    emitterTier3Cutting = range.getItem( "emitterTier3Cutting" )
-    emitterMatterTransporter = range.getItem( "emitterMatterTransporter" )
+    mantisFrame = range.getItemEnabled( "mantisFrame" )
+    fireflyFrame = range.getItemEnabled( "fireflyFrame" )
   }
 
   private def loadChamberItemIds( config : Configuration ) : Unit = {
-    val range = new IdRange( config, 5600, "beam-chambers", "Beam Chamber Modules - Set to 0 to disable" )
+    val range = new Category( config, "beam-chambers", "Beam Chamber Modules - Set to false to disable" )
 
-    chamberLaser = range.getItem( "chamberLaser" )
-    chamberHeatRay = range.getItem( "chamberHeatRay" )
-    chamberLifeForce = range.getItem( "chamberLifeForce" )
-    chamberFrostRay = range.getItem( "chamberFrostRay" )
-    chamberFortifiedSunlight = range.getItem( "chamberFortifiedSunlight" )
-    chamberExplosive = range.getItem( "chamberExplosive" )
-    chamberDeathRay = range.getItem( "chamberDeathRay" )
-    chamberEnder = range.getItem( "chamberEnder" )
-    chamberLightning = range.getItem( "chamberLightning" )
-    chamberImpulse = range.getItem( "chamberImpulse" )
-    chamberTractor = range.getItem( "chamberTractor" )
-    chamberCuttingTier1 = range.getItem( "chamberCuttingTier1" )
-    chamberCuttingTier2 = range.getItem( "chamberCuttingTier2" )
-    chamberCuttingTier3 = range.getItem( "chamberCuttingTier3" )
-    chamberMatterTransporter = range.getItem( "chamberMatterTransporter" )
+    chamberLaser = range.getItemEnabled( "chamberLaser" )
+    chamberHeatRay = range.getItemEnabled( "chamberHeatRay" )
+    chamberLifeForce = range.getItemEnabled( "chamberLifeForce" )
+    chamberFrostRay = range.getItemEnabled( "chamberFrostRay" )
+    chamberFortifiedSunlight = range.getItemEnabled( "chamberFortifiedSunlight" )
+    chamberExplosive = range.getItemEnabled( "chamberExplosive" )
+    chamberDeathRay = range.getItemEnabled( "chamberDeathRay" )
+    chamberEnder = range.getItemEnabled( "chamberEnder" )
+    chamberLightning = range.getItemEnabled( "chamberLightning" )
+    chamberImpulse = range.getItemEnabled( "chamberImpulse" )
+    chamberTractor = range.getItemEnabled( "chamberTractor" )
+    chamberCuttingTier1 = range.getItemEnabled( "chamberCuttingTier1" )
+    chamberCuttingTier2 = range.getItemEnabled( "chamberCuttingTier2" )
+    chamberCuttingTier3 = range.getItemEnabled( "chamberCuttingTier3" )
+    chamberMatterTransporter = range.getItemEnabled( "chamberMatterTransporter" )
   }
 
   private def loadBarrelItemIds( config : Configuration ) : Unit = {
-    val range = new IdRange( config, 5700, "barrels", "Barrel Modules - Set to 0 to disable" )
+    val range = new Category( config, "barrels", "Barrel Modules - Set to false to disable" )
 
-    barrelBeam = range.getItem( "barrelBeam" )
-    barrelBlaster = range.getItem( "barrelBlaster" )
+    barrelBeam = range.getItemEnabled( "barrelBeam" )
+    barrelBlaster = range.getItemEnabled( "barrelBlaster" )
   }
 
   private def loadConfigOptions( config : Configuration ) : Unit = {
@@ -265,41 +162,23 @@ object Config extends Logging {
     ic2PowerMultiplier = config.get( "config-options", "ic2PowerMultiplier", 4.0d ).getDouble( 4.0d )
   }
 
-  private def loadBlockIds( config : Configuration ) : Unit = {
-    val range = new IdRange( config, 1000, "blocks", "" )
-
-    gunBench = range.getBlock( "gunBench" )
-    lensGrinder = range.getBlock( "lensGrinder" )
-    invisibleRedstone = range.getBlock( "invisibleRedstone" )
-  }
-
   def loadRecipes(config: Configuration) : Unit = {
-    val str = config.get( "config-options", "recipeLibrary", "vanilla", "Current allowed values are: vanilla, ic2, thermalExpansion" ).getString();
+    val str = config.get( "config-options", "recipeLibrary", "vanilla", "Current allowed values are: vanilla, thermalExpansion" ).getString();
     str match {
       case "vanilla" => recipeLibrary = VanillaRecipeLibrary
-      case "ic2" if cpw.mods.fml.common.Loader.isModLoaded("IC2") =>
-        recipeLibrary = Ic2RecipeLibrary
       case "thermalExpansion" if cpw.mods.fml.common.Loader.isModLoaded("ThermalExpansion") =>
         recipeLibrary = ThermalExpansionRecipeLibrary
       case _ => {
-        severe( "Either the recipe library is set to an unknown value, or the " +
+        error( "Either the recipe library is set to an unknown value, or the " +
             "selected library requires a mod that is not installed. Defaulting to vanilla recipes." )
         recipeLibrary = VanillaRecipeLibrary
       }
     }
   }
 
-  private class IdRange( config : Configuration, start: Int, name : String, comment : String ) {
-    private var nextId = start
+  private class Category( config : Configuration, name : String, comment : String ) {
     config.getCategory( name ).setComment( comment )
 
-    def getBlock( key : String ) : Int = config.getBlock( name, key, getNextId() ).getInt
-    def getItem( key : String ) : Int = config.getItem( name, key, getNextId() ).getInt
-
-    private def getNextId() : Int = {
-      val id = nextId
-      nextId += 1
-      id
-    }
+    def getItemEnabled( key : String ) : Boolean = config.get( name, key, true ).getBoolean( true )
   }
 }

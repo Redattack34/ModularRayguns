@@ -30,6 +30,8 @@ package com.castlebravostudios.rayguns.items.chambers
 import com.castlebravostudios.rayguns.api.items.ItemModule
 import com.castlebravostudios.rayguns.entities.effects.LaserEffect
 import com.castlebravostudios.rayguns.mod.ModularRayguns
+import com.castlebravostudios.rayguns.items.emitters.Emitters
+import com.castlebravostudios.rayguns.items.misc.Tier1EmptyChamber
 
 object LaserChamber extends BaseChamber {
   val moduleKey = "LaserChamber"
@@ -37,7 +39,8 @@ object LaserChamber extends BaseChamber {
   val shotEffect = LaserEffect
   val nameSegmentKey = "rayguns.LaserChamber.segment"
 
-  def createItem( id : Int ) : ItemModule = new ItemModule( id, this )
+   def createItem() : ItemModule = new ItemChamber( this,
+      Emitters.laserEmitter, Tier1EmptyChamber )
     .setUnlocalizedName("rayguns.LaserChamber")
     .setTextureName("rayguns:chamber_laser")
     .setCreativeTab( ModularRayguns.raygunsTab )

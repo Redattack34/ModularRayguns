@@ -29,6 +29,8 @@ package com.castlebravostudios.rayguns.items.chambers
 
 import com.castlebravostudios.rayguns.api.items.ItemModule
 import com.castlebravostudios.rayguns.entities.effects.FortifiedSunlightEffect
+import com.castlebravostudios.rayguns.items.emitters.Emitters
+import com.castlebravostudios.rayguns.items.misc.Tier2EmptyChamber
 import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 object FortifiedSunlightChamber extends BaseChamber {
@@ -37,7 +39,8 @@ object FortifiedSunlightChamber extends BaseChamber {
   val shotEffect = FortifiedSunlightEffect
   val nameSegmentKey = "rayguns.FortifiedSunlightChamber.segment"
 
-  def createItem( id : Int ) : ItemModule = new ItemModule( id, this )
+   def createItem() : ItemModule = new ItemChamber( this,
+       Emitters.fortifiedSunlightEmitter, Tier2EmptyChamber )
     .setUnlocalizedName("rayguns.FortifiedSunlightChamber")
     .setTextureName("rayguns:chamber_fortified_sunlight")
     .setCreativeTab( ModularRayguns.raygunsTab )

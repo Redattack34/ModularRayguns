@@ -30,6 +30,10 @@ package com.castlebravostudios.rayguns.items.chambers
 import com.castlebravostudios.rayguns.api.items.ItemModule
 import com.castlebravostudios.rayguns.entities.effects.ExplosiveEffect
 import com.castlebravostudios.rayguns.mod.ModularRayguns
+import com.castlebravostudios.rayguns.items.misc.Tier3EmptyChamber
+import com.castlebravostudios.rayguns.items.emitters.Emitters
+
+
 
 object ExplosiveChamber extends BaseChamber {
   val moduleKey = "ExplosiveChamber"
@@ -37,7 +41,8 @@ object ExplosiveChamber extends BaseChamber {
   val shotEffect = ExplosiveEffect
   val nameSegmentKey = "rayguns.ExplosiveChamber.segment"
 
-  def createItem( id : Int ) : ItemModule = new ItemModule( id, this )
+   def createItem() : ItemModule = new ItemChamber( this,
+       Emitters.explosiveEmitter, Tier3EmptyChamber )
     .setUnlocalizedName("rayguns.ExplosiveChamber")
     .setTextureName("rayguns:chamber_explosive")
     .setCreativeTab( ModularRayguns.raygunsTab )
