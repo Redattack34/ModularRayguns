@@ -62,9 +62,12 @@ class BeamRenderer extends Render {
     GL11.glDisable(GL11.GL_TEXTURE_2D)
     OpenGlHelper.setActiveTexture(OpenGlHelper.defaultTexUnit)
 
+    BeamStartRenderer.doRender( this.renderManager.renderEngine, e, partialTickTime )
+
     drawGlow( e )
     drawCore( e )
     drawNoise( e )
+
 
     GL11.glPopMatrix()
     OpenGlHelper.setActiveTexture(OpenGlHelper.lightmapTexUnit)

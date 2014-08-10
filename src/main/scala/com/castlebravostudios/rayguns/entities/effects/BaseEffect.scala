@@ -122,6 +122,8 @@ trait BaseEffect {
   def boltTexture : ResourceLocation
   def beamGlowTexture : ResourceLocation
   def beamCoreTexture : ResourceLocation
+  def beamStartGlowTexture : ResourceLocation
+  def beamStartCoreTexture : ResourceLocation
   def beamNoiseTexture : ResourceLocation
   def chargeTexture : ResourceLocation
 
