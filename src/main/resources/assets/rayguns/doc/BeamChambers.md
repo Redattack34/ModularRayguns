@@ -1,4 +1,7 @@
 As with many things in Modular Rayguns, Beam Chambers come in three tiers.
+Shift-right-clicking with a beam chamber in hand will give you the emitter and
+an empty beam chamber of the same tier back, so you can attach a different
+emitter.
 
 # Tier 1
 
