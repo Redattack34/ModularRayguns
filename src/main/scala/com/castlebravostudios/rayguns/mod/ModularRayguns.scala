@@ -47,6 +47,7 @@ import com.castlebravostudios.rayguns.items.RaygunsBlocks
 import com.castlebravostudios.rayguns.items.frames.FireflyFrame
 import net.minecraft.item.Item
 import cpw.mods.fml.common.event.FMLInterModComms
+import net.minecraft.nbt.NBTTagCompound
 
 @Mod(modid="mod_ModularRayguns", version="1.0-alpha2", modLanguage="scala", useMetadata=true)
 object ModularRayguns {
@@ -83,6 +84,13 @@ object ModularRayguns {
 
     FMLInterModComms.sendMessage("Waila", "register",
         "com.castlebravostudios.rayguns.plugins.waila.RaygunsWailaModule.register" )
+
+    val guideMessage = new NBTTagCompound
+    guideMessage.setString("name", "Modular Rayguns")
+    guideMessage.setString("location", "rayguns:doc/ModularRayguns.md")
+
+    FMLInterModComms.sendMessage("mod_TheGuide", "RegisterIndexFile",
+        guideMessage )
   }
 
   val raygunsTab  = new CreativeTabs("tabRayguns") {
