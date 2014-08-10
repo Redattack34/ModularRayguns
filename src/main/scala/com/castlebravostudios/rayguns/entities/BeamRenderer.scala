@@ -48,7 +48,6 @@ class BeamRenderer extends Render {
 
   private def doRender( e : BaseBeamEntity, x : Double, y : Double, z : Double, yaw : Float, partialTickTime : Float): Unit = {
 
-    this.bindEntityTexture(e)
     GL11.glPushMatrix()
 
     GL11.glTranslated(x, y, z)
@@ -67,7 +66,6 @@ class BeamRenderer extends Render {
     drawGlow( e )
     drawCore( e )
     drawNoise( e )
-
 
     GL11.glPopMatrix()
     OpenGlHelper.setActiveTexture(OpenGlHelper.lightmapTexUnit)
