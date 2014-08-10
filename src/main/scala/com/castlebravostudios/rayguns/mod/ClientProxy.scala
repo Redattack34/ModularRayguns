@@ -68,7 +68,11 @@ class ClientProxy extends CommonProxy {
 
   override def loadTextures() : Unit = {
     EffectRegistry.allRegisteredEffects foreach { effect =>
-      loadTexture( effect.beamTexture )
+      loadTexture( effect.beamGlowTexture )
+      loadTexture( effect.beamCoreTexture )
+      loadTexture( effect.beamStartGlowTexture )
+      loadTexture( effect.beamStartCoreTexture )
+      loadTexture( effect.beamNoiseTexture )
       loadTexture( effect.boltTexture )
       loadTexture( effect.lineTexture )
     }

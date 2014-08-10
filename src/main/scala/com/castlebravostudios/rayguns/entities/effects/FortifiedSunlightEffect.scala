@@ -38,7 +38,7 @@ import net.minecraft.item.ItemDye
 import net.minecraft.util.EntityDamageSource
 import net.minecraft.init.Items
 
-object FortifiedSunlightEffect extends BaseEffect {
+object FortifiedSunlightEffect extends BaseEffect with SimpleTextures {
 
   val effectKey = "FortifiedSunlight"
   val damageSourceKey = "fortifiedSunlight"
@@ -74,7 +74,5 @@ object FortifiedSunlightEffect extends BaseEffect {
     }
   }
 
-  val boltTexture = ModularRayguns.texture( "textures/bolts/sunlight_bolt.png" )
-  val beamTexture = ModularRayguns.texture( "textures/beams/sunlight_beam.png" )
-  val chargeTexture = ModularRayguns.texture( "textures/effects/charge/sunlight_charge.png" )
+  override def textureName : String = "sunlight"
 }

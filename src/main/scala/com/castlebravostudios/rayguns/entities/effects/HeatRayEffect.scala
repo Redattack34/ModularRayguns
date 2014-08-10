@@ -38,7 +38,7 @@ import com.castlebravostudios.rayguns.mod.ModularRayguns
 import net.minecraft.init.Blocks
 
 
-object HeatRayEffect extends BaseEffect {
+object HeatRayEffect extends BaseEffect with SimpleTextures {
 
   val effectKey = "HeatRay"
   val damageSourceKey = "heatRay"
@@ -80,7 +80,5 @@ object HeatRayEffect extends BaseEffect {
     }
   }
 
-  val boltTexture = ModularRayguns.texture( "textures/bolts/heat_bolt.png" )
-  val beamTexture = ModularRayguns.texture( "textures/beams/heat_beam.png" )
-  val chargeTexture = ModularRayguns.texture( "textures/effects/charge/heat_charge.png" )
+  override def textureName : String = "heat"
 }

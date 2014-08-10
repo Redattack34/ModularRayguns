@@ -34,7 +34,7 @@ import net.minecraft.util.ResourceLocation
 import net.minecraft.world.World
 import com.castlebravostudios.rayguns.mod.ModularRayguns
 
-object LaserEffect extends BaseEffect {
+object LaserEffect extends BaseEffect with SimpleTextures {
 
   val effectKey = "Laser"
   val damageSourceKey = "laser"
@@ -54,7 +54,5 @@ object LaserEffect extends BaseEffect {
     shootable.worldObj.spawnParticle("smoke", hitX, hitY, hitZ, 0.0D, 0.0D, 0.0D)
   }
 
-  val boltTexture = ModularRayguns.texture( "textures/bolts/laser_bolt.png" )
-  val beamTexture = ModularRayguns.texture( "textures/beams/laser_beam.png" )
-  val chargeTexture = ModularRayguns.texture( "textures/effects/charge/laser_charge.png" )
+  def textureName : String = "laser"
 }

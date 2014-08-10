@@ -36,7 +36,7 @@ import net.minecraft.world.World
 import com.castlebravostudios.rayguns.mod.ModularRayguns
 
 
-object LifeForceEffect extends BaseEffect {
+object LifeForceEffect extends BaseEffect with SimpleTextures {
 
   val effectKey = "LifeForce"
   val damageSourceKey = "lifeForce"
@@ -63,7 +63,6 @@ object LifeForceEffect extends BaseEffect {
       shootable.worldObj.spawnParticle("cloud", hitX, hitY, hitZ, 0.0D, 0.0D, 0.0D);
     }
   }
-  val boltTexture = ModularRayguns.texture( "textures/bolts/life_bolt.png" )
-  val beamTexture = ModularRayguns.texture( "textures/beams/life_beam.png" )
-  val chargeTexture = ModularRayguns.texture( "textures/effects/charge/life_charge.png" )
+
+  def textureName : String = "life"
 }

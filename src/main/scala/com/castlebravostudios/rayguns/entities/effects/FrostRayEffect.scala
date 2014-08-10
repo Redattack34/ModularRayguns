@@ -41,7 +41,7 @@ import com.castlebravostudios.rayguns.mod.ModularRayguns
 import net.minecraft.init.Blocks
 
 
-object FrostRayEffect extends BaseEffect {
+object FrostRayEffect extends BaseEffect with SimpleTextures {
 
   val effectKey = "FrostRay"
   val damageSourceKey = "frostRay"
@@ -104,7 +104,5 @@ object FrostRayEffect extends BaseEffect {
     }
   }
 
-  val boltTexture = ModularRayguns.texture( "textures/bolts/frost_bolt.png" )
-  val beamTexture = ModularRayguns.texture( "textures/beams/frost_beam.png" )
-  val chargeTexture = ModularRayguns.texture( "textures/effects/charge/frost_charge.png" )
+  override def textureName : String = "frost"
 }

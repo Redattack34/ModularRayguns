@@ -37,8 +37,7 @@ import net.minecraft.client.renderer.entity.Render
 import net.minecraft.entity.Entity
 import net.minecraft.util.ResourceLocation
 import com.castlebravostudios.rayguns.mod.ModularRayguns
-
-
+import org.lwjgl.opengl.GL14
 
 class LightningBeamRenderer extends Render {
 
@@ -48,58 +47,80 @@ class LightningBeamRenderer extends Render {
     doRender( e.asInstanceOf[LightningBeamEntity], x, y, z, yaw, partialTickTime )
   }
 
-  private def doRender( e : LightningBeamEntity, x : Double, y : Double, z : Double, yaw : Float, partialTickTime : Float) : Unit = {
+  private def doRender( e : LightningBeamEntity, x : Double, y : Double, z : Double, yaw : Float, partialTickTime : Float): Unit = {
     val renderLoc = Vector3( x, y, z )
 
     this.bindEntityTexture(e);
     GL11.glPushMatrix();
 
     GL11.glDisable(GL11.GL_LIGHTING)
-    GL11.glDisable(GL11.GL_CULL_FACE)
     GL11.glEnable(GL11.GL_BLEND);
     if ( flash && e.renderCount % 3 == 0 ) {
-      GL11.glBlendFunc(GL11.GL_ZERO, GL11.GL_ONE_MINUS_SRC_ALPHA);
+      GL14.glBlendEquation( GL14.GL_FUNC_REVERSE_SUBTRACT)
     }
-    else {
-      GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
-    }
+    GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE);
     GL11.glDepthMask(false);
     OpenGlHelper.setActiveTexture(OpenGlHelper.lightmapTexUnit)
     GL11.glDisable(GL11.GL_TEXTURE_2D)
     OpenGlHelper.setActiveTexture(OpenGlHelper.defaultTexUnit)
 
-    val tes = Tessellator.instance
+    this.bindTexture( e.effect.beamGlowTexture )
+    drawBolt(e, renderLoc)
+    this.bindTexture( e.effect.beamCoreTexture )
+    drawBolt(e, renderLoc)
+    this.bindTexture( e.effect.beamNoiseTexture )
+    drawBolt(e, renderLoc, e.charge * 100 )
 
+    GL11.glTranslated(x, y, z)
+    GL11.glRotatef(180 + e.rotationYaw, 0.0f, 1.0f, 0.0f)
+    GL11.glRotatef(180 - e.rotationPitch, 1.0f, 0.0f, 0.0f)
+    GL11.glScalef(0.05f * e.charge.toFloat, 0.05f * e.charge.toFloat, 1.0f)
+
+    BeamStartRenderer.doRender( this.renderManager.renderEngine, e, partialTickTime )
+
+    OpenGlHelper.setActiveTexture(OpenGlHelper.lightmapTexUnit)
+    GL11.glEnable(GL11.GL_TEXTURE_2D)
+    OpenGlHelper.setActiveTexture(OpenGlHelper.defaultTexUnit)
+    GL11.glDepthMask(true);
+    GL11.glDisable(GL11.GL_BLEND)
+    GL11.glEnable(GL11.GL_LIGHTING)
+    GL11.glPopMatrix()
+    GL14.glBlendEquation( GL14.GL_FUNC_ADD )
+
+    e.renderCount += 1
+  }
+
+  private def drawBolt(e: LightningBeamEntity, renderLoc: Vector3, textureOffset : Double = 0.0d ): Int = {
+    val tes = Tessellator.instance
     tes.startDrawingQuads();
     for { index <- 0 until e.pointsList.size - 1 } {
       val start = e.pointsList( index ).add(renderLoc)
       val end = e.pointsList( index + 1 ).add(renderLoc)
 
       val thickness = 0.0625D * e.charge
-      tes.addVertexWithUV( start.x - thickness, start.y, start.z, 0, 0);
-      tes.addVertexWithUV( end.x - thickness, end.y, end.z, 0, 1);
-      tes.addVertexWithUV( end.x + thickness, end.y, end.z, 1, 1);
-      tes.addVertexWithUV( start.x + thickness, start.y, start.z, 1, 0);
-      tes.addVertexWithUV( start.x, start.y - thickness, start.z, 0, 0);
-      tes.addVertexWithUV( end.x, end.y - thickness, end.z, 0, 1);
-      tes.addVertexWithUV( end.x, end.y + thickness, end.z, 1, 1);
-      tes.addVertexWithUV( start.x, start.y + thickness, start.z, 1, 0);
+      tes.addVertexWithUV( start.x - thickness, start.y, start.z, 0, 0 + textureOffset);
+      tes.addVertexWithUV( end.x - thickness, end.y, end.z, 0, 1 + textureOffset);
+      tes.addVertexWithUV( end.x + thickness, end.y, end.z, 1, 1 + textureOffset);
+      tes.addVertexWithUV( start.x + thickness, start.y, start.z, 1, 0 + textureOffset);
+
+      tes.addVertexWithUV( start.x + thickness, start.y, start.z, 1, 0 + textureOffset);
+      tes.addVertexWithUV( end.x + thickness, end.y, end.z, 1, 1 + textureOffset);
+      tes.addVertexWithUV( end.x - thickness, end.y, end.z, 0, 1 + textureOffset);
+      tes.addVertexWithUV( start.x - thickness, start.y, start.z, 0, 0 + textureOffset);
+
+      tes.addVertexWithUV( start.x, start.y - thickness, start.z, 0, 0 + textureOffset);
+      tes.addVertexWithUV( end.x, end.y - thickness, end.z, 0, 1 + textureOffset);
+      tes.addVertexWithUV( end.x, end.y + thickness, end.z, 1, 1 + textureOffset);
+      tes.addVertexWithUV( start.x, start.y + thickness, start.z, 1, 0 + textureOffset);
+
+      tes.addVertexWithUV( start.x, start.y + thickness, start.z, 1, 0 + textureOffset);
+      tes.addVertexWithUV( end.x, end.y + thickness, end.z, 1, 1 + textureOffset);
+      tes.addVertexWithUV( end.x, end.y - thickness, end.z, 0, 1 + textureOffset);
+      tes.addVertexWithUV( start.x, start.y - thickness, start.z, 0, 0 + textureOffset);
     }
     tes.draw();
-
-    OpenGlHelper.setActiveTexture(OpenGlHelper.lightmapTexUnit)
-    GL11.glEnable(GL11.GL_TEXTURE_2D)
-    OpenGlHelper.setActiveTexture(OpenGlHelper.defaultTexUnit)
-    GL11.glColor4f( 1.0f, 1.0f, 1.0f, 1.0f )
-    GL11.glDepthMask(true);
-    GL11.glDisable(GL11.GL_BLEND)
-    GL11.glEnable(GL11.GL_CULL_FACE)
-    GL11.glEnable(GL11.GL_LIGHTING)
-    GL11.glPopMatrix()
-
-    e.renderCount += 1
   }
 
   def getEntityTexture( e : Entity ) : ResourceLocation =
-    ModularRayguns.texture( "textures/beams/lightning_beam.png" )
+    ModularRayguns.texture( "textures/beams/beam_glow_lightning.png" )
 }
